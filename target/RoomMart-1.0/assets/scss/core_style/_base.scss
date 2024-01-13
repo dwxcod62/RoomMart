@@ -1,0 +1,428 @@
+// Global variables
+:root {
+  // Color
+  --primary-color: #0067ff;
+  --white-color: #fff;
+  --black-color: #000;
+  --text-color: #2f3440;
+  --border-color: #eee;
+  --error-color: #ff3838;
+  --footer-background-color: #181821;
+
+  // Button
+  --button-active-color: #3b89fc;
+  --button-inactive-color: #878787;
+  --button-background-color: #eaf5ff;
+
+  // Box-shadow
+  --box-shadow-border: rgb(0 0 0 / 5%) 0px 6px 24px 0px,
+    rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+  --box-shadow-border-model: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  // Height
+  --navbar-height: 80px;
+  --footer-height: 80px;
+
+  --min-body-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
+}
+
+/* Smooth scroll behavior */
+:root {
+  scroll-behavior: smooth;
+}
+
+// Reset css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.6rem;
+  line-height: normal;
+  text-rendering: optimizeSpeed;
+  color: var(--text-color);
+}
+
+button,
+input,
+[tabindex] {
+  outline: none;
+  border: none;
+}
+
+select {
+  border: 0.5px solid #ccc;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.over-flow-hidden {
+  overflow: hidden;
+}
+
+// Scroll bar css
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+// Form
+.custom-form {
+  .spacer {
+    margin: 16px 0;
+    border-top: 0.2px solid rgba(0, 0, 0, 0.2);
+  }
+}
+
+.form-header {
+  text-align: center;
+
+  .form-title {
+    font-size: 2.8rem;
+    font-weight: 600;
+  }
+
+  .form-subtitle {
+    margin-top: 24px;
+  }
+}
+
+// Form input
+.form-label {
+  font-size: 1.8rem;
+  font-weight: 500;
+
+  span {
+    color: var(--error-color);
+  }
+}
+
+.form-control {
+  font-size: 1.4rem;
+  height: 40px;
+  margin: 4px 0 16px 0;
+  border-radius: 4px;
+}
+
+.form-message {
+  color: var(--error-color);
+  display: block;
+  margin-bottom: 16px;
+}
+
+// Form error message
+.form-error-message {
+  color: var(--error-color);
+  font-style: italic;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+}
+
+// Form submit
+.form-submit {
+  color: var(--white-color);
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 12px 0;
+  border-radius: 4px;
+}
+
+// Content group
+.content-group {
+  .content-bar {
+    display: flex;
+    align-items: center;
+  }
+  .content-history {
+    flex: 1;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px 0;
+
+    a {
+      margin-right: 8px;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+
+    i {
+      font-size: 1.4rem;
+      margin-right: 8px;
+    }
+
+    .current {
+      color: var(--primary-color);
+    }
+
+    .content-body {
+      padding: 16px 16px;
+      border-radius: 6px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
+        rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    }
+  }
+
+  .content-actions {
+    button,
+    a {
+      display: block;
+      padding: 12px 8px;
+      border-radius: 6px;
+      font-size: 1.6rem;
+      color: var(--white-color);
+    }
+  }
+}
+
+// Modal
+.modal-title {
+  font-size: 2.6rem;
+}
+
+.modal-footer {
+  button,
+  a {
+    font-size: 1.8rem;
+    padding: 6px 16px;
+    border-radius: 4px;
+    color: var(--white-color);
+  }
+}
+
+/* Toast alert */
+.toast + .toast {
+  margin-top: 20px;
+}
+
+#toast {
+  position: fixed !important;
+  top: 120px;
+  right: 32px;
+  z-index: 9999999;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 2px;
+  padding-right: 14px;
+  min-width: 400px;
+  max-width: 450px;
+  border-left: 4px solid;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+  transition: all linear 0.3s;
+  animation: slideInLeft ease 0.3s, fadeOut linear 1s 10s forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% + 32px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast__wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.toast--success {
+  border-color: #47d864;
+}
+
+.toast--success .toast__icon {
+  color: #47d864;
+}
+
+.toast--info {
+  border-color: #2186eb;
+}
+
+.toast--info .toast__icon {
+  color: #2186eb;
+}
+
+.toast--warning {
+  border-color: #ffc021;
+}
+
+.toast--warning .toast__icon {
+  color: #ffc021;
+}
+
+.toast--error {
+  border-color: #ff623d;
+}
+
+.toast--error .toast__icon {
+  color: #ff623d;
+}
+
+.toast__icon {
+  font-size: 40px;
+  padding: 0 16px 0 16px;
+}
+
+.toast__body {
+  flex-grow: 1;
+}
+.toast__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 15px 0 10px 0;
+}
+.toast__msg {
+  font-size: 14px;
+  color: #888;
+  margin: 0 0 15px 0;
+  line-height: 1.5;
+}
+.toast__close {
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  padding: 0 2px 0 10px;
+}
+
+.toast__countdown {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 4px;
+  width: 100%;
+}
+
+@keyframes countdown {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}
+
+.toast--success .toast__countdown {
+  background: #47d864;
+}
+.toast--info .toast__countdown {
+  background: #2186eb;
+}
+
+.toast--warning .toast__countdown {
+  background: #ffc021;
+}
+
+.toast--error .toast__countdown {
+  background: #ff623d;
+}
+
+.over-flow-hidden {
+  overflow: hidden;
+}
+
+// Preloader css
+#preloader {
+  background-color: #fff;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  inset: 0;
+
+  .dots {
+    width: 3.5em;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .dots div {
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: #fc2f70;
+    animation: fade 0.8s ease-in-out alternate infinite;
+  }
+
+  .dots div:nth-of-type(1) {
+    animation-delay: -0.4s;
+  }
+
+  .dots div:nth-of-type(2) {
+    animation-delay: -0.2s;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+#preloader[closing] {
+  animation: fadeOut 0.3s ease-in forwards;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
