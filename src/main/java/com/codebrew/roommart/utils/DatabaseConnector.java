@@ -9,8 +9,8 @@ public class DatabaseConnector {
     public static Connection makeConnection() throws SQLException {
         Connection connection = null;
         String url = "jdbc:postgresql://ep-silent-lake-76600314.ap-southeast-1.aws.neon.tech/RoomRetelHub?sslmode=require";
-        String username = "Thanhhoacam";
-        String password = "PUg7kGetso2u";
+        String username = "tienthanh170803@gmail.com";
+        String password = "Test123@";
 
         try {
             Class.forName("org.postgresql.Driver");
