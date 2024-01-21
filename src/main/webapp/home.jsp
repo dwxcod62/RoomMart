@@ -116,7 +116,7 @@
                                     <div class="detail-box" style="background: #f1f2f3;">
                                         <h5 style="text-transform: uppercase; text-align: center;">
                                             <a href="roomdetail?rid=${r.roomId}" class="" style="color: black; text-decoration: none">
-                                                Number: ${r.roomNumber} <br>Area: ${r.roomArea} <br> Attic: ${r.attic}
+                                                Number: ${r.roomNumber} <br>Area: ${r.roomArea} <br> Attic: ${r.hasAttic} <br> Capacity : ${r.capacity}
                                             </a>
                                         </h5>
                                     </div>

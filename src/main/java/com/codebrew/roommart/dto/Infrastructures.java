@@ -9,11 +9,9 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class RoomInformation {
-    String hostelName;
-    String address;
-    String ward;
-    String district;
-    String city;
+public class Infrastructures {
+    int id;
+    String name;
+    int quantity;
+    int status;
 }
-
