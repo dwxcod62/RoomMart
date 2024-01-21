@@ -70,24 +70,21 @@
                     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                            <c:forEach var="index" begin="0" end="${requestScope.roomImg.size() - 1}">
+                                <li data-target="#myCarousel" data-slide-to="${index}" class="${index == 0 ? 'active' : ''}"></li>
+                            </c:forEach>
                         </ol>
 
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner card-img img-fluid">
-                            <div class="carousel-item active">
-                                <img src="https://media.designcafe.com/wp-content/uploads/2023/07/05141750/aesthetic-room-decor.jpg" alt="Los Angeles">
-                            </div>
 
-                            <div class="carousel-item card-img img-fluid">
-                                <img src="https://www.shutterstock.com/shutterstock/photos/2157520005/display_1500/stock-photo-empty-interior-room-d-illustration-2157520005.jpg" alt="Chicago">
-                            </div>
+                            <c:forEach var="index" begin="0" end="${roomImg.size() - 1}">
+                                <div class="carousel-item card-img img-fluid ${index == 0 ? 'active' : ''}">
+                                    <img src="${requestScope.roomImg[index]}" alt="Image ${index + 1}">
+                                </div>
+                            </c:forEach>
 
-                            <div class="carousel-item card-img img-fluid">
-                                <img src="https://www.usnews.com/object/image/00000167-32b5-dff7-a56f-7bb53c640000/181120-bedroom-stock.jpg?update-time=1542744061266&size=responsive640" alt="New York">
-                            </div>
+
                         </div>
 
                         <!-- Left and right controls -->
@@ -103,11 +100,11 @@
                     </div>
 
                     <div id="carouselWrapper" class="carousel-indicators">
-                        <img src="https://media.designcafe.com/wp-content/uploads/2023/07/05141750/aesthetic-room-decor.jpg" data-target="#myCarousel" data-slide-to="0" class="active">
-                        <img src="https://www.shutterstock.com/shutterstock/photos/2157520005/display_1500/stock-photo-empty-interior-room-d-illustration-2157520005.jpg" data-target="#myCarousel" data-slide-to="1">
-                        <img src="https://www.usnews.com/object/image/00000167-32b5-dff7-a56f-7bb53c640000/181120-bedroom-stock.jpg?update-time=1542744061266&size=responsive640" data-target="#myCarousel" data-slide-to="2">
+                        <c:forEach var="index" begin="0" end="${roomImg.size() - 1}">
+                            <img src="${roomImg[index]}" data-target="#myCarousel" data-slide-to="${index}" class="${index == 0 ? 'active' : ''}">
+                        </c:forEach>
 
-                        <!-- Thêm các thumbnail khác ở đây -->
+
                     </div>
                 </div>
                 <div class="row card m-5">
@@ -128,10 +125,12 @@
                     <!--Start Carousel Wrapper-->
                     <h1 >Services Information</h1>
                         <li class="list-inline-item">
-                            <h6>Adress: ${requestScope.roomInfor.address}</h6>
-                            <h6>city : ${requestScope.roomInfor.city}</h6>
-                            <h6>district : ${requestScope.roomInfor.district}</h6>
-                            <h6>ward : ${requestScope.roomInfor.ward}</h6>
+                            <c:forEach var="service" items="${serviceList}">
+                                <h6>Service Name: ${service.serviceName}, Valid Date: ${service.validDate},Price: ${service.servicePrice}/${service.unit}</h6>
+
+
+                            </c:forEach>
+
                         </li>
                     <!--End Carousel Wrapper-->
                     </div>
@@ -141,10 +140,10 @@
                     <!--Start Carousel Wrapper-->
                     <h1>Infrastures Information</h1>
                         <li class="list-inline-item">
-                            <h6>Adress: ${requestScope.roomInfor.address}</h6>
-                            <h6>city : ${requestScope.roomInfor.city}</h6>
-                            <h6>district : ${requestScope.roomInfor.district}</h6>
-                            <h6>ward : ${requestScope.roomInfor.ward}</h6>
+                            <c:forEach var="infras" items="${infrasList}">
+                                    <h6>${infras.infrastructureName}</h6>
+                            </c:forEach>
+
                         </li>
                     <!--End Carousel Wrapper-->
                     </div>
@@ -169,10 +168,10 @@
                         <h6>Description:</h6>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse. Donec condimentum elementum convallis. Nunc sed orci a diam ultrices aliquet interdum quis nulla.</p>
 
-                        <p></p>
+
                         <ul class="list-inline">
                             <li class="list-inline-item">
-                                <h6>Property:  ${requestScope.room.roomInformation.property_name}</h6>
+                                <h6>Property:  ${requestScope.room.roomInformation.hostelName}</h6>
 
                             </li>
                             <li class="list-inline-item">
@@ -209,6 +208,32 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+    <div class="container pb-5 m-auto">
+
+
+
+
+        <div class="row">
+<h2>Other: </h2>
+                <c:forEach var="room" items="${list}">
+                    <div class="col-sm-3 card">
+<div class="card-body">
+                    <a href="roomdetail?rid=${room.roomId}" > <!-- Add your link here -->
+                        <img src="${ not empty room.imgUrl ? room.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" class="d-block w-100" alt="Image ${index + 1}">
+                    </a>
+                    </div></div>
+                </c:forEach>
+
+            <!-- Wrapper for slides -->
+
+
+
+
+
         </div>
     </div>
 </section>
