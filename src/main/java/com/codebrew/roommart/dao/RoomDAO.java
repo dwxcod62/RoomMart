@@ -1,5 +1,9 @@
 package com.codebrew.roommart.dao;
+import com.cloudinary.*;
+import com.cloudinary.utils.ObjectUtils;
+import io.github.cdimascio.dotenv.Dotenv;
 
+import java.util.Map;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.RoomInformation;
 import com.codebrew.roommart.utils.DatabaseConnector;
@@ -12,12 +16,56 @@ public class RoomDAO {
     private static final String ADD_IMGs = "INSERT INTO roomimgs (room_id,imgurl) \n" +
             "VALUES (?, ?)";
     private static final String COUNT_ROOM = "SELECT COUNT(*) AS room_count FROM rooms";
-    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
-                              int quantity1, int status1,
-                              int quantity2, int status2,
-                              int quantity3, int status3,
-                              int quantity4, int status4,
-                               List<String> imgUrls) {
+    public boolean addImgbyId(int room_Id,List<String> imgUrls){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isInserted = false;
+        ResultSet rs = null;
+        try{
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+            // insert urlImg into table roomimgs
+            pst = cn.prepareStatement(ADD_IMGs);
+
+            for (int i = 0; i < imgUrls.size(); i++) {
+                // Set giá trị cho Prepared Statement
+                pst.setInt(1, room_Id);
+                pst.setString(2, imgUrls.get(i));
+
+                // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                if (pst.executeUpdate() > 0) {
+                    isInserted = true;
+                } else {
+                    isInserted = false;
+                    break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
+                }
+            }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isInserted;
+
+
+    }
+    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls) {
+
+        //connect db
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isInserted = false;
@@ -37,17 +85,7 @@ public class RoomDAO {
                 pst.setInt(5, attic);
                 pst.setInt(6, roomStatus);
 
-//                pst.setInt(7, quantity1);
-//                pst.setInt(8, status1);
-//
-//                pst.setInt(9, quantity2);
-//                pst.setInt(10, status2);
-//
-//                pst.setInt(11, quantity3);
-//                pst.setInt(12, status3);
-//
-//                pst.setInt(13, quantity4);
-//                pst.setInt(14, status4);
+
 
 
                 if (pst.executeUpdate() > 0) {
@@ -59,30 +97,19 @@ public class RoomDAO {
 
                     }
 
-                        // insert urlImg into table roomimgs
-                    pst = cn.prepareStatement(ADD_IMGs);
-
-                    for (int i = 0; i < imgUrls.size(); i++) {
-                        // Set giá trị cho Prepared Statement
-                        pst.setInt(1, room_Id);
-                        pst.setString(2, imgUrls.get(i));
-
-                        // Thực hiện câu lệnh SQL và kiểm tra kết quả
-                        if (pst.executeUpdate() > 0) {
-                            isInserted = true;
-                        } else {
-                            isInserted = false;
-                            break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
-                        }
-                    }
+                     isInserted =addImgbyId(room_Id,imgUrls);
 
 // Kiểm tra kết quả cuối cùng và commit hoặc rollback
                     if (isInserted) {
+                        cn.setAutoCommit(false);
                         cn.commit();
+                        cn.setAutoCommit(true);
                     } else {
+
                         cn.rollback();
+                        cn.setAutoCommit(true);
                     }
-                    cn.setAutoCommit(true);
+
 
 
                 }else {

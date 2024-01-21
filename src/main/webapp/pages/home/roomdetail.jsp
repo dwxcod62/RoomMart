@@ -125,10 +125,12 @@
                     <!--Start Carousel Wrapper-->
                     <h1 >Services Information</h1>
                         <li class="list-inline-item">
-                            <h6>Adress: ${requestScope.roomInfor.address}</h6>
-                            <h6>city : ${requestScope.roomInfor.city}</h6>
-                            <h6>district : ${requestScope.roomInfor.district}</h6>
-                            <h6>ward : ${requestScope.roomInfor.ward}</h6>
+                            <c:forEach var="service" items="${serviceList}">
+                                <h6>Service Name: ${service.serviceName}, Valid Date: ${service.validDate},Price: ${service.servicePrice}/${service.unit}</h6>
+
+
+                            </c:forEach>
+
                         </li>
                     <!--End Carousel Wrapper-->
                     </div>
@@ -138,10 +140,10 @@
                     <!--Start Carousel Wrapper-->
                     <h1>Infrastures Information</h1>
                         <li class="list-inline-item">
-                            <h6>Adress: ${requestScope.roomInfor.address}</h6>
-                            <h6>city : ${requestScope.roomInfor.city}</h6>
-                            <h6>district : ${requestScope.roomInfor.district}</h6>
-                            <h6>ward : ${requestScope.roomInfor.ward}</h6>
+                            <c:forEach var="infras" items="${infrasList}">
+                                    <h6>${infras.infrastructureName}</h6>
+                            </c:forEach>
+
                         </li>
                     <!--End Carousel Wrapper-->
                     </div>
@@ -208,20 +210,22 @@
             </div>
         </div>
     </div>
+
+
     <div class="container pb-5 m-auto">
 
 
 
 
         <div class="row">
-
+<h2>Other: </h2>
                 <c:forEach var="room" items="${list}">
-                    <div class="col-sm-3">
-
+                    <div class="col-sm-3 card">
+<div class="card-body">
                     <a href="roomdetail?rid=${room.roomId}" > <!-- Add your link here -->
                         <img src="${ not empty room.imgUrl ? room.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" class="d-block w-100" alt="Image ${index + 1}">
                     </a>
-                    </div>
+                    </div></div>
                 </c:forEach>
 
             <!-- Wrapper for slides -->

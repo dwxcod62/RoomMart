@@ -111,7 +111,7 @@
                             <div class="box" style="box-shadow: 0 0 5px 5px lightgray;">
                                 <div>
                                     <div class="img-box" style="height: 400px !important; border-radius: 0px !important;">
-                                        <img src="https://media.designcafe.com/wp-content/uploads/2023/07/05141750/aesthetic-room-decor.jpg" alt="Film Image" style="max-height: none; height: 100%">
+                                        <img src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="Film Image" style="max-height: none; height: 100%">
                                     </div>
                                     <div class="detail-box" style="background: #f1f2f3;">
                                         <h5 style="text-transform: uppercase; text-align: center;">
