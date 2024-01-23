@@ -2,6 +2,7 @@
 package com.codebrew.roommart.filter;
 
 import com.codebrew.roommart.dao.AccountDao;
+import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
 import java.io.IOException;
 
@@ -23,9 +24,7 @@ public class RoleFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
-        System.out.println("A");
-        
+
         Account acc = null;
         String token = null;
         String url = null;
@@ -43,8 +42,9 @@ public class RoleFilter implements Filter {
 
         // Neu cookie, session co thi se chuyen sang trang nguoi do, khong thi quay ve
         // login
+
         if ((session.getAttribute("USER") != null || c != null) &&
-                ("login".equals(resource) || "loginPage".equals(resource) || resource.isEmpty())) {
+                ("login".equals(resource) || "log".equals(resource) || resource.isEmpty())) {
 
             for (Cookie cookie : c) {
                 if (cookie.getName().equals("selector")) {
@@ -52,7 +52,7 @@ public class RoleFilter implements Filter {
                 }
             }
 
-            acc = ( token != null ) ? new AccountDao().getAccountByToken(token) : (Account) session.getAttribute("USER");
+            acc = ( token != null ) ? new SystemDao().getAccountByToken(token) : (Account) session.getAttribute("USER");
             if (acc != null) {
                 url = "dashboard";
                 httpResponse.sendRedirect(url);

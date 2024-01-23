@@ -1,6 +1,7 @@
 package com.codebrew.roommart.servlets.AccountServlet;
 
 import com.codebrew.roommart.dao.AccountDao;
+import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Status;
 import com.codebrew.roommart.utils.EncodeUtils;
@@ -21,17 +22,16 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Account acc = null;
-        AccountDao dao = new AccountDao();
-
-        String uname = request.getParameter("username");
-        String pwd = EncodeUtils.hashSHA256(request.getParameter("password"));
-        String save = request.getParameter("remember");
-        String url = "loginPage";
+        SystemDao dao = new SystemDao();
+        String uname = request.getParameter("email");
+        String pwd = request.getParameter("pass");
+        String save = null;
+        String url = "login";
 
         try {
-//            acc = dao.getAccountByUnamePass(uname, pwd);
+            acc = dao.getAccountByUsernameAndPassword(uname, pwd);
             if (acc != null && acc.getStatus() == 1){
-                url = "success";
+                url = "dashboard";
                 HttpSession session = request.getSession(true);
                 if (session != null){
                     session.setAttribute("USER", acc);
