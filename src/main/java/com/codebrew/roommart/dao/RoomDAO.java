@@ -63,7 +63,7 @@ public class RoomDAO {
 
 
     }
-    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls) {
+    public boolean addNewRoom(int landID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls) {
 
         //connect db
         Connection cn = null;
@@ -78,7 +78,7 @@ public class RoomDAO {
                         "    VALUES (?, ?, ?, ?, ?, ?)\n";
 
                 pst = cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pst.setInt(1, hostelID);
+                pst.setInt(1, landID);
                 pst.setInt(2, roomNumber);
                 pst.setInt(3, capacity);
                 pst.setDouble(4, roomArea);
@@ -236,7 +236,7 @@ public class RoomDAO {
                 if (rs != null) {
                     while (rs.next()) {
                         int roomID = rs.getInt("room_id");
-                        int hostelID = rs.getInt("hostel_id");
+                        int landID = rs.getInt("hostel_id");
                         int roomNumber = rs.getInt("room_number");
                         int capacity = rs.getInt("capacity");
                         double roomArea = rs.getDouble("room_area");
@@ -246,7 +246,7 @@ public class RoomDAO {
                         List<String> urlImg = getListImgByRoomId(roomID);
                         rooms.add(Room.builder()
                                 .roomId(roomID)
-                                .hostelId(hostelID)
+                                .landId(landID)
                                 .roomNumber(roomNumber)
                                 .roomArea(roomArea)
                                 .capacity(capacity)
@@ -286,7 +286,7 @@ public class RoomDAO {
         return rooms;
     }
 
-    public List<Room> getListRoomsByHostelId(int hostelID) {
+    public List<Room> getListRoomsByLandId(int landID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -301,7 +301,7 @@ public class RoomDAO {
                         "WHERE hostel_id = ?";
 
                 pst = cn.prepareStatement(sql);
-                pst.setInt(1, hostelID);
+                pst.setInt(1, landID);
 
                 rs = pst.executeQuery();
                 if (rs != null) {
@@ -315,7 +315,7 @@ public class RoomDAO {
                         RoomInformation roomInformation = null;
                         rooms.add(Room.builder()
                                 .roomId(roomID)
-                                .hostelId(hostelID)
+                                .landId(landID)
                                 .roomNumber(roomNumber)
                                 .roomArea(roomArea)
                                 .capacity(capacity)
@@ -371,7 +371,7 @@ public class RoomDAO {
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    int hostelId = rs.getInt("hostel_id");
+                    int landId = rs.getInt("hostel_id");
                     int roomNumber = rs.getInt("room_number");
                     int capacity = rs.getInt("capacity");
                     int roomStatus = rs.getInt("room_status");
@@ -384,7 +384,7 @@ public class RoomDAO {
                     String city = rs.getString("city");
                     List<String> urlImg = getListImgByRoomId(roomID);
                     RoomInformation roomInformation = RoomInformation.builder()
-                            .hostelName(name)
+                            .landName(name)
                             .address(address)
                             .ward(ward)
                             .district(district)
@@ -392,7 +392,7 @@ public class RoomDAO {
                             .build();
                     room = Room.builder()
                             .roomId(roomID)
-                            .hostelId(hostelId)
+                            .landId(landId)
                             .roomNumber(roomNumber)
                             .roomStatus(roomStatus)
                             .capacity(capacity)
@@ -476,5 +476,53 @@ public int countRoom(){
             }
         }
     }
-    return roomCount;}
+    return roomCount;
+    }
+
+    public Room getRoomInfoByRenterId(int renterId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfo = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT R.* FROM Rooms R " +
+                        "INNER JOIN Contracts C ON R.room_id = C.room_id " +
+                        "WHERE C.renter_id = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int room_id = rs.getInt("room_id");
+                    int land_id = rs.getInt("hostel_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    roomInfo = Room
+                            .builder()
+                            .roomId(room_id)
+                            .landId(land_id)
+                            .roomNumber(roomNumber)
+                            .capacity(capacity)
+                            .roomArea(roomArea)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfo;
+    }
 }

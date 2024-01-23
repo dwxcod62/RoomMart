@@ -9,10 +9,10 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Hostel {
-    private int hostelID;
-    private int hostelOwnerAccountID;
-    private String hostelName;
+public class Land {
+    private int landID;
+    private int landOwnerAccountID;
+    private String landName;
     private String address;
     private String ward;
     private String district;

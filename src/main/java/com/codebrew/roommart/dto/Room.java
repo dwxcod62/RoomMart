@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 public class Room {
     int roomId;
-    int hostelId;
+    int landId;
     int roomNumber;
     int capacity;
     int roomStatus;
