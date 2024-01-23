@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.AccountServlet.HomeServlets;
+package com.codebrew.roommart.servlets.RenterServlet.AccountServlet.HomeServlets;
 
 import com.codebrew.roommart.dao.InfrastructureDAO;
 import com.codebrew.roommart.dao.RoomDAO;
@@ -12,12 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Service;
+//import javax.xml.ws.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import com.cloudinary.*;
+
 import com.codebrew.roommart.dto.ServiceInfo;
 
 @WebServlet(name = "RoomDetailServlet", value = "/roomdetail")
@@ -47,7 +46,7 @@ public class RoomDetailServlet extends HttpServlet {
         }else{
 
             RoomInformation ri = r.getRoomInformation();
-            List<ServiceInfo> list_service = serviceIdao.getServicesOfHostel(r.getHostelId());
+            List<ServiceInfo> list_service = serviceIdao.getServicesOfLand(r.getLandId());
             List<InfrastructureItem> list_infras = idao.getAllInfrastructure();
             request.setAttribute("room",r);
             request.setAttribute("roomImg",r.getImgUrl());

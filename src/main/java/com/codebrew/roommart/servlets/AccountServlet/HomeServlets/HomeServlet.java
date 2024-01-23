@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.AccountServlet.HomeServlets;
+package com.codebrew.roommart.servlets.RenterServlet.AccountServlet.HomeServlets;
 
 import com.codebrew.roommart.dao.RoomDAO;
 import com.codebrew.roommart.dto.Room;
