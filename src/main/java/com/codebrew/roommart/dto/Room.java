@@ -1,7 +1,10 @@
 package com.codebrew.roommart.dto;
 
 import lombok.*;
+
 import java.util.Date;
+import java.util.List;
+
 @Builder
 @Data
 @AllArgsConstructor
@@ -10,17 +13,17 @@ import java.util.Date;
 @Setter
 @ToString
 public class Room {
-    private int roomId;
-    private int propertyId;
-    private int roomNumber;
-//    private int capacity;
-//    int roomStatus;
-    private double roomArea;
-    private int attic;
-    private int roomStatus;
-//    String inviteCode;
-//    String QRCode;
-//    Date expiredTimeCode;
-
-    RoomInfomation roomInfomation;
+    int roomId;
+    int landId;
+    int roomNumber;
+    int capacity;
+    int roomStatus;
+    double roomArea;
+    int hasAttic;
+    String inviteCode;
+    String QRCode;
+    Date expiredTimeCode;
+    RoomInformation roomInformation;
+    List<String> imgUrl;
 }
+

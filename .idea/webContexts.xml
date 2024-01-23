@@ -4,6 +4,7 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/index/renter/renter-notification.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/index/renter" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/index/renter/renter-roommate-update.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/index/renter" />
       </map>
     </option>
   </component>

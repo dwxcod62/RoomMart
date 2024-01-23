@@ -22,11 +22,11 @@ public class Account {
     private Integer roomId; 
     private Date expiredDate;
     private UserInformation accountInfo;
-    private List<RoommateInfo> roommateInfo;
+    private List<Roommate> roommateInfo;
     private String otp;
     private Date expiredTimeOTP;
 
-    public Account(String username, String password, String token, int status, int role, Integer roomId, Date expiredDate, UserInformation accountInfo, List<RoommateInfo> roommateInfo, String otp, Date expiredTimeOTP) {
+    public Account(String username, String password, String token, int status, int role, Integer roomId, Date expiredDate, UserInformation accountInfo, List<Roommate> roommateInfo, String otp, Date expiredTimeOTP) {
         this.username = username;
         this.password = password;
         this.token = token;

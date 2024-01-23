@@ -1,3 +1,5 @@
+<%@ page import="com.codebrew.roommart.dto.Roommate" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -25,10 +27,10 @@
 
 <body>
 <div>
-<%--        <%--%>
-<%--    ArrayList<RoommateInfo> listroommateinfor = (ArrayList<RoommateInfo>) session.getAttribute("listroommateinfor");--%>
-<%--    Account account = (Account)session.getAttribute("USER");--%>
-<%--  %>--%>
+        <%
+        ArrayList<Roommate> listRoommateInfor = (ArrayList<Roommate>) request.getAttribute("listRoommateInfor");
+//    Account account = (Account)session.getAttribute("USER");
+  %>
     <!-- navbar -->
 
     <!-- content -->
@@ -37,22 +39,22 @@
 
         <div class="content">
             <%@include file="component/navbar.jsp" %>
-            <c:if test="${listroommateinfor.size() == 0}">
+            <c:if test="${listRoommateInfor.size() == 0}">
                 <h1 style="color: red; font-size: 26px; text-align: center; margin-top: 20px">Chưa Có Thành Viên</h1>
             </c:if>
-            <c:if test="${listroommateinfor.size() != 0}">
+            <c:if test="${listRoommateInfor.size() != 0}">
                 <h2 class="title-table">Danh Sách Bạn Cùng Phòng</h2>
                 <div>
                     <table class="table">
                         <tr>
                             <th>STT</th>
                             <th>Họ và tên</th>
-                            <th colspan="3">Hành Động</th>
+                            <th colspan="3"></th>
                         </tr>
                         <%
                             int x = 1;
                         %>
-                        <c:forEach items="${listroommateinfor}" var="roommateinfor">
+                        <c:forEach items="${listRoommateInfor}" var="roommateinfor">
                             <tr>
                                 <td><%=x%>
                                 </td>
@@ -62,16 +64,6 @@
                                             data-bs-target="#staticBackdrop<%=x%>">Chi tiết
                                     </button>
                                 </td>
-                                <td>
-                                    <a href="RoommateUpdateDetail?roommateID=${roommateinfor.roommateID}"
-                                       role="button"
-                                       class="btnAction">Chỉnh Sửa</a>
-                                </td>
-                                <td>
-                                    <a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button"
-                                       class="btnAction">Xoá</a>
-                                </td>
-
                             </tr>
 
                             <%
@@ -98,31 +90,33 @@
                             <div class="modal-body" style="text-align: left">
                                 <h3>
                                     <strong>Tên: </strong>
-<%--                                    <%=listroommateinfor.get(y - 1).getInformation().getFullname()%>--%>
+                                    <%=listRoommateInfor.get(y - 1).getInformation().getFullname()%>
                                 </h3>
                                 <h3>
                                     <strong>Email: </strong>
-<%--                                    <%=listroommateinfor.get(y - 1).getInformation().getEmail()%>--%>
+                                    <%=listRoommateInfor.get(y - 1).getInformation().getEmail()%>
                                 </h3>
                                 <h3>
                                     <strong>Ngày Sinh: </strong>
-<%--                                    <%=listroommateinfor.get(y - 1).getInformation().getBirthday()%>--%>
+                                    <%=listRoommateInfor.get(y - 1).getInformation().getBirthday()%>
                                 </h3>
                                 <h3><strong>Giới Tính: </strong>
-<%--                                    <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 1 %>">--%>
-<%--                                        Nam--%>
-<%--                                    </c:if>--%>
-<%--                                    <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 0 %>">--%>
-<%--                                        Nữ--%>
-<%--                                    </c:if>--%>
+                                    <c:choose>
+                                        <c:when test="${roommateinfor.getInformation().getSex()}">
+                                            Nam
+                                        </c:when>
+                                        <c:otherwise>
+                                            Nữ
+                                        </c:otherwise>
+                                    </c:choose>
                                 </h3>
                                 <h3>
                                     <strong>Số Điện Thoại: </strong>
-<%--                                    <%=listroommateinfor.get(y - 1).getInformation().getPhone()%>--%>
+                                    <%=listRoommateInfor.get(y - 1).getInformation().getPhone()%>
                                 </h3>
                                 <h3>
                                     <strong>Địa Chỉ: </strong>
-<%--                                    <%=listroommateinfor.get(y - 1).getInformation().getAddress()%>--%>
+                                    <%=listRoommateInfor.get(y - 1).getInformation().getAddress()%>
                                 </h3>
                             </div>
                             <div class="modal-footer">
@@ -177,5 +171,4 @@
     </script>
 
 </body>
-
 </html>

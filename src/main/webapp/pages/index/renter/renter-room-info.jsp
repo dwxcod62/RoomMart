@@ -1,3 +1,4 @@
+<%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -24,9 +25,9 @@
 </head>
 
 <body>
-<%--<%--%>
-<%--    Account account = (Account) session.getAttribute("USER");--%>
-<%--%>--%>
+<%
+    Account account = (Account) session.getAttribute("USER");
+%>
 <div>
 
 
@@ -42,9 +43,9 @@
                     <div class="content-top-1">
                         <p><span>Phòng số: </span>${ROOM_INFOR.roomNumber}</p>
                         <p><span>Diện tích phòng: </span>${ROOM_INFOR.roomArea} m2</p>
-                        <p><span>Tên khu trọ: </span>${HOSTEL.hostelName}</p>
+                        <p><span>Tên khu trọ: </span>${LAND.landName}</p>
                         <p>
-                            <span>Địa chỉ: </span>${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}
+                            <span>Địa chỉ: </span>${LAND.address},${LAND.ward},${LAND.district},${LAND.city}
                         </p>
                     </div>
                     <div class="content-top-2">
@@ -80,13 +81,12 @@
                             </tr>
                             <c:forEach var="s" items="${SERVICES}">
                                 <tr>
-
-<%--                                    <td>${s.serviceName}</td>--%>
-<%--                                    <td>--%>
-<%--                                        <fmt:setLocale value="vi_VN"/>--%>
-<%--                                        <fmt:formatNumber value="${s.servicePrice}" type="currency"--%>
-<%--                                                          currencySymbol="VNĐ"/>--%>
-<%--                                    </td>--%>
+                                    <td>${s.serviceName}</td>
+                                    <td>
+                                        <fmt:setLocale value="vi_VN"/>
+                                        <fmt:formatNumber value="${s.servicePrice}" type="currency"
+                                                         currencySymbol="VNĐ"/>/${s.unit}
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </table>

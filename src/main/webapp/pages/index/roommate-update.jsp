@@ -1,8 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
@@ -34,9 +32,9 @@
 <div>
 
     <div class="row" style="padding: 0;margin: 0;">
-        <%@include file="component/sidebar.jsp" %>
+        <%@include file="renter/component/sidebar.jsp" %>
         <div class="content">
-            <%@include file="component/navbar.jsp" %>
+            <%@include file="renter/component/navbar.jsp" %>
             <%--           start notification--%>
             <div class="hidden_notification" id="notification">
                 <p>${requestScope.SUCCESS != null ? requestScope.SUCCESS : ""} ${requestScope.ERROR != null ? requestScope.ERROR : ""}</p>
@@ -44,33 +42,33 @@
             </div>
             <%--           end notification--%>
             <div class="div-controll-form" id="div-controll-form">
-                <form action="renter-roommate-update" method="post" class="form" id="form_update_roommate">
+                <form action="RoommateUpdate" method="post" class="form" id="form_update_roommate">
                     <h1>Cập Nhật Thông Tin</h1>
                     <div class="form-item" id="form-item">
                         <input id="form-item-input-1" name="new-name" type="text" placeholder="Tên Đầy đủ"
-                               value="${sessionScope.roommate1.getInformation().getFullname()}">
+                               value="${requestScope.roommate1.getInformation().getFullname()}">
                         <p class="border-bottom"></p>
                         <span id="mes-1"></span>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-2" placeholder="Email" type="email" name="new-email" multiple
-                               value="${sessionScope.roommate1.getInformation().getEmail()}">
+                               value="${requestScope.roommate1.getInformation().getEmail()}">
                         <p class="border-bottom"></p>
                         <span id="mes-2"></span>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-3" name="new-birthday" type="date" placeholder="Ngày sinh"
-                               value="${sessionScope.roommate1.information.birthday}"/>
+                               value="${requestScope.roommate1.information.birthday}"/>
                         <p class="border-bottom"></p>
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-item">
                         <select name="new-gender" id="form-item-input-4">
-                            <c:if test="${sessionScope.roommate1.information.sex == 0}">
+                            <c:if test="${requestScope.roommate1.information.sex == 0}">
                                 <option value="0">Nữ</option>
                                 <option value="1">Nam</option>
                             </c:if>
-                            <c:if test="${sessionScope.roommate1.information.sex == 1}">
+                            <c:if test="${requestScope.roommate1.information.sex == 1}">
                                 <option value="1">Nam</option>
                                 <option value="0">Nữ</option>
                             </c:if>
@@ -78,19 +76,19 @@
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-5" name="new-phone" type="text" placeholder="Số điện thoại"
-                               value="${sessionScope.roommate1.getInformation().getPhone()}">
+                               value="${requestScope.roommate1.getInformation().getPhone()}">
                         <p class="border-bottom"></p>
                         <span id="mes-5"></span>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-6" name="new-address" type="text" placeholder="Địa chỉ"
-                               value="${sessionScope.roommate1.getInformation().getAddress()}">
+                               value="${requestScope.roommate1.getInformation().getAddress()}">
                         <p class="border-bottom"></p>
                         <span id="mes-6"></span>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-7" name="new-cccd" type="text" placeholder="Số CCCD"
-                               value="${sessionScope.roommate1.getInformation().getCccd()}">
+                               value="${requestScope.roommate1.getInformation().getCccd()}">
                         <p class="border-bottom"></p>
                         <span id="mes-7"></span>
                     </div>
@@ -102,7 +100,7 @@
         </div>
     </div>
 </div>
-<%@include file="component/footer.jsp" %>
+<%@include file="renter/component/footer.jsp" %>
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
@@ -157,6 +155,7 @@
         isRequire(form_6, "Vui lòng nhập trường này!")
     });
     form_7.addEventListener("blur", () => {
+        isRequire(form_7, "Vui lòng nhập trường này!")
         isRequire(form_7, "Vui lòng nhập trường này!")
         isCccd(form_7, "Số cccd không khả dụng!")
     });

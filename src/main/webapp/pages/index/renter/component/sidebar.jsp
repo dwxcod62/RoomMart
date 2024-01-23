@@ -19,10 +19,6 @@
                 <i class="fa-solid fa-user-group"></i>
                 <a href="RoommatePage">Xem thành viên</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/AddRenterRoommateServlet" ? "active" : ""}">
-                <i class="fa-solid fa-user-plus"></i>
-                <a href="AddRoommatePage">Thêm thành viên</a>
-            </div>
             <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetContractServlet" ? "active": ""}">
                 <i class="fa-solid fa-file-contract"></i>
                 <a href="ContractPage">Hợp đồng</a>

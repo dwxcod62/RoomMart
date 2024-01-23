@@ -9,9 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-
 public class InfrastructureItem {
     int idInfrastructureItem;
     String infrastructureName;
-    String infrastuctureUnit;
 }
