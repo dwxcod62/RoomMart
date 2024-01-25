@@ -15,7 +15,7 @@ import java.util.List;
 public class UserInformationDAO {
     private static final String GET_LAND_OWNER_INFO_BY_RENTER_ID =
             "SELECT DISTINCT AccountInformations.fullname, AccountInformations.birthday," +
-                    " AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
+                    "AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
                     "FROM AccountInformations INNER JOIN Accounts ON AccountInformations.account_id=Accounts.account_id\n" +
                     "INNER JOIN Hostels ON Accounts.account_id=Hostels.owner_account_id\n" +
                     "INNER JOIN Contracts ON Accounts.account_id=Contracts.hostel_owner_id\n" +
