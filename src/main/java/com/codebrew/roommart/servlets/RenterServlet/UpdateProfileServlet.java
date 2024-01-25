@@ -15,8 +15,8 @@ import java.util.List;
 
 @WebServlet(name = "UpdateProfileServlet", value = "/UpdateProfileServlet")
 public class UpdateProfileServlet extends HttpServlet {
-    public static final String ERROR = "/pages/index/renter/renter-profile-update.jsp";
-    public static final String SUCCESS = "/pages/index/renter/renter-profile-update.jsp";
+    public static final String ERROR = "/pages/renter/renter-profile-update.jsp";
+    public static final String SUCCESS = "/pages/renter/renter-profile-update.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);

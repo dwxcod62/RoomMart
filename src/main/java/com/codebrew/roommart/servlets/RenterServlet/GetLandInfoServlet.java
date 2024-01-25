@@ -11,8 +11,8 @@ import java.util.List;
 
 @WebServlet(name = "GetLandInfoServlet", value = "/GetLandInfoServlet")
 public class GetLandInfoServlet extends HttpServlet {
-    public static final String ERROR = "/pages/index/renter/renter-room-info.jsp";
-    public static final String SUCCESS = "/pages/index/renter/renter-room-info.jsp";
+    public static final String ERROR = "/pages/renter/renter-room-info.jsp";
+    public static final String SUCCESS = "/pages/renter/renter-room-info.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;

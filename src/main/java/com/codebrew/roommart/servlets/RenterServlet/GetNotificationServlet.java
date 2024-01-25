@@ -13,8 +13,8 @@ import java.util.List;
 
 @WebServlet(name = "GetNotificationServlet", value = "/GetNotificationServlet")
 public class GetNotificationServlet extends HttpServlet {
-    public static final String ERROR = "/pages/index/renter/renter-notification.jsp";
-    public static final String SUCCESS = "/pages/index/renter/renter-notification.jsp";
+    public static final String ERROR = "/pages/renter/renter-notification.jsp";
+    public static final String SUCCESS = "/pages/renter/renter-notification.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;

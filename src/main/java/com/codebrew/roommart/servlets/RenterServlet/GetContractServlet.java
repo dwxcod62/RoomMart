@@ -14,8 +14,8 @@ import java.io.IOException;
 
 @WebServlet(name = "GetContractServlet", value = "/GetContractServlet")
 public class GetContractServlet extends HttpServlet {
-    public static final String ERROR = "/pages/index/renter/renter-contract.jsp";
-    public static final String SUCCESS = "/pages/index/renter/renter-contract.jsp";
+    public static final String ERROR = "/pages/renter/renter-contract.jsp";
+    public static final String SUCCESS = "/pages/renter/renter-contract.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
