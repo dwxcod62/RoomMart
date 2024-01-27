@@ -43,9 +43,9 @@
                     <div class="content-top-1">
                         <p><span>Phòng số: </span>${ROOM_INFOR.roomNumber}</p>
                         <p><span>Diện tích phòng: </span>${ROOM_INFOR.roomArea} m2</p>
-                        <p><span>Tên khu trọ: </span>${LAND.landName}</p>
+                        <p><span>Tên khu trọ: </span>${HOSTEL.hostelName}</p>
                         <p>
-                            <span>Địa chỉ: </span>${LAND.address},${LAND.ward},${LAND.district},${LAND.city}
+                            <span>Địa chỉ: </span>${HOSTEL.address},${HOSTEL.ward},${HOSTEL.district},${HOSTEL.city}
                         </p>
                     </div>
                     <div class="content-top-2">

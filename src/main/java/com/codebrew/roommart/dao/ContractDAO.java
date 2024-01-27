@@ -43,7 +43,7 @@ public class ContractDAO {
                             .expiration(expiration)
                             .deposit(deposit)
                             .renterId(renterId)
-                            .landOwnerId(ownerId)
+                            .hostelOwnerId(ownerId)
                             .build();
                 }
             }

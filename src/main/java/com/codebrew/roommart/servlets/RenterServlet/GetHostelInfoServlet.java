@@ -9,8 +9,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "GetLandInfoServlet", value = "/GetLandInfoServlet")
-public class GetLandInfoServlet extends HttpServlet {
+@WebServlet(name = "GetHostelInfoServlet", value = "/GetHostelInfoServlet")
+public class GetHostelInfoServlet extends HttpServlet {
     public static final String ERROR = "/pages/renter/renter-room-info.jsp";
     public static final String SUCCESS = "/pages/renter/renter-room-info.jsp";
     @Override
@@ -25,19 +25,19 @@ public class GetLandInfoServlet extends HttpServlet {
 //            acc = (Account) session.getAttribute("USER");
 //            int renterId = acc.getAccountId();
 
-            LandDAO landDAO = new LandDAO();
+            HostelDAO hostelDAO = new HostelDAO();
             UserInformationDAO userInfoDAO = new UserInformationDAO();
             request.setAttribute("uri", request.getRequestURI());
 
             //Get Room
-            Land land = landDAO.getLandByRenterId(1);
-            if (land != null) {
-                request.setAttribute("LAND", land);
+            Hostel hostel = hostelDAO.getHostelByRenterId(1);
+            if (hostel != null) {
+                request.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }
 
-            //Get Land Owner Info
-            UserInformation accountInfo = userInfoDAO.getLandOwnerInfoByRenterId(1);
+            //Get Hostel Owner Info
+            UserInformation accountInfo = userInfoDAO.getHostelOwnerInfoByRenterId(1);
             if (accountInfo != null) {
                 request.setAttribute("ACCOUNT_INFOR", accountInfo);
                 url = SUCCESS;
@@ -62,7 +62,7 @@ public class GetLandInfoServlet extends HttpServlet {
             }
 
             //Get Service
-            serviceInfo = new ServiceInfoDAO().getServicesOfLand(1);
+            serviceInfo = new ServiceInfoDAO().getServicesOfHostel(1);
             if (serviceInfo != null) {
                 request.setAttribute("SERVICES", serviceInfo);
                 url = SUCCESS;
@@ -77,7 +77,7 @@ public class GetLandInfoServlet extends HttpServlet {
 
 //            session.setAttribute("CURRENT_PAGE", "hostel-renter-page");
         } catch (Exception e) {
-            log("Error at GetLandInforServlet: " + e.toString());
+            log("Error at GetHostelInfoServlet: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

@@ -16,7 +16,7 @@ public class Contract {
     String startDate;
     String expiration;
     int deposit;
-    int landOwnerId;
+    int hostelOwnerId;
     int renterId;
     int status;
     String cancelDate;

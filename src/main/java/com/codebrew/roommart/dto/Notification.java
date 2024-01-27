@@ -11,7 +11,7 @@ import lombok.*;
 public class Notification {
     private int notification_id;
     private int account_id;
-    private int land_id;
+    private int hostel_id;
     private String title;
     private String content;
     private String createDate;

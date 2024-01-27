@@ -1,6 +1,5 @@
 package com.codebrew.roommart.servlets.RenterServlet;
 
-import com.codebrew.roommart.dao.LandDAO;
 import com.codebrew.roommart.dao.UserInformationDAO;
 import com.codebrew.roommart.dto.UserInformation;
 
@@ -67,7 +66,7 @@ public class UpdateProfileServlet extends HttpServlet {
             }
             response.sendRedirect(request.getContextPath() + "/ProfileRenter");
         } catch (Exception e) {
-            log("Error at UpdateLand: " + e.toString());
+            log("Error at UpdateHostel: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

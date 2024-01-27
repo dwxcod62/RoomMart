@@ -1,10 +1,10 @@
-package com.codebrew.roommart.servlets.RenterServlets;
+package com.codebrew.roommart.servlets.RenterServlet;
 
 import com.codebrew.roommart.dao.ContractDAO;
-import com.codebrew.roommart.dao.LandDAO;
+import com.codebrew.roommart.dao.HostelDAO;
 import com.codebrew.roommart.dao.UserInformationDAO;
 import com.codebrew.roommart.dto.Contract;
-import com.codebrew.roommart.dto.Land;
+import com.codebrew.roommart.dto.Hostel;
 import com.codebrew.roommart.dto.UserInformation;
 
 import javax.servlet.*;
@@ -34,17 +34,17 @@ public class GetContractServlet extends HttpServlet {
                 url = SUCCESS;
             }
             request.setAttribute("uri", request.getRequestURI());
-            //Get LandOwner
-            UserInformation ownerInfo = infoDao.getLandOwnerInfoByRenterId(1);
+            //Get HostelOwner
+            UserInformation ownerInfo = infoDao.getHostelOwnerInfoByRenterId(1);
             if (ownerInfo!=null){
                 request.setAttribute("OWNER_INFO", ownerInfo);
                 url = SUCCESS;
             }
-            //Get Land Address
-            LandDAO landDAO = new LandDAO();
-            Land land = landDAO.getLandByRenterId(1);
-            if (land!=null){
-                request.setAttribute("LAND", land);
+            //Get Hostel Address
+            HostelDAO hostelDAO = new HostelDAO();
+            Hostel hostel = hostelDAO.getHostelByRenterId(1);
+            if (hostel!=null){
+                request.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }
             //Get Contract Information

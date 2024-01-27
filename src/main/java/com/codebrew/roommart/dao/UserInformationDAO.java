@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UserInformationDAO {
-    private static final String GET_LAND_OWNER_INFO_BY_RENTER_ID =
+    private static final String GET_HOSTEL_OWNER_INFO_BY_RENTER_ID =
             "SELECT DISTINCT AccountInformations.fullname, AccountInformations.birthday," +
                     "AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
                     "FROM AccountInformations INNER JOIN Accounts ON AccountInformations.account_id=Accounts.account_id\n" +
@@ -34,7 +34,7 @@ public class UserInformationDAO {
             "SET fullname = ?, email = ?, birthday = ?, sex = ?, phone = ?, address = ?, identity_card_number = ?\n" +
             "WHERE roomate_info_id = ?";
 
-    public UserInformation getLandOwnerInfoByRenterId(int renterId) throws SQLException {
+    public UserInformation getHostelOwnerInfoByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -42,7 +42,7 @@ public class UserInformationDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement(GET_LAND_OWNER_INFO_BY_RENTER_ID);
+                pst = cn.prepareStatement(GET_HOSTEL_OWNER_INFO_BY_RENTER_ID);
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {

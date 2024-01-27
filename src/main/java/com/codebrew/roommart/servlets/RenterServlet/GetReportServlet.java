@@ -30,7 +30,6 @@ public class GetReportServlet extends HttpServlet {
 //            Account account = (Account) session.getAttribute("USER");
             if (reportCategories.size()>0){
                 request.setAttribute("REPORT_CATE", reportCategories);
-                System.out.println(reportCategories);
                 url = SUCCESS;
                 if (request.getParameter("id")!=null) {
                     request.setAttribute("id", request.getParameter("id"));
@@ -44,7 +43,7 @@ public class GetReportServlet extends HttpServlet {
                 url = SUCCESS;
                 if (request.getParameter("id")!=null) {
                     request.setAttribute("id", request.getParameter("id"));
-                    url = "/pages/index/renter/renter-report-view-detail.jsp";
+                    url = "/pages/renter/renter-report-view-detail.jsp";
                 }
             }
 

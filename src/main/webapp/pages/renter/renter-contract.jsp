@@ -75,8 +75,8 @@
                 </div>
                 <div class="contract-result">
                     <h3><strong style="font-size: 22px; margin-bottom: 5px">Thông tin phòng</strong></h3>
-                    <h5><strong>Địa chỉ: </strong>${LAND.address}, ${LAND.ward},
-                        ${LAND.district}, ${LAND.city} </h5><br>
+                    <h5><strong>Địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward},
+                        ${HOSTEL.district}, ${HOSTEL.city} </h5><br>
                     <h5><strong>Giá: </strong>
                         <fmt:setLocale value="vi_VN"/>
                         <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>

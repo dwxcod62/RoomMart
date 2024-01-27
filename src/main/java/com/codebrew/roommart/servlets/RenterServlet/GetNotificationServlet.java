@@ -1,6 +1,6 @@
 package com.codebrew.roommart.servlets.RenterServlet;
 
-import com.codebrew.roommart.dao.LandDAO;
+import com.codebrew.roommart.dao.HostelDAO;
 import com.codebrew.roommart.dao.NotificationDAO;
 import com.codebrew.roommart.dto.Notification;
 
@@ -24,7 +24,7 @@ public class GetNotificationServlet extends HttpServlet {
 //            HttpSession session = req.getSession();
 //            acc = (Account)session.getAttribute("USER");
 //            int accId = acc.getAccId();
-            LandDAO hostelDAO = new LandDAO();
+            HostelDAO hostelDAO = new HostelDAO();
             request.setAttribute("uri", request.getRequestURI());
 
             notifications = new NotificationDAO().getNotificationByRenterId(1);
@@ -35,7 +35,7 @@ public class GetNotificationServlet extends HttpServlet {
 
 //            request.setAttribute("CURRENT_PAGE", "hostel-renter-page");
         }catch (Exception e){
-            log("Error at GetLandInfoServlet: " + e.toString());
+            log("Error at GetHostelInfoServlet: " + e.toString());
         }finally {
             request.getRequestDispatcher(url).forward(request,response);
         }
