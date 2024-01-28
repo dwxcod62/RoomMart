@@ -201,14 +201,14 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 //room_id	property_id	room_number	room_area	attic	room_status
-                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
-                        "FROM rooms\n" +
+                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status,hostels.name,address,city,ward,district\n" +
+                       "FROM rooms\n" +
                         "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
 
                 if (city != "all" && city!= null) {
                     System.out.println("CITY NOT EMPTY");
                     String c = "Thành Phố Hà Nội";
-                    if(c.equals(city)){
+                    if(c.equalsIgnoreCase(city)){
                         System.out.println(c + " == " +city);
                     }else System.out.println(c + " != " +city);
                     sql += "WHERE hostels.city = '" + city + "'";
@@ -238,7 +238,14 @@ public class RoomDAO {
                         double roomArea = rs.getDouble("room_area");
                         int hasAttic = rs.getInt("has_attic");
                         int roomStatus = rs.getInt("room_status");
-                        RoomInformation roomInformation = null;
+                        String hname = rs.getString("name");
+                        String address = rs.getString("address");
+                        String city2 = rs.getString("city");
+                        String district2 = rs.getString("district");
+                        String ward2 = rs.getString("ward");
+
+                        RoomInformation roomInformation = new RoomInformation(hname,address,ward2,district2,city2);
+
                         List<String> urlImg = getListImgByRoomId(roomID);
                         rooms.add(Room.builder()
                                 .roomId(roomID)
