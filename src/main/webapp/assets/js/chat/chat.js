@@ -15,9 +15,9 @@ const chatForm = document.getElementById("chat");
 const readbtn = document.getElementById("read");
 const role = prompt("Please Tell Us your role");
 const username = prompt("Please Tell Us your Name");
-const userid = prompt("Please Tell Us user id");
-
-const ownerid = prompt("Please Tell Us owner id");
+// const userid = prompt("Please Tell Us user id");
+//
+// const ownerid = prompt("Please Tell Us owner id");
 console.log("username : "+username);
 console.log("userid : "+userid);
 console.log("ownerid : "+ownerid);
@@ -80,14 +80,14 @@ function sendMessage(e) {
 
     var read = false;
     // create db collection and send in the data
-    db.ref(`chats/${ownerid}/${userid}/` + timestamp).set({
+    db.ref(`chats/${ownerId}/${userId}/` + timestamp).set({
         username,
         message,
         read,
     });
 }
 
-const fetchChat = db.ref(`chats/${ownerid}/${userid}/`);
+const fetchChat = db.ref(`chats/${ownerId}/${userId}/`);
 
 fetchChat.on("child_added", function (snapshot) {
 
