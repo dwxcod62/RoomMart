@@ -202,23 +202,23 @@
                 <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver2.msvbds.FrontEnd.Product.Details.MediaSlide.Psi.min.js" async="" data-cfasync="false"></script>
 
                 <div class="re__pr-info pr-info js__product-detail-web" id="product-detail-web" uid="522997" prid="38582357">
-                    <h1 class="re__pr-title pr-title js__pr-title">Title</h1>
-                    <span class="re__pr-short-description js__pr-address">Address</span>
+                    <h1 class="re__pr-title pr-title js__pr-title">${room.roomInformation.hostelName} - ${r.roomNumber}</h1>
+                    <span class="re__pr-short-description js__pr-address">${room.roomInformation.address}, ${room.roomInformation.ward}, ${room.roomInformation.district}, ${room.roomInformation.city}</span>
 
 
 
                     <div class="re__pr-short-info js__pr-short-info">
                         <div class="re__pr-short-info-item js__pr-short-info-item">
                             <span class="title">Mức giá</span>
-                            <span class="value">price tri&#x1EC7;u/th&#xE1;ng</span>
+                            <span class="value">Contact</span>
                         </div>
                         <div class="re__pr-short-info-item js__pr-short-info-item">
                             <span class="title">Diện tích</span>
-                            <span class="value">area m&#xB2;</span>
+                            <span class="value">${room.roomArea} m&#xB2;</span>
                         </div>
                         <div class="re__pr-short-info-item js__pr-short-info-item">
                             <span class="title">Phòng ngủ</span>
-                            <span class="value">1 PN</span>
+                            <span class="value">${room.capacity} PN</span>
                         </div>
 
 
@@ -229,6 +229,23 @@
                         <span class="re__section-title">Thông tin mô tả</span>
                         <div class="re__section-body re__detail-content js__section-body js__pr-description js__tracking" trackingid="lead-phone-ldp" trackinglabel="loc=Rent-Listing Details-body,prid=38582357">
                             Xin chào quý anh/chị . Trân trọng cảm ơn!
+                            <h2>Services: </h2>
+                            <ul>
+                                <c:forEach var="s" items="${requestScope.serviceList}">
+                                    <li>
+                                        <h6>${s.serviceName} : ${s.servicePrice} / ${s.unit}</h6>
+
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                            <h2>Infrastures: </h2>
+                            <ul>
+                                <c:forEach var="f" items="${requestScope.infrasList}">
+                                    <li>
+                                        <h6>${s.infrastructureName}</h6>
+                                    </li>
+                                </c:forEach>
+                            </ul>
                         </div>
                     </div>
                     <div class="re__section re__pr-specs re__pr-specs-v1 js__section js__li-specs">
@@ -239,27 +256,27 @@
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="re__icon-size"></i></span>
                                     <span class="re__pr-specs-content-item-title">Diện tích</span>
-                                    <span class="re__pr-specs-content-item-value">52 m&#xB2;</span>
+                                    <span class="re__pr-specs-content-item-value">{room.roomArea} m&#xB2;</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="re__icon-money"></i></span>
                                     <span class="re__pr-specs-content-item-title">Mức giá</span>
-                                    <span class="re__pr-specs-content-item-value">16,9 tri&#x1EC7;u/th&#xE1;ng</span>
+                                    <span class="re__pr-specs-content-item-value">Price tri&#x1EC7;u/th&#xE1;ng</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="re__icon-bedroom"></i></span>
                                     <span class="re__pr-specs-content-item-title">Số phòng ngủ</span>
-                                    <span class="re__pr-specs-content-item-value">1 phòng</span>
+                                    <span class="re__pr-specs-content-item-value">${room.capacity} phòng</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="re__icon-bath"></i></span>
-                                    <span class="re__pr-specs-content-item-title">Số toilet</span>
-                                    <span class="re__pr-specs-content-item-value">1 phòng</span>
+                                    <span class="re__pr-specs-content-item-title">Số Attic</span>
+                                    <span class="re__pr-specs-content-item-value">${room.hasAttic} phòng</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="re__icon-interior"></i></span>
                                     <span class="re__pr-specs-content-item-title">Nội thất</span>
-                                    <span class="re__pr-specs-content-item-value">&#x110;&#x1EA7;y &#x111;&#x1EE7; n&#x1ED9;i th&#x1EA5;t c&#x1A1; b&#x1EA3;n</span>
+                                    <span class="re__pr-specs-content-item-value">Contact</span>
                                 </div>
                             </div>
                         </div>
@@ -304,8 +321,8 @@
                                                         </h3>
                                                     </div>
                                                     <div class="re__card-config">
-                                                        <span class="re__card-config-price">12 tỷ</span>
-                                                        <span class="re__card-config-area"><span class="re__card-config-dot">·</span>109 m²</span>
+                                                        <span class="re__card-config-price">Price</span>
+                                                        <span class="re__card-config-area"><span class="re__card-config-dot">·</span>${r.roomArea} m²</span>
                                                         <div class="re__clear"></div>
                                                     </div>
                                                     <div class="re__card-location">
