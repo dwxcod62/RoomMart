@@ -133,7 +133,7 @@
         <div class="re__content-block re__home__head-block">
             <div class="re__home-search-box">
                 <!-- form -->
-                <form action="homeS" method="get" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
+                <form action="homeS" method="post" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
                     <div class="re__search-box-container">
 
                         <input data-val="true" data-val-required="The ProductType field is required." id="ProductType" name="ProductType" type="hidden" value="38" />
@@ -391,6 +391,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
+    var citySelect = ${requestScope.citySelected};
+    var dis = ${requestScope.districtSelected};
+    var w = ${requestScope.wardSelected};
+
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
         return axios.get(api)
@@ -413,8 +417,15 @@
     }
 
     var renderData = function(array, select) {
+        let row = "";
+        if (select == "city"){
+            row = '<option value="" selected>citySelect</option>';
+        }else if (select == "district"){
+            row = '<option value="" selected>dis</option>';
+        }else if (select == "ward"){
+            row = '<option value="" selected>w</option>';
+        }
 
-        let row = '<option value="" selected>Choose..</option>';
         array.forEach(function(element) {
             row += '<option data-id="' + element.code + '" value="' + element.name + '">' + element.name + '</option>';
         });
