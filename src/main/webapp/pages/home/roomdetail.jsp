@@ -202,7 +202,7 @@
                 <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver2.msvbds.FrontEnd.Product.Details.MediaSlide.Psi.min.js" async="" data-cfasync="false"></script>
 
                 <div class="re__pr-info pr-info js__product-detail-web" id="product-detail-web" uid="522997" prid="38582357">
-                    <h1 class="re__pr-title pr-title js__pr-title">${room.roomInformation.hostelName} - ${r.roomNumber}</h1>
+                    <h1 class="re__pr-title pr-title js__pr-title">${room.roomInformation.hostelName} - ${room.roomNumber}</h1>
                     <span class="re__pr-short-description js__pr-address">${room.roomInformation.address}, ${room.roomInformation.ward}, ${room.roomInformation.district}, ${room.roomInformation.city}</span>
 
 
@@ -214,7 +214,7 @@
                         </div>
                         <div class="re__pr-short-info-item js__pr-short-info-item">
                             <span class="title">Diện tích</span>
-                            <span class="value">${room.roomArea} m&#xB2;</span>
+                            <span class="value"> ${room.roomArea} m&#xB2;</span>
                         </div>
                         <div class="re__pr-short-info-item js__pr-short-info-item">
                             <span class="title">Phòng ngủ</span>
@@ -256,7 +256,7 @@
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="re__icon-size"></i></span>
                                     <span class="re__pr-specs-content-item-title">Diện tích</span>
-                                    <span class="re__pr-specs-content-item-value">{room.roomArea} m&#xB2;</span>
+                                    <span class="re__pr-specs-content-item-value">${room.roomArea} m&#xB2;</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="re__icon-money"></i></span>
