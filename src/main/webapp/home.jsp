@@ -178,7 +178,7 @@
 
                                 <div class="search-filter" >
 
-                                    <select id="city" name="city" class="select-text">
+                                    <select id="city" name="city" class="select-text" style="color: #0a0d13">
                                         <option value="" selected>Chọn tỉnh thành</option>
                                     </select>
 
@@ -187,7 +187,7 @@
                                 <div class="search-filter">
 
 
-                                    <select id="district" name="district" class="select-text">
+                                    <select id="district" name="district" class="select-text" style="color: #0a0d13">
                                         <option value="" selected>Chọn quận huyện</option>
                                     </select>
 
@@ -195,7 +195,7 @@
 
                                 <div class="search-filter">
 
-                                    <select id="ward" name="ward" class="select-text">
+                                    <select id="ward" name="ward" class="select-text" style="color: #0a0d13">
                                         <option value="" selected>Chọn phường xã</option>
                                     </select>
 
@@ -230,15 +230,15 @@
                     <div class="home-product product-4-you">
                         <div class="js__interested-product re__interested-product-cards">
                             <c:forEach items="${requestScope.rooms}" var="r">
-
+                                <c:set var="address" value="${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}" />
+                                <c:set var="hostelName" value="${r.roomInformation.hostelName}" />
 
                                 <div class="re__product-item re__interested-product-card js__product-item">
 
                                     <div class="js__card js__card-compact-web
-     pr-container re__card-compact re__vip-normal" prav="https://file4.batdongsan.com.vn/crop/200x140/2024/01/12/20240112160709-2bf2_wm.jpg" uid="2481833" prid="38995031" vtp="vip-normal" clo="hpre">
-                                        <a class="js__product-link-for-product-id" data-product-id="38995031" href="/ban-dat-duong-xuan-la-phuong-xuan-la/ban-gap-ngoai-giao-doan-gara-o-to-kinh-doanh-sam-uat-xay-building-apartment-105m-12-ty-pr38995031" title="Bán đất ngay Ngoại Giao Đoàn gara ô tô, kinh doanh sầm uất, xây building, apartment 105m2 - 12 tỷ" previewlistener="true">
-                                            <div class="re__card-image
-            ">
+     pr-container re__card-compact re__vip-normal">
+                                        <a class="js__product-link-for-product-id" data-product-id="38995031" href="roomdetail?rid=${r.roomId}" title="Roommart" previewlistener="true">
+                                            <div class="re__card-image">
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
                                                 <div class="re__card-image-feature">
@@ -274,22 +274,17 @@
                                                     </div>
                                                     <div class="re__card-location">
                                                         <i class="re__icon-location--sm"></i>
-                                                        <span>${r.roomStatus}==1?"Available":"Unvailable"</span>
+                                                        <span>${address}</span>
                                                     </div>
                                                     <div class="re__clearfix"></div>
                                                     <div class="re__card-contact">
                                                         <div class="re__card-published-info">
                                 <span class="re__card-published-info-published-at" aria-label="28/01/2024" data-microtip-position="right" role="tooltip">
-
+                                        ${r.roomStatus==1?"Available":"Unavailable"}
                                 </span>
 
                                                         </div>
-                                                        <div class="re__card-contact-button">
-                        <span class="js__marking-product re__btn re__btn-se-border--sm re__btn-icon--sm" data-marked-product-info-as-json="{&quot;documentId&quot;:&quot;38995031&quot;,&quot;productId&quot;:38995031,&quot;avatarinfowap&quot;:&quot;https://file4.batdongsan.com.vn/crop/200x140/2024/01/12/20240112160709-2bf2_wm.jpg&quot;,&quot;title&quot;:&quot;Bán đất ngay Ngoại Giao Đoàn gara ô tô, kinh doanh sầm uất, xây building, apartment 105m2 - 12 tỷ&quot;,&quot;url&quot;:&quot;/ban-dat-duong-xuan-la-phuong-xuan-la/ban-gap-ngoai-giao-doan-gara-o-to-kinh-doanh-sam-uat-xay-building-apartment-105m-12-ty-pr38995031&quot;}" aria-label="Bấm để lưu tin" data-microtip-position="bottom" role="tooltip" tracking-id="save-listing" tracking-label="loc=Other-Home,status=save" title="">
-                            <i class="re__icon-heart--sm"></i>
-                            <i class="re__icon-heart-pressed--sm"></i>
-                        </span>
-                                                        </div>
+
                                                         <div class="re__clear-both"></div>
                                                     </div>
                                                 </div>
@@ -408,7 +403,11 @@
 </section>
 
 <!-- end food section -->
-
+<%
+    String citySelected = (String) request.getAttribute("citySelected");
+    String districtSelected = (String) request.getAttribute("districtSelected");
+    String wardSelected = (String) request.getAttribute("wardSelected");
+%>
 <%--<!--Script-->--%>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -417,9 +416,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
 
-    let citySelect = ${requestScope.citySelected};
-    let dis = ${requestScope.districtSelected};
-    let w = ${requestScope.wardSelected};
+
 
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
@@ -443,16 +440,13 @@
     }
 
     var renderData = function(array, select) {
-        let row;
-        if (select == "city"){
-            row = '<option value="" selected>citySelect</option>';
-        }else if (select == "district"){
-            row = '<option value="" selected>dis</option>';
-        }else if (select == "ward"){
-            row = '<option value="" selected>w</option>';
-        }else{
-            row = '<option value="" selected>Choose...</option>';
-        }
+
+        var c = '<%= citySelected == null ? "null" : citySelected %>';
+        var d = '<%= districtSelected == null ? "null" : districtSelected %>';
+        var w = '<%= wardSelected == null ? "null" : wardSelected %>';
+
+            let row = '<option value="" selected>Choose...</option>';
+
 
         array.forEach(function(element) {
             row += '<option data-id="' + element.code + '" value="' + element.name + '">' + element.name + '</option>';
