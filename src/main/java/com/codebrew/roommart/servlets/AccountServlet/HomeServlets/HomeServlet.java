@@ -16,17 +16,37 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        RoomDAO rd = new RoomDAO();
+
+        List<Room> rooms = rd.getAllRoom();
+
+
+        if (rooms.isEmpty()){
+            System.out.println("empty list");
+            request.setAttribute("rooms", null);
+        }else {
+            request.setAttribute("rooms", rooms);
+        }
+//        System.out.println("room id "+ rooms.get(0).getRoomId());
+        request.getRequestDispatcher("home.jsp").forward(request,response);
+
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String city = request.getParameter("city") == "" ? "all" : request.getParameter("city");
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
 
 
 
-            request.setAttribute("citySelected", city);
+        request.setAttribute("citySelected", city);
 
-                request.setAttribute("districtSelected", district);
+        request.setAttribute("districtSelected", district);
 
-                    request.setAttribute("wardSelected", ward);
+        request.setAttribute("wardSelected", ward);
 
 
 
@@ -44,12 +64,5 @@ public class HomeServlet extends HttpServlet {
         }
 //        System.out.println("room id "+ rooms.get(0).getRoomId());
         request.getRequestDispatcher("home.jsp").forward(request,response);
-
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

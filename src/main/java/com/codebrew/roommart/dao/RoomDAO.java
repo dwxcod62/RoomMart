@@ -153,11 +153,7 @@ public class RoomDAO {
                         "FROM roomimgs\n" +
                         "where room_id = "+rid;
 
-
-
-
                 pst = cn.prepareStatement(sql);
-
 
                 rs = pst.executeQuery();
                 if (rs != null) {
@@ -285,7 +281,7 @@ public class RoomDAO {
         }
         return rooms;
     }
-    public List<Room> geAllListRoom() {
+    public List<Room> getAllRoom() {
 
         Connection cn = null;
         PreparedStatement pst = null;
@@ -301,9 +297,7 @@ public class RoomDAO {
                         "FROM rooms\n" +
                         "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
 
-
                 pst = cn.prepareStatement(sql);
-
 
                 rs = pst.executeQuery();
                 if (rs != null) {
