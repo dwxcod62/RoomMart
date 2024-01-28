@@ -190,7 +190,7 @@ public class RoomDAO {
         return imgs;
     }
     public List<Room> getListRoomsByCondition(String city, String district, String ward) {
-        System.out.println(city + " : city");
+        System.out.println("city in get list method: " +city);
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -206,7 +206,7 @@ public class RoomDAO {
                         "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
 
                 if (city != "all" && city!= null) {
-                    System.out.println("city not empty : " +city);
+                    System.out.println("CITY NOT EMPTY");
                     String c = "Thành Phố Hà Nội";
                     if(c.equals(city)){
                         System.out.println(c + " == " +city);

@@ -9,13 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @WebServlet(name = "HomeServlet", value = "/homeS")
 public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
 
         RoomDAO rd = new RoomDAO();
 
@@ -36,7 +37,10 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
         String city = request.getParameter("city") == "" ? "all" : request.getParameter("city");
+        System.out.println("Nhan ve : "+city);
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
 
@@ -51,6 +55,7 @@ public class HomeServlet extends HttpServlet {
 
 
         System.out.println(city +": " + district + ": " + ward);
+        System.out.println(URLDecoder.decode(city, "utf-8"));
         RoomDAO rd = new RoomDAO();
 
         List<Room> rooms = rd.getListRoomsByCondition(city,district,ward);

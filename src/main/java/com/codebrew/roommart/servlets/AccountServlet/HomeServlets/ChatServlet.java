@@ -9,6 +9,7 @@ import java.io.IOException;
 public class ChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String hostelId_raw = request.getParameter("hostelID");
         String renterId_raw = request.getParameter("retnerID");
 
@@ -30,6 +31,7 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
 
     }
 }

@@ -24,6 +24,7 @@ import com.codebrew.roommart.dto.ServiceInfo;
 public class RoomDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         System.out.println("RoomDetailServlet");
         String rid_raw = request.getParameter("rid");
         int rid = Integer.parseInt(rid_raw);

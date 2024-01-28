@@ -316,21 +316,21 @@
                 WELCOME TO ROOMMART
             </h2>
         </div>
-        <form method="get" action="homeS" class=row>
+        <form method="post" action="homeS" class=row>
 
 
             <div class="container mt-5">
-<%--                <select id="city" name="city">--%>
-<%--                    <option value="" selected>Chọn tỉnh thành</option>--%>
-<%--                </select>--%>
+                <select id="city2" name="city">
+                    <option value="" selected>Chọn tỉnh thành</option>
+                </select>
 
-<%--                <select id="district" name="district">--%>
-<%--                    <option value="" selected>Chọn quận huyện</option>--%>
-<%--                </select>--%>
+                <select id="district2" name="district">
+                    <option value="" selected>Chọn quận huyện</option>
+                </select>
 
-<%--                <select id="ward" name="ward">--%>
-<%--                    <option value="" selected>Chọn phường xã</option>--%>
-<%--                </select>--%>
+                <select id="ward2" name="ward">
+                    <option value="" selected>Chọn phường xã</option>
+                </select>
                 <div class="input-group">
 
                     <input type="text" class="form-control" id="searchInput" placeholder="Nhập địa chỉ...">
@@ -416,7 +416,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
 
-
+    var c = '<%= citySelected == null ? "null" : citySelected %>';
+    var d = '<%= districtSelected == null ? "null" : districtSelected %>';
+    var w = '<%= wardSelected == null ? "null" : wardSelected %>';
 
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
@@ -441,9 +443,7 @@
 
     var renderData = function(array, select) {
 
-        var c = '<%= citySelected == null ? "null" : citySelected %>';
-        var d = '<%= districtSelected == null ? "null" : districtSelected %>';
-        var w = '<%= wardSelected == null ? "null" : wardSelected %>';
+            console.log(c);
 
             let row = '<option value="" selected>Choose...</option>';
 
