@@ -228,54 +228,78 @@
 
                     <!-- list img -->
                     <div class="home-product product-4-you">
-<c:forEach items="${requestScope.rooms}" var="r">
                         <div class="js__interested-product re__interested-product-cards">
-                            <div class="re__product-item re__interested-product-card js__product-item">
+                            <c:forEach items="${requestScope.rooms}" var="r">
 
-                                <div class="js__card js__card-compact-web pr-container re__card-compact re__vip-normal">
-                                    <a class="js__product-link-for-product-id" href="#">
-                                        <div class="re__card-image">
-                                            <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
-                                            <div class="re__card-image-feature">
-                                                <i class="re__icon-image"></i>
-                                                <span>${not empty r.imgUrl ? r.imgUrl.size : 0}</span>
+                                <div class="re__product-item re__interested-product-card js__product-item">
+
+                                    <div class="js__card js__card-compact-web
+     pr-container re__card-compact re__vip-normal" prav="https://file4.batdongsan.com.vn/crop/200x140/2024/01/12/20240112160709-2bf2_wm.jpg" uid="2481833" prid="38995031" vtp="vip-normal" clo="hpre">
+                                        <a class="js__product-link-for-product-id" data-product-id="38995031" href="/ban-dat-duong-xuan-la-phuong-xuan-la/ban-gap-ngoai-giao-doan-gara-o-to-kinh-doanh-sam-uat-xay-building-apartment-105m-12-ty-pr38995031" title="Bán đất ngay Ngoại Giao Đoàn gara ô tô, kinh doanh sầm uất, xây building, apartment 105m2 - 12 tỷ" previewlistener="true">
+                                            <div class="re__card-image
+            ">
+                                                <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
+
+                                                <div class="re__card-image-feature">
+                                                    <i class="re__icon-image"></i>
+                                                    <span>${not empty r.imgUrl ? r.imgUrl.size() : 0}</span>
+                                                </div>
+
                                             </div>
-
-                                        </div>
-                                        <div class="re__card-info">
-                                            <div class="re__card-info-content">
-                                                <div class="re__card-title">
-                                                    <h3 class="js__card-title">
-                                                        Title
-                                                    </h3>
-                                                </div>
-                                                <div class="re__card-config">
-                                                    <span class="re__card-config-price">Price</span>
-                                                    <span class="re__card-config-area"><span class="re__card-config-dot">·</span>Square</span>
-                                                    <div class="re__clear"></div>
-                                                </div>
-                                                <div class="re__card-location">
-                                                    <i class="re__icon-location--sm"></i>
-                                                    <span>Location</span>
-                                                </div>
-                                                <div class="re__clearfix"></div>
-                                                <div class="re__card-contact">
-                                                    <div class="re__card-published-info">
-
-
+                                            <div class="re__card-info">
+                                                <div class="re__card-info-content">
+                                                    <div class="re__card-title">
+                                                        <h3 class="js__card-title">
+                                                                ${r.roomInformation.hostelName} - ${r.roomNumber}
+                                                        </h3>
                                                     </div>
+                                                    <div class="re__card-config">
+                                                        <span class="re__card-config-price">${r.capacity} Peoples</span>
 
+                                                        <span class="re__card-config-area">
+                                                        <span class="re__card-config-dot">·</span>
+                                                    </span>
 
+                                                        <span class="re__card-config-price"> ${r.roomArea}</span>
+
+                                                        <span class="re__card-config-area">
+                                                        <span class="re__card-config-dot">·</span>
+                                                    </span>
+
+                                                        <span class="re__card-config-price">Attic: ${r.hasAttic}</span>
+
+                                                        <div class="re__clear"></div>
+                                                        <div class="re__clear"></div>
+                                                    </div>
+                                                    <div class="re__card-location">
+                                                        <i class="re__icon-location--sm"></i>
+                                                        <span>${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}</span>
+                                                    </div>
+                                                    <div class="re__clearfix"></div>
+                                                    <div class="re__card-contact">
+                                                        <div class="re__card-published-info">
+                                <span class="re__card-published-info-published-at" aria-label="28/01/2024" data-microtip-position="right" role="tooltip">
+                                        ${r.roomStatus}
+                                </span>
+
+                                                        </div>
+                                                        <div class="re__card-contact-button">
+                        <span class="js__marking-product re__btn re__btn-se-border--sm re__btn-icon--sm" data-marked-product-info-as-json="{&quot;documentId&quot;:&quot;38995031&quot;,&quot;productId&quot;:38995031,&quot;avatarinfowap&quot;:&quot;https://file4.batdongsan.com.vn/crop/200x140/2024/01/12/20240112160709-2bf2_wm.jpg&quot;,&quot;title&quot;:&quot;Bán đất ngay Ngoại Giao Đoàn gara ô tô, kinh doanh sầm uất, xây building, apartment 105m2 - 12 tỷ&quot;,&quot;url&quot;:&quot;/ban-dat-duong-xuan-la-phuong-xuan-la/ban-gap-ngoai-giao-doan-gara-o-to-kinh-doanh-sam-uat-xay-building-apartment-105m-12-ty-pr38995031&quot;}" aria-label="Bấm để lưu tin" data-microtip-position="bottom" role="tooltip" tracking-id="save-listing" tracking-label="loc=Other-Home,status=save" title="">
+                            <i class="re__icon-heart--sm"></i>
+                            <i class="re__icon-heart-pressed--sm"></i>
+                        </span>
+                                                        </div>
+                                                        <div class="re__clear-both"></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="re__clearfix"></div>
-                                    </a>
+                                            <div class="re__clearfix"></div>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-
+                            </c:forEach>
                         </div>
-</c:forEach>
+
                     </div>
                 </div>
 
