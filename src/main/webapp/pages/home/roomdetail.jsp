@@ -194,12 +194,15 @@
                         </ul>
                         <h6>Services: ${requestScope.roomInfor.address} minute</h6>
 
-                        <form class="mt-5" action="#" method="GET">
+                        <form class="mt-5" action="chatS" method="GET">
+                            <input type="hidden" name="hostelID" value="${r.hostelId}" />
+                            <input type="hidden" name="retnerID" value="${3}" />
+
                             <div class="row pb-3">
                                 <div class="col d-grid">
                                     <input hidden type="text" value="#" name="filmId"/>
                                     <button type="submit" class="btn btn-success btn-lg">
-                                        Contact with property owner
+                                        Chat with owner
                                     </button>
                                 </div>
                             </div>
