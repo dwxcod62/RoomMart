@@ -43,14 +43,14 @@
 </div>
 
 <!-- Navbar -->
-<%@include file="./components/navbar.jsp" %>
+<%@include file="../components/navbar.jsp" %>
 
 <!-- Body -->
 <div class="container">
     <div class="row position-relative">
         <!-- Side bar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="./components/sidebar.jsp" %>
+            <%@include file="../components/sidebar.jsp" %>
         </div>
 
         <!-- Content -->
@@ -120,7 +120,7 @@
 </div>
 
 <!-- Footer -->
-<%@include file="./components/footer.jsp" %>
+<%@include file="../components/footer.jsp" %>
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
