@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
 
     <!-- Title -->
     <title>Tổng quan</title>
@@ -17,10 +17,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/core_style/core.css">
+    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="./assets/css/admin_page/admin-dashboard/style.css">
+    <link rel="stylesheet" href="../../assets/css/admin_page/admin-dashboard/style.css">
 
 </head>
 
@@ -52,10 +52,10 @@
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Welcome -->
                 <div class="content-welcome mt-5">
-                    <img src="./assets/images/avatars/user-avatar.jpg" alt="User avatar" class="welcome-image">
+                    <img src="../../assets/images/avatars/user-avatar.jpg" alt="User avatar" class="welcome-image">
                     <div class="welcome-content">
                         <div class="welcome-title">Chào mừng, <span>${sessionScope.USER.accountInfo.information.fullname}</span></div>
-                        <p class="welcome-paragraph">Quản trị hệ thống thật là dễ :3</p>
+                        <p class="welcome-paragraph">Admin RoomMart</p>
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@
                                 <div class="card-body">
                                     <div class="text-center">
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                             src="./assets/images/banners/illustration-2.svg" alt="...">
+                                             src="../../assets/images/banners/illustration-2.svg" alt="...">
                                     </div>
                                     <p>
                                         Ngày càng có nhiều nền
@@ -194,7 +194,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="mb-0">
-                                        HQT Team tự hào là doanh nghiệp hàng đầu trong tư vấn, nghiên cứu và phát
+                                        RoomMart tự hào là doanh nghiệp hàng đầu trong tư vấn, nghiên cứu và phát
                                         triển các giải
                                         pháp cho doanh nghiệp. Chúng tôi tự tin có thể mang đến cho bạn một bộ phần
                                         mềm quản lý nhà
@@ -262,12 +262,12 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <!-- JQuery -->
-<script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="../../assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
-<script src="./assets/js/handle-main-navbar.js"></script>
+<script src="../../assets/js/handle-main-navbar.js"></script>
 
 <!-- Loader -->
-<script src="./assets/js/loading-handler.js"></script>
+<script src="../../assets/js/loading-handler.js"></script>
 </body>
 
 </html>

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
 
     <!-- Title -->
     <title>Quản lý tài khoản</title>
@@ -18,10 +18,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/core_style/core.css">
+    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="./assets/css/admin_page/admin-list-accounts/style.css">
+    <link rel="stylesheet" href="../../assets/css/admin_page/admin-list-accounts/style.css">
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
@@ -618,12 +618,12 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <!-- JQuery -->
-<script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="../../assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
-<script src="./assets/js/handle-main-navbar.js"></script>
+<script src="../../assets/js/handle-main-navbar.js"></script>
 <!-- Simple Datatable JS -->
-<script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="./assets/js/toast-alert.js"></script>
+<script src="../../assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="../../assets/js/toast-alert.js"></script>
 <script>
     <c:choose>
     <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
@@ -652,7 +652,7 @@
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
     <!-- Loader -->
-    <script src="./assets/js/loading-handler.js"></script>
+    <script src="../../assets/js/loading-handler.js"></script>
 </c:if>
 </body>
 
