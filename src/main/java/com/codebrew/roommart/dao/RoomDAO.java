@@ -285,6 +285,79 @@ public class RoomDAO {
         }
         return rooms;
     }
+    public List<Room> geAllListRoom() {
+
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                //room_id	property_id	room_number	room_area	attic	room_status
+                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
+                        "FROM rooms\n" +
+                        "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
+
+
+                pst = cn.prepareStatement(sql);
+
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int roomID = rs.getInt("room_id");
+                        int hostelID = rs.getInt("hostel_id");
+                        int roomNumber = rs.getInt("room_number");
+                        int capacity = rs.getInt("capacity");
+                        double roomArea = rs.getDouble("room_area");
+                        int hasAttic = rs.getInt("has_attic");
+                        int roomStatus = rs.getInt("room_status");
+                        RoomInformation roomInformation = null;
+                        List<String> urlImg = getListImgByRoomId(roomID);
+                        rooms.add(Room.builder()
+                                .roomId(roomID)
+                                .hostelId(hostelID)
+                                .roomNumber(roomNumber)
+                                .roomArea(roomArea)
+                                .capacity(capacity)
+                                .roomStatus(roomStatus)
+                                .hasAttic(hasAttic)
+                                .roomInformation(roomInformation)
+                                .imgUrl(urlImg)
+                                .build());
+                    }
+                }else {rooms=null;}
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return rooms;
+    }
 
     public List<Room> getListRoomsByHostelId(int hostelID) {
         Connection cn = null;

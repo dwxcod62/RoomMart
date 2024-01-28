@@ -32,7 +32,10 @@ public class HomeServlet extends HttpServlet {
 
         System.out.println(city +": " + district + ": " + ward);
         RoomDAO rd = new RoomDAO();
+
         List<Room> rooms = rd.getListRoomsByCondition(city,district,ward);
+
+
         if (rooms.isEmpty()){
             System.out.println("empty list");
             request.setAttribute("rooms", null);

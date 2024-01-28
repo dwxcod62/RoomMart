@@ -133,7 +133,7 @@
         <div class="re__content-block re__home__head-block">
             <div class="re__home-search-box">
                 <!-- form -->
-                <form action="#" method="post" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
+                <form action="homeS" method="get" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
                     <div class="re__search-box-container">
 
                         <input data-val="true" data-val-required="The ProductType field is required." id="ProductType" name="ProductType" type="hidden" value="38" />
@@ -144,10 +144,11 @@
                                     <div class="re__search-location-row re__search-location-select-header-item js_search-location-select-header-item">
                                         <div class="re__city-code-select js__listing-search-select-container js__city-code-select" data-multiple="false" data-default-value="Trên toàn quốc" data-type="" tracking-id="open-search-location" tracking-label="loc=Home">
                                             <i class="js__selected-icon re__icon-search re__city-icon-search"></i>
-                                            <divc class="re__listing-search-select-button-current-text"><select>
-                                                <option value="1">TP.HCM</option>
-                                                <option value="2">2</option>
-                                            </select></divc>
+                                            <divc class="re__listing-search-select-button-current-text">
+<%--                                                <select id="city" name="city">--%>
+<%--                                                    <option value="" selected>Chọn tỉnh thành</option>--%>
+<%--                                                </select>--%>
+                                            </divc>
 
 
                                         </div>
@@ -175,35 +176,27 @@
                             </div>
                             <div class="home-filter home-filter-1">
 
-                                <div class="search-filter">
+                                <div class="search-filter ">
 
-
-
-
-                                    <select class="select-text"  >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-
-
-
-
-                                </div>
-
-                                <div class="search-filter">
-
-
-                                    <select class="select-text" >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                    <select id="city" name="city">
+                                        <option value="" selected>Chọn tỉnh thành</option>
                                     </select>
 
                                 </div>
 
                                 <div class="search-filter">
-                                    <select class="select-text" name="" id="">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+
+
+                                    <select id="district" name="district" class="select-text">
+                                        <option value="" selected>Chọn quận huyện</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="search-filter">
+
+                                    <select id="ward" name="ward" class="select-text">
+                                        <option value="" selected>Chọn phường xã</option>
                                     </select>
 
 
@@ -235,18 +228,17 @@
 
                     <!-- list img -->
                     <div class="home-product product-4-you">
+<c:forEach items="${requestScope.rooms}" var="r">
                         <div class="js__interested-product re__interested-product-cards">
                             <div class="re__product-item re__interested-product-card js__product-item">
 
-                                <div class="js__card js__card-compact-web
-     pr-container re__card-compact re__vip-normal">
+                                <div class="js__card js__card-compact-web pr-container re__card-compact re__vip-normal">
                                     <a class="js__product-link-for-product-id" href="#">
-                                        <div class="re__card-image
-            ">
-                                            <img class="pr-img ls-is-cached lazyloaded" src="https://file4.batdongsan.com.vn/crop/393x222/2023/12/12/20231212203356-67f2_wm.jpeg">
+                                        <div class="re__card-image">
+                                            <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
                                             <div class="re__card-image-feature">
                                                 <i class="re__icon-image"></i>
-                                                <span>3</span>
+                                                <span>${not empty r.imgUrl ? r.imgUrl.size : 0}</span>
                                             </div>
 
                                         </div>
@@ -283,7 +275,7 @@
                             </div>
 
                         </div>
-
+</c:forEach>
                     </div>
                 </div>
 
@@ -308,17 +300,17 @@
 
 
             <div class="container mt-5">
-                <select id="city" name="city">
-                    <option value="" selected>Chọn tỉnh thành</option>
-                </select>
+<%--                <select id="city" name="city">--%>
+<%--                    <option value="" selected>Chọn tỉnh thành</option>--%>
+<%--                </select>--%>
 
-                <select id="district" name="district">
-                    <option value="" selected>Chọn quận huyện</option>
-                </select>
+<%--                <select id="district" name="district">--%>
+<%--                    <option value="" selected>Chọn quận huyện</option>--%>
+<%--                </select>--%>
 
-                <select id="ward" name="ward">
-                    <option value="" selected>Chọn phường xã</option>
-                </select>
+<%--                <select id="ward" name="ward">--%>
+<%--                    <option value="" selected>Chọn phường xã</option>--%>
+<%--                </select>--%>
                 <div class="input-group">
 
                     <input type="text" class="form-control" id="searchInput" placeholder="Nhập địa chỉ...">
