@@ -293,7 +293,8 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 //room_id	property_id	room_number	room_area	attic	room_status
-                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
+                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status,hostels.name," +
+                        "address,city,ward,district\n" +
                         "FROM rooms\n" +
                         "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
 
@@ -309,7 +310,13 @@ public class RoomDAO {
                         double roomArea = rs.getDouble("room_area");
                         int hasAttic = rs.getInt("has_attic");
                         int roomStatus = rs.getInt("room_status");
-                        RoomInformation roomInformation = null;
+                        String hname = rs.getString("name");
+                        String address = rs.getString("address");
+                        String city = rs.getString("city");
+                        String district = rs.getString("district");
+                        String ward = rs.getString("ward");
+
+                        RoomInformation roomInformation = new RoomInformation(hname,address,ward,district,city);
                         List<String> urlImg = getListImgByRoomId(roomID);
                         rooms.add(Room.builder()
                                 .roomId(roomID)

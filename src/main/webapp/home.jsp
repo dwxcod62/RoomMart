@@ -176,9 +176,9 @@
                             </div>
                             <div class="home-filter home-filter-1">
 
-                                <div class="search-filter ">
+                                <div class="search-filter" >
 
-                                    <select id="city" name="city">
+                                    <select id="city" name="city" class="select-text">
                                         <option value="" selected>Chọn tỉnh thành</option>
                                     </select>
 
@@ -231,6 +231,7 @@
                         <div class="js__interested-product re__interested-product-cards">
                             <c:forEach items="${requestScope.rooms}" var="r">
 
+
                                 <div class="re__product-item re__interested-product-card js__product-item">
 
                                     <div class="js__card js__card-compact-web
@@ -250,7 +251,7 @@
                                                 <div class="re__card-info-content">
                                                     <div class="re__card-title">
                                                         <h3 class="js__card-title">
-                                                                ${r.roomInformation.hostelName} - ${r.roomNumber}
+                                                                ${hostelName} - ${r.roomNumber}
                                                         </h3>
                                                     </div>
                                                     <div class="re__card-config">
@@ -273,13 +274,13 @@
                                                     </div>
                                                     <div class="re__card-location">
                                                         <i class="re__icon-location--sm"></i>
-                                                        <span>${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}</span>
+                                                        <span>${r.roomStatus}==1?"Available":"Unvailable"</span>
                                                     </div>
                                                     <div class="re__clearfix"></div>
                                                     <div class="re__card-contact">
                                                         <div class="re__card-published-info">
                                 <span class="re__card-published-info-published-at" aria-label="28/01/2024" data-microtip-position="right" role="tooltip">
-                                        ${r.roomStatus}
+
                                 </span>
 
                                                         </div>
@@ -415,9 +416,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
-    var citySelect = ${requestScope.citySelected};
-    var dis = ${requestScope.districtSelected};
-    var w = ${requestScope.wardSelected};
+
+    let citySelect = ${requestScope.citySelected};
+    let dis = ${requestScope.districtSelected};
+    let w = ${requestScope.wardSelected};
 
     const host = "https://provinces.open-api.vn/api/";
     var callAPI = (api) => {
@@ -441,13 +443,15 @@
     }
 
     var renderData = function(array, select) {
-        let row = "";
+        let row;
         if (select == "city"){
             row = '<option value="" selected>citySelect</option>';
         }else if (select == "district"){
             row = '<option value="" selected>dis</option>';
         }else if (select == "ward"){
             row = '<option value="" selected>w</option>';
+        }else{
+            row = '<option value="" selected>Choose...</option>';
         }
 
         array.forEach(function(element) {
