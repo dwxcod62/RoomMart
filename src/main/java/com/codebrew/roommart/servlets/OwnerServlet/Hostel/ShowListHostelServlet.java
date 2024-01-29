@@ -1,9 +1,9 @@
 package com.codebrew.roommart.servlets.OwnerServlet.Hostel;
 
-import com.codebrew.roommart.dao.OwnerDao.HostelDAO;
+import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dao.OwnerDao.IHostelDAO;
 import com.codebrew.roommart.dao.OwnerDao.IRoomDAO;
-import com.codebrew.roommart.dao.OwnerDao.RoomDAO;
+import com.codebrew.roommart.dao.OwnerDao.Impl.RoomDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 
@@ -11,7 +11,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
