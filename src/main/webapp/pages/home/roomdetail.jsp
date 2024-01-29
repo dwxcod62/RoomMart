@@ -14,7 +14,7 @@
     <title> ROOMMART </title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.css"/>
+<%--    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css"/>--%>
 
 
     <!-- font awesome style -->
@@ -23,11 +23,20 @@
 
 
     <!-- responsive style -->
-    <link rel="stylesheet" href="../../assets/css/style.scss">
+<%--    <link rel="stylesheet" href="assets/css/style.css">--%>
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
+<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">--%>
+    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
+    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/lib/jquery-swiper/css/swiper.min.css" />
+    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/js/lightGallery1.2.21/css/lightgallery.min.css" />
+    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/lib/slick/slick.min.css" />
+    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.ldp.min.css" />
+    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/filestatic.ver7.msvbds.speedup.min.js" async="" data-cfasync="false"></script>
+    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Common/Global/filestatic.ver7.msvbds.Extensions.min.js" async="" data-cfasync="false"></script>
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3a77c7a9.msvbds.FrontEnd.GAMBannerViewer.min.js" async="" data-cfasync="false"></script>
+    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3.msvbds.FrontEnd.GAMBannerScript.min.js" async="" data-cfasync="false"></script>
     <style>
         .carousel-item img {
             width: 100%;  /* chiều rộng bằng với container */
@@ -55,193 +64,382 @@
 
 </head>
 
-<body>
-<!--Header-->
+<body class="re__body re__body-ldp re__new-search-location-focus">
+<div class="form-content">
 
-<!--Header-->
+    <div class="re__bg-header">
+        <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">
+            <div class="re__container-sm">
+                <div class="re__nav" id="naga">
 
 
-<!-- food section -->
-<section class="bg-light">
-    <div class="container pb-5 m-auto">
-        <div class="row">
-            <div class="col-lg-9 mt-5">
-                <div class="card mb-3">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            <c:forEach var="index" begin="0" end="${requestScope.roomImg.size() - 1}">
-                                <li data-target="#myCarousel" data-slide-to="${index}" class="${index == 0 ? 'active' : ''}"></li>
+
+
+
+
+
+                </div>
+                <div class="re__bg-pushmenu"></div>
+            </div>
+            <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">
+
+                <div class="re__control-menu">
+
+                    <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
+                        <a href="#login" class="re__btn re__btn-se-ghost--md">Login</a>
+                        <span class="re__line"></span>
+                        <a href="#register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" id="kct_username" tracking-id="sign-up-button-seller" tracking-label="loc=Header">Register</a>
+                    </div>
+
+                </div>
+                <!-- icon -->
+                <div class="re__drop-menu">
+                    <div class="re__left-menu">
+                        <h1>
+                            <a href="#home" >
+                                <img style="height: 70px; object-fit: cover;" src="https://i.imgur.com/a8AWgbF.png" error-image-src="https://i.imgur.com/a8AWgbF.png" alt="Roomart" title="Roomart">
+                            </a>
+                        </h1>
+                    </div>
+
+                    <div class="re__right-menu">
+                        <!--Header menu-->
+                        <div class="re__home-header-menu">
+                            <div class="re__home-header-menu">
+                                <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">
+
+
+
+                                    <li class="lv0 ">
+                                        <a href="#home">
+
+                                            <span class="text">Home</span>
+                                        </a><div class="re__arrrow"></div>
+
+                                    </li>
+                                    <li class="lv0 ">
+                                        <a href="#home">
+
+                                            <span class="text">About us</span>
+                                        </a><div class="re__arrrow"></div>
+
+                                    </li>
+                                    <li class="lv0 ">
+                                        <a href="#home">
+
+                                            <span class="text">More</span>
+                                        </a><div class="re__arrrow"></div>
+
+                                    </li>
+
+
+
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+        </header>
+    </div>
+</div>
+
+<div class="re__main" itemprop="about">
+
+    <!-- Product-detail-->
+    <div class="re__ldp re__main-content-layout js__main-container">
+
+        <div class="re__main-content">
+
+
+            <div class="re__pr-container  cplus-4940_report-button pr-details pr-container vip-diamond" prid="38582357" prav="https://file4.batdongsan.com.vn/crop/200x140/2023/11/16/20231116202228-6c00_wm.jpg">
+
+                <div class="re__pr-media-slide js__pr-media-slide" tabindex="0">
+                    <div class="re__media-preview js__media-preview  swiper-container">
+                        <ul class="swiper-wrapper">
+                            <!-- for loop here -->
+
+<%--                                loop end here--%>
+                            <c:forEach var="image" items="${requestScope.roomImg}" varStatus="loopStatus">
+                                <li class="swiper-slide js__media-item-container" data-filter="image" data-index="${loopStatus.index}">
+                                    <div class="re__overlay js__overlay">
+                                        <img src="${image}" alt="Roommart" title="Roommart" class="pr-img" />
+                                    </div>
+                                    <div class="re__pr-image-cover js__pr-image-cover" title="" style="background-image: url('${image}')"></div>
+                                </li>
                             </c:forEach>
-                        </ol>
 
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner card-img img-fluid">
+                        </ul>
 
-                            <c:forEach var="index" begin="0" end="${roomImg.size() - 1}">
-                                <div class="carousel-item card-img img-fluid ${index == 0 ? 'active' : ''}">
-                                    <img src="${requestScope.roomImg[index]}" alt="Image ${index + 1}">
-                                </div>
-                            </c:forEach>
+
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination swiper-pagination-fraction"><span class="swiper-pagination-current">1</span>&nbsp;/&nbsp;<span class="swiper-pagination-total">16</span></div>
+                        <!-- Add Arrows -->
+                        <div action="go-right"><a class="re__btn re__btn-se-border--sm re__btn-icon--sm"><i class="re__icon-chevron-right"></i></a></div>
+                        <div action="go-left"><a class="re__btn re__btn-se-border--sm re__btn-icon--sm"><i class="re__icon-chevron-left"></i></a></div>
+                    </div>
+                    <div class="re__media-thumbs js__media-thumbs ">
+                        <div class="js__slick-thumb">
+<c:forEach var="image" items="${requestScope.roomImg}" varStatus="loopStatus">
+    <div class="re__media-thumb-item js__media-thumbs-item" data-filter="image">
+        <img data-src="${image}" alt="Roommart"
+             title="Roommart" class="lazyload" />
+    </div>
+</c:forEach>
+
 
 
                         </div>
-
-                        <!-- Left and right controls -->
-                        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-
-                    </div>
-
-                    <div id="carouselWrapper" class="carousel-indicators">
-                        <c:forEach var="index" begin="0" end="${roomImg.size() - 1}">
-                            <img src="${roomImg[index]}" data-target="#myCarousel" data-slide-to="${index}" class="${index == 0 ? 'active' : ''}">
-                        </c:forEach>
-
-
                     </div>
                 </div>
-                <div class="row card m-5">
-                    <div class="card-body">
-                    <!--Start Carousel Wrapper-->
-                    <h1 id="sc">style css</h1>
-                        <li class="list-inline-item">
-                            <h6>Adress: ${requestScope.roomInfor.address}</h6>
-                            <h6>city : ${requestScope.roomInfor.city}</h6>
-                            <h6>district : ${requestScope.roomInfor.district}</h6>
-                            <h6>ward : ${requestScope.roomInfor.ward}</h6>
-                        </li>
-                    <!--End Carousel Wrapper-->
+                <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver2.msvbds.FrontEnd.Product.Details.MediaSlide.Psi.min.js" async="" data-cfasync="false"></script>
+
+                <div class="re__pr-info pr-info js__product-detail-web" id="product-detail-web" uid="522997" prid="38582357">
+                    <h1 class="re__pr-title pr-title js__pr-title">${room.roomInformation.hostelName} - ${room.roomNumber}</h1>
+                    <span class="re__pr-short-description js__pr-address">${room.roomInformation.address}, ${room.roomInformation.ward}, ${room.roomInformation.district}, ${room.roomInformation.city}</span>
+
+
+
+                    <div class="re__pr-short-info js__pr-short-info">
+                        <div class="re__pr-short-info-item js__pr-short-info-item">
+                            <span class="title">Mức giá</span>
+                            <span class="value">Contact</span>
+                        </div>
+                        <div class="re__pr-short-info-item js__pr-short-info-item">
+                            <span class="title">Diện tích</span>
+                            <span class="value"> ${room.roomArea} m&#xB2;</span>
+                        </div>
+                        <div class="re__pr-short-info-item js__pr-short-info-item">
+                            <span class="title">Phòng ngủ</span>
+                            <span class="value">${room.capacity} PN</span>
+                        </div>
+
+
                     </div>
-                </div>
-                <div class="row card m-5">
-                    <div class="card-body">
-                    <!--Start Carousel Wrapper-->
-                    <h1 >Services Information</h1>
-                        <li class="list-inline-item">
-                            <c:forEach var="service" items="${serviceList}">
-                                <h6>Service Name: ${service.serviceName}, Valid Date: ${service.validDate},Price: ${service.servicePrice}/${service.unit}</h6>
 
 
-                            </c:forEach>
+                    <div class="re__section re__pr-description js__section js__li-description">
+                        <span class="re__section-title">Thông tin mô tả</span>
+                        <div class="re__section-body re__detail-content js__section-body js__pr-description js__tracking" trackingid="lead-phone-ldp" trackinglabel="loc=Rent-Listing Details-body,prid=38582357">
+                            Xin chào quý anh/chị . Trân trọng cảm ơn!
+                            <h2>Services: </h2>
+                            <ul>
+                                <c:forEach var="s" items="${requestScope.serviceList}">
+                                    <li>
+                                        <h6>${s.serviceName} : ${s.servicePrice} / ${s.unit}</h6>
 
-                        </li>
-                    <!--End Carousel Wrapper-->
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                            <h2>Infrastures: </h2>
+                            <ul>
+                                <c:forEach var="f" items="${requestScope.infrasList}">
+                                    <li>
+                                        <h6>${s.infrastructureName}</h6>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="row card m-5">
-                    <div class="card-body">
-                    <!--Start Carousel Wrapper-->
-                    <h1>Infrastures Information</h1>
-                        <li class="list-inline-item">
-                            <c:forEach var="infras" items="${infrasList}">
-                                    <h6>${infras.infrastructureName}</h6>
-                            </c:forEach>
+                    <div class="re__section re__pr-specs re__pr-specs-v1 js__section js__li-specs">
+                        <span class="re__section-title">Đặc điểm bất động sản</span>
+                        <div class="re__section-body re__border--std js__section-body">
+                            <div class="re__pr-specs-content js__other-info">
 
-                        </li>
-                    <!--End Carousel Wrapper-->
-                    </div>
-                </div>
-            </div>
-            <!-- col end -->
-            <div class="col-lg-3 mt-5 " >
-                <div class="card" style="height: auto">
-                    <div class="card-body">
-                        <h1 class="h2">Room : ${requestScope.room.roomNumber}</h1>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Genres:</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted">
-                                    <strong>${requestScope.room.roomArea}</strong>
-                                </p>
-                            </li>
-                        </ul>
-
-                        <h6>Description:</h6>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse. Donec condimentum elementum convallis. Nunc sed orci a diam ultrices aliquet interdum quis nulla.</p>
-
-
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Property:  ${requestScope.room.roomInformation.hostelName}</h6>
-
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted"><strong>${requestScope.roomInfor.address}</strong></p>
-                            </li>
-                        </ul>
-
-                        <ul class="list-inline d-flex">
-                            <li class="list-inline-item">
-                                <h6>Adress: ${requestScope.roomInfor.address}</h6>
-                                <h6>city : ${requestScope.roomInfor.city}</h6>
-                                <h6>district : ${requestScope.roomInfor.district}</h6>
-                                <h6>ward : ${requestScope.roomInfor.ward}</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted">
-                                    <strong> </strong>
-                                </p>
-                            </li>
-                        </ul>
-                        <h6>Services: ${requestScope.roomInfor.address} minute</h6>
-
-                        <form class="mt-5" action="#" method="GET">
-                            <div class="row pb-3">
-                                <div class="col d-grid">
-                                    <input hidden type="text" value="#" name="filmId"/>
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        Contact with property owner
-                                    </button>
+                                <div class="re__pr-specs-content-item">
+                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-size"></i></span>
+                                    <span class="re__pr-specs-content-item-title">Diện tích</span>
+                                    <span class="re__pr-specs-content-item-value">${room.roomArea} m&#xB2;</span>
+                                </div>
+                                <div class="re__pr-specs-content-item">
+                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-money"></i></span>
+                                    <span class="re__pr-specs-content-item-title">Mức giá</span>
+                                    <span class="re__pr-specs-content-item-value">Price tri&#x1EC7;u/th&#xE1;ng</span>
+                                </div>
+                                <div class="re__pr-specs-content-item">
+                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-bedroom"></i></span>
+                                    <span class="re__pr-specs-content-item-title">Số phòng ngủ</span>
+                                    <span class="re__pr-specs-content-item-value">${room.capacity} phòng</span>
+                                </div>
+                                <div class="re__pr-specs-content-item">
+                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-bath"></i></span>
+                                    <span class="re__pr-specs-content-item-title">Số Attic</span>
+                                    <span class="re__pr-specs-content-item-value">${room.hasAttic} phòng</span>
+                                </div>
+                                <div class="re__pr-specs-content-item">
+                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-interior"></i></span>
+                                    <span class="re__pr-specs-content-item-title">Nội thất</span>
+                                    <span class="re__pr-specs-content-item-value">Contact</span>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                    </div>
 
+
+                </div>
+
+            </div>
+
+            <div class="re__divide-8"></div>
+            <div class="re__section re__pr-more-listing re__similar-listing js__section js__similar-listing lazyload" data-script="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.SimilarListing.Lazy.min.js">
+                    <span tracking-id="same-area-title-ldp" class="re__section-title">
+        Bất động sản dành cho bạn
+
+    </span>
+
+                <div class="re__section-body js__section-body">
+                    <div class="swiper-container re__swiper-container">
+                        <div class="js__similar-listing-recommendations" style="transform: translate3d(0px, 0px, 0px);">
+                            <!-- loop here -->
+                            <c:forEach var="r" items="${requestScope.list}">
+                                <div class="swiper-slide" style="display: inline-block; width: unset;margin-top: 20px; " >
+
+                                    <div class="js__card js__card-compact-web
+     pr-container re__card-compact re__vip-normal">
+                                        <a class="js__product-link-for-product-id" href="roomdetail?rid=${r.roomId}" >
+                                            <div class="re__card-image
+            ">
+                                                <img alt="Ảnh đại diện" class="pr-img lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}">
+                                                <div class="re__card-image-feature">
+                                                    <i class="re__icon-image"></i>
+                                                    <span>${r.imgUrl.size()}</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="re__card-info">
+                                                <div class="re__card-info-content">
+                                                    <div class="re__card-title">
+                                                        <h3 class="js__card-title">
+                                                            ${r.roomInformation.hostelName} - ${r.roomNumber}
+                                                        </h3>
+                                                    </div>
+                                                    <div class="re__card-config">
+                                                        <span class="re__card-config-price">Price</span>
+                                                        <span class="re__card-config-area"><span class="re__card-config-dot">·</span>${r.roomArea} m²</span>
+                                                        <div class="re__clear"></div>
+                                                    </div>
+                                                    <div class="re__card-location">
+                                                        <i class="re__icon-location--sm"></i>
+                                                        <span>${r.roomInformation.district}, ${r.roomInformation.city}</span>
+                                                    </div>
+                                                    <div class="re__clearfix"></div>
+                                                    <div class="re__card-contact">
+                                                        <div class="re__card-published-info">
+
+
+                                                        </div>
+
+                                                        <div class="re__clear-both"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="re__clearfix"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                            <!-- end loop here -->
+
+
+
+
+
+
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="re__divide-8"></div>
+
+
+            <!-- slide  -->
+            <script type="text/javascript">
+                (function initMediaSlide() {
+                    if (window.FrontEnd && window.FrontEnd.Product && window.FrontEnd.Product.Details && window.FrontEnd.Product.Details.MediaSlide) {
+                        new FrontEnd.Product.Details.MediaSlide({})
+                    } else {
+                        setTimeout(initMediaSlide, 100);
+                    }
+                })();
+                (function initProductDetails() {
+                    if (window.FrontEnd && window.FrontEnd.Product && window.FrontEnd.Product.Details && window.FrontEnd.Product.Details.Details && window.FrontEnd.BadReportProductsServices) {
+
+                        window.FrontEnd_Product_Details_DetailsBinnova = new FrontEnd.Product.Details.Details({
+                            urlSubmitFeedback: '/Product/ProductDetail/SendFeedback',
+                            productId: 38582357,
+                            adbutlerConfig: {
+                                MID: parseInt("183272"),
+                                zoneId: parseInt("542226")
+                            },
+                            adbutlerAPI: "https://promote.batdongsan.com.vn/",
+                        });
+
+                        (new window.FrontEnd.BadReportProductsServices()).BadReportDetailsProduct();
+                    } else {
+                        setTimeout(initProductDetails, 100);
+                    }
+                })();
+            </script>
+
+
+            <div class="re__divide"></div>
+            <div class="re__divide-8"></div>
+
         </div>
-    </div>
+        <div class="re__main-sidebar">
 
-
-    <div class="container pb-5 m-auto">
-
-
-
-
-        <div class="row">
-<h2>Other: </h2>
-                <c:forEach var="room" items="${list}">
-                    <div class="col-sm-3 card">
-<div class="card-body">
-                    <a href="roomdetail?rid=${room.roomId}" > <!-- Add your link here -->
-                        <img src="${ not empty room.imgUrl ? room.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" class="d-block w-100" alt="Image ${index + 1}">
+            <!-- contact -->
+            <div class="re__sidebar-box re__contact-box js__contact-box">
+                <div class="re__contact-name js_contact-name" title="Hi&#x1EBF;u Hu&#x1EF3;nh &amp; C&#x1ED9;ng S&#x1EF1;">
+                    <a tracking-id="navigate-agent-profile" tracking-label="source=name" href="#information">
+                        Owner name
                     </a>
-                    </div></div>
-                </c:forEach>
-
-            <!-- Wrapper for slides -->
+                </div>
 
 
+                <a data-href="https://zalo.me/${sdt}" data-qrcode="" tracking-id="zalo-chat-ldp" tracking-label="prid=38582357" data-uid="522997" class="re__btn re__btn-se-border--md js__zalo-chat js__zalo-chat-qr">
+                    <div class="re__btn-icon-left--md re__btn-icon-text-center">
+                        <i class="re__icon-zalo-hover"></i>
+                        <span>Chat qua Zalo</span>
+                    </div>
+                </a>
+
+                <a class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" tracking-id="request-call-back-ldp" tracking-label="loc=Rent-Listing Details,prid=38582357" href="javascript:void(0);">Chat</a>
+            </div>
 
 
 
         </div>
     </div>
-</section>
+    <!-- end product-detail-->
+    <script src="https://staticfile.batdongsan.com.vn/js/Common/Services/filestatic.ver3a77c7a9.msvbds.FrontEnd.UserListingViewedService.min.js" defer></script>
+    <script src="https://staticfile.batdongsan.com.vn/js/Product/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.UserListingViewed.min.js" defer></script>
 
-<!-- end food section -->
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/jquery/jquery.common.min.js"></script>
+
+<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-swiper/js/filestatic.ver1.msvbds.swiper.min.js"></script>
+<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-swiper/js/jquery.touchSwipe.min.js"></script>
+<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-img360/pannellum.min.js"></script>
+<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-img360/img360.min.js"></script>
+<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/slick/slick.min.js"></script>
+<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.MediaSlide.min.js"></script>
+
 </body>
+
 </html>

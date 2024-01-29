@@ -153,11 +153,7 @@ public class RoomDAO {
                         "FROM roomimgs\n" +
                         "where room_id = "+rid;
 
-
-
-
                 pst = cn.prepareStatement(sql);
-
 
                 rs = pst.executeQuery();
                 if (rs != null) {
@@ -194,7 +190,7 @@ public class RoomDAO {
         return imgs;
     }
     public List<Room> getListRoomsByCondition(String city, String district, String ward) {
-        System.out.println(city + " : city");
+        System.out.println("city in get list method: " +city);
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -205,14 +201,14 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 //room_id	property_id	room_number	room_area	attic	room_status
-                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
-                        "FROM rooms\n" +
+                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status,hostels.name,address,city,ward,district\n" +
+                       "FROM rooms\n" +
                         "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
 
                 if (city != "all" && city!= null) {
-                    System.out.println("city not empty : " +city);
+                    System.out.println("CITY NOT EMPTY");
                     String c = "Thành Phố Hà Nội";
-                    if(c.equals(city)){
+                    if(c.equalsIgnoreCase(city)){
                         System.out.println(c + " == " +city);
                     }else System.out.println(c + " != " +city);
                     sql += "WHERE hostels.city = '" + city + "'";
@@ -242,7 +238,92 @@ public class RoomDAO {
                         double roomArea = rs.getDouble("room_area");
                         int hasAttic = rs.getInt("has_attic");
                         int roomStatus = rs.getInt("room_status");
-                        RoomInformation roomInformation = null;
+                        String hname = rs.getString("name");
+                        String address = rs.getString("address");
+                        String city2 = rs.getString("city");
+                        String district2 = rs.getString("district");
+                        String ward2 = rs.getString("ward");
+
+                        RoomInformation roomInformation = new RoomInformation(hname,address,ward2,district2,city2);
+
+                        List<String> urlImg = getListImgByRoomId(roomID);
+                        rooms.add(Room.builder()
+                                .roomId(roomID)
+                                .hostelId(hostelID)
+                                .roomNumber(roomNumber)
+                                .roomArea(roomArea)
+                                .capacity(capacity)
+                                .roomStatus(roomStatus)
+                                .hasAttic(hasAttic)
+                                .roomInformation(roomInformation)
+                                .imgUrl(urlImg)
+                                .build());
+                    }
+                }else {rooms=null;}
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return rooms;
+    }
+    public List<Room> getAllRoom() {
+
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                //room_id	property_id	room_number	room_area	attic	room_status
+                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status,hostels.name," +
+                        "address,city,ward,district\n" +
+                        "FROM rooms\n" +
+                        "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
+
+                pst = cn.prepareStatement(sql);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int roomID = rs.getInt("room_id");
+                        int hostelID = rs.getInt("hostel_id");
+                        int roomNumber = rs.getInt("room_number");
+                        int capacity = rs.getInt("capacity");
+                        double roomArea = rs.getDouble("room_area");
+                        int hasAttic = rs.getInt("has_attic");
+                        int roomStatus = rs.getInt("room_status");
+                        String hname = rs.getString("name");
+                        String address = rs.getString("address");
+                        String city = rs.getString("city");
+                        String district = rs.getString("district");
+                        String ward = rs.getString("ward");
+
+                        RoomInformation roomInformation = new RoomInformation(hname,address,ward,district,city);
                         List<String> urlImg = getListImgByRoomId(roomID);
                         rooms.add(Room.builder()
                                 .roomId(roomID)
