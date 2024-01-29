@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "HomeServlet", value = "/HomeServlet")
@@ -43,7 +44,7 @@ public class HomeServlet extends HttpServlet {
         System.out.println("Nhan ve : "+city);
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
-
+        String inputText = request.getParameter("textInput").trim();
 
 
         request.setAttribute("citySelected", city);
@@ -57,8 +58,13 @@ public class HomeServlet extends HttpServlet {
         System.out.println(city +": " + district + ": " + ward);
         System.out.println(URLDecoder.decode(city, "utf-8"));
         RoomDAO rd = new RoomDAO();
+        List<Room> rooms = new ArrayList<>();
+        if(inputText!=null){
+            rooms = rd.getListRoomsByCondition(city,district,ward, inputText);
+        }else {
+            rooms = rd.getAllRoom();
+        }
 
-        List<Room> rooms = rd.getListRoomsByCondition(city,district,ward);
 
 
         if (rooms.isEmpty()){

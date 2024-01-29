@@ -163,6 +163,7 @@ public class RoomDAO {
                 }else {imgs=null;}
             }
         } catch (Exception e) {
+            System.out.println("getListImgByRoomId");
             e.printStackTrace();
         } finally {
             if (rs != null) {
@@ -189,8 +190,9 @@ public class RoomDAO {
         }
         return imgs;
     }
-    public List<Room> getListRoomsByCondition(String city, String district, String ward) {
+    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText) {
         System.out.println("city in get list method: " +city);
+
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -201,21 +203,57 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 //room_id	property_id	room_number	room_area	attic	room_status
-                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status,hostels.name,address,city,ward,district\n" +
-                       "FROM rooms\n" +
-                        "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
+                String groupBySql=
+                        " GROUP BY \n" +
+                                "    rooms.room_id, \n"+
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district;\n";
+                String sql = "SELECT \n" +
+                        "    rooms.room_id, \n" +
 
-                if (city != "all" && city!= null) {
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district,\n" +
+                        "    MIN(roomimgs.imgurl) AS imgUrl,\n" +
+                        "    count(roomimgs.imgurl) as count_img\n" +
+                        "    \n" +
+                        "FROM \n" +
+                        "    rooms \n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
+                        "JOIN \n" +
+                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n"
+                       ;
+
+                       ;
+                    if(inputText!=null){
+                        sql += "WHERE LOWER(hostels.city) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.district) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.ward) LIKE '%" + inputText.toLowerCase() + "%' \n";
+                    } else if  (city != "all" && city!= null) {
                     System.out.println("CITY NOT EMPTY");
-                    String c = "Thành Phố Hà Nội";
-                    if(c.equalsIgnoreCase(city)){
-                        System.out.println(c + " == " +city);
-                    }else System.out.println(c + " != " +city);
-                    sql += "WHERE hostels.city = '" + city + "'";
+//                    String c = "Thành Phố Hà Nội";
+//                    if(c.equalsIgnoreCase(city)){
+//                        System.out.println(c + " == " +city);
+//                    }else System.out.println(c + " != " +city);
+                    sql += "WHERE hostels.city LIKE '" + city + "'";
                     if (district != "all" && district != "" && city!= null) {
                         System.out.println("district not empty : " +district);
 
-                        sql += " AND hostels.district = '" + district + "'";
+                        sql += " AND hostels.district LIKE '" + district + "'";
                         if (ward != "all" && district != "" && city!= null) {
                             System.out.println("ward not empty : " + ward);
 
@@ -223,7 +261,7 @@ public class RoomDAO {
                         }
                     }
                 }
-
+                sql+=groupBySql;
 
                 pst = cn.prepareStatement(sql);
 
@@ -232,7 +270,7 @@ public class RoomDAO {
                 if (rs != null) {
                     while (rs.next()) {
                         int roomID = rs.getInt("room_id");
-                        int hostelID = rs.getInt("hostel_id");
+
                         int roomNumber = rs.getInt("room_number");
                         int capacity = rs.getInt("capacity");
                         double roomArea = rs.getDouble("room_area");
@@ -243,25 +281,30 @@ public class RoomDAO {
                         String city2 = rs.getString("city");
                         String district2 = rs.getString("district");
                         String ward2 = rs.getString("ward");
+                        int imgNumber = rs.getInt("count_img");
+                        String img = rs.getString("imgUrl");
+                        List<String> imgList = new ArrayList<>();
+                        imgList.add(img);
 
                         RoomInformation roomInformation = new RoomInformation(hname,address,ward2,district2,city2);
 
-                        List<String> urlImg = getListImgByRoomId(roomID);
+
                         rooms.add(Room.builder()
                                 .roomId(roomID)
-                                .hostelId(hostelID)
+                                .hostelId(imgNumber)
                                 .roomNumber(roomNumber)
                                 .roomArea(roomArea)
                                 .capacity(capacity)
                                 .roomStatus(roomStatus)
                                 .hasAttic(hasAttic)
                                 .roomInformation(roomInformation)
-                                .imgUrl(urlImg)
+                                .imgUrl(imgList)
                                 .build());
                     }
                 }else {rooms=null;}
             }
         } catch (Exception e) {
+            System.out.println("error in getListRoomsByCondition");
             e.printStackTrace();
         } finally {
             if (rs != null) {
@@ -302,18 +345,18 @@ public class RoomDAO {
                 //room_id	property_id	room_number	room_area	attic	room_status
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
-                        "    rooms.hostel_id, \n" +
+
                         "    room_number, \n" +
                         "    capacity, \n" +
                         "    room_area, \n" +
                         "    has_attic, \n" +
                         "    room_status,\n" +
-                        "    hostels.name AS hostel_name, \n" +
+                        "    hostels.name, \n" +
                         "    address,\n" +
                         "    city,\n" +
                         "    ward,\n" +
                         "    district,\n" +
-                        "    MIN(roomimgs.imgurl) AS imgurl,\n" +
+                        "    MIN(roomimgs.imgurl) AS imgUrl,\n" +
                         "    count(roomimgs.imgurl) as count_img\n" +
                         "    \n" +
                         "FROM \n" +
@@ -324,7 +367,7 @@ public class RoomDAO {
                         "    roomimgs ON rooms.room_id = roomimgs.room_id \n" +
                         "GROUP BY \n" +
                         "    rooms.room_id, \n" +
-                        "    rooms.hostel_id, \n" +
+
                         "    room_number, \n" +
                         "    capacity, \n" +
                         "    room_area, \n" +
@@ -342,7 +385,7 @@ public class RoomDAO {
                 if (rs != null) {
                     while (rs.next()) {
                         int roomID = rs.getInt("room_id");
-                        int hostelID = rs.getInt("hostel_id");
+
                         int roomNumber = rs.getInt("room_number");
                         int capacity = rs.getInt("capacity");
                         double roomArea = rs.getDouble("room_area");
@@ -353,21 +396,22 @@ public class RoomDAO {
                         String city = rs.getString("city");
                         String district = rs.getString("district");
                         String ward = rs.getString("ward");
-                        String img = rs.getString("imgurl");
+                        String img = rs.getString("imgUrl");
                         int imgNumber = rs.getInt("count_img");
                         List<String> imgList = new ArrayList<>();
                         imgList.add(img);
 
                         RoomInformation roomInformation = new RoomInformation(hname,address,ward,district,city);
                         rooms.add(Room.builder()
-                                .roomId(roomID)
-                                .hostelId(hostelID)
+
+                                .hostelId(imgNumber) // number of image :))
                                 .roomNumber(roomNumber)
                                 .roomArea(roomArea)
                                 .capacity(capacity)
                                 .roomStatus(roomStatus)
                                 .hasAttic(hasAttic)
                                 .roomInformation(roomInformation)
+                                .imgUrl(imgList)
                                 .build());
                     }
                 }else {rooms=null;}
@@ -377,6 +421,7 @@ public class RoomDAO {
 
             }
         } catch (Exception e) {
+            System.out.println("error getAllRoom");
             e.printStackTrace();
         } finally {
             if (rs != null) {
@@ -522,6 +567,7 @@ public class RoomDAO {
                 }
             }
         } catch (Exception e) {
+            System.out.println("error in getRoomInformationByRoomId");
             e.printStackTrace();
         } finally {
             if (rs != null) {
@@ -629,6 +675,7 @@ public int countRoom(){
                 }
             }
         } catch (Exception e) {
+            System.out.println("error in getRoomInfoByRenterId");
             e.printStackTrace();
         } finally {
             if (rs != null) {
