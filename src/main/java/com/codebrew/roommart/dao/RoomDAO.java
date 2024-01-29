@@ -215,7 +215,8 @@ public class RoomDAO {
                         "    address,\n" +
                         "    city,\n" +
                         "    ward,\n" +
-                        "    district;\n";
+                        "    district;\n"+"ORDER BY \n" +
+                                "    rooms.room_id ASC;";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
 
@@ -237,10 +238,9 @@ public class RoomDAO {
                         "JOIN \n" +
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
                         "JOIN \n" +
-                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n"
-                       ;
+                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n";
 
-                       ;
+
                     if(inputText!=null){
                         sql += "WHERE LOWER(hostels.city) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.district) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.ward) LIKE '%" + inputText.toLowerCase() + "%' \n";
                     } else if  (city != "all" && city!= null) {
@@ -377,7 +377,8 @@ public class RoomDAO {
                         "    address,\n" +
                         "    city,\n" +
                         "    ward,\n" +
-                        "    district;\n";
+                        "    district\n"+"ORDER BY \n" +
+                        "    rooms.room_id DESC;";
 
                 pst = cn.prepareStatement(sql);
 

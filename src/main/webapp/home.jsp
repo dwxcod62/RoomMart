@@ -1,5 +1,4 @@
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -94,21 +93,11 @@
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
-
-
-
-
-
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
-
-
             </div>
         </header>
     </div>
@@ -122,7 +111,6 @@
                 <form action="home" method="post" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
                     <div class="re__search-box-container">
 
-                        <input data-val="true" data-val-required="The ProductType field is required." id="ProductType" name="ProductType" type="hidden" value="38" />
                         <div class="re__search-box-content js__search-box-content">
                             <div class="re__input-group--sm re__search-box-row js__search-row-location">
 
@@ -211,11 +199,11 @@
                                 <c:set var="address" value="${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}" />
                                 <c:set var="hostelName" value="${r.roomInformation.hostelName}" />
 
-                                <div class="re__product-item re__interested-product-card js__product-item">
+                                <div class="re__product-item re__interested-product-card js__product-item" style="display: block">
 
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
-                                        <a class="js__product-link-for-product-id" data-product-id="38995031" href="roomdetail?rid=${r.roomId}" title="Roommart" previewlistener="true">
+                                        <a class="js__product-link-for-product-id" href="roomdetail?rid=${r.roomId}" title="Roommart" previewlistener="true">
                                             <div class="re__card-image">
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
@@ -257,7 +245,7 @@
                                                     <div class="re__clearfix"></div>
                                                     <div class="re__card-contact">
                                                         <div class="re__card-published-info">
-                                <span class="re__card-published-info-published-at" aria-label="28/01/2024" data-microtip-position="right" role="tooltip">
+                                <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
                                         ${r.roomStatus==1?"Available":"Unavailable"}
                                 </span>
 

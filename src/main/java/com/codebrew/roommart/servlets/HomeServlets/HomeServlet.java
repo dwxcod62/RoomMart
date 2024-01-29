@@ -22,6 +22,7 @@ public class HomeServlet extends HttpServlet {
         RoomDAO rd = new RoomDAO();
 
         List<Room> rooms = rd.getAllRoom();
+        System.out.println("get size room: "+rooms.size());
 
 
         if (rooms.isEmpty()){
@@ -61,8 +62,10 @@ public class HomeServlet extends HttpServlet {
         List<Room> rooms = new ArrayList<>();
         if(inputText!=null){
             rooms = rd.getListRoomsByCondition(city,district,ward, inputText);
+            System.out.println("get size room by condition: "+rooms.size());
         }else {
             rooms = rd.getAllRoom();
+            System.out.println("get size room: "+rooms.size());
         }
 
 
