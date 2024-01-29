@@ -203,7 +203,7 @@
 
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
-                                        <a class="js__product-link-for-product-id" href="RoomDetailServlet?rid=${r.roomId}" title="Roommart" previewlistener="true">
+                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${r.roomId}" title="Roommart" previewlistener="true">
                                             <div class="re__card-image">
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
