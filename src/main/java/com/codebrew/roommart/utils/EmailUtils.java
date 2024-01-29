@@ -42,9 +42,9 @@ public class EmailUtils {
         }
     }
 
-    public static boolean sendToken(String receiverEmail, String otp, String token) {
+    public static boolean sendToken(String receiverEmail, String otp, String data) {
         String subject = "OTP from send-otp";
-        String lik = "http://" + host +":8080/RoomMart_war_exploded/otp?token=" + token + "&otp=" + otp + "&act=mail";
+        String lik = "http://" + host +":8080/RoomMart_war_exploded/otp?data=" + data;
         String content = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"

@@ -230,11 +230,11 @@ public class SystemDao {
         return isSuccess;
     }
 
-    public boolean checkOTP(String token, String otp){
+    public boolean checkOTP(String mail, String otp){
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        String sql = "select * from accounts where token = ? and otp = ?";
+        String sql = "select * from accounts where email = ? and otp = ?";
 
         boolean isSuccess = false;
 
@@ -242,7 +242,7 @@ public class SystemDao {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(sql);
-                pst.setString(1, token);
+                pst.setString(1, mail);
                 pst.setString(2, otp);
                 rs = pst.executeQuery();
                 isSuccess = rs.next();
@@ -269,13 +269,13 @@ public class SystemDao {
         return isSuccess;
     }
 
-    public boolean resAddEmailTokenOtp(String mail, String token, String otp){
+    public boolean resAddEmailOtp(String mail, String otp){
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         String sql = "INSERT INTO " +
-                     "Accounts (email, token, otp) " +
-                     "VALUES (?, ?, ?)";
+                     "Accounts (email, otp) " +
+                     "VALUES (?, ?)";
 
         boolean isSuccess = false;
         try {
@@ -283,8 +283,7 @@ public class SystemDao {
             if (cn != null) {
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, mail);
-                pst.setString(2, token);
-                pst.setString(3, otp);
+                pst.setString(2, otp);
                 int rowsAffected = pst.executeUpdate();
                 isSuccess = (rowsAffected > 0);
             }
@@ -310,8 +309,8 @@ public class SystemDao {
     }
 
     private static final String RES_UPDATE_ACCOUNT = "UPDATE Accounts "
-                                    + "SET password = ?, token = '' , role = 1, status = 1,  otp = ''"
-                                    + "WHERE token = ? "
+                                    + "SET password = ?, token = '' , role = ?, status = 1,  otp = '' "
+                                    + "WHERE email = ? "
                                     + "RETURNING account_id, email";
     private static final String RES_UPDATE_USERINFORMATION = "INSERT INTO AccountInformations (account_id, fullname, birthday, sex, phone, address, identity_card_number) "
             + "values (?, ?, ?, ?, ?, ?, ?)";
@@ -359,7 +358,7 @@ public class SystemDao {
         return sts;
     }
 
-    public Account resAddAccount(UserInformation user_info, String token, String password){
+    public Account resAddAccount(UserInformation user_info, String email, String password, int role){
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
@@ -368,14 +367,18 @@ public class SystemDao {
             if (cn != null) {
                 pst = cn.prepareStatement(RES_UPDATE_ACCOUNT);
                 pst.setString(1, password);
-                pst.setString(2, token);
+                pst.setInt(2, role);
+                pst.setString(3, email);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int account_id = rs.getInt("account_id");
-                    String email = rs.getString("email");
                     LocalDate currentDate = LocalDate.now();
-                    if (resAddInformation(user_info, account_id, email));
-                    acc = new Account(account_id, email, password, "", currentDate.toString(), 1, 1, user_info);
+                    if (resAddInformation(user_info, account_id, email)){
+                        acc = new Account(account_id, email, password, "", currentDate.toString(), 1, role, user_info);
+                    } else {
+                        acc = null;
+                        System.out.println("Loi o resAddAccount");
+                    }
                 }
             }
         } catch (Exception e) {
