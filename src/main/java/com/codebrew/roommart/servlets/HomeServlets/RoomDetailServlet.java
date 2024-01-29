@@ -32,18 +32,12 @@ public class RoomDetailServlet extends HttpServlet {
         ServiceInfoDAO serviceIdao = new ServiceInfoDAO();
 
         Room r = rd.getRoomInformationByRoomId(rid);
-        List<Room> recommendRoom = new ArrayList<>();
+        System.out.println("reccomend room");
+        List<Room> recommendRoom = rd.getAllRecommendRoom(rid);
 
-
-
-        for (int i = 1; i<=5;i++){
-            System.out.println("reccomend room");
-            if(i!=rid){recommendRoom.add(rd.getRoomInformationByRoomId(i));}
-
-        }
 
         if (r == null){
-            System.out.println("room empty");
+            System.out.println("ROOM DETAIL EMPTY");
         }else{
 
             RoomInformation ri = r.getRoomInformation();

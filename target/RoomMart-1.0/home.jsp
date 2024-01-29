@@ -73,21 +73,21 @@
 
 
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">Home</span>
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">About us</span>
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">More</span>
                                         </a><div class="re__arrrow"></div>
@@ -203,7 +203,7 @@
 
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
-                                        <a class="js__product-link-for-product-id" href="roomdetail?rid=${r.roomId}" title="Roommart" previewlistener="true">
+                                        <a class="js__product-link-for-product-id" href="RoomDetailServlet?rid=${r.roomId}" title="Roommart" previewlistener="true">
                                             <div class="re__card-image">
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
@@ -217,7 +217,7 @@
                                                 <div class="re__card-info-content">
                                                     <div class="re__card-title">
                                                         <h3 class="js__card-title">
-                                                                ${hostelName} - ${r.roomNumber}
+                                                                ${r.roomId} - ${hostelName} - ${r.roomNumber}
                                                         </h3>
                                                     </div>
                                                     <div class="re__card-config">
