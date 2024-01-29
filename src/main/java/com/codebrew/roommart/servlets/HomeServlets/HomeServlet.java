@@ -61,6 +61,7 @@ public class HomeServlet extends HttpServlet {
         RoomDAO rd = new RoomDAO();
         List<Room> rooms = new ArrayList<>();
         if(inputText!=null){
+            System.out.println("get input text: " + inputText);
             rooms = rd.getListRoomsByCondition(city,district,ward, inputText);
             System.out.println("get size room by condition: "+rooms.size());
         }else {

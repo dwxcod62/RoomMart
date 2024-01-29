@@ -192,7 +192,7 @@ public class RoomDAO {
     }
     public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText) {
         System.out.println("get list condition method, CITY get: " +city);
-
+        System.out.println("get by condition input text: " + inputText);
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -215,7 +215,7 @@ public class RoomDAO {
                         "    address,\n" +
                         "    city,\n" +
                         "    ward,\n" +
-                        "    district;\n"+"ORDER BY \n" +
+                        "    district\n"+"ORDER BY \n" +
                                 "    rooms.room_id ASC;";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
@@ -243,6 +243,9 @@ public class RoomDAO {
 
                     if(inputText!=null){
                         sql += "WHERE LOWER(hostels.city) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.district) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.ward) LIKE '%" + inputText.toLowerCase() + "%' \n";
+                        sql+= " OR LOWER(hostels.name) LIKE '%" + inputText.toLowerCase() + "%' "+" OR LOWER(hostels.address) LIKE '%" + inputText.toLowerCase() + "%' ";
+                        sql+= " OR rooms.room_number = '" + inputText + "' " + " OR rooms.room_area = '" + inputText + "' ";
+
                     } else if  (city != "all" && city!= null) {
                     System.out.println("CITY NOT EMPTY");
 //                    String c = "Thành Phố Hà Nội";
@@ -377,7 +380,7 @@ public class RoomDAO {
                         "    address,\n" +
                         "    city,\n" +
                         "    ward,\n" +
-                        "    district\n"+"ORDER BY \n" +
+                        "    district \n"+"ORDER BY \n" +
                         "    rooms.room_id DESC;";
 
                 pst = cn.prepareStatement(sql);
