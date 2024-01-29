@@ -25,6 +25,9 @@ public class LoginServlet extends HttpServlet {
         SystemDao dao = new SystemDao();
         String uname = request.getParameter("email");
         String pwd = request.getParameter("pass");
+
+        System.out.println(uname + pwd);
+
         String save = null;
         String url = "login";
 

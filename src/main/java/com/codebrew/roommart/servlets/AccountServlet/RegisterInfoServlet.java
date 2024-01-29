@@ -22,7 +22,7 @@ public class RegisterInfoServlet extends HttpServlet {
         String url = "error";
 
         String name = request.getParameter("name");
-        String token = request.getParameter("token");
+        String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
         String address = request.getParameter("address");
@@ -40,7 +40,8 @@ public class RegisterInfoServlet extends HttpServlet {
                                     .build();
 
         try {
-            Account acc = dao.resAddAccount(user_info, token, password);
+            int role = Integer.parseInt(request.getParameter("role"));
+            Account acc = dao.resAddAccount(user_info, email, password, role);
             if (acc != null){
                 url = "dashboard";
                 HttpSession session = request.getSession(true);

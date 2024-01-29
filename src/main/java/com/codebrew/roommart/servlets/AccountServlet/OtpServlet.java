@@ -3,6 +3,7 @@ package com.codebrew.roommart.servlets.AccountServlet;
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Status;
 import com.codebrew.roommart.utils.EmailUtils;
+import com.codebrew.roommart.utils.EncodeUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,31 +12,70 @@ import java.io.IOException;
 
 @WebServlet(name = "OtpServlet", value = "/OtpServlet")
 public class OtpServlet extends HttpServlet {
-    protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        SystemDao dao = new SystemDao();
-        String url = "error";
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = "login";
+        try{
+            String data = request.getParameter("data");
+            if (data != null){
+                String decodeString = EncodeUtils.decodeString(data);
+                String[] decodeStringArr = decodeString.split("&");
+                if (decodeStringArr.length > 0) {
+                    String emailData = decodeStringArr[0];
+                    String otpData = decodeStringArr[1];
 
-        String token = request.getParameter("token");
-        String mail = request.getParameter("mail");
-        String act = request.getParameter("act");
-        String otp;
-        if ("mail".equals(act)){
-            otp = request.getParameter("otp");
-        } else {
-            otp = request.getParameter("otp1") + request.getParameter("otp2") + request.getParameter("otp3") + request.getParameter("otp4");
-        }
+                    String email;
+                    try {
+                        email = emailData.split("=")[1];
+                    } catch ( Exception e){
+                        Status status = Status.builder()
+                                .status(false)
+                                .content("Something wrong, try again!")
+                                .build();
+                        request.setAttribute("RESPONSE_MSG", status);
+                        return;
+                    }
 
-        boolean status = false;
-        try {
-            status = dao.checkOTP(token, otp);
-            if (status){
-                request.setAttribute("TOKEN", token);
-                url = "register_2";
+                    String otp;
+                    try {
+                        otp = otpData.split("=")[1];
+                    } catch ( Exception e){
+                        Status status = Status.builder()
+                                .status(false)
+                                .content("Something wrong, try again!")
+                                .build();
+                        request.setAttribute("RESPONSE_MSG", status);
+                        return;
+                    }
+
+                    SystemDao dao = new SystemDao();
+                    boolean check = dao.checkOTP(email, otp);
+                    if (check){
+                        url = "register-information-form";
+                        request.setAttribute("EMAIL", email);
+                    } else {
+                        Status status = Status.builder()
+                                .status(false)
+                                .content("Something wrong, try again!")
+                                .build();
+                        request.setAttribute("RESPONSE_MSG", status);
+                    }
+
+                } else {
+                    Status status = Status.builder()
+                            .status(false)
+                            .content("Something wrong, try again!")
+                            .build();
+                    request.setAttribute("RESPONSE_MSG", status);
+                }
             } else {
-                request.setAttribute("RESPONSE_MSG", Status.builder().status(false).content("Invalid OTP").build());
-                url = "otp-input" + "?token=" + token + "&mail=" + mail + "&act=page";
+                Status status = Status.builder()
+                        .status(false)
+                        .content("Something wrong, try again!")
+                        .build();
+                request.setAttribute("RESPONSE_MSG", status);
             }
-        } catch ( Exception e) {
+        } catch ( Exception e){
             System.out.println(e);
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
@@ -43,18 +83,6 @@ public class OtpServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String act = request.getParameter("act");
-        if (act != null) {
-            process(request, response);
-        } else {
-            String url = "register";
-            response.sendRedirect(url);
-        }
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
     }
 }

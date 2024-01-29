@@ -8,14 +8,14 @@
 </head>
 <body>
 <c:choose>
-    <c:when test="${empty requestScope.TOKEN}">
+    <c:when test="${empty requestScope.EMAIL}">
         <% response.sendRedirect("register"); %>
     </c:when>
     <c:otherwise>
         <div class="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
             <h2 class="text-2xl font-medium mb-4">Infomation</h2>
             <form action="resinf" method="post">
-                <input class="hidden" name="token" value="${requestScope.TOKEN}">
+                <input class="hidden" name="email" value="${requestScope.EMAIL}">
                 <div class="grid grid-cols-3 gap-2">
                     <div class="mb-4 col-span-2">
                         <label class="block text-gray-700 font-medium mb-2">Name</label>
@@ -90,6 +90,20 @@
                                 class="col-span-2 border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
                         />
                     </div>
+                </div>
+                <div class="mb-4">
+                    <label for="gender" class="block text-gray-700 font-medium mb-2">Role ( Delete later )</label>
+                    <select
+                            id="role"
+                            name="role"
+                            class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+                            required
+                    >
+                        <option value="0">Admin</option>
+                        <option value="1">Owner</option>
+                        <option value="2">Staff</option>
+                        <option selected  value="3">Renter</option>
+                    </select>
                 </div>
 
                 <div>
