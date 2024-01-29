@@ -16,7 +16,7 @@ public class ServiceInfoDAO {
                     "FROM Services S RIGHT JOIN HostelService N ON S.service_id = N.service_id\n" +
                     "WHERE N.hostel_id = ?";
 
-    public List<ServiceInfo> getServicesOfLand(int hostelID) {
+    public List<ServiceInfo> getServicesOfHostel(int hostelID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
