@@ -307,58 +307,58 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
 
-    var c = '<%= citySelected == null ? "null" : citySelected %>';
-    var d = '<%= districtSelected == null ? "null" : districtSelected %>';
-    var w = '<%= wardSelected == null ? "null" : wardSelected %>';
-
-    const host = "https://provinces.open-api.vn/api/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data, "city");
-            });
-    }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.districts, "district");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.wards, "ward");
-            });
-    }
-
-    var renderData = function(array, select) {
-
-            console.log(c);
-
-            let row = '<option value="" selected>Choose...</option>';
-
-
-        array.forEach(function(element) {
-            row += '<option data-id="' + element.code + '" value="' + element.name + '">' + element.name + '</option>';
-        });
-        document.querySelector("#" + select).innerHTML = row;
-    }
-
-
-    $("#city").change(() => {
-        // callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
-        callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
-
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
     });
-    $("#district").change(() => {
-        // callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
-        callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
 
-    });
-    $("#ward").change(() => {
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if(this.options[this.selectedIndex].dataset.id != ""){
+                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
-    });
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    district.options.add(opt);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
+    }
 
 </script>
 <%--<!--Script-->--%>
