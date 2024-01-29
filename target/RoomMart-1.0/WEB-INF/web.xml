@@ -10,6 +10,11 @@
         <listener-class>com.codebrew.roommart.ServletListener</listener-class>
     </listener>
 
+    <!-- FILTER  -->
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.codebrew.roommart.filter.AuthenticationFilter</filter-class>
+    </filter>
     <filter>
         <filter-name>RoleFilter</filter-name>
         <filter-class>com.codebrew.roommart.filter.RoleFilter</filter-class>
@@ -18,6 +23,14 @@
         <filter-name>DispatcherFilter</filter-name>
         <filter-class>com.codebrew.roommart.filter.DispatcherFilter</filter-class>
     </filter>
+
+    <!-- FILTER MAPPING -->
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>RoleFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -30,6 +43,8 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
+
+    <!-- SESSION -->
 
     <session-config>
         <session-timeout>

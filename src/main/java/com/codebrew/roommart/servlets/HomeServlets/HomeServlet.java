@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "HomeServlet", value = "/HomeServlet")
@@ -21,6 +22,7 @@ public class HomeServlet extends HttpServlet {
         RoomDAO rd = new RoomDAO();
 
         List<Room> rooms = rd.getAllRoom();
+        System.out.println("get size room: "+rooms.size());
 
 
         if (rooms.isEmpty()){
@@ -40,10 +42,10 @@ public class HomeServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         String city = request.getParameter("city") == "" ? "all" : request.getParameter("city");
-        System.out.println("Nhan ve : "+city);
+
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
-
+        String inputText = request.getParameter("textInput").trim();
 
 
         request.setAttribute("citySelected", city);
@@ -54,15 +56,23 @@ public class HomeServlet extends HttpServlet {
 
 
 
-        System.out.println(city +": " + district + ": " + ward);
-        System.out.println(URLDecoder.decode(city, "utf-8"));
-        RoomDAO rd = new RoomDAO();
+        System.out.println(city +" city : " + district + " district : " + ward+" ward");
 
-        List<Room> rooms = rd.getListRoomsByCondition(city,district,ward);
+        RoomDAO rd = new RoomDAO();
+        List<Room> rooms = new ArrayList<>();
+        if(inputText!=null){
+            System.out.println("get input text: " + inputText);
+            rooms = rd.getListRoomsByCondition(city,district,ward, inputText);
+            System.out.println("get size room by condition: "+rooms.size());
+        }else {
+            rooms = rd.getAllRoom();
+            System.out.println("get size room: "+rooms.size());
+        }
+
 
 
         if (rooms.isEmpty()){
-            System.out.println("empty list");
+            System.out.println("EMPTY LIST");
             request.setAttribute("rooms", null);
         }else {
             request.setAttribute("rooms", rooms);

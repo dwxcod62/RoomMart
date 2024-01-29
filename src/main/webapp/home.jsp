@@ -1,5 +1,4 @@
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,6 +22,7 @@
     <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
     <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
     <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
 <body class="re__body re__body-home">
@@ -58,7 +58,7 @@
                 <div class="re__drop-menu">
                     <div class="re__left-menu">
                         <h1>
-                            <a href="#home" >
+                            <a href="home" >
                                 <img style="height: 70px; object-fit: cover;" src="https://i.imgur.com/a8AWgbF.png" error-image-src="https://i.imgur.com/a8AWgbF.png" alt="Roomart" title="Roomart">
                             </a>
                         </h1>
@@ -73,41 +73,31 @@
 
 
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">Home</span>
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">About us</span>
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">More</span>
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
-
-
-
-
-
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
-
-
             </div>
         </header>
     </div>
@@ -118,31 +108,21 @@
         <div class="re__content-block re__home__head-block">
             <div class="re__home-search-box">
                 <!-- form -->
-                <form action="homeS" method="post" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
+                <form action="home" method="post" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
                     <div class="re__search-box-container">
 
-                        <input data-val="true" data-val-required="The ProductType field is required." id="ProductType" name="ProductType" type="hidden" value="38" />
                         <div class="re__search-box-content js__search-box-content">
                             <div class="re__input-group--sm re__search-box-row js__search-row-location">
 
                                 <div class="re__search-location-select-header js_search-location-select-header" tabindex="0">
                                     <div class="re__search-location-row re__search-location-select-header-item js_search-location-select-header-item">
-                                        <div class="re__city-code-select js__listing-search-select-container js__city-code-select" data-multiple="false" data-default-value="Trên toàn quốc" data-type="" tracking-id="open-search-location" tracking-label="loc=Home">
-                                            <i class="js__selected-icon re__icon-search re__city-icon-search"></i>
-                                            <divc class="re__listing-search-select-button-current-text">
-<%--                                                <select id="city" name="city">--%>
-<%--                                                    <option value="" selected>Chọn tỉnh thành</option>--%>
-<%--                                                </select>--%>
-                                            </divc>
+                                        <i class="js__selected-icon re__icon-search re__city-icon-search"></i>
+
+                                        <input type="text" id="textInput" name="textInput" title="Enter address follow pattern: province,(district),(ward)" class="w3-input w3-animate-input re__city-code-select js__listing-search-select-container js__city-code-select">
 
 
-                                        </div>
 
-                                        <div class="js__location-select re__location-select re__location-input" data-microtip-position="bottom" role="tooltip">
-                                            <ul id="LocationTags" class="js__location-tags re__location-tags">
-                                            </ul>
-                                            <input id="LocationSearch" class="location-search__field valid" type="search" tabindex="0" autocomplete="off" placeholder="Nhập tối đa 5 địa điểm, dự án. Ví dụ: Quận Hoàn Kiếm, Quận Đống Đa">
-                                        </div>
+
 
                                         <button type="submit" class="re__btn re__btn-pr-solid--sm re__btn-icon-left--sm re__btn-search" id="btnSearch">
                                             <span>Tìm kiếm</span>
@@ -150,7 +130,7 @@
                                     </div>
                                     <div class="re__search-location-select-header-item-no-city js_search-location-select-header-item-no-city">
                                         <div class="re__header-item-no-city">
-                                            <div class="re__city-search-select-header-title">Bạn muốn tìm bất động sản tại tỉnh thành nào?</div>
+                                            <div class="re__city-search-select-header-title">Bạn muốn tìm Room tại tỉnh thành nào?</div>
                                             <a class="re__city-search-select-button-close js__listing-search-no-city-button-close">
                                                 <i class="re__icon-close-no-circle no-city-button-close"></i>
                                             </a>
@@ -164,7 +144,7 @@
                                 <div class="search-filter" >
 
                                     <select id="city" name="city" class="select-text" style="color: #0a0d13">
-                                        <option value="" selected>Chọn tỉnh thành</option>
+                                        <option value="all" selected>Chọn tỉnh thành</option>
                                     </select>
 
                                 </div>
@@ -173,7 +153,7 @@
 
 
                                     <select id="district" name="district" class="select-text" style="color: #0a0d13">
-                                        <option value="" selected>Chọn quận huyện</option>
+                                        <option value="all" selected>Chọn quận huyện</option>
                                     </select>
 
                                 </div>
@@ -181,7 +161,7 @@
                                 <div class="search-filter">
 
                                     <select id="ward" name="ward" class="select-text" style="color: #0a0d13">
-                                        <option value="" selected>Chọn phường xã</option>
+                                        <option value="all" selected>Chọn phường xã</option>
                                     </select>
 
 
@@ -206,7 +186,7 @@
             <div class="re__content-container">
 
 
-                <h2 class="re__content-container-label">Recommend for you</h2>
+                <h2 class="re__content-container-label">For you </h2>
 
 
                 <div id="interestedProductsBinnovaContent" class="re__product-container">
@@ -214,21 +194,22 @@
                     <!-- list img -->
                     <div class="home-product product-4-you">
                         <div class="js__interested-product re__interested-product-cards">
+                            <c:if test="${not empty requestScope.rooms}">
                             <c:forEach items="${requestScope.rooms}" var="r">
                                 <c:set var="address" value="${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}" />
                                 <c:set var="hostelName" value="${r.roomInformation.hostelName}" />
 
-                                <div class="re__product-item re__interested-product-card js__product-item">
+                                <div class="re__product-item re__interested-product-card js__product-item" style="display: block">
 
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
-                                        <a class="js__product-link-for-product-id" data-product-id="38995031" href="roomdetail?rid=${r.roomId}" title="Roommart" previewlistener="true">
+                                        <a class="js__product-link-for-product-id" href="RoomDetailServlet?rid=${r.roomId}" title="Roommart" previewlistener="true">
                                             <div class="re__card-image">
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
                                                 <div class="re__card-image-feature">
                                                     <i class="re__icon-image"></i>
-                                                    <span>${not empty r.imgUrl ? r.imgUrl.size() : 0}</span>
+                                                    <span>${not empty r.hostelId ? r.hostelId : 0}</span>
                                                 </div>
 
                                             </div>
@@ -236,7 +217,7 @@
                                                 <div class="re__card-info-content">
                                                     <div class="re__card-title">
                                                         <h3 class="js__card-title">
-                                                                ${hostelName} - ${r.roomNumber}
+                                                                ${r.roomId} - ${hostelName} - ${r.roomNumber}
                                                         </h3>
                                                     </div>
                                                     <div class="re__card-config">
@@ -264,7 +245,7 @@
                                                     <div class="re__clearfix"></div>
                                                     <div class="re__card-contact">
                                                         <div class="re__card-published-info">
-                                <span class="re__card-published-info-published-at" aria-label="28/01/2024" data-microtip-position="right" role="tooltip">
+                                <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
                                         ${r.roomStatus==1?"Available":"Unavailable"}
                                 </span>
 
@@ -279,6 +260,10 @@
                                     </div>
                                 </div>
                             </c:forEach>
+                            </c:if>
+                            <c:if test="${empty requestScope.rooms}">
+                            <h2>No valid room</h2>
+                            </c:if>
                         </div>
 
                     </div>
@@ -310,54 +295,58 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
 
-    var c = '<%= citySelected == null ? "null" : citySelected %>';
-    var d = '<%= districtSelected == null ? "null" : districtSelected %>';
-    var w = '<%= wardSelected == null ? "null" : wardSelected %>';
-
-    const host = "https://provinces.open-api.vn/api/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data, "city");
-            });
-    }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.districts, "district");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.wards, "ward");
-            });
-    }
-
-    var renderData = function(array, select) {
-
-            console.log(c);
-
-            let row = '<option value="" selected>Choose...</option>';
-
-
-        array.forEach(function(element) {
-            row += '<option data-id="' + element.code + '" value="' + element.name + '">' + element.name + '</option>';
-        });
-        document.querySelector("#" + select).innerHTML = row;
-    }
-    $("#city").change(() => {
-        callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
-
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
     });
-    $("#district").change(() => {
-        callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
 
-    });
-    $("#ward").change(() => {
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if(this.options[this.selectedIndex].dataset.id != ""){
+                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
-    });
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    district.options.add(opt);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
+    }
 
 </script>
 <%--<!--Script-->--%>
