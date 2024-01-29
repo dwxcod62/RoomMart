@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @ToString
 public class RoomInformation {
-    String landName;
+    String hostelName;
     String address;
     String ward;
     String district;

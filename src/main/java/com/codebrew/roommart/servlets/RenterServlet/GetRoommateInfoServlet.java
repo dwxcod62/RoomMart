@@ -22,7 +22,7 @@ public class GetRoommateInfoServlet extends HttpServlet {
             List<Roommate> list = new RoommateInfoDAO().getListRoommatesOfAnAccount(1);
             request.setAttribute("listRoommateInfor", list);
             request.setAttribute("uri", request.getRequestURI());
-            request.getRequestDispatcher("/pages/index/renter/renter-roommate.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/renter/renter-roommate.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
