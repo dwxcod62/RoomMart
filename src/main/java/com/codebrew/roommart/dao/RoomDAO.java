@@ -191,7 +191,7 @@ public class RoomDAO {
         return imgs;
     }
     public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText) {
-        System.out.println("city in get list method: " +city);
+        System.out.println("get list condition method, CITY get: " +city);
 
         Connection cn = null;
         PreparedStatement pst = null;

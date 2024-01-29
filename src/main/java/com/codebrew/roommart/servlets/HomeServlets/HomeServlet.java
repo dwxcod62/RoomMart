@@ -41,7 +41,7 @@ public class HomeServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         String city = request.getParameter("city") == "" ? "all" : request.getParameter("city");
-        System.out.println("Nhan ve : "+city);
+
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
         String inputText = request.getParameter("textInput").trim();
@@ -55,8 +55,8 @@ public class HomeServlet extends HttpServlet {
 
 
 
-        System.out.println(city +": " + district + ": " + ward);
-        System.out.println(URLDecoder.decode(city, "utf-8"));
+        System.out.println(city +" city : " + district + " district : " + ward+" ward");
+
         RoomDAO rd = new RoomDAO();
         List<Room> rooms = new ArrayList<>();
         if(inputText!=null){
@@ -68,7 +68,7 @@ public class HomeServlet extends HttpServlet {
 
 
         if (rooms.isEmpty()){
-            System.out.println("empty list");
+            System.out.println("EMPTY LIST");
             request.setAttribute("rooms", null);
         }else {
             request.setAttribute("rooms", rooms);
