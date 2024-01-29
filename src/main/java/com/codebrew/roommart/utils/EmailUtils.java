@@ -62,9 +62,9 @@ public class EmailUtils {
         return send(receiverEmail, subject, content);
     }
 
-    public static boolean sendRecoverPass(String receiverEmail, String code) {
+    public static boolean sendRecoverPass(String receiverEmail, String data) {
         String subject = "Recover Password!";
-        String recoveryLink = "http://" + host +":8080/RoomMart_war_exploded/recover?code=" + code + "&act=rcv";
+        String recoveryLink = "http://" + host +":8080/RoomMart_war_exploded/password-reset?data=" + data;
         String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"

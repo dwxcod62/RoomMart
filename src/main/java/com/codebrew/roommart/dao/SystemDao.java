@@ -8,23 +8,65 @@ import java.time.LocalDate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+
 
 public class SystemDao {
+
+    public Account getAccountByEmail(String email){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Account acc = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select email from accounts where email = ?");
+                pst.setString(1, email);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    acc = new Account().builder()
+                            .email(rs.getString("email"))
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return acc;
+    }
+
     public  Account getAccountByToken(String token){
         return null;
     }
 
-    public boolean updateRecoverCode(String code, String mail){
+    public boolean updateRecoverCode(String mail, String code, Timestamp expired_date){
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         boolean isSuccess = false;
-        String sql = "update accounts set request_recover_password_code = ? where email = ? ";
+        String sql = "update accounts set request_recover_password_code = ?, expired_time_recover_password = ? where email = ? ";
         try {
             cn = DatabaseConnector.makeConnection();
             pst = cn.prepareStatement(sql);
             pst.setString(1, code);
-            pst.setString(2, mail);
+            pst.setTimestamp(2, expired_date);
+            pst.setString(3, mail);
             int rowsAffected = pst.executeUpdate();
             isSuccess = (rowsAffected > 0);
 
@@ -49,22 +91,28 @@ public class SystemDao {
         return isSuccess;
     }
 
-    public boolean updateRecoverPassword(String code, String pass){
+    public boolean resetPassword(String code, String pass){
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        boolean isSuccess = false;
-        String sql = "update accounts set password = ? where request_recover_password_code = ? ";
+        boolean check = false;
+
+        String sql = "update accounts set password = ?, " +
+                    "expired_time_recover_password = null " +
+                    "where request_recover_password_code = ? "
+                    +"RETURNING account_id";
         try {
             cn = DatabaseConnector.makeConnection();
             pst = cn.prepareStatement(sql);
             pst.setString(1, pass);
             pst.setString(2, code);
-            int rowsAffected = pst.executeUpdate();
-            isSuccess = (rowsAffected > 0);
+            rs = pst.executeQuery();
+            if (rs != null && rs.next()){
+                check = true;
+            }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         } finally {
             if (pst != null) {
                 try {
@@ -81,7 +129,7 @@ public class SystemDao {
                 }
             }
         }
-        return isSuccess;
+        return check;
     }
 
     String UPDATE_ACCOUNT_INFORMATION = "UPDATE accountinformations "
@@ -300,11 +348,11 @@ public class SystemDao {
         return isSuccess;
     }
 
-    private String RES_UPDATE_ACCOUNT = "UPDATE Accounts "
-                                    + "SET password = ?, token = '' , role = 1, status = 1,  otp = ''"
+    private static final String RES_UPDATE_ACCOUNT = "UPDATE Accounts "
+                                    + "SET password = ?, token = '', expired_time_recover_password = '' , role = 1, status = 1,  otp = ''"
                                     + "WHERE token = ? "
                                     + "RETURNING account_id, email";
-    private String RES_UPDATE_USERINFORMATION = "INSERT INTO AccountInformations (account_id, fullname, birthday, sex, phone, address, identity_card_number) "
+    private static final String RES_UPDATE_USERINFORMATION = "INSERT INTO AccountInformations (account_id, fullname, birthday, sex, phone, address, identity_card_number) "
             + "values (?, ?, ?, ?, ?, ?, ?)";
 
     public boolean resAddInformation(UserInformation info, int acc_id, String email){
@@ -386,4 +434,42 @@ public class SystemDao {
         return acc;
     }
 
+    private static final String CHECK_ACCOUNT_REQUEST_RECOVER_PASSWORD = "select * from accounts where email = ? and request_recover_password_code = ? and expired_time_recover_password > NOW() - INTERVAL '24 hours'";
+
+    public boolean checkAccountRequestRecoverPassword(String email, String code){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean status = false;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(CHECK_ACCOUNT_REQUEST_RECOVER_PASSWORD);
+                pst.setString(1, email);
+                pst.setString(2, code);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    status = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return status;
+    }
 }

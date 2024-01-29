@@ -13,5 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDao {
+    public  Account getAccountByToken(String token){
+        return null;
+    }
 
+    public boolean updateTokenByUserName(String token, String email){
+        return false;
+    }
 }

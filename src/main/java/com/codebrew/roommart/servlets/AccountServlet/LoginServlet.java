@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
         try {
             acc = dao.getAccountByUsernameAndPassword(uname, pwd);
             if (acc != null && acc.getStatus() == 1){
-                url = "dashboard";
+                url = "success";
                 HttpSession session = request.getSession(true);
                 if (session != null){
                     session.setAttribute("USER", acc);
@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 //                        dao.updateTokenByUserName(token, uname);
                     }
                 }
+                System.out.println(uname + " login success!");
                 session.setAttribute("CURRENT_PAGES", "dashboard");
             } else if ( acc != null && acc.getStatus() == -1){
                 request.setAttribute("RESPONSE_MSG", Status.builder().status(false).content("Your account has been locked!").build());
@@ -53,7 +54,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("RESPONSE_MSG", Status.builder().status(false).content("Incorrect username or password!").build());
             }
         } catch ( Exception e){
-            System.out.println("loi " + e);
+            System.out.println("Error at LoginServlet:  " + e);
         } finally {
             if (acc != null && acc.getStatus() == 1) {
                 response.sendRedirect(url);

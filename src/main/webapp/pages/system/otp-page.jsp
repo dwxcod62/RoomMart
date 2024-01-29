@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="./assets/sys-css/toast.css" rel="stylesheet">
 </head>
-<body class="bg-[#2c3e50]">
+<body class="bg-[#ecf0f1]">
     <c:if test="${not empty requestScope.RESPONSE_MSG}">
         <div id="toast-danger" class="fixed flex items-center w-fit max-w-xs p-4 space-x-4 text-white bg-[#54ac84] divide-x rtl:divide-x-reverse  rounded-lg shadow right-5 bottom-5" role="alert"
         >
@@ -32,7 +32,7 @@
     </c:if>
 
     <div class="bg-white max-w-md mx-auto border max-w-sm mt-20 rounded">
-        <form action="otp" method="post" class="shadow-md px-4 py-6">
+        <form action="otp" method="post" class="px-4 py-6">
             <input class="hidden" name="token" value="${param.token}">
             <input class="hidden" name="act" value="page">
             <input class="hidden" name="mail" value="${param.mail}">

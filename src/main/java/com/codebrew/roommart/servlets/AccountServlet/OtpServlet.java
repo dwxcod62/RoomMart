@@ -40,7 +40,6 @@ public class OtpServlet extends HttpServlet {
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
     @Override

@@ -35,16 +35,12 @@ public class RoleFilter implements Filter {
         HttpSession session = httpRequest.getSession(true);
         Cookie[] c = httpRequest.getCookies();
 
-        // lay lien ket
         String uri = httpRequest.getRequestURI();
         int lastIndex = uri.lastIndexOf("/");
         String resource = uri.substring(lastIndex + 1);
 
-        // Neu cookie, session co thi se chuyen sang trang nguoi do, khong thi quay ve
-        // login
-
         if ((session.getAttribute("USER") != null || c != null) &&
-                ("login".equals(resource) || "log".equals(resource) || resource.isEmpty())) {
+                ("success".equals(resource) || "login".equals(resource) || "log".equals(resource) || resource.isEmpty())) {
 
             for (Cookie cookie : c) {
                 if (cookie.getName().equals("selector")) {

@@ -32,44 +32,50 @@
       </div>
     </c:if>
 
-    <main id="content" role="main" class="w-full max-w-md mx-auto p-6">
-      <div class="mt-7 bg-white rounded-xl shadow-lg border-2 border-indigo-300">
-        <div class="p-4 sm:p-7">
-          <div class="text-center">
-            <h1 class="block text-2xl font-bold text-gray-800">Register?</h1>
-          </div>
+    <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <img class="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />
+        <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Your email?</h2>
+        <p class="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
+          Or
+          <a
+                  href="login"
+                  class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+          >
+            login to your account
+          </a>
+        </p>
+      </div>
 
-          <div class="mt-5">
-            <form action="res" method="post">
-              <div class="grid gap-y-4">
-                <div>
-                  <label for="email" class="block text-sm font-bold ml-1 mb-2">Email address</label>
-                  <div class="relative">
-                    <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                            required
-                            aria-describedby="email-error"
-                    />
-                  </div>
-                  <p class="hidden text-xs text-red-600 mt-2" id="email-error">
-                    Please include a valid email address so we can get back to you
-                  </p>
-                </div>
-                <button
-                        type="submit"
-                        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                >
-                  Send
-                </button>
+      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <form action="res" method="post">
+            <div>
+              <label for="email" class="block text-sm font-medium leading-5 text-gray-700">Email</label>
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                />
               </div>
-            </form>
-          </div>
+            </div>
+
+            <div class="mt-6">
+                <span class="block w-full rounded-md shadow-sm">
+                    <button
+                            type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+                    >
+                        Send
+                    </button>
+                </span>
+            </div>
+          </form>
         </div>
       </div>
-    </main>
+    </div>
     <script src="./assets/js/system/toast.js"></script>
 </body>
 </html>

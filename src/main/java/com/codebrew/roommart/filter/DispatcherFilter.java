@@ -34,6 +34,7 @@ public class DispatcherFilter implements Filter {
             String resource = uri.substring(lastIndex+1);
 
             url = siteMap.getProperty(resource);
+
             if (url != null) {
                 RequestDispatcher rd = httpRequest.getRequestDispatcher(url);
                 rd.forward(request, response);
