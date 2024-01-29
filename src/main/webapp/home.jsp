@@ -59,7 +59,7 @@
                 <div class="re__drop-menu">
                     <div class="re__left-menu">
                         <h1>
-                            <a href="#home" >
+                            <a href="home" >
                                 <img style="height: 70px; object-fit: cover;" src="https://i.imgur.com/a8AWgbF.png" error-image-src="https://i.imgur.com/a8AWgbF.png" alt="Roomart" title="Roomart">
                             </a>
                         </h1>
