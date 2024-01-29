@@ -4,11 +4,11 @@ package com.codebrew.roommart.dao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.UserInformation;
 import com.codebrew.roommart.utils.DatabaseConnector;
+
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
 
 
 public class SystemDao {
@@ -135,46 +135,7 @@ public class SystemDao {
     String UPDATE_ACCOUNT_INFORMATION = "UPDATE accountinformations "
             + "SET fullname = ?, birthday = ?, phone = ?, address = ?,  identity_card_number = ? "
             + "WHERE account_id = ?";
-    public boolean updateUserInformation(Account acc){
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        boolean isSuccess = false;
-        UserInformation info = acc.getAccountInfo();
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                pst = cn.prepareStatement(UPDATE_ACCOUNT_INFORMATION);
-                pst.setString(1, info.getFullname());
-                pst.setString(2, info.getBirthday());
-                pst.setString(3, info.getPhone());
-                pst.setString(4, info.getAddress());
-                pst.setString(5, info.getCccd());
-                pst.setInt(6, acc.getAccId());
-                int rowsAffected = pst.executeUpdate();
-                isSuccess = (rowsAffected > 0);
-            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return isSuccess;
-    }
 
     String GET_ACCOUNT_BY_UNAME_PASS = "SELECT ai.*, a.role , a.status "
             + "FROM accounts a "
@@ -349,7 +310,7 @@ public class SystemDao {
     }
 
     private static final String RES_UPDATE_ACCOUNT = "UPDATE Accounts "
-                                    + "SET password = ?, token = '', expired_time_recover_password = '' , role = 1, status = 1,  otp = ''"
+                                    + "SET password = ?, token = '' , role = 1, status = 1,  otp = ''"
                                     + "WHERE token = ? "
                                     + "RETURNING account_id, email";
     private static final String RES_UPDATE_USERINFORMATION = "INSERT INTO AccountInformations (account_id, fullname, birthday, sex, phone, address, identity_card_number) "
@@ -362,10 +323,14 @@ public class SystemDao {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date utilDate = sdf.parse(info.getBirthday());
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
                 pst = cn.prepareStatement(RES_UPDATE_USERINFORMATION);
                 pst.setInt(1, acc_id);
                 pst.setString(2, info.getFullname());
-                pst.setString(3, info.getBirthday());
+                pst.setDate(3, sqlDate );
                 pst.setBoolean(4, info.isSex());
                 pst.setString(5, info.getPhone());
                 pst.setString(6, info.getAddress());

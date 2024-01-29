@@ -2,6 +2,7 @@ package com.codebrew.roommart.servlets.RenterServlet;
 
 import com.codebrew.roommart.dao.HostelDAO;
 import com.codebrew.roommart.dao.UserInformationDAO;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Infrastructures;
 import com.codebrew.roommart.dto.ServiceInfo;
 import com.codebrew.roommart.dto.UserInformation;
@@ -21,26 +22,26 @@ public class GetProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
-//        Account acc;
+        Account acc;
         List<Infrastructures> infrastructures = new ArrayList<>();
         List<ServiceInfo> serviceInfo = new ArrayList<>();
         UserInformation accInfo;
 
         try {
             request.setAttribute("uri", request.getRequestURI());
-//            HttpSession session = req.getSession();
-//            acc = (Account) session.getAttribute("USER");
-//            int renterId = acc.getAccId();
+            HttpSession session = request.getSession();
+            acc = (Account) session.getAttribute("USER");
+            int renterId = acc.getAccId();
             HostelDAO hostelDAO = new HostelDAO();
 
             //Get Account Infor
-            accInfo = new UserInformationDAO().getAccountInformationById(1);
+            accInfo = new UserInformationDAO().getAccountInformationById(renterId);
             if (accInfo != null) {
                 request.setAttribute("ACC_INFO", accInfo);
                 url = SUCCESS;
             }
 
-            request.setAttribute("CURRENT_PAGE", "hostel-renter-page");
+            session.setAttribute("CURRENT_PAGE", "hostel-renter-page");
         } catch (Exception e) {
             log("Error at GetHostelInfoServlet: " + e.toString());
         } finally {

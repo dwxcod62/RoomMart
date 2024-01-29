@@ -48,9 +48,9 @@
                 <div class="re__control-menu">
 
                     <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
-                        <a href="#login" class="re__btn re__btn-se-ghost--md">Login</a>
+                        <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>
                         <span class="re__line"></span>
-                        <a href="#register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" id="kct_username" tracking-id="sign-up-button-seller" tracking-label="loc=Header">Register</a>
+                        <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" id="kct_username" tracking-id="sign-up-button-seller" tracking-label="loc=Header">Register</a>
                     </div>
 
                 </div>

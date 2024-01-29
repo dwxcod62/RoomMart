@@ -15,7 +15,7 @@ import java.util.Date;
 public class UserInformation {
     String fullname;
     String email;
-    Date birthday;
+    String birthday;
     boolean sex;
     String phone;
     String address;

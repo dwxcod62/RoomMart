@@ -35,10 +35,7 @@ public class UpdateProfileServlet extends HttpServlet {
 //            int accId = acc.getAccId();
             String profileName = request.getParameter("new-name").equals("") ? accountInfor.getFullname() : request.getParameter("new-name");
             String profileEmail = request.getParameter("new-email").equals("") ? accountInfor.getEmail() : request.getParameter("new-email");
-            Date profileBirthday = parseDateOrDefault(
-                    request.getParameter("new-birthday"),
-                    accountInfor.getBirthday()
-            );
+            accountInfor.setBirthday(request.getParameter("new-birthday"));
             boolean sex = Boolean.valueOf(request.getParameter("new-sex"));
             String profilePhone = request.getParameter("new-phone").equals("") ? accountInfor.getPhone() : request.getParameter("new-phone");
             String profileAddress = request.getParameter("new-address").equals("") ? accountInfor.getAddress() : request.getParameter("new-address");
@@ -47,7 +44,6 @@ public class UpdateProfileServlet extends HttpServlet {
             accountInfos = UserInformation.builder()
                     .fullname(profileName)
                     .email(profileEmail)
-                    .birthday(profileBirthday)
                     .phone(profilePhone)
                     .sex(sex)
                     .address(profileAddress)

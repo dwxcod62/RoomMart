@@ -1,6 +1,7 @@
 package com.codebrew.roommart.servlets.RenterServlet;
 
 import com.codebrew.roommart.dao.InvoiceDAO;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Invoice;
 
 import javax.servlet.*;
@@ -17,12 +18,12 @@ public class GetRenterInvoiceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
         try {
-//            HttpSession session = req.getSession();
-//            Account account = (Account) session.getAttribute("USER");
-//            int accID = account.getAccId();
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("USER");
+            int accID = account.getAccId();
 
             InvoiceDAO invoiceDAO = new InvoiceDAO();
-            List<Invoice> invoiceList = invoiceDAO.getInvoiceListByRenterID(1);
+            List<Invoice> invoiceList = invoiceDAO.getInvoiceListByRenterID(accID);
             request.setAttribute("uri", request.getRequestURI());
             if (invoiceList.size() > 0){
                 request.setAttribute("INVOICE_LIST", invoiceList);

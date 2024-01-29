@@ -3,6 +3,7 @@ package com.codebrew.roommart.servlets.RenterServlet;
 import com.codebrew.roommart.dao.ContractDAO;
 import com.codebrew.roommart.dao.HostelDAO;
 import com.codebrew.roommart.dao.UserInformationDAO;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Contract;
 import com.codebrew.roommart.dto.Hostel;
 import com.codebrew.roommart.dto.UserInformation;
@@ -20,36 +21,36 @@ public class GetContractServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
-//        Account acc;
+        Account acc;
         try {
-//            HttpSession session = req.getSession();
-//            acc = (Account)session.getAttribute("USER");
-//            int accId = acc.getAccId();
+            HttpSession session = request.getSession();
+            acc = (Account)session.getAttribute("USER");
+            int accId = acc.getAccId();
             UserInformationDAO infoDao = new UserInformationDAO();
 
             //Get Renter
-            UserInformation renterInfo = infoDao.getAccountInformationById(1);
+            UserInformation renterInfo = infoDao.getAccountInformationById(accId);
             if (renterInfo != null) {
                 request.setAttribute("RENTER_INFO", renterInfo);
                 url = SUCCESS;
             }
             request.setAttribute("uri", request.getRequestURI());
             //Get HostelOwner
-            UserInformation ownerInfo = infoDao.getHostelOwnerInfoByRenterId(1);
+            UserInformation ownerInfo = infoDao.getHostelOwnerInfoByRenterId(accId);
             if (ownerInfo!=null){
                 request.setAttribute("OWNER_INFO", ownerInfo);
                 url = SUCCESS;
             }
             //Get Hostel Address
             HostelDAO hostelDAO = new HostelDAO();
-            Hostel hostel = hostelDAO.getHostelByRenterId(1);
+            Hostel hostel = hostelDAO.getHostelByRenterId(accId);
             if (hostel!=null){
                 request.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }
             //Get Contract Information
             ContractDAO contractDAO = new ContractDAO();
-            Contract contract = contractDAO.getContractByRenterId(1);
+            Contract contract = contractDAO.getContractByRenterId(accId);
             if (contract!=null){
                 request.setAttribute("CONTRACT", contract);
                 url = SUCCESS;

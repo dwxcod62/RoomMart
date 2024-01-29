@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.AccountServlet.HomeServlets;
+package com.codebrew.roommart.servlets.HomeServlets;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

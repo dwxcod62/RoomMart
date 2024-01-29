@@ -1,6 +1,7 @@
-package com.codebrew.roommart.servlets.RenterServlets;
+package com.codebrew.roommart.servlets.RenterServlet;
 
 import com.codebrew.roommart.dao.RoommateInfoDAO;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Roommate;
 
 import javax.servlet.*;
@@ -15,11 +16,11 @@ public class GetRoommateInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-//            HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
 
-//            Account account = (Account) session.getAttribute("USER");
+            Account account = (Account) session.getAttribute("USER");
 
-            List<Roommate> list = new RoommateInfoDAO().getListRoommatesOfAnAccount(1);
+            List<Roommate> list = new RoommateInfoDAO().getListRoommatesOfAnAccount(account.getAccId());
             request.setAttribute("listRoommateInfor", list);
             request.setAttribute("uri", request.getRequestURI());
             request.getRequestDispatcher("/pages/renter/renter-roommate.jsp").forward(request, response);

@@ -21,16 +21,16 @@ public class GetHostelInfoServlet extends HttpServlet {
         List<ServiceInfo> serviceInfo;
         UserInformation accInfo;
         try {
-//            HttpSession session = request.getSession();
-//            acc = (Account) session.getAttribute("USER");
-//            int renterId = acc.getAccountId();
+            HttpSession session = request.getSession();
+            acc = (Account) session.getAttribute("USER");
+            int renterId = acc.getAccId();
 
             HostelDAO hostelDAO = new HostelDAO();
             UserInformationDAO userInfoDAO = new UserInformationDAO();
             request.setAttribute("uri", request.getRequestURI());
 
             //Get Room
-            Hostel hostel = hostelDAO.getHostelByRenterId(1);
+            Hostel hostel = hostelDAO.getHostelByRenterId(renterId);
             if (hostel != null) {
                 request.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;

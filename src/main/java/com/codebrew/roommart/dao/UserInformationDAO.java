@@ -47,7 +47,7 @@ public class UserInformationDAO {
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     String fullname = rs.getString("fullname");
-                    Date birthday = rs.getDate("birthday");
+                    String birthday = rs.getDate("birthday").toString();
                     boolean sex = rs.getBoolean("sex");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
@@ -92,7 +92,7 @@ public class UserInformationDAO {
                 if (rs != null && rs.next()) {
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
-                    Date birthday = rs.getDate("birthday");
+                    String birthday = rs.getDate("birthday").toString();
                     boolean sex = rs.getBoolean("sex");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
@@ -136,7 +136,7 @@ public class UserInformationDAO {
                     UserInformation userInfo = UserInformation.builder()
                             .fullname(rs.getString("fullname"))
                             .email(rs.getString("email"))
-                            .birthday(rs.getDate("birthday"))
+                            .birthday(rs.getDate("birthday").toString())
                             .sex(rs.getBoolean("sex"))
                             .phone(rs.getString("phone"))
                             .address(rs.getString("address"))
@@ -177,9 +177,8 @@ public class UserInformationDAO {
                 ptm = cn.prepareStatement(UPDATE_PROFILE);
                 ptm.setString(1, accountInfos.getFullname());
                 ptm.setString(2, accountInfos.getEmail());
-                java.util.Date utilDate = accountInfos.getBirthday();
-                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-                ptm.setDate(3, sqlDate);
+                String utilDate = accountInfos.getBirthday();
+                ptm.setString(3, utilDate);
                 ptm.setString(4, accountInfos.getPhone());
                 ptm.setString(5, accountInfos.getAddress());
                 ptm.setString(6, accountInfos.getCccd());
@@ -221,10 +220,9 @@ public class UserInformationDAO {
                 ptm.setString(2, roommateInfo.getInformation().getEmail());
 
                 // Chuyển đổi java.util.Date thành java.sql.Date
-                java.util.Date utilDate = roommateInfo.getInformation().getBirthday();
-                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                String utilDate = roommateInfo.getInformation().getBirthday();
                 // Sử dụng java.sql.Date trong PreparedStatement
-                ptm.setDate(3, sqlDate);
+                ptm.setString(3, utilDate);
 
                 ptm.setBoolean(4, roommateInfo.getInformation().isSex());
                 ptm.setString(5, roommateInfo.getInformation().getPhone());
