@@ -96,7 +96,7 @@
                 <div class="re__drop-menu">
                     <div class="re__left-menu">
                         <h1>
-                            <a href="#home" >
+                            <a href="home" >
                                 <img style="height: 70px; object-fit: cover;" src="https://i.imgur.com/a8AWgbF.png" error-image-src="https://i.imgur.com/a8AWgbF.png" alt="Roomart" title="Roomart">
                             </a>
                         </h1>
@@ -111,21 +111,21 @@
 
 
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">Home</span>
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">About us</span>
                                         </a><div class="re__arrrow"></div>
 
                                     </li>
                                     <li class="lv0 ">
-                                        <a href="#home">
+                                        <a href="home">
 
                                             <span class="text">More</span>
                                         </a><div class="re__arrrow"></div>
@@ -303,7 +303,7 @@
 
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
-                                        <a class="js__product-link-for-product-id" href="roomdetail?rid=${r.roomId}" >
+                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${r.roomId}" >
                                             <div class="re__card-image
             ">
                                                 <img alt="Ảnh đại diện" class="pr-img lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}">
