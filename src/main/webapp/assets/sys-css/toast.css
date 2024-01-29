@@ -1,0 +1,15 @@
+@keyframes toastAnimation {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#toast-danger {
+    z-index: 9999;
+    animation: toastAnimation 1s forwards;
+}

@@ -3,6 +3,7 @@ package com.codebrew.roommart.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 
 public class EncodeUtils {
@@ -24,4 +25,14 @@ public class EncodeUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public static String encodeString(String string) {
+        return Base64.getEncoder().encodeToString(string.getBytes());
+    }
+
+    public static String decodeString(String encodedString) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+        return new String(decodedBytes);
+    }
+
 }
