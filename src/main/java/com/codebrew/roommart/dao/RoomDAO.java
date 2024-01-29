@@ -300,10 +300,41 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 //room_id	property_id	room_number	room_area	attic	room_status
-                String sql = "SELECT room_id, rooms.hostel_id, room_number, capacity, room_area, has_attic, room_status,hostels.name," +
-                        "address,city,ward,district\n" +
-                        "FROM rooms\n" +
-                        "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n";
+                String sql = "SELECT \n" +
+                        "    rooms.room_id, \n" +
+                        "    rooms.hostel_id, \n" +
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name AS hostel_name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district,\n" +
+                        "    MIN(roomimgs.imgurl) AS imgurl,\n" +
+                        "    count(roomimgs.imgurl) as count_img\n" +
+                        "    \n" +
+                        "FROM \n" +
+                        "    rooms \n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
+                        "JOIN \n" +
+                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n" +
+                        "GROUP BY \n" +
+                        "    rooms.room_id, \n" +
+                        "    rooms.hostel_id, \n" +
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district;\n";
 
                 pst = cn.prepareStatement(sql);
 
@@ -315,16 +346,19 @@ public class RoomDAO {
                         int roomNumber = rs.getInt("room_number");
                         int capacity = rs.getInt("capacity");
                         double roomArea = rs.getDouble("room_area");
-                        int hasAttic = rs.getInt("has_attic");
+                            int hasAttic = rs.getInt("has_attic");
                         int roomStatus = rs.getInt("room_status");
                         String hname = rs.getString("name");
                         String address = rs.getString("address");
                         String city = rs.getString("city");
                         String district = rs.getString("district");
                         String ward = rs.getString("ward");
+                        String img = rs.getString("imgurl");
+                        int imgNumber = rs.getInt("count_img");
+                        List<String> imgList = new ArrayList<>();
+                        imgList.add(img);
 
                         RoomInformation roomInformation = new RoomInformation(hname,address,ward,district,city);
-                        List<String> urlImg = getListImgByRoomId(roomID);
                         rooms.add(Room.builder()
                                 .roomId(roomID)
                                 .hostelId(hostelID)
@@ -334,10 +368,13 @@ public class RoomDAO {
                                 .roomStatus(roomStatus)
                                 .hasAttic(hasAttic)
                                 .roomInformation(roomInformation)
-                                .imgUrl(urlImg)
                                 .build());
                     }
                 }else {rooms=null;}
+
+
+
+
             }
         } catch (Exception e) {
             e.printStackTrace();
