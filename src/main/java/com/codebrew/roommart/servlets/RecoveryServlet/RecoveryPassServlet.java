@@ -56,7 +56,7 @@ public class RecoveryPassServlet extends HttpServlet {
                     String recoverUrl = "email=" + email + "&code=" + code;
                     String encodeString = EncodeUtils.encodeString(recoverUrl);
 
-                    if (EmailUtils.sendRecoverPass(email, encodeString)){
+                    if (new EmailUtils().sendRecoverPass(email, encodeString)){
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                         Calendar startTime = Calendar.getInstance();
                         long timeInSecs = startTime.getTimeInMillis();

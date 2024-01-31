@@ -33,7 +33,7 @@ public class RegisterServlet extends HttpServlet {
                 String urlRegister = "email=" + mail + "&otp=" + otp;
                 String encodeData = EncodeUtils.encodeString(urlRegister);
 
-                status = EmailUtils.sendToken(mail, otp, encodeData) && dao.resAddEmailOtp(mail, otp);
+                status = new EmailUtils().sendToken(mail, otp, encodeData) && dao.resAddEmailOtp(mail, otp);
                 if (status){
                     st = Status.builder()
                             .status(true)
