@@ -26,9 +26,9 @@
 
 
 <script>
-    const userId = "${requestScope.hostelId}";
+    const userId = "${sessionScope.hostelId}";
 
-    const ownerId = "${requestScope.renterId}";
+    const ownerId = "${sessionScope.renterId}";
 </script>
 <!-- scripts -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>

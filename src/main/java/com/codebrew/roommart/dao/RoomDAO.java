@@ -24,22 +24,22 @@ public class RoomDAO {
         try{
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-            // insert urlImg into table roomimgs
-            pst = cn.prepareStatement(ADD_IMGs);
+                // insert urlImg into table roomimgs
+                pst = cn.prepareStatement(ADD_IMGs);
 
-            for (int i = 0; i < imgUrls.size(); i++) {
-                // Set giá trị cho Prepared Statement
-                pst.setInt(1, room_Id);
-                pst.setString(2, imgUrls.get(i));
+                for (int i = 0; i < imgUrls.size(); i++) {
+                    // Set giá trị cho Prepared Statement
+                    pst.setInt(1, room_Id);
+                    pst.setString(2, imgUrls.get(i));
 
-                // Thực hiện câu lệnh SQL và kiểm tra kết quả
-                if (pst.executeUpdate() > 0) {
-                    isInserted = true;
-                } else {
-                    isInserted = false;
-                    break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
+                    // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                    if (pst.executeUpdate() > 0) {
+                        isInserted = true;
+                    } else {
+                        isInserted = false;
+                        break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
+                    }
                 }
-            }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,7 +97,7 @@ public class RoomDAO {
 
                     }
 
-                     isInserted =addImgbyId(room_Id,imgUrls);
+                    isInserted =addImgbyId(room_Id,imgUrls);
 
 // Kiểm tra kết quả cuối cùng và commit hoặc rollback
                     if (isInserted) {
@@ -206,16 +206,16 @@ public class RoomDAO {
                 String groupBySql=
                         " GROUP BY \n" +
                                 "    rooms.room_id, \n"+
-                        "    room_number, \n" +
-                        "    capacity, \n" +
-                        "    room_area, \n" +
-                        "    has_attic, \n" +
-                        "    room_status,\n" +
-                        "    hostels.name, \n" +
-                        "    address,\n" +
-                        "    city,\n" +
-                        "    ward,\n" +
-                        "    district\n"+"ORDER BY \n" +
+                                "    room_number, \n" +
+                                "    capacity, \n" +
+                                "    room_area, \n" +
+                                "    has_attic, \n" +
+                                "    room_status,\n" +
+                                "    hostels.name, \n" +
+                                "    address,\n" +
+                                "    city,\n" +
+                                "    ward,\n" +
+                                "    district\n"+"ORDER BY \n" +
                                 "    rooms.room_id ASC;";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
@@ -241,12 +241,12 @@ public class RoomDAO {
                         "    roomimgs ON rooms.room_id = roomimgs.room_id \n";
 
 
-                    if(inputText!=null){
-                        sql += " WHERE LOWER(hostels.city) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.district) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.ward) LIKE '%" + inputText.toLowerCase() + "%' \n";
-                        sql+= " OR LOWER(hostels.name) LIKE '%" + inputText.toLowerCase() + "%' "+" OR LOWER(hostels.address) LIKE '%" + inputText.toLowerCase() + "%' ";
-                        sql+= " OR rooms.room_number = '" + inputText + "' " + " OR rooms.room_area = '" + inputText + "' ";
+                if(inputText!=null){
+                    sql += " WHERE LOWER(hostels.city) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.district) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.ward) LIKE '%" + inputText.toLowerCase() + "%' \n";
+                    sql+= " OR LOWER(hostels.name) LIKE '%" + inputText.toLowerCase() + "%' "+" OR LOWER(hostels.address) LIKE '%" + inputText.toLowerCase() + "%' ";
+                    sql+= " OR rooms.room_number = '" + inputText + "' " + " OR rooms.room_area = '" + inputText + "' ";
 
-                    } else if  (city != "all" && city!= null) {
+                } else if  (city != "all" && city!= null) {
                     System.out.println("CITY NOT EMPTY");
 //                    String c = "Thành Phố Hà Nội";
 //                    if(c.equalsIgnoreCase(city)){
@@ -393,7 +393,7 @@ public class RoomDAO {
                         int roomNumber = rs.getInt("room_number");
                         int capacity = rs.getInt("capacity");
                         double roomArea = rs.getDouble("room_area");
-                            int hasAttic = rs.getInt("has_attic");
+                        int hasAttic = rs.getInt("has_attic");
                         int roomStatus = rs.getInt("room_status");
                         String hname = rs.getString("name");
                         String address = rs.getString("address");
@@ -407,7 +407,7 @@ public class RoomDAO {
 
                         RoomInformation roomInformation = new RoomInformation(hname,address,ward,district,city);
                         rooms.add(Room.builder()
-                                        .roomId(roomID)
+                                .roomId(roomID)
                                 .hostelId(imgNumber) // number of image :))
                                 .roomNumber(roomNumber)
                                 .roomArea(roomArea)
@@ -647,7 +647,7 @@ public class RoomDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                String sql = "SELECT room_id, H.hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
+                String sql = "SELECT room_id, H.hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city , H.owner_account_id\n" +
                         "FROM Rooms R JOIN Hostels H ON R.hostel_id = H.hostel_id\n" +
                         "WHERE R.room_id = ?\n";
 
@@ -658,6 +658,7 @@ public class RoomDAO {
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
+
                     int hostelId = rs.getInt("hostel_id");
                     int roomNumber = rs.getInt("room_number");
                     int capacity = rs.getInt("capacity");
@@ -719,52 +720,52 @@ public class RoomDAO {
         return room;
     }
 
-public int countRoom(){
+    public int countRoom(){
 
-    Connection cn = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-    int roomCount=0;
-    try {
-        cn = DatabaseConnector.makeConnection();
-        if (cn != null) {
-            String sql = COUNT_ROOM;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int roomCount=0;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = COUNT_ROOM;
 
-            pst = cn.prepareStatement(sql);
+                pst = cn.prepareStatement(sql);
 
 
 
-            rs = pst.executeQuery();
-            if (rs != null && rs.next()) {
-                roomCount = rs.getInt("room_count");
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    roomCount = rs.getInt("room_count");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        if (pst != null) {
-            try {
-                pst.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        if (cn != null) {
-            try {
-                cn.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-    return roomCount;
+        return roomCount;
     }
 
     public Room getRoomInfoByRenterId(int renterId) throws SQLException {
