@@ -26,9 +26,12 @@
 
 
 <script>
-    const userId = "${sessionScope.ownerId}";
+    const renterId = "${sessionScope.ownerId !=null ? sessionScope.ownerId: "null"}";
 
-    const ownerId = "${sessionScope.renterId}";
+    const ownerId = "${sessionScope.renterId !=null ? sessionScope.renterId: "null"}";
+
+    console.log("userid : "+renterId);
+    console.log("ownerid : "+ownerId);
 </script>
 <!-- scripts -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>

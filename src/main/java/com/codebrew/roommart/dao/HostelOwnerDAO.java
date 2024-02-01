@@ -10,10 +10,11 @@ import java.sql.SQLException;
 
 public class HostelOwnerDAO {
     private static final String GET_OWNERID_BY_HOSTELID =
-            "SELECT Hostels.owner_account_id" +
-                    "FROM Hostels\n"+
+            "SELECT owner_account_id" +
+                    " FROM hostels "+
                     "WHERE hostel_id = ?";
     public int getOwnerIdByHostelId(int hostel_id) throws SQLException {
+        System.out.println("getOwnerIdByHostelId");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

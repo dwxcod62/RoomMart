@@ -18,9 +18,15 @@ const username = prompt("Please Tell Us your Name");
 // const userid = prompt("Please Tell Us user id");
 //
 // const ownerid = prompt("Please Tell Us owner id");
+
+var retrievedValue = sessionStorage.getItem('key');
+console.log(retrievedValue); // Output: 'value'
+
 console.log("username : "+username);
-console.log("userid : "+userid);
-console.log("ownerid : "+ownerid);
+
+
+console.log("userid : "+renterId);
+console.log("ownerid : "+ownerId);
 
 
 
@@ -28,8 +34,8 @@ console.log("ownerid : "+ownerid);
 // const userid = "2";
 // const ownerid = "1";
 
-var firebase_ownerId = db.ref(`chats/${ownerid}/`);
-console.log("firebase_ownerId : "+firebase_ownerId);
+// var firebase_ownerId = db.ref(`chats/${renterId}/`);
+// console.log("firebase_ownerId : "+firebase_ownerId);
 
 
 
@@ -80,14 +86,14 @@ function sendMessage(e) {
 
     var read = false;
     // create db collection and send in the data
-    db.ref(`chats/${ownerId}/${userId}/` + timestamp).set({
+    db.ref(`chats/${ownerId}/${renterId}/` + timestamp).set({
         username,
         message,
         read,
     });
 }
 
-const fetchChat = db.ref(`chats/${ownerId}/${userId}/`);
+const fetchChat = db.ref(`chats/${ownerId}/${renterId}/`);
 
 fetchChat.on("child_added", function (snapshot) {
 
