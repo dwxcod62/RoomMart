@@ -10,6 +10,7 @@ import java.util.List;
 
 public class InfrastructureDAO {
     public List<InfrastructureItem> getAllInfrastructure() {
+        System.out.println("getAllInfrastructure");
         Connection cn = null;
         Statement pst = null;
         ResultSet rs = null;

@@ -17,6 +17,7 @@ public class ServiceInfoDAO {
                     "WHERE N.hostel_id = ?";
 
     public List<ServiceInfo> getServicesOfHostel(int hostelID) {
+        System.out.println("getServicesOfHostel");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

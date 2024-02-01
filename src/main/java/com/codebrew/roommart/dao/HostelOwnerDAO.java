@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class HostelOwnerDAO {
     private static final String GET_OWNERID_BY_HOSTELID =
             "SELECT Hostels.owner_account_id" +
-                    "FROM public.Hostels\n"+
+                    "FROM Hostels\n"+
                     "WHERE hostel_id = ?";
     public int getOwnerIdByHostelId(int hostel_id) throws SQLException {
         Connection cn = null;

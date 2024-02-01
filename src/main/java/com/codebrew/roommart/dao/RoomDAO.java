@@ -139,6 +139,7 @@ public class RoomDAO {
         return isInserted;
     }
     public List<String>getListImgByRoomId(int rid){
+        System.out.println("getListImgByRoomId");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -453,7 +454,7 @@ public class RoomDAO {
         return rooms;
     }
     public List<Room> getAllRecommendRoom(int rid) {
-
+        System.out.println("getAllRecommendRoom");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -640,6 +641,7 @@ public class RoomDAO {
         return rooms;
     }
     public Room getRoomInformationByRoomId(int roomID) {
+        System.out.println("getRoomInformationByRoomId");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

@@ -32,7 +32,7 @@ public class RoomDetailServlet extends HttpServlet {
         ServiceInfoDAO serviceIDao = new ServiceInfoDAO();
 
         Room r = rd.getRoomInformationByRoomId(rid);
-        System.out.println("recommend room");
+
         List<Room> recommendRoom = rd.getAllRecommendRoom(rid);
 
 
