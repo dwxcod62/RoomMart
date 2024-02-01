@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Firebase RealTime Chat</title>
-    <link rel="stylesheet" href="assets/css/chat.css">
+    <link rel="stylesheet" href="assets/scss/chat_style/chat.css">
 </head>
 <body>
 <header>
@@ -26,7 +26,7 @@
 
 
 <script>
-    const userId = "${sessionScope.hostelId}";
+    const userId = "${sessionScope.ownerId}";
 
     const ownerId = "${sessionScope.renterId}";
 </script>
