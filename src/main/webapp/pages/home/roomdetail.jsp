@@ -380,7 +380,14 @@
                     </div>
                 </a>
 
-                <a class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" href="chat?hostelId=${requestScope.hostelId}">Chat</a>
+<%--                <a class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" href="chat?hostelId=${requestScope.room.hostelId}">Chat</a>--%>
+            <form action="chat" method="post">
+                <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
+                <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
+
+                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" type="submit">Chat with owner</button>
+            </form>
+
             </div>
 
 
