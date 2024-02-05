@@ -13,8 +13,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 // var read = false;
 const chatForm = document.getElementById("messages");
-const chatInput = document.getElementById("chat-id-1-form")
-
+const chatInput = document.getElementById("chat-id-1-form");
+const chatHeader = document.getElementById("chatHeader");
 // const readbtn = document.getElementById("read");
 // const role = prompt("Please Tell Us your role");
 // const username = prompt("Please Tell Us your Name");
@@ -48,6 +48,9 @@ function roleHandler() {
     if (role == 1) {
         username = "admin";
         sidebarList.style.display="block";
+        if(renterId == "null"){
+            chatHeader.style.display="none";
+        }
 
     } else {
         username = "thanh";

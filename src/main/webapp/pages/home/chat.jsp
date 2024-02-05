@@ -244,7 +244,7 @@
 
                             <!-- Chat photo -->
                             <div class="col-6 col-xl-6">
-                                <div class="media text-center text-xl-left">
+                                <div id="chatHeader" class="media text-center text-xl-left">
                                     <div class="avatar avatar-sm d-none d-xl-inline-block mr-5">
                                         <img src="https://i.imgur.com/a8AWgbF.png" class="avatar-img" alt="">
                                     </div>
