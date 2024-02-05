@@ -14,19 +14,19 @@
     <title> ROOMMART </title>
 
     <!-- bootstrap core css -->
-<%--    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css"/>--%>
+    <%--    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css"/>--%>
 
 
     <!-- font awesome style -->
-<%--    <link href="../../assets/css/font-awesome.min.css" rel="stylesheet"/>--%>
+    <%--    <link href="../../assets/css/font-awesome.min.css" rel="stylesheet"/>--%>
 
 
 
     <!-- responsive style -->
-<%--    <link rel="stylesheet" href="assets/css/style.css">--%>
+    <%--    <link rel="stylesheet" href="assets/css/style.css">--%>
 
 
-<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">--%>
+    <%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">--%>
     <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
     <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/lib/jquery-swiper/css/swiper.min.css" />
     <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/js/lightGallery1.2.21/css/lightgallery.min.css" />
@@ -37,28 +37,7 @@
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3a77c7a9.msvbds.FrontEnd.GAMBannerViewer.min.js" async="" data-cfasync="false"></script>
     <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3.msvbds.FrontEnd.GAMBannerScript.min.js" async="" data-cfasync="false"></script>
-    <style>
-        .carousel-item img {
-            width: 100%;  /* chiều rộng bằng với container */
-            height: 500px; /* chiều cao cố định */
-            object-fit: cover; /* giữ tỷ lệ hình ảnh khi thay đổi kích thước */
-        }
-        #carouselWrapper{
-            background-color: rgba(255, 255, 255, 0.5); /* nền trắng mờ */
-            padding: 10px; /* padding xung quanh các hình ảnh */
-            display: flex; /* sử dụng flexbox để sắp xếp các hình ảnh */
-            justify-content: center; /* căn giữa các hình ảnh */
-            align-items: center; /* căn giữa các hình ảnh theo trục dọc */
-            margin: 0;
-        }
-        #carouselWrapper img {
-            margin: 0 5px; /* khoảng cách 5px giữa các hình ảnh */
-            cursor: pointer; /* con trỏ chuột dạng pointer khi di chuyển qua hình ảnh */
-            width: 80px; /* chiều rộng cố định */
-            height: 50px; /* chiều cao cố định */
-            object-fit: cover; /* giữ tỷ lệ hình ảnh khi thay đổi kích thước */
-        }
-    </style>
+
 
 
 
@@ -71,13 +50,7 @@
         <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">
             <div class="re__container-sm">
                 <div class="re__nav" id="naga">
-
-
-
-
-
-
-
+                    <%--remove--%>
                 </div>
                 <div class="re__bg-pushmenu"></div>
             </div>
@@ -107,15 +80,10 @@
                         <div class="re__home-header-menu">
                             <div class="re__home-header-menu">
                                 <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">
-
-
-
                                     <li class="lv0 ">
                                         <a href="home">
-
                                             <span class="text">Home</span>
                                         </a><div class="re__arrrow"></div>
-
                                     </li>
                                     <li class="lv0 ">
                                         <a href="home">
@@ -166,7 +134,6 @@
                         <ul class="swiper-wrapper">
                             <!-- for loop here -->
 
-<%--                                loop end here--%>
                             <c:forEach var="image" items="${requestScope.roomImg}" varStatus="loopStatus">
                                 <li class="swiper-slide js__media-item-container" data-filter="image" data-index="${loopStatus.index}">
                                     <div class="re__overlay js__overlay">
@@ -175,6 +142,7 @@
                                     <div class="re__pr-image-cover js__pr-image-cover" title="" style="background-image: url('${image}')"></div>
                                 </li>
                             </c:forEach>
+                            <%--  loop end here--%>
 
                         </ul>
 
@@ -187,12 +155,12 @@
                     </div>
                     <div class="re__media-thumbs js__media-thumbs ">
                         <div class="js__slick-thumb">
-<c:forEach var="image" items="${requestScope.roomImg}" varStatus="loopStatus">
-    <div class="re__media-thumb-item js__media-thumbs-item" data-filter="image">
-        <img data-src="${image}" alt="Roommart"
-             title="Roommart" class="lazyload" />
-    </div>
-</c:forEach>
+                            <c:forEach var="image" items="${requestScope.roomImg}" varStatus="loopStatus">
+                                <div class="re__media-thumb-item js__media-thumbs-item" data-filter="image">
+                                    <img data-src="${image}" alt="Roommart"
+                                         title="Roommart" class="lazyload" />
+                                </div>
+                            </c:forEach>
 
 
 
@@ -317,7 +285,7 @@
                                                 <div class="re__card-info-content">
                                                     <div class="re__card-title">
                                                         <h3 class="js__card-title">
-                                                            ${r.roomInformation.hostelName} - ${r.roomNumber}
+                                                                ${r.roomInformation.hostelName} - ${r.roomNumber}
                                                         </h3>
                                                     </div>
                                                     <div class="re__card-config">
@@ -357,7 +325,7 @@
                 </div>
             </div>
 
-            <div class="re__divide-8"></div>
+            <div class="re__divide-8">remove</div>
 
 
             <!-- slide  -->
@@ -412,7 +380,14 @@
                     </div>
                 </a>
 
-                <a class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" tracking-id="request-call-back-ldp" tracking-label="loc=Rent-Listing Details,prid=38582357" href="javascript:void(0);">Chat</a>
+<%--                <a class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" href="chat?hostelId=${requestScope.room.hostelId}">Chat</a>--%>
+            <form action="chat" method="post">
+                <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
+                <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
+
+                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" type="submit">Chat with owner</button>
+            </form>
+
             </div>
 
 

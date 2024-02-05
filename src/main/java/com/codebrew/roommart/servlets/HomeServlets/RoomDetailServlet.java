@@ -28,11 +28,11 @@ public class RoomDetailServlet extends HttpServlet {
         String rid_raw = request.getParameter("rid");
         int rid = Integer.parseInt(rid_raw);
         RoomDAO rd = new RoomDAO();
-        InfrastructureDAO idao = new InfrastructureDAO();
-        ServiceInfoDAO serviceIdao = new ServiceInfoDAO();
+        InfrastructureDAO infraDao = new InfrastructureDAO();
+        ServiceInfoDAO serviceIDao = new ServiceInfoDAO();
 
         Room r = rd.getRoomInformationByRoomId(rid);
-        System.out.println("reccomend room");
+
         List<Room> recommendRoom = rd.getAllRecommendRoom(rid);
 
 
@@ -41,8 +41,8 @@ public class RoomDetailServlet extends HttpServlet {
         }else{
 
             RoomInformation ri = r.getRoomInformation();
-            List<ServiceInfo> list_service = serviceIdao.getServicesOfHostel(r.getHostelId());
-            List<InfrastructureItem> list_infras = idao.getAllInfrastructure();
+            List<ServiceInfo> list_service = serviceIDao.getServicesOfHostel(r.getHostelId());
+            List<InfrastructureItem> list_infras = infraDao.getAllInfrastructure();
             request.setAttribute("room",r);
             request.setAttribute("roomImg",r.getImgUrl());
             request.setAttribute("roomInfor",ri);
