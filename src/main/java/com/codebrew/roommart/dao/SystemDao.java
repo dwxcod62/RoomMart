@@ -311,7 +311,7 @@ public class SystemDao {
     private static final String RES_UPDATE_ACCOUNT = "UPDATE Accounts "
                                     + "SET password = ?, token = '' , role = ?, status = 1,  otp = '' "
                                     + "WHERE email = ? "
-                                    + "RETURNING account_id, email";
+                                    + "RETURNING account_id";
     private static final String RES_UPDATE_USERINFORMATION = "INSERT INTO AccountInformations (account_id, fullname, birthday, sex, phone, address, identity_card_number) "
             + "values (?, ?, ?, ?, ?, ?, ?)";
 
