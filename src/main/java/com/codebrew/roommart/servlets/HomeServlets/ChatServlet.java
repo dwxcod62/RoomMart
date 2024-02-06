@@ -26,7 +26,17 @@ public class ChatServlet extends HttpServlet {
         UserInformation ui = uid.getAccountInformationById(acc.getAccId());
 
 //        int renterId = acc.getAccId();
-        String renterId = request.getParameter("renterId");
+
+
+        String renterId_raw = request.getParameter("renterId");
+        if (renterId_raw != null){
+            System.out.println("renterId_raw " +renterId_raw);
+            int renterId = Integer.parseInt(renterId_raw);
+            UserInformation renter_ui = uid.getAccountInformationById(renterId);
+            request.setAttribute("infor2",renter_ui);
+
+        }
+
         int role = acc.getRole();
         int ownerId=0;
         if(role==1){
@@ -38,12 +48,14 @@ public class ChatServlet extends HttpServlet {
         try {
 
             System.out.println("ownerid (session): "+ownerId);
-            System.out.println("renterid (session): "+renterId);
+            System.out.println("renterid (session): "+renterId_raw);
             System.out.println("role: "+role);
 
             request.setAttribute("infor",ui);
+
+
             session.setAttribute("ownerId",ownerId);
-            session.setAttribute("renterId",renterId);
+            session.setAttribute("renterId",renterId_raw);
             session.setAttribute("role",role);
             request.getRequestDispatcher("pages/home/chat.jsp").forward(request,response);
 
@@ -64,6 +76,7 @@ public class ChatServlet extends HttpServlet {
         UserInformationDAO uid = new UserInformationDAO();
 
         UserInformation ui = uid.getAccountInformationById(acc.getAccId());
+
 //        int renterId = acc.getAccId();
         int renterId = acc.getAccId();
     int role = acc.getRole();
@@ -76,6 +89,8 @@ public class ChatServlet extends HttpServlet {
             int roomId = Integer.parseInt(roomId_raw);
 
             int ownerId = hod.getOwnerIdByHostelId(hostelId);
+            UserInformation owner_ui = uid.getAccountInformationById(ownerId);
+            request.setAttribute("infor2",owner_ui);
             System.out.println("ownerid (session): "+ownerId);
             System.out.println("renterid (session): "+renterId);
             System.out.println("hostelid :"+hostelId);

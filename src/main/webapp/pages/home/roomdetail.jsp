@@ -1,4 +1,5 @@
 
+<%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -58,11 +59,22 @@
 
                 <div class="re__control-menu">
 
-                    <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
-                        <a href="#login" class="re__btn re__btn-se-ghost--md">Login</a>
-                        <span class="re__line"></span>
-                        <a href="#register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" id="kct_username" tracking-id="sign-up-button-seller" tracking-label="loc=Header">Register</a>
-                    </div>
+                    <c:if test = "${sessionScope.USER != null}">
+                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
+                            <a href="#AccInformation" class="re__btn re__btn-se-ghost--md">
+                                    ${sessionScope.USER.email.split("@")[0]}
+                            </a>
+                            <span class="re__line"></span>
+                            <a href="logout" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >logout</a>
+                        </div>
+                    </c:if>
+                    <c:if test = "${sessionScope.USER == null}">
+                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
+                            <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>
+                            <span class="re__line"></span>
+                            <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>
+                        </div>
+                    </c:if>
 
                 </div>
                 <!-- icon -->
@@ -271,7 +283,8 @@
 
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
-                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${r.roomId}" >
+                                        <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
+                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${encodedRoomId}" >
                                             <div class="re__card-image
             ">
                                                 <img alt="Ảnh đại diện" class="pr-img lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}">

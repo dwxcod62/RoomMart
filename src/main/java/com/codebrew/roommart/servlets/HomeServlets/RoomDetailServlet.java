@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 import com.cloudinary.*;
 import com.codebrew.roommart.dto.ServiceInfo;
+import com.codebrew.roommart.utils.EncodeUtils;
 
 @WebServlet(name = "RoomDetailServlet", value = "/RoomDetailServlet")
 public class RoomDetailServlet extends HttpServlet {
@@ -25,7 +26,9 @@ public class RoomDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         System.out.println("RoomDetailServlet");
-        String rid_raw = request.getParameter("rid");
+        String decodeRoomId = EncodeUtils.decodeString(request.getParameter("rid"));
+        System.out.println("decodeRoomId: " +decodeRoomId);
+        String rid_raw = decodeRoomId;
         int rid = Integer.parseInt(rid_raw);
         RoomDAO rd = new RoomDAO();
         InfrastructureDAO infraDao = new InfrastructureDAO();

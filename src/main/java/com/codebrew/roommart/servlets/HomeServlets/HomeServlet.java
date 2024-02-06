@@ -2,6 +2,7 @@ package com.codebrew.roommart.servlets.HomeServlets;
 
 import com.codebrew.roommart.dao.RoomDAO;
 import com.codebrew.roommart.dto.Room;
+import com.codebrew.roommart.utils.EncodeUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,9 @@ public class HomeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         RoomDAO rd = new RoomDAO();
+
+
+
 
         List<Room> rooms = rd.getAllRoom();
         System.out.println("get size room: "+rooms.size());
