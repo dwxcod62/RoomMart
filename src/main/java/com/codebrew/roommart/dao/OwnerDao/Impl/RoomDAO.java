@@ -4,6 +4,7 @@ import com.codebrew.roommart.dao.OwnerDao.IRoomDAO;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.RoomInformation;
 import com.codebrew.roommart.utils.DatabaseConnector;
+import com.codebrew.roommart.utils.OwnerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,39 +22,44 @@ public class RoomDAO implements IRoomDAO {
         ArrayList<Room> rooms = new ArrayList<>();
 
         try {
-            // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
-            String sql = "SELECT room_id, hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
-                    "FROM Rooms\n" +
-                    "WHERE hostel_id = ?";
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
 
-            pst = cn.prepareStatement(sql);
-            pst.setInt(1, hostelID);
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                String sql = "SELECT room_id, hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
+                        "FROM Rooms\n" +
+                        "WHERE hostel_id = ?";
 
-            rs = pst.executeQuery();
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, hostelID);
 
-            if (rs != null) {
-                while (rs.next()) {
-                    int roomID = rs.getInt("room_id");
-                    int roomNumber = rs.getInt("room_number");
-                    int capacity = rs.getInt("capacity");
-                    double roomArea = rs.getDouble("room_area");
-                    int hasAttic = rs.getInt("has_attic");
-                    int roomStatus = rs.getInt("room_status");
-                    RoomInformation roomInformation = null;
-                    rooms.add(Room.builder()
-                            .roomId(roomID)
-                            .hostelId(hostelID)
-                            .roomNumber(roomNumber)
-                            .roomArea(roomArea)
-                            .capacity(capacity)
-                            .roomStatus(roomStatus)
-                            .hasAttic(hasAttic)
-                            .roomInformation(roomInformation)
-                            .build());
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int roomID = rs.getInt("room_id");
+                        int roomNumber = rs.getInt("room_number");
+                        int capacity = rs.getInt("capacity");
+                        double roomArea = rs.getDouble("room_area");
+                        int hasAttic = rs.getInt("has_attic");
+                        int roomStatus = rs.getInt("room_status");
+                        RoomInformation roomInformation = null;
+                        rooms.add(Room.builder()
+                                .roomId(roomID)
+                                .hostelId(hostelID)
+                                .roomNumber(roomNumber)
+                                .roomArea(roomArea)
+                                .capacity(capacity)
+                                .roomStatus(roomStatus)
+                                .hasAttic(hasAttic)
+                                .roomInformation(roomInformation)
+                                .build());
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
         }
         return rooms;
     }
@@ -87,6 +93,8 @@ public class RoomDAO implements IRoomDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
         }
         return number;
     }

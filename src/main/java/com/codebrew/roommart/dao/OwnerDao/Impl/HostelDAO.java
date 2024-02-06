@@ -3,6 +3,7 @@ package com.codebrew.roommart.dao.OwnerDao.Impl;
 import com.codebrew.roommart.dao.OwnerDao.IHostelDAO;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 import com.codebrew.roommart.utils.DatabaseConnector;
+import com.codebrew.roommart.utils.OwnerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,15 +61,7 @@ public class HostelDAO implements IHostelDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (pst != null) {
-                pst.close();
-            }
-            if (cn != null) {
-                cn.close();
-            }
+            OwnerUtils.closeSQL(cn, pst, rs);
         }
         return hostel;
     }
@@ -107,6 +100,8 @@ public class HostelDAO implements IHostelDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
         }
         return listHostels;
     }
