@@ -152,7 +152,7 @@
                                             <img class="avatar-img" src="https://i.imgur.com/a8AWgbF.png" alt="">
                                         </div>
 
-                                        <h5>Owner ${sessionScope.ownerId}</h5>
+                                        <h5>${requestScope.infor.fullname}</h5>
 <%--                                        <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML.</p>--%>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                                             <div class="media align-items-center">
                                                 <div class="media-body">
                                                     <p class="small text-muted mb-0">Country</p>
-                                                    <p>Owner country</p>
+                                                    <p>${requestScope.infor.address}</p>
                                                 </div>
                                                 <i class="text-muted icon-sm fe-globe"></i>
                                             </div>
@@ -177,7 +177,7 @@
                                             <div class="media align-items-center">
                                                 <div class="media-body">
                                                     <p class="small text-muted mb-0">Phone</p>
-                                                    <p>+84 xxxx xxxx</p>
+                                                    <p>${requestScope.infor.phone}</p>
                                                 </div>
                                                 <i class="text-muted icon-sm fe-mic"></i>
                                             </div>
@@ -187,7 +187,7 @@
                                             <div class="media align-items-center">
                                                 <div class="media-body">
                                                     <p class="small text-muted mb-0">Email</p>
-                                                    <p>xxxx@gmail.com</p>
+                                                    <p>${requestScope.infor.email}</p>
                                                 </div>
                                                 <i class="text-muted icon-sm fe-mail"></i>
                                             </div>
@@ -250,7 +250,7 @@
                                     </div>
 
                                     <div class="media-body align-self-center text-truncate">
-                                        <h6 class="text-truncate mb-n1">${sessionScope.role==1? "User":"Owner"} ${sessionScope.role==1?(sessionScope.renterId):sessionScope.ownerId} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}
+                                        <h6 class="text-truncate mb-n1">${sessionScope.role==1 || sessionScope.role==2? "User":"Owner"} ${sessionScope.role==1|| sessionScope.role==2?(sessionScope.renterId):sessionScope.ownerId} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}
                                         </h6>
                                         <button id="read" class="text-uppercase btn-secondary" onclick="showChat()">Connect</button>
                                         <!-- <small class="text-muted">35 members</small>
@@ -343,7 +343,7 @@
 
                                 <!-- Title(mobile) -->
                                 <li class="text-center d-block d-lg-none">
-                                    <h6 class="mb-n2">${sessionScope.role==1? "User":"Owner"} ${sessionScope.role==1?(sessionScope.renterId):sessionScope.ownerId} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}</h6>
+                                    <h6 class="mb-n2">${sessionScope.role==1||sessionScope.role==2 ?"User":"Owner"} ${sessionScope.role==1||sessionScope.role==2?(sessionScope.renterId):sessionScope.ownerId} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}</h6>
                                     <small class="text-muted">Chat Details</small>
                                 </li>
 
@@ -510,8 +510,10 @@
 
     const renterId = "${sessionScope.renterId !=null ? sessionScope.renterId: "null"}";
     const role = "${sessionScope.role !=null ? sessionScope.role: "null"}";
+    const acc = "${sessionScope.USER !=null ? sessionScope.USER: "null"}";
 
 
+    console.log("acc" + acc)
     console.log("userid : "+renterId);
     console.log("ownerid : "+ownerId);
     console.log("role: "+role)

@@ -1,7 +1,12 @@
 package com.codebrew.roommart.servlets.HomeServlets;
 
+
+
+
 import com.codebrew.roommart.dao.HostelOwnerDAO;
+import com.codebrew.roommart.dao.UserInformationDAO;
 import com.codebrew.roommart.dto.Account;
+import com.codebrew.roommart.dto.UserInformation;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,16 +21,19 @@ public class ChatServlet extends HttpServlet {
         HttpSession session = request.getSession();
         HostelOwnerDAO hod = new HostelOwnerDAO();
         Account acc = (Account) session.getAttribute("USER");
+        UserInformationDAO uid = new UserInformationDAO();
+
+        UserInformation ui = uid.getAccountInformationById(acc.getAccId());
 
 //        int renterId = acc.getAccId();
         String renterId = request.getParameter("renterId");
-        int role = 1;
+        int role = acc.getRole();
         int ownerId=0;
         if(role==1){
-            ownerId = 2; // get from acc id
+            ownerId = acc.getAccId(); // get from acc id
         }
 
-
+        System.out.println("est");
 
         try {
 
@@ -33,7 +41,7 @@ public class ChatServlet extends HttpServlet {
             System.out.println("renterid (session): "+renterId);
             System.out.println("role: "+role);
 
-
+            request.setAttribute("infor",ui);
             session.setAttribute("ownerId",ownerId);
             session.setAttribute("renterId",renterId);
             session.setAttribute("role",role);
@@ -53,10 +61,12 @@ public class ChatServlet extends HttpServlet {
         HttpSession session = request.getSession();
         HostelOwnerDAO hod = new HostelOwnerDAO();
         Account acc = (Account) session.getAttribute("USER");
+        UserInformationDAO uid = new UserInformationDAO();
 
+        UserInformation ui = uid.getAccountInformationById(acc.getAccId());
 //        int renterId = acc.getAccId();
-        int renterId = 3;
-    int role = 2;
+        int renterId = acc.getAccId();
+    int role = acc.getRole();
         String hostelId_raw = request.getParameter("hostelId");
         String roomId_raw = request.getParameter("roomId");
 
@@ -70,6 +80,7 @@ public class ChatServlet extends HttpServlet {
             System.out.println("renterid (session): "+renterId);
             System.out.println("hostelid :"+hostelId);
 
+            request.setAttribute("infor",ui);
             request.setAttribute("hostelId",hostelId);
             request.setAttribute("roomId",roomId);
             session.setAttribute("role",role);
