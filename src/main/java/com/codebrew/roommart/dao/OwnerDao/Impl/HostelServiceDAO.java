@@ -19,7 +19,7 @@ public class HostelServiceDAO implements IHostelServiceDAO {
 
     private static final String INSERT_LIST_SERVICES_INTO_HOSTEL =
             "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date, status)\n" +
-                    "VALUES (?, ?, ?, GETDATE(), 1)";
+                    "VALUES (?, ?, ?, CURRENT_DATE, true)";
 
     private static final String UPDATE_STATUS_HOSTEL_SERVICES =
             "UPDATE HostelService SET status = ?\n" +
@@ -43,7 +43,8 @@ public class HostelServiceDAO implements IHostelServiceDAO {
                             .serviceID(rs.getInt("service_id"))
                             .servicePrice(rs.getInt("service_price"))
                             .validDate(rs.getString("valid_date"))
-                            .status(rs.getInt("status")).build());
+                            .status(OwnerUtils.convertBooleanToInt(rs.getBoolean("status")))
+                            .build());
                 }
             }
         } catch (Exception e) {

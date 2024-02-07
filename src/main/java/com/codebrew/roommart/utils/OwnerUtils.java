@@ -29,4 +29,15 @@ public class OwnerUtils {
             }
         }
     }
+
+    public static int convertBooleanToInt(boolean bool) {
+        if (bool) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public static boolean convertIntToBoolean(int num) {
+        return num == 1;
+    }
 }

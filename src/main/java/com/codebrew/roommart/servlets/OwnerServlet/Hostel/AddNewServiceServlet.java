@@ -10,7 +10,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AddNewServiceServlet", value = "/add-new-service")
+@WebServlet(name = "AddNewServiceServlet", value = "/add-new-service") // lỗi add nhiều record cùng 1 lúc, fix sau
 public class AddNewServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,6 +34,7 @@ public class AddNewServiceServlet extends HttpServlet {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
                         .content("Đã có lỗi xảy ra! Vui lòng thử lại sau!").build());
+                url += hostelId;
             } else {
                 list.add(HostelService.builder()
                         .serviceID(serviceId)
@@ -50,9 +51,8 @@ public class AddNewServiceServlet extends HttpServlet {
                             .status(false)
                             .content("Thêm dịch vụ mới thất bại!").build());
                 }
+                url += hostelId;
             }
-            url += hostelId;
-
         } catch (Exception e) {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {
