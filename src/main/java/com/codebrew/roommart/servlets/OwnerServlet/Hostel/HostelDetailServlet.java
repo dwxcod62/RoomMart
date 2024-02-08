@@ -1,6 +1,7 @@
 package com.codebrew.roommart.servlets.OwnerServlet.Hostel;
 
 
+import com.codebrew.roommart.dao.OwnerDao.Impl.ServiceDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.ServiceInfoDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
@@ -8,6 +9,7 @@ import com.codebrew.roommart.dao.OwnerDao.Impl.RoomDAO;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.ServiceInfo;
+import com.codebrew.roommart.dto.Services;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,7 +31,7 @@ public class HostelDetailServlet extends HttpServlet {
 
             int hostelId = Integer.parseInt(request.getParameter("hostelID"));
 
-            Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, 1); // accountId ảo
+            Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, 1); //thông tin hostel (để xem chi tiết) // accountId ảo
 
             RoomDAO roomDao = new RoomDAO();
 
@@ -39,15 +41,19 @@ public class HostelDetailServlet extends HttpServlet {
                 return;
             }
 
-            List<Room> rooms = roomDao.getListRoomsByHostelId(hostelId);
-//        int numberRoom = roomDao.getNumberRoomSpecificHostel(hostelId); // chua can su dung
+            List<Room> rooms = roomDao.getListRoomsByHostelId(hostelId);  // list các room của hostel đó
+            int roomQuantity = roomDao.getNumberRoomSpecificHostel(hostelId); // tổng số phòng của hostel đó
 
-            List<ServiceInfo> serviceList = new ServiceInfoDAO().getServicesOfHostel(hostelId);
+            List<ServiceInfo> serviceList = new ServiceInfoDAO().getServicesOfHostel(hostelId); // thông tin dịch vụ của hostel đó
+
+            List<Services> listServicesNotInHostel = new ServiceDAO().getListServicesNotInHostel(hostelId); // danh sách service mà chủ trọ có thể chọn để thêm vào các dịch vụ hiện có của khu trọ của họ (các dịch vụ này sẽ không trùng lăp với dịch vụ đang hiện có của khu trọ đó) => when click modal add new service
             url = "pages/owner/hostel/hostel-detail.jsp";
             request.setAttribute("hostel", hostel);
             session.setAttribute("hostel", hostel);
             request.setAttribute("roomList", rooms);
             request.setAttribute("serviceInfo", serviceList);
+            request.setAttribute("roomQuantity", roomQuantity);
+            request.setAttribute("services", listServicesNotInHostel);
             session.setAttribute("CURRENT_PAGE", "hostel");
         } catch (Exception e) {
             log("Error at HostelDetailServlet: " + e.toString());
