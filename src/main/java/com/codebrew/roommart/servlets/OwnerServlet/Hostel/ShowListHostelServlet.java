@@ -25,7 +25,7 @@ public class ShowListHostelServlet extends HttpServlet {
         HttpSession session = request.getSession();
 //        acc = (Account) session.getAttribute("USER");
 //        int accountId = acc.getAccountId();
-        int accountId = 1;
+        int accountId = 21;
         List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(accountId);
 
         Map<Integer, Integer> ListNumberTotalRoomsOfHostel = new HashMap<>();
