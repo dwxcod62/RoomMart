@@ -2,6 +2,7 @@ package com.codebrew.roommart.servlets.RecoveryServlet;
 
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Status;
+import com.codebrew.roommart.utils.EmailUtils;
 import com.codebrew.roommart.utils.EncodeUtils;
 
 import javax.servlet.*;
@@ -105,8 +106,8 @@ public class PasswordResetServlet extends HttpServlet {
 
             SystemDao dao = new SystemDao();
             if ( !password.isEmpty() ){
-                if ( dao.resetPassword(code, password) ){
-//                    Send mail bao thay pass thanh cong
+                if ( dao.resetPassword(code, EncodeUtils.hashSHA256(password)) ){
+                    new EmailUtils().sendPasswordChangeSuccessEmail(request.getParameter("email"));
                     status = Status.builder()
                                     .status(true)
                                     .content("Password updated successfully!")

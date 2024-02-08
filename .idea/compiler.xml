@@ -13,7 +13,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="RoomMart" options="-endorseddirs &quot;E:\Hoc Tap\RoomRetelHub\RoomMart\RoomMart\target/endorsed&quot;" />
+      <module name="RoomMart" options="-endorseddirs D:\Coding-With-Dwsc\Java\RoomMart\target/endorsed" />
     </option>
   </component>
 </project>

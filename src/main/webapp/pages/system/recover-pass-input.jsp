@@ -41,6 +41,7 @@
             <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                 <form id="rcvForm" method="POST" action="password-reset">
                     <input class="hidden" name="code" value="${requestScope.RECOVER_CODE}">
+                    <input class="hidden" name="email" value="${requestScope.EMAIL}">
                     <div class="mt-6">
                         <label for="password" class="block text-sm font-medium leading-5 text-gray-700"> Password </label>
                         <div class="mt-1 rounded-md shadow-sm">
