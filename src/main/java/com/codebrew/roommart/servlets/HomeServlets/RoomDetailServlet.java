@@ -25,15 +25,24 @@ public class RoomDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        System.out.println("RoomDetailServlet");
-        String decodeRoomId = EncodeUtils.decodeString(request.getParameter("rid"));
-        System.out.println("decodeRoomId: " +decodeRoomId);
-        String rid_raw = decodeRoomId;
+        System.out.println("RoomDetailServlet==============================================================");
+        String decodeRoomId = null;
+        String rid_raw = null;
+        try{
+            decodeRoomId = EncodeUtils.decodeString(request.getParameter("rid"));
+            System.out.println("decodeRoomId: " +decodeRoomId);
+             rid_raw = decodeRoomId;
+        }catch (Exception e){
+            System.out.println("RoomDetail Servlet error - decode id");
+            request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
+            return;
+        }
+
         int rid=0;
         try {
                    rid = Integer.parseInt(rid_raw);
         }catch (Exception e){
-            System.out.println("Parse int room detail id error");
+            System.out.println("RoomDetail Servlet error - Parse int id error");
             request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
 
            return;

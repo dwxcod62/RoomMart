@@ -129,7 +129,7 @@
                                     <div class="re__search-location-row re__search-location-select-header-item js_search-location-select-header-item">
                                         <i class="js__selected-icon re__icon-search re__city-icon-search"></i>
 
-                                        <input type="text" id="textInput" name="key" title="Enter address follow pattern: province,(district),(ward)" class="w3-input w3-animate-input re__city-code-select js__listing-search-select-container js__city-code-select">
+                                        <input value="${requestScope.key}" type="text" id="textInput" name="key" title="Enter address follow pattern: province,(district),(ward)" class="w3-input w3-animate-input re__city-code-select js__listing-search-select-container js__city-code-select">
 
                                         <button type="submit" class="re__btn re__btn-pr-solid--sm re__btn-icon-left--sm re__btn-search" id="btnSearch">
                                             <span>Tìm kiếm</span>

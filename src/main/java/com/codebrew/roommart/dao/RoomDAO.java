@@ -277,7 +277,7 @@ public class RoomDAO {
                     sql+=")\n";
                 }
                 sql+=groupBySql;
-                System.out.println(sql);
+//                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 

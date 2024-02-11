@@ -19,10 +19,8 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        System.out.println("HomeServlet============================================");
         RoomDAO rd = new RoomDAO();
-
-
 
 
         List<Room> rooms = rd.getAllRoom();
@@ -35,7 +33,7 @@ public class HomeServlet extends HttpServlet {
         }else {
             request.setAttribute("rooms", rooms);
         }
-//        System.out.println("room id "+ rooms.get(0).getRoomId());
+
         request.getRequestDispatcher("home.jsp").forward(request,response);
 
 

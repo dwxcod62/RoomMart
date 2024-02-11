@@ -18,6 +18,7 @@ public class ChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        System.out.println("ChatServlet======================================================");
         HttpSession session = request.getSession();
         HostelOwnerDAO hod = new HostelOwnerDAO();
         Account acc = (Account) session.getAttribute("USER");
@@ -25,7 +26,7 @@ public class ChatServlet extends HttpServlet {
 
         UserInformation ui = uid.getAccountInformationById(acc.getAccId());
 
-//        int renterId = acc.getAccId();
+
 
 
         String renterId_raw = request.getParameter("renterId");
@@ -60,7 +61,7 @@ public class ChatServlet extends HttpServlet {
             request.getRequestDispatcher("pages/home/chat.jsp").forward(request,response);
 
         }catch (Exception e){
-            System.out.println("chatservlet error get");
+            System.out.println("ChatServlet error - get");
         }
 
 
@@ -104,7 +105,7 @@ public class ChatServlet extends HttpServlet {
             request.getRequestDispatcher("pages/home/chat.jsp").forward(request,response);
 
         }catch (Exception e){
-            System.out.println("chatservlet error get");
+            System.out.println("ChatServlet error - post");
             System.out.println(e);
         }
 

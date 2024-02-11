@@ -51,7 +51,9 @@ public class SearchServlet extends HttpServlet {
         }else {
             request.setAttribute("rooms", rooms);
         }
-//        System.out.println("room id "+ rooms.get(0).getRoomId());
+
+        request.setAttribute("key",inputText);
+
         request.getRequestDispatcher("home.jsp").forward(request,response);
     }
 
