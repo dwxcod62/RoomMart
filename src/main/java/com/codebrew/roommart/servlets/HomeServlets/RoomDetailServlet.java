@@ -29,7 +29,17 @@ public class RoomDetailServlet extends HttpServlet {
         String decodeRoomId = EncodeUtils.decodeString(request.getParameter("rid"));
         System.out.println("decodeRoomId: " +decodeRoomId);
         String rid_raw = decodeRoomId;
-        int rid = Integer.parseInt(rid_raw);
+        int rid=0;
+        try {
+                   rid = Integer.parseInt(rid_raw);
+        }catch (Exception e){
+            System.out.println("Parse int room detail id error");
+            request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
+
+           return;
+
+        }
+
         RoomDAO rd = new RoomDAO();
         InfrastructureDAO infraDao = new InfrastructureDAO();
         ServiceInfoDAO serviceIDao = new ServiceInfoDAO();

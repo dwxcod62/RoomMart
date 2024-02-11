@@ -131,10 +131,14 @@
     </div>
 </div>
 
+
+
+<c:if test="${not empty requestScope.room}" >
 <div class="re__main" itemprop="about">
 
+
     <!-- Product-detail-->
-    <div class="re__ldp re__main-content-layout js__main-container">
+    <div  class="re__ldp re__main-content-layout js__main-container ">
 
         <div class="re__main-content">
 
@@ -413,8 +417,16 @@
 
 
 
-</div>
 
+</div>
+</c:if>
+<c:if test="${empty requestScope.room}" >
+    <div style="text-align: center;" class="re__ldp re__main-content-layout js__main-container">
+        <img  src="https://res.cloudinary.com/dqp6vdayn/image/upload/v1707647165/What-is-a-404-error-code_lu1xgy.png" style="display: block; margin: auto;">
+
+
+    </div>
+</c:if>
 
 
 

@@ -204,8 +204,7 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 //room_id	property_id	room_number	room_area	attic	room_status
-                String groupBySql=
-                        " GROUP BY \n" +
+                String groupBySql=" GROUP BY \n" +
                                 "    rooms.room_id, \n"+
                                 "    room_number, \n" +
                                 "    capacity, \n" +
@@ -216,7 +215,7 @@ public class RoomDAO {
                                 "    address,\n" +
                                 "    city,\n" +
                                 "    ward,\n" +
-                                "    district\n"+"ORDER BY \n" +
+                                "    district\n"+" ORDER BY \n" +
                                 "    rooms.room_id ASC;";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
@@ -239,33 +238,46 @@ public class RoomDAO {
                         "JOIN \n" +
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
                         "JOIN \n" +
-                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n";
+                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n  where 1=1 ";
 
 
                 if(inputText!=null){
-                    sql += " WHERE LOWER(hostels.city) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.district) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.ward) LIKE '%" + inputText.toLowerCase() + "%' \n";
-                    sql+= " OR LOWER(hostels.name) LIKE '%" + inputText.toLowerCase() + "%' "+" OR LOWER(hostels.address) LIKE '%" + inputText.toLowerCase() + "%' ";
-                    sql+= " OR rooms.room_number = '" + inputText + "' " + " OR rooms.room_area = '" + inputText + "' ";
 
-                } else if  (city != "all" && city!= null) {
+                    try{
+                        int input_number = Integer.parseInt(inputText);
+                        sql += " AND ( rooms.room_number = '"+input_number+"'  OR rooms.room_area =  '"+input_number+"')";
+                    }catch (Exception e){
+                        System.out.println("int parse error");
+                        String inputTextLower = inputText.toLowerCase();
+                        sql += "AND ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputTextLower + "%')\n";
+
+                    }
+
+
+                }
+                if  (!city.equalsIgnoreCase("all") && city!= null) {
                     System.out.println("CITY NOT EMPTY");
 //                    String c = "Thành Phố Hà Nội";
 //                    if(c.equalsIgnoreCase(city)){
 //                        System.out.println(c + " == " +city);
 //                    }else System.out.println(c + " != " +city);
-                    sql += " WHERE hostels.city LIKE '" + city + "'";
-                    if (district != "all" && district != "" && city!= null) {
+                    sql += " AND( hostels.city LIKE '" + city + "'";
+                    if (!district .equalsIgnoreCase("all") && district != "" && city!= null) {
                         System.out.println("district not empty : " +district);
 
                         sql += " AND hostels.district LIKE '" + district + "'";
-                        if (ward != "all" && district != "" && city!= null) {
+                        if (!ward .equalsIgnoreCase("all") && district != "" && city!= null) {
                             System.out.println("ward not empty : " + ward);
 
                             sql += " AND hostels.ward = '" + ward + "'";
                         }
+
                     }
+                    sql+=")\n";
                 }
                 sql+=groupBySql;
+                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
