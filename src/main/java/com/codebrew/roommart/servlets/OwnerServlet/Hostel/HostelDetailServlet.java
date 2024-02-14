@@ -27,11 +27,11 @@ public class HostelDetailServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             acc = (Account) session.getAttribute("USER");
-//        int accountId = acc.getAccountId();
+            int accountId = acc.getAccId();
 
             int hostelId = Integer.parseInt(request.getParameter("hostelID"));
 
-            Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, 1); //thông tin hostel (để xem chi tiết) // accountId ảo
+            Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, accountId); //thông tin hostel (để xem chi tiết)
 
             RoomDAO roomDao = new RoomDAO();
 

@@ -19,7 +19,7 @@ public class HostelServiceDAO implements IHostelServiceDAO {
 
     private static final String INSERT_LIST_SERVICES_INTO_HOSTEL =
             "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date, status)\n" +
-                    "VALUES (?, ?, ?, CURRENT_DATE, true)";
+                    "VALUES (?, ?, ?, GETDATE(), 1)";
 
     private static final String UPDATE_STATUS_HOSTEL_SERVICES =
             "UPDATE HostelService SET status = ?\n" +
