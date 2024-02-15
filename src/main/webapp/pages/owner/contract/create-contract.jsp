@@ -13,7 +13,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
 
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
@@ -60,7 +63,14 @@
                                         />
                                     </div>
                                 </div>
-                                <span class="form-message mt-4"> </span>
+                                <div class="row align-items-center my-2">
+                                    <div class="col-6">
+                                        <span class="form-message mt-4"> </span>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary" id="checkButton">Check</button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -274,28 +284,11 @@
     <div id="toast">&nbsp;</div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".datepicker").datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true,
-            });
-        });
-    </script>
-    <script>
-        $(".advanced-form").hide();
 
-        $("#toggle-checkbox").change(function () {
-            if ($(this).is(":checked")) {
-                $(".advanced-form").show();
-            } else {
-                $(".advanced-form").hide();
-                $("input[id='fixed-years']").val("");
-                $("input[id='percentage-increase']").val("");
-            }
-        });
-    </script>
+    <script src="./assets/js/contract/create-contract.js"></script>
+
 </body>
 </html>

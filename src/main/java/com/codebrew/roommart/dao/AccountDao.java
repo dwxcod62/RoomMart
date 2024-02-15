@@ -13,6 +13,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDao {
+
+
+    private static final String CHECK_ACCOUNT_EXIST_BY_ROLE = "select account_id from accounts where email = ? and role = ?";
+    public boolean checkAccountExistByRole(String email, int role){
+        boolean result = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(CHECK_ACCOUNT_EXIST_BY_ROLE);
+                pst.setString(1, email);
+                pst.setInt(2, role);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    result = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
     public  Account getAccountByToken(String token){
         Account acc = null;
         Connection cn = null;
