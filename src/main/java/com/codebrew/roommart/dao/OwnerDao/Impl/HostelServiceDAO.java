@@ -14,8 +14,7 @@ import java.util.List;
 public class HostelServiceDAO implements IHostelServiceDAO {
     private static final String GET_CURRENT_LIST_SERVICES_OF_A_HOSTEL =
             "SELECT hostel_service_id, hostel_id, service_id, service_price, valid_date, status \n" +
-//                    "FROM HostelService WHERE status = 1 AND hostel_id = ?"; // chua check status
-                    "FROM HostelService WHERE hostel_id = ?";
+                    "FROM HostelService WHERE status = 1 AND hostel_id = ?";
 
     private static final String INSERT_LIST_SERVICES_INTO_HOSTEL =
             "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date, status)\n" +
@@ -56,7 +55,7 @@ public class HostelServiceDAO implements IHostelServiceDAO {
     }
 
     @Override
-    public boolean updateStatusOfListHostelServices(boolean status, List<HostelService> hostelServiceList) {
+    public boolean updateStatusOfListHostelServices(int status, List<HostelService> hostelServiceList) {
         Connection conn = null;
         PreparedStatement psm = null;
 
@@ -69,7 +68,7 @@ public class HostelServiceDAO implements IHostelServiceDAO {
                 boolean checkUpdate;
                 for (HostelService item : hostelServiceList) {
                     psm = conn.prepareStatement(UPDATE_STATUS_HOSTEL_SERVICES);
-                    psm.setBoolean(1, status);
+                    psm.setInt(1, status);
                     psm.setInt(2, item.getHostelServiceId());
                     checkUpdate = psm.executeUpdate() > 0;
 
@@ -127,5 +126,27 @@ public class HostelServiceDAO implements IHostelServiceDAO {
             OwnerUtils.closeSQL(conn, psm, null);
         }
         return check;
+    }
+
+    public void addNewHostelService(HostelService hostelService) {
+        Connection conn = null;
+        PreparedStatement psm = null;
+
+        try {
+            conn = DatabaseConnector.makeConnection();
+
+            if (conn != null) {
+                psm = conn.prepareStatement(INSERT_LIST_SERVICES_INTO_HOSTEL);
+
+                psm.setInt(1, hostelService.getHostelID());
+                psm.setInt(2, hostelService.getServiceID());
+                psm.setInt(3, hostelService.getServicePrice());
+                psm.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(conn, psm, null);
+        }
     }
 }

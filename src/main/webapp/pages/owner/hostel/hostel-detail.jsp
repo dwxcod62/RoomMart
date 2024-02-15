@@ -126,7 +126,7 @@
                                             </td>
                                             <td>
                                                 <!-- Room detail link -->
-                                                <a href="roomDetail?roomID=${room.roomId}" class="room-detail-link">Xem chi tiết</a>
+                                                <a href="/roomDetail?roomID=${room.roomId}" class="room-detail-link">Xem chi tiết</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
