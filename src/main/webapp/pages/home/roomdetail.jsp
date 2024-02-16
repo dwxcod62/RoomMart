@@ -25,19 +25,27 @@
 
     <!-- responsive style -->
     <%--    <link rel="stylesheet" href="assets/css/style.css">--%>
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
-    <%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">--%>
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/lib/jquery-swiper/css/swiper.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/js/lightGallery1.2.21/css/lightgallery.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/lib/slick/slick.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.ldp.min.css" />
-    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/filestatic.ver7.msvbds.speedup.min.js" async="" data-cfasync="false"></script>
-    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Common/Global/filestatic.ver7.msvbds.Extensions.min.js" async="" data-cfasync="false"></script>
-    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3a77c7a9.msvbds.FrontEnd.GAMBannerViewer.min.js" async="" data-cfasync="false"></script>
-    <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3.msvbds.FrontEnd.GAMBannerScript.min.js" async="" data-cfasync="false"></script>
+<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">--%>
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
+
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/lib/jquery-swiper/css/swiper.min.css" />
+
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/js/lightGallery1.2.21/css/lightgallery.min.css" />
+
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/lib/slick/slick.min.css" />
+
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.ldp.min.css" />
+
+    <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/filestatic.ver7.msvbds.speedup.min.js" async="" data-cfasync="false"></script>
+
+    <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Common/Global/filestatic.ver7.msvbds.Extensions.min.js" async="" data-cfasync="false"></script>
+    <script async src="src/main/webapp/assets/sys-css/securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3a77c7a9.msvbds.FrontEnd.GAMBannerViewer.min.js" async="" data-cfasync="false"></script>
+    <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3.msvbds.FrontEnd.GAMBannerScript.min.js" async="" data-cfasync="false"></script>
 
 
 
@@ -166,8 +174,10 @@
                         <!-- Add Pagination -->
                         <div class="swiper-pagination swiper-pagination-fraction"><span class="swiper-pagination-current">1</span>&nbsp;/&nbsp;<span class="swiper-pagination-total">16</span></div>
                         <!-- Add Arrows -->
-                        <div action="go-right"><a class="re__btn re__btn-se-border--sm re__btn-icon--sm"><i class="re__icon-chevron-right"></i></a></div>
-                        <div action="go-left"><a class="re__btn re__btn-se-border--sm re__btn-icon--sm"><i class="re__icon-chevron-left"></i></a></div>
+<%--                        <i class="re__icon-chevron-right"></i>--%>
+<%--                        <i class="re__icon-chevron-left"></i>--%>
+                        <div action="go-right"><a class="re__btn re__btn-se-border--sm re__btn-icon--sm"> <i class="bi bi-caret-right"></i> </a></div>
+                        <div action="go-left"><a class="re__btn re__btn-se-border--sm re__btn-icon--sm"> <i class="bi bi-caret-left"></i> </a></div>
                     </div>
                     <div class="re__media-thumbs js__media-thumbs ">
                         <div class="js__slick-thumb">
@@ -183,7 +193,7 @@
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver2.msvbds.FrontEnd.Product.Details.MediaSlide.Psi.min.js" async="" data-cfasync="false"></script>
+                <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver2.msvbds.FrontEnd.Product.Details.MediaSlide.Psi.min.js" async="" data-cfasync="false"></script>
 
                 <div class="re__pr-info pr-info js__product-detail-web" id="product-detail-web" uid="522997" prid="38582357">
                     <h1 class="re__pr-title pr-title js__pr-title">${room.roomInformation.hostelName} - ${room.roomNumber}</h1>
@@ -238,27 +248,27 @@
                             <div class="re__pr-specs-content js__other-info">
 
                                 <div class="re__pr-specs-content-item">
-                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-size"></i></span>
+                                    <span class="re__pr-specs-content-item-icon"><i class="bi bi-bounding-box-circles"></i></span>
                                     <span class="re__pr-specs-content-item-title">Diện tích</span>
                                     <span class="re__pr-specs-content-item-value">${room.roomArea} m&#xB2;</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
-                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-money"></i></span>
+                                    <span class="re__pr-specs-content-item-icon"><i class="bi bi-cash"></i></span>
                                     <span class="re__pr-specs-content-item-title">Mức giá</span>
                                     <span class="re__pr-specs-content-item-value">Price tri&#x1EC7;u/th&#xE1;ng</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
-                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-bedroom"></i></span>
+                                    <span class="re__pr-specs-content-item-icon"><i class="bi bi-border-all"></i></span>
                                     <span class="re__pr-specs-content-item-title">Số phòng ngủ</span>
                                     <span class="re__pr-specs-content-item-value">${room.capacity} phòng</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
-                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-bath"></i></span>
+                                    <span class="re__pr-specs-content-item-icon"><i class="bi bi-chevron-up"></i></span>
                                     <span class="re__pr-specs-content-item-title">Số Attic</span>
                                     <span class="re__pr-specs-content-item-value">${room.hasAttic} phòng</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
-                                    <span class="re__pr-specs-content-item-icon"><i class="re__icon-interior"></i></span>
+                                    <span class="re__pr-specs-content-item-icon"><i class="bi bi-tv"></i></span>
                                     <span class="re__pr-specs-content-item-title">Nội thất</span>
                                     <span class="re__pr-specs-content-item-value">Contact</span>
                                 </div>
@@ -272,7 +282,7 @@
             </div>
 
             <div class="re__divide-8"></div>
-            <div class="re__section re__pr-more-listing re__similar-listing js__section js__similar-listing lazyload" data-script="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.SimilarListing.Lazy.min.js">
+            <div class="re__section re__pr-more-listing re__similar-listing js__section js__similar-listing lazyload" data-script="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.SimilarListing.Lazy.min.js">
                     <span tracking-id="same-area-title-ldp" class="re__section-title">
         Bất động sản dành cho bạn
 
@@ -293,7 +303,7 @@
             ">
                                                 <img alt="Ảnh đại diện" class="pr-img lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}">
                                                 <div class="re__card-image-feature">
-                                                    <i class="re__icon-image"></i>
+                                                    <i class="bi bi-image"></i>
                                                     <span>${r.imgUrl.size()}</span>
                                                 </div>
 
@@ -311,7 +321,7 @@
                                                         <div class="re__clear"></div>
                                                     </div>
                                                     <div class="re__card-location">
-                                                        <i class="re__icon-location--sm"></i>
+                                                        <i class="bi bi-house-fill"></i>
                                                         <span>${r.roomInformation.district}, ${r.roomInformation.city}</span>
                                                     </div>
                                                     <div class="re__clearfix"></div>
@@ -390,19 +400,19 @@
                 </div>
 
 
-                <a data-href="https://zalo.me/${sdt}" data-qrcode="" tracking-id="zalo-chat-ldp" tracking-label="prid=38582357" data-uid="522997" class="re__btn re__btn-se-border--md js__zalo-chat js__zalo-chat-qr">
-                    <div class="re__btn-icon-left--md re__btn-icon-text-center">
-                        <i class="re__icon-zalo-hover"></i>
-                        <span>Chat qua Zalo</span>
-                    </div>
-                </a>
+<%--                <a data-href="https://zalo.me/${sdt}" data-qrcode="" tracking-id="zalo-chat-ldp" tracking-label="prid=38582357" data-uid="522997" class="re__btn re__btn-se-border--md js__zalo-chat js__zalo-chat-qr">--%>
+<%--                    <div class="re__btn-icon-left--md re__btn-icon-text-center">--%>
+<%--                        <i class="bi bi-chat"></i>--%>
+<%--                        <span>Chat qua Zalo</span>--%>
+<%--                    </div>--%>
+<%--                </a>--%>
 
 <%--                <a class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" href="chat?hostelId=${requestScope.room.hostelId}">Chat</a>--%>
             <form action="chat" method="post">
                 <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                 <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" type="submit">Chat with owner</button>
+                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
             </form>
 
             </div>
@@ -412,8 +422,8 @@
         </div>
     </div>
     <!-- end product-detail-->
-    <script src="https://staticfile.batdongsan.com.vn/js/Common/Services/filestatic.ver3a77c7a9.msvbds.FrontEnd.UserListingViewedService.min.js" defer></script>
-    <script src="https://staticfile.batdongsan.com.vn/js/Product/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.UserListingViewed.min.js" defer></script>
+    <script src="assets/sys-css/staticfile.batdongsan.com.vn/js/Common/Services/filestatic.ver3a77c7a9.msvbds.FrontEnd.UserListingViewedService.min.js" defer></script>
+    <script src="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.UserListingViewed.min.js" defer></script>
 
 
 
@@ -431,14 +441,17 @@
 
 
 
-<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/jquery/jquery.common.min.js"></script>
+<script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/jquery/jquery.common.min.js"></script>
 
-<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-swiper/js/filestatic.ver1.msvbds.swiper.min.js"></script>
-<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-swiper/js/jquery.touchSwipe.min.js"></script>
-<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-img360/pannellum.min.js"></script>
-<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/jquery-img360/img360.min.js"></script>
-<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/lib/slick/slick.min.js"></script>
-<script type="text/javascript" src="https://staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.MediaSlide.min.js"></script>
+<script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/lib/jquery-swiper/js/filestatic.ver1.msvbds.swiper.min.js"></script>
+<script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/lib/jquery-swiper/js/jquery.touchSwipe.min.js"></script>
+
+<script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/lib/jquery-img360/pannellum.min.js"></script>
+<script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/lib/jquery-img360/img360.min.js"></script>
+<script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/lib/slick/slick.min.js"></script>
+
+
+<script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.MediaSlide.min.js"></script>
 
 </body>
 

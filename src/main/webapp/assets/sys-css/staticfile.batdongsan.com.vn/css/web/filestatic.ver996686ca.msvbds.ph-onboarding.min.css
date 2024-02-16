@@ -1,0 +1,229 @@
+@keyframes gradient-animation-card-skeleton {
+    from {
+        left: 0%
+    }
+    to {
+        left: 100%
+    }
+}
+
+.re__bg-onboarding {
+    background: url(/images/banners/pricing-history-bg-right.svg) no-repeat bottom right #E8FEFF;
+    margin: 16px 0
+}
+
+.re__box-onboarding {
+    background: url(/images/banners/pricing-history-bg-left.svg) no-repeat bottom left transparent;
+    width: 100%;
+    min-height: 148px;
+    padding: 22px 24px
+}
+
+.re__title-onboarding {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #2C2C2C;
+    margin-bottom: 16px
+}
+
+.re__title-onboarding>span {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #009BA1
+}
+
+.re__box-onboarding-ldp-container {
+    position: fixed;
+    bottom: -56px;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    animation-name: slideup;
+    animation-delay: 1s;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out
+}
+
+@keyframes slideup {
+    0% {
+        bottom: -56px
+    }
+    100% {
+        bottom: 16px
+    }
+}
+
+.re__box-onboarding-ldp {
+    background: #845D9C;
+    background: url(/images/banners/pricing-history-ldp.svg) no-repeat bottom right #845D9C;
+    padding: 12px 16px;
+    height: 56px;
+    display: inline-flex;
+    align-self: center;
+    border-radius: 4px
+}
+
+.re__box-onboarding-ldp img {
+    width: 24px
+}
+
+.re__box-onboarding-ldp.hidden {
+    visibility: hidden
+}
+
+.re__box-onboarding-ldp .re__title-onboarding-ldp {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #fff;
+    line-height: 32px;
+    margin: 0 32px 0 8px
+}
+
+.re__box-onboarding-ldp .re__onboarding-close {
+    color: #999;
+    line-height: 32px;
+    margin-left: 16px;
+    cursor: pointer
+}
+
+@media only screen and (min-width: 320px) and (max-width: 1023px) {
+    .re__box-onboarding-ldp-container {
+        width: 100%;
+        right: 0;
+        animation-name: tslideup
+    }
+    @keyframes tslideup {
+        0% {
+            bottom: -85px
+        }
+        100% {
+            bottom: 78px
+        }
+    }
+    .re__box-onboarding-ldp {
+        display: flex;
+        text-align: left
+    }
+    .re__title-onboarding-ldp {
+        font-family: "Lexend Medium", Roboto, Arial !important;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: normal !important;
+        letter-spacing: -.2px;
+        color: #fff;
+        margin: 0 8px 0 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        width: 100%
+    }
+    .re__btn-flex {
+        flex-grow: 0;
+        flex-shrink: 0
+    }
+}
+
+.re__bg-onboarding-mobile {
+    background: url(/images/banners/pricing-history-bg-right-mobile.svg) no-repeat bottom right #E8FEFF;
+    margin: 16px 0
+}
+
+.re__box-onboarding-mobile {
+    background: url(/images/banners/pricing-history-bg-left-mobile.svg) no-repeat bottom left transparent;
+    width: 100%;
+    min-height: 120px;
+    padding: 16px
+}
+
+.re__title-onboarding-mobile {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #2C2C2C;
+    margin-bottom: 16px
+}
+
+.re__title-onboarding-mobile>span {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #009BA1
+}
+
+.re__box-onboarding-ldp-mobile {
+    background: #845D9C;
+    background: url(/images/banners/pricing-history-ldp-mobile.svg) no-repeat bottom right #845D9C;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: -85px;
+    left: 0;
+    z-index: 8;
+    width: 100%;
+    animation-name: mslideup;
+    animation-delay: 1s;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out
+}
+
+@keyframes mslideup {
+    0% {
+        bottom: -85px
+    }
+    100% {
+        bottom: 77px
+    }
+}
+
+.re__box-onboarding-ldp-mobile img {
+    width: 24px
+}
+
+.re__box-onboarding-ldp-mobile.hidden {
+    visibility: hidden
+}
+
+.re__box-onboarding-ldp-mobile .re__title-onboarding-ldp {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #fff;
+    margin: 0 8px 0 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    width: 100%
+}
+
+.re__box-onboarding-ldp-mobile .re__btn-flex {
+    flex-grow: 0;
+    flex-shrink: 0
+}
+
+.re__box-onboarding-ldp-mobile .re__onboarding-close {
+    color: #999;
+    margin-left: 16px
+}
