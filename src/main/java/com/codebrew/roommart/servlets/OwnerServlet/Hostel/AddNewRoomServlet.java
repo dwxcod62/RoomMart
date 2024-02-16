@@ -91,11 +91,12 @@ public class AddNewRoomServlet extends HttpServlet {
         List<String> roomFiles = new ArrayList<>();
 
         List<Part> fileParts = request.getParts().stream().filter(part -> "fileImage".equals(part.getName())).collect(Collectors.toList());
-        System.out.println(getFileName(fileParts.get(0)));
-        Collection<Part> parts = request.getParts().stream()
-                .filter(part -> "fileImage".equals(part.getName()) && part.getSize() > 0)
-                .collect(Collectors.toList());
 
+        if (fileParts != null){
+            System.out.println(getFileName(fileParts.get(0)));
+            Collection<Part> parts = request.getParts().stream()
+                    .filter(part -> "fileImage".equals(part.getName()) && part.getSize() > 0)
+                    .collect(Collectors.toList());
         for (Part part : fileParts) {
             String fileName = getFileName(part);
             if (fileName != null && !fileName.isEmpty()) {
@@ -107,6 +108,8 @@ public class AddNewRoomServlet extends HttpServlet {
                 System.out.println("Uploaded image URL: " + imageUrl);
                 // Lưu URL của hình ảnh vào cơ sở dữ liệu hoặc thực hiện các thao tác khác.
             }
+        }}else {
+            roomFiles = null;
         }
 
         try {

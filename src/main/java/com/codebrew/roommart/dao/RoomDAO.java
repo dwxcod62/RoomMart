@@ -240,8 +240,15 @@ public class RoomDAO {
                             "END $$;\n";
 
                     pst = cn.prepareStatement(sql2);
-                    pst.executeUpdate();
+
+                    if (pst.executeUpdate() > 0) {
+                        isInserted = true;
+                    } else {
+                        isInserted = false;}
+
+                    if (imgUrls != null){
                     System.out.println("step 3 - add imgs");
+
                     pst = cn.prepareStatement(ADD_IMGs);
 
                     for (int i = 0; i < imgUrls.size(); i++) {
@@ -256,7 +263,7 @@ public class RoomDAO {
                             isInserted = false;
                             break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
                         }
-                    }
+                    }}
 
 
 // Kiểm tra kết quả cuối cùng và commit hoặc rollback
@@ -447,178 +454,53 @@ public class RoomDAO {
 //    quantity2
 //    quantity3
 //    quantity4
-    public boolean addNewRoom2(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
-                              int quantity1, int status1,
-                              int quantity2, int status2,
-                              int quantity3, int status3,
-                              int quantity4, int status4) {
-        System.out.println("Add new room - RoomDAO");
-        Connection cn = null;
-        PreparedStatement pst = null;
-        boolean isInserted = false;
+public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic) {
+    Connection cn = null;
+    PreparedStatement pst = null;
+    boolean isSuccess = false;
+    try {
+        cn = DatabaseConnector.makeConnection();
+        if (cn != null) {
+            cn.setAutoCommit(false);
+            String sqlUpdateRoom = "UPDATE Rooms\n" +
+                    "SET room_number = ?, capacity = ?, room_area = ?, has_attic = ?\n" +
+                    "WHERE room_id = ?";
 
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                // Insert new room include Nhà vệ sinh, cửa sổ, cửa ra vào, máy lạnh theo thứ tự
-                String sql =  "DO $$\n" +
-                        "DECLARE \n" +
+            pst = cn.prepareStatement(sqlUpdateRoom);
+            pst.setInt(1, roomNumber);
+            pst.setInt(2, capacity);
+            pst.setDouble(3, roomArea);
+            pst.setInt(4, hasAttic);
+            pst.setInt(5, roomID);
 
-                        "    roomID INT;\n" +
-                        "    restQuantity INT := '"+quantity1+"';\n" +
-                        "    windowQuantity INT := '"+quantity2+"';\n" +
-                        "    doorQuantity INT := '"+quantity3+"';\n" +
-                        "    airConditionQuantity INT := '"+quantity4+"';\n" +
-                        "BEGIN\n" +
-                        "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-                        "VALUES ("+hostelID+", "+roomNumber+", "+capacity+", "+roomArea+", "+attic+", "+roomStatus+")  RETURNING room_id INTO roomID;\n" +
-                        "    INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
-                        "    VALUES (0, 0, CURRENT_DATE, 0, roomID);\n" +
-
-                        "    LOOP\n" +
-                        "        EXIT WHEN restQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status1+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Nhà vệ sinh'));\n" +
-                        "        restQuantity := restQuantity - 1;\n" +
-                        "    END LOOP;\n" +
-                        "    LOOP\n" +
-                        "        EXIT WHEN windowQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status2+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa sổ'));\n" +
-                        "        windowQuantity := windowQuantity - 1;\n" +
-                        "    END LOOP;\n" +
-                        "    LOOP\n" +
-                        "        EXIT WHEN doorQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status3+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa ra vào'));\n" +
-                        "        doorQuantity := doorQuantity - 1;\n" +
-                        "    END LOOP;\n" +
-                        "    LOOP\n" +
-                        "        EXIT WHEN airConditionQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status4+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Máy lạnh'));\n" +
-                        "        airConditionQuantity := airConditionQuantity - 1;\n" +
-                        "    END LOOP;\n"+
-                        "END $$;\n";
-
-                pst = cn.prepareStatement(sql);
-                int rowsAffected = pst.executeUpdate(); // Thực hiện truy vấn và lưu số hàng ảnh hưởng
-
-                System.out.println(rowsAffected);
-
-
-                if (rowsAffected > 0) {
-                    isInserted = true;
-                }
+            if (pst.executeUpdate() == 0) {
+                cn.rollback();
+            } else {
+                isSuccess = true;
+                cn.commit();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+            cn.setAutoCommit(true);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (pst != null) {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
-        return isInserted;
-    }
-    public boolean addNewManyRooms2(int hostelID, int capacity, double roomArea, int attic, int roomStatus,
-                                   int quantity1, int status1,
-                                   int quantity2, int status2,
-                                   int quantity3, int status3,
-                                   int quantity4, int status4) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        boolean isInserted = false;
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                String sql = "DO $$\n" +
-                        "DECLARE \n" +
-                        "    roomID INT;\n" +
-                        "    restQuantity INT := '"+quantity1+"';\n" +
-                        "    windowQuantity INT := '"+quantity2+"';\n" +
-                        "    doorQuantity INT := '"+quantity3+"';\n" +
-                        "    airConditionQuantity INT := '"+quantity4+"';\n" +
-                        "    roomNumber INT;\n" +
-                        "BEGIN\n" +
-                        "    SELECT MAX(room_number) INTO roomNumber\n" +
-                        "    FROM Rooms\n" +
-                        "    WHERE hostel_id = '"+hostelID+"';\n" +
-                        "\n" +
-                        "    IF roomNumber IS NULL THEN\n" +
-                        "        roomNumber := 1;\n" +
-                        "    ELSE\n" +
-                        "        roomNumber := roomNumber + 1;\n" +
-                        "    END IF;\n" +
-                        "    INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-                        "    VALUES ("+hostelID+", roomNumber, "+capacity+", "+roomArea+", "+attic+", "+roomStatus+")  RETURNING room_id INTO roomID;\n" +
-                        "    INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
-                        "    VALUES (0, 0, CURRENT_DATE, 0, roomID);\n" +
-                        "    LOOP\n" +
-                        "        EXIT WHEN restQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status1+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Nhà vệ sinh'));\n" +
-                        "        restQuantity := restQuantity - 1;\n" +
-                        "    END LOOP;\n" +
-                        "    LOOP\n" +
-                        "        EXIT WHEN windowQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status2+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa sổ'));\n" +
-                        "        windowQuantity := windowQuantity - 1;\n" +
-                        "    END LOOP;\n" +
-                        "    LOOP\n" +
-                        "        EXIT WHEN doorQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status3+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa ra vào'));\n" +
-                        "        doorQuantity := doorQuantity - 1;\n" +
-                        "    END LOOP;\n" +
-                        "    LOOP\n" +
-                        "        EXIT WHEN airConditionQuantity <= 0;\n" +
-                        "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "        VALUES (roomID, 1, "+status4+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Máy lạnh'));\n" +
-                        "        airConditionQuantity := airConditionQuantity - 1;\n" +
-                        "    END LOOP;\n" +
-                        "END $$;\n";
-
-
-
-                pst = cn.prepareStatement(sql);
-
-
-                if (pst.executeUpdate() > 0) {
-                    isInserted = true;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+        if (cn != null) {
+            try {
+                cn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
-        return isInserted;
     }
+    return isSuccess;
+}
     public List<String>getListImgByRoomId(int rid){
         System.out.println("getListImgByRoomId");
         Connection cn = null;
