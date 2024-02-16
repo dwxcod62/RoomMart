@@ -17,11 +17,12 @@
 
 
         <title> ROOMMART </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
@@ -217,7 +218,7 @@
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
                                                 <div class="re__card-image-feature">
-                                                    <i class="re__icon-image"></i>
+                                                    <i class="bi bi-image"></i>
                                                     <span>${not empty r.hostelId ? r.hostelId : 0}</span>
                                                 </div>
 
@@ -248,7 +249,7 @@
                                                         <div class="re__clear"></div>
                                                     </div>
                                                     <div class="re__card-location">
-                                                        <i class="re__icon-location--sm"></i>
+                                                        <i class="bi bi-house-fill"></i>
                                                         <span>${address}</span>
                                                     </div>
                                                     <div class="re__clearfix"></div>

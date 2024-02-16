@@ -305,6 +305,89 @@ public class RoomDAO {
         }
         return isInserted;
     }
+    public boolean deleteImgs(int roomId){
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dqp6vdayn",
+                "api_key", "527664667972471",
+                "api_secret", "HzMyAcz7DKbWinMpZEsLe64XkUo",
+                "secure", true));
+        cloudinary.config.secure = true;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isInserted = false;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                String sql ="SELECT imgurl\n" +
+                        "FROM roomimgs\n" +
+                        "WHERE room_id = ?;";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomId);
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+
+
+
+                    }
+                }else {}
+
+                if (pst.executeUpdate() > 0) {
+
+                    pst = cn.prepareStatement(sql);
+
+                    pst = cn.prepareStatement(ADD_IMGs);
+
+                    // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                    if (pst.executeUpdate() > 0) {
+                        isInserted = true;
+                    } else {
+                        isInserted = false;
+
+                    }
+
+// Kiểm tra kết quả cuối cùng và commit hoặc rollback
+                    if (isInserted) {
+                        cn.setAutoCommit(false);
+                        cn.commit();
+                        cn.setAutoCommit(true);
+                    } else {
+
+                        cn.rollback();
+                        cn.setAutoCommit(true);
+                    }
+
+
+
+                }else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isInserted;
+    }
     public boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,String imgUrls,
                                int quantity1, int status1,
                                int quantity2, int status2,
@@ -454,17 +537,72 @@ public class RoomDAO {
 //    quantity2
 //    quantity3
 //    quantity4
-public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic) {
+public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic,List<String> imgUrls) {
+    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "dqp6vdayn",
+            "api_key", "527664667972471",
+            "api_secret", "HzMyAcz7DKbWinMpZEsLe64XkUo",
+            "secure", true));
     Connection cn = null;
     PreparedStatement pst = null;
     boolean isSuccess = false;
+    ResultSet rs = null;
+    List<String> imageUrls = new ArrayList<>();
     try {
         cn = DatabaseConnector.makeConnection();
         if (cn != null) {
             cn.setAutoCommit(false);
+
+            //get img url to delete in cloudinary
+            System.out.println("step 1 - get url img to delete from cloudinary");
+            String sql ="SELECT imgurl\n" +
+                    "FROM roomimgs\n" +
+                    "WHERE room_id = ?;";
+
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, roomID);
+            rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                imageUrls.add(rs.getString("imgurl"));
+
+
+                }
+            }else {imgUrls = null;}
+            try {
+                // List chứa public ID của các ảnh cần xóa
+                List<String> publicIds = new ArrayList<>();
+
+                // Lặp qua danh sách các URL và lấy public ID từ mỗi URL
+                for (String imageUrl : imageUrls) {
+                    String publicId = String.valueOf(cloudinary.url().publicId(imageUrl));
+                    publicIds.add(publicId);
+                }
+
+                // Xóa lô ảnh từ Cloudinary bằng public ID của các ảnh
+                Map<String, Object> result = cloudinary.api().deleteResources(publicIds, ObjectUtils.emptyMap());
+
+                System.out.println("Đã xóa các ảnh thành công!");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Xảy ra lỗi khi xóa các ảnh từ Cloudinary.");
+            }
+            System.out.println("step 2 - delete imgurl from database");
+            String sqlDeleteImg = "DELETE FROM roomimgs WHERE room_id = ?";
+
+            pst = cn.prepareStatement(sqlDeleteImg);
+            pst.setInt(1, roomID);
+            if (pst.executeUpdate() > 0) {
+                System.out.println("Records deleted successfully.");
+            } else {
+                System.out.println("No records found to delete.");
+            }
+            System.out.println("step 3 - update new list img and information");
+
             String sqlUpdateRoom = "UPDATE Rooms\n" +
                     "SET room_number = ?, capacity = ?, room_area = ?, has_attic = ?\n" +
                     "WHERE room_id = ?";
+
 
             pst = cn.prepareStatement(sqlUpdateRoom);
             pst.setInt(1, roomNumber);
@@ -476,7 +614,25 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
             if (pst.executeUpdate() == 0) {
                 cn.rollback();
             } else {
-                isSuccess = true;
+                if (imgUrls != null){
+                    System.out.println("-> add imgs to cloundinary");
+
+                    pst = cn.prepareStatement(ADD_IMGs);
+
+                    for (int i = 0; i < imgUrls.size(); i++) {
+                        // Set giá trị cho Prepared Statement
+                        pst.setInt(1, roomID);
+                        pst.setString(2, imgUrls.get(i));
+
+                        // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                        if (pst.executeUpdate() > 0) {
+                            isSuccess = true;
+                        } else {
+                            isSuccess = false;
+                            break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
+                        }
+                    }}
+
                 cn.commit();
             }
             cn.setAutoCommit(true);
@@ -844,7 +1000,6 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
                 //room_id	property_id	room_number	room_area	attic	room_status
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
-
                         "    room_number, \n" +
                         "    capacity, \n" +
                         "    room_area, \n" +
