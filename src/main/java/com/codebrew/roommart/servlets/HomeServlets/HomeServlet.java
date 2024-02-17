@@ -1,6 +1,7 @@
 package com.codebrew.roommart.servlets.HomeServlets;
 
 import com.codebrew.roommart.dao.RoomDAO;
+import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.utils.EncodeUtils;
 
@@ -25,7 +26,19 @@ public class HomeServlet extends HttpServlet {
 
         List<Room> rooms = rd.getAllRoom();
         System.out.println("get size room: "+rooms.size());
-
+        boolean isSuccess = false;
+        if (!rooms.isEmpty()){
+            isSuccess=true;
+        }
+        if (isSuccess) {
+            request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                    .status(true)
+                    .content("Loading room successfully").build());
+        } else {
+            request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                    .status(false)
+                    .content("Loading room fail!").build());
+        }
 
         if (rooms.isEmpty()){
             System.out.println("empty list");

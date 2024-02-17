@@ -14,14 +14,7 @@
     <!-- Site Metas -->
     <title> ROOMMART </title>
 
-    <!-- bootstrap core css -->
-    <%--    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css"/>--%>
-
-
-    <!-- font awesome style -->
-    <%--    <link href="../../assets/css/font-awesome.min.css" rel="stylesheet"/>--%>
-
-
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- responsive style -->
     <%--    <link rel="stylesheet" href="assets/css/style.css">--%>
@@ -52,7 +45,18 @@
 
 </head>
 
-<body class="re__body re__body-ldp re__new-search-location-focus">
+<body class="re__body re__body-ldp re__new-search-location-focus ${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+
+
+    <div id="preloader">
+<div class="dots">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+</div>
+
+
 <div class="form-content">
 
     <div class="re__bg-header">
@@ -452,6 +456,9 @@
 
 
 <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.MediaSlide.min.js"></script>
+
+    <!-- Loader -->
+    <script src="assets/js/loading-handler.js"></script>
 
 </body>
 

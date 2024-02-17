@@ -11,7 +11,7 @@
     <title>Chat</title>
 
     <!-- Template core CSS -->
-    <link href="assets/scss/chat_style/template.min.css" rel="stylesheet">
+    <link href="assets/css/chat_style/template.min.css" rel="stylesheet">
     <%--        <link rel="stylesheet" href="assets/scss/chat_style/chat.css">--%>
 
 </head>

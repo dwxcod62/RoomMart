@@ -3,9 +3,7 @@ package com.codebrew.roommart.servlets.HomeServlets;
 import com.codebrew.roommart.dao.InfrastructureDAO;
 import com.codebrew.roommart.dao.RoomDAO;
 import com.codebrew.roommart.dao.ServiceInfoDAO;
-import com.codebrew.roommart.dto.InfrastructureItem;
-import com.codebrew.roommart.dto.Room;
-import com.codebrew.roommart.dto.RoomInformation;
+import com.codebrew.roommart.dto.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import com.cloudinary.*;
-import com.codebrew.roommart.dto.ServiceInfo;
 import com.codebrew.roommart.utils.EncodeUtils;
 
 @WebServlet(name = "RoomDetailServlet", value = "/RoomDetailServlet")
@@ -50,12 +47,27 @@ public class RoomDetailServlet extends HttpServlet {
         }
 
         RoomDAO rd = new RoomDAO();
+        boolean isSuccess = false;
         InfrastructureDAO infraDao = new InfrastructureDAO();
         ServiceInfoDAO serviceIDao = new ServiceInfoDAO();
 
         Room r = rd.getRoomInformationByRoomId(rid);
 
         List<Room> recommendRoom = rd.getAllRecommendRoom(rid);
+
+        if (!recommendRoom.isEmpty()){
+            isSuccess=true;
+        }
+        if (isSuccess) {
+            request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                    .status(true)
+                    .content("Loading room successfully").build());
+        } else {
+            request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                    .status(false)
+                    .content("Loading room fail!").build());
+        }
+
 
 
         if (r == null){

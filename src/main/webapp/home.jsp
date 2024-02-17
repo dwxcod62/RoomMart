@@ -26,7 +26,45 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
-<body class="re__body re__body-home">
+<style>
+    #loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8); /* Một lớp mờ */
+        z-index: 9999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
+    }
+
+    #loading-overlay img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body class="re__body re__body-home ${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+
+
+
+<div id="loading-overlay">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+
+
+
 
 <div class="form-content">
 
@@ -359,6 +397,26 @@
     }
 
 </script>
-<%--<!--Script-->--%>
+<script src="assets/js/loading-handler.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var loadingOverlay = document.getElementById('loading-overlay');
+        var loader = document.getElementById('preloader');
+        loadingOverlay.style.display = 'block'; // Hiển thị biểu tượng loading
+
+        // Bắt sự kiện load hoàn tất của trang và ẩn biểu tượng loading
+        window.addEventListener("load", function() {
+            loadingOverlay.style.display = 'none';
+        });
+        window.addEventListener('beforeunload', function() {
+            loadingOverlay.style.display = 'block'; // Hiển thị biểu tượng loading khi bắt đầu chuyển trang
+        });
+    });
+
+
+
+
+</script>
+<!--Script-->
 </body>
 </html>

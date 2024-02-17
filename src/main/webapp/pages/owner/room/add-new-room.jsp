@@ -21,7 +21,24 @@
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
+<style>#loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Một lớp mờ */
+    z-index: 9999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
+}
 
+#loading-overlay img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 
 <!-- Navbar -->
@@ -36,6 +53,7 @@
         </div>
     </div>
 </c:if>
+
 
 
 <!-- Body -->
@@ -221,8 +239,8 @@
                             <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="form-submit">Hủy bỏ</a>
                             <input type="hidden" name="hostelID" value="${requestScope.hostel.hostelID}">
                             <c:if test="${requestScope.rid != null}">
-                                <input type="hidden" name="roomID" value="${requestScope.r.roomId}">
 
+                                <input type="hidden" name="RoomID" value="${requestScope.r.roomId}">
                             </c:if>
 <%--                            change hostelID ben Servlet--%>
                             <button class="form-submit">${requestScope.rid eq null?"Tạo phòng":"Cập nhật"}</button>
@@ -396,6 +414,8 @@ if (${requestScope.rid eq null}){
     <!-- Loader -->
     <script src="assets/js/loading-handler.js"></script>
 </c:if>
+
+
 
 </body>
 
