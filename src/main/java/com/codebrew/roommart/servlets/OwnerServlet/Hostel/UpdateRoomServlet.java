@@ -4,6 +4,8 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.codebrew.roommart.dao.RoomDAO;
 import com.codebrew.roommart.dto.HandlerStatus;
+import com.codebrew.roommart.dto.Room;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -32,23 +34,35 @@ import java.util.stream.Collectors;
 public class UpdateRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = "AddRoomPage";
+        int roomID = Integer.parseInt(request.getParameter("rid"));
+        System.out.println(roomID);
+//        Part quantityRoomPart = request.getPart("roomID");
+//        int quantityRoom = Integer.parseInt(getPartValue(quantityRoomPart));
+        request.setAttribute("rid",roomID);
+        RoomDAO roomDAO = new RoomDAO();
+        Room r = roomDAO.getRoomInformationByRoomId(roomID);
+        System.out.println(r);
+        request.setAttribute("r",r);
+        request.getRequestDispatcher(url).forward(request, response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "roomDetail";
-//        int roomID = Integer.parseInt(request.getParameter("roomID"));
-//        int roomNumber = Integer.parseInt(request.getParameter("room-number"));
-//        int capacity = Integer.parseInt(request.getParameter("room-capacity"));
-//        double roomArea = Double.parseDouble(request.getParameter("room-area"));
-//        int attic = Integer.parseInt(request.getParameter("room-attic"));
+        String url = "roomDetail"; // thay url cho nay
+        int roomID = Integer.parseInt(request.getParameter("roomID"));
+        int roomNumber = Integer.parseInt(request.getParameter("room-name"));
+        int capacity = Integer.parseInt(request.getParameter("room-capacity"));
+        double roomArea = Double.parseDouble(request.getParameter("room-area"));
+        int attic = Integer.parseInt(request.getParameter("room-floor"));
 
-        int roomID = 38;
-        int roomNumber = 405;
-        int capacity = 10;
-        double roomArea = 500;
-        int attic = 1;
+
+//        int roomID = 38;
+//        int roomNumber = 405;
+//        int capacity = 10;
+//        double roomArea = 500;
+//        int attic = 1;
         RoomDAO roomDao = new RoomDAO();
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "dqp6vdayn",
@@ -60,14 +74,17 @@ public class UpdateRoomServlet extends HttpServlet {
 
         List<String> roomFiles = new ArrayList<>();
 
-        List<Part> fileParts = request.getParts().stream().filter(part -> "fileImage".equals(part.getName())).collect(Collectors.toList());
+        List<Part> fileParts = request.getParts().stream()
+                .filter(part -> "fileImage".equals(part.getName()) && part.getSize() > 0) // Check if the part is not empty
+                .collect(Collectors.toList());
+        System.out.println("filesParts: "+ fileParts);
 
+
+//            System.out.println(getFileName(fileParts.get(0)));
+//            Collection<Part> parts = request.getParts().stream()
+//                    .filter(part -> "fileImage".equals(part.getName()) && part.getSize() > 0)
+//                    .collect(Collectors.toList());
         if (fileParts != null){
-
-            System.out.println(getFileName(fileParts.get(0)));
-            Collection<Part> parts = request.getParts().stream()
-                    .filter(part -> "fileImage".equals(part.getName()) && part.getSize() > 0)
-                    .collect(Collectors.toList());
             for (Part part : fileParts) {
                 String fileName = getFileName(part);
                 if (fileName != null && !fileName.isEmpty()) {
@@ -79,12 +96,13 @@ public class UpdateRoomServlet extends HttpServlet {
                     System.out.println("Uploaded image URL: " + imageUrl);
                     // Lưu URL của hình ảnh vào cơ sở dữ liệu hoặc thực hiện các thao tác khác.
                 }
-            }}else {
+            }
+        }else {
             roomFiles = null;
         }
-
+        System.out.println("room files: "+roomFiles);
         try {
-            boolean isSuccessUpdate = new RoomDAO().updateRoom(roomID, roomNumber, capacity, roomArea, attic,roomFiles);
+            boolean isSuccessUpdate = roomDao.updateRoom(roomID, roomNumber, capacity, roomArea, attic,roomFiles);
 
             if (isSuccessUpdate) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()

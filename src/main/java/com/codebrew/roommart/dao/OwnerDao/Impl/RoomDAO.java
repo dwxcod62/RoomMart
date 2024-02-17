@@ -25,7 +25,7 @@ public class RoomDAO implements IRoomDAO {
             String sql = "SELECT room_id, hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
                     "FROM Rooms\n" +
                     "WHERE hostel_id = ?";
-
+            cn = DatabaseConnector.makeConnection();
             pst = cn.prepareStatement(sql);
             pst.setInt(1, hostelID);
 

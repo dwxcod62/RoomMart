@@ -686,49 +686,58 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
             cn.setAutoCommit(false);
 
             //get img url to delete in cloudinary
-            System.out.println("step 1 - get url img to delete from cloudinary");
-            String sql ="SELECT imgurl\n" +
-                    "FROM roomimgs\n" +
-                    "WHERE room_id = ?;";
+            if (!imgUrls.isEmpty()){
+                System.out.println("step 1 - get url img to delete from cloudinary");
+                String sql ="SELECT imgurl\n" +
+                        "FROM roomimgs\n" +
+                        "WHERE room_id = ?;";
 
-            pst = cn.prepareStatement(sql);
-            pst.setInt(1, roomID);
-            rs = pst.executeQuery();
-            if (rs != null) {
-                while (rs.next()) {
-                imageUrls.add(rs.getString("imgurl"));
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        imageUrls.add(rs.getString("imgurl"));
 
 
+                    }
+                }else {imageUrls = null;}
+                System.out.println("imageUrls: "+imageUrls);
+                if (!imageUrls.isEmpty()){
+                    try {
+                        // List chứa public ID của các ảnh cần xóa
+                        List<String> publicIds = new ArrayList<>();
+
+                        // Lặp qua danh sách các URL và lấy public ID từ mỗi URL
+                        for (String imageUrl : imageUrls) {
+                            String publicId = String.valueOf(cloudinary.url().publicId(imageUrl));
+                            publicIds.add(publicId);
+                        }
+
+                        // Xóa lô ảnh từ Cloudinary bằng public ID của các ảnh
+                        Map<String, Object> result = cloudinary.api().deleteResources(publicIds, ObjectUtils.emptyMap());
+
+                        System.out.println("Đã xóa các ảnh thành công!");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Xảy ra lỗi khi xóa các ảnh từ Cloudinary.");
+                    }
                 }
-            }else {imageUrls = null;}
-            try {
-                // List chứa public ID của các ảnh cần xóa
-                List<String> publicIds = new ArrayList<>();
 
-                // Lặp qua danh sách các URL và lấy public ID từ mỗi URL
-                for (String imageUrl : imageUrls) {
-                    String publicId = String.valueOf(cloudinary.url().publicId(imageUrl));
-                    publicIds.add(publicId);
+                System.out.println("step 2 - delete imgurl from database");
+                String sqlDeleteImg = "DELETE FROM roomimgs WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteImg);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() > 0) {
+                    System.out.println("Records deleted successfully.");
+                } else {
+                    System.out.println("No records found to delete.");
                 }
-
-                // Xóa lô ảnh từ Cloudinary bằng public ID của các ảnh
-                Map<String, Object> result = cloudinary.api().deleteResources(publicIds, ObjectUtils.emptyMap());
-
-                System.out.println("Đã xóa các ảnh thành công!");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Xảy ra lỗi khi xóa các ảnh từ Cloudinary.");
             }
-            System.out.println("step 2 - delete imgurl from database");
-            String sqlDeleteImg = "DELETE FROM roomimgs WHERE room_id = ?";
 
-            pst = cn.prepareStatement(sqlDeleteImg);
-            pst.setInt(1, roomID);
-            if (pst.executeUpdate() > 0) {
-                System.out.println("Records deleted successfully.");
-            } else {
-                System.out.println("No records found to delete.");
-            }
+
+
             System.out.println("step 3 - update new list img and information");
 
             String sqlUpdateRoom = "UPDATE Rooms\n" +
@@ -746,8 +755,8 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
             if (pst.executeUpdate() == 0) {
                 cn.rollback();
             } else {
-                if (imgUrls != null){
-                    System.out.println("-> add imgs to cloundinary");
+                if (!imgUrls.isEmpty()){
+                    System.out.println("-> add imgs to db");
 
                     pst = cn.prepareStatement(ADD_IMGs);
 
