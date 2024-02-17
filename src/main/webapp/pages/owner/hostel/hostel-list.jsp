@@ -64,7 +64,7 @@
               Danh sách khu trọ</div>
           </div>
           <div class="content-actions">
-            <a href="add-hostel" class="add-hostel-btn">
+            <a href="add-new-hostel" class="add-hostel-btn">
               Thêm khu trọ mới
             </a>
           </div>
@@ -106,7 +106,7 @@
                            class="hostel-table__body-link-detail">
                           <i class="fa-solid fa-building-circle-arrow-right"></i>
                         </a>
-                        <a href="update-hostel?hostelID=${hostels.hostelID}"
+                        <a href="updateHostel?hostelID=${hostels.hostelID}"
                            class="hostel-table__body-btn-edit"><i
                                 class="fa-solid fa-pen-to-square"></i></a>
                       </div>

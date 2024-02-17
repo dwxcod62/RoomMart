@@ -21,4 +21,14 @@ public class UserInformation {
     String address;
     String cccd;
     int account_id;
+    Information information;
+    public UserInformation(String fullname, String email, String birthday, boolean sex, String phone, String address, String cccd) {
+        this.fullname = fullname;
+        this.email = email;
+        this.birthday = birthday;
+        this.sex = sex;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+    }
 }
