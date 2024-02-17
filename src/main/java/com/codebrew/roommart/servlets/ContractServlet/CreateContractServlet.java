@@ -133,8 +133,8 @@ public class CreateContractServlet extends HttpServlet {
 
 
             // PROPERTIES
-            jsonObject.put("room_startdate", request.getParameter("room-startdate"));
-            jsonObject.put("room_enddate", request.getParameter("room-enddate"));
+            jsonObject.put("room_start_date", request.getParameter("room-startdate"));
+            jsonObject.put("room_end_date", request.getParameter("room-enddate"));
             jsonObject.put("room_electric", request.getParameter("room-electric"));
             jsonObject.put("room_water", request.getParameter("room-water"));
             jsonObject.put("room_fee", request.getParameter("room-fee"));

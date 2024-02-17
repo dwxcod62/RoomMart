@@ -26,13 +26,19 @@ public class SystemDao {
         }
     }
 
-    private static final String UPDATE_CONTRACT_RENTER_SIDE = "UPDATE contract_details\n" +
+    private static final String UPDATE_CONTRACT_RENTER_SIGN = "UPDATE contract_details\n" +
             "SET renter_sign = ?\n" +
             "FROM contract_main\n" +
             "WHERE contract_main.contract_details_id = contract_details.contract_details_id\n" +
-            "AND contract_main.renter_id = ?";
+            "AND contract_main.renter_id = ? AND contract_main.owner_id = ? ";
 
-    public boolean updateContractRenterSide(String email, String sign){
+    private static final String UPDATE_CONTRACT_OWNER_SIGN = "UPDATE contract_details\n" +
+            "SET owner_sign = ?\n" +
+            "FROM contract_main\n" +
+            "WHERE contract_main.contract_details_id = contract_details.contract_details_id\n" +
+            "AND contract_main.renter_id = ? AND contract_main.owner_id = ? ";
+
+    public boolean updateContractSign(String owner_mail, String renter_mail, int role,  String sign){
         boolean result = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -41,15 +47,17 @@ public class SystemDao {
             cn = DatabaseConnector.makeConnection();
             AccountDao dao = new AccountDao();
             if (cn != null) {
-                pst = cn.prepareStatement(UPDATE_CONTRACT_RENTER_SIDE);
-
-                pst.setString(1, sign);
-                pst.setString(2, email);
-
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()){
-                    result = true;
+                if ( role == 1 ){
+                    pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIGN);
+                } else {
+                    pst = cn.prepareStatement(UPDATE_CONTRACT_RENTER_SIGN);
                 }
+                pst.setString(1, sign);
+                pst.setString(2, renter_mail);
+                pst.setString(3, owner_mail);
+
+                int rowsAffected = pst.executeUpdate();
+                result = (rowsAffected > 0);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,9 +111,9 @@ public class SystemDao {
                 pst.setInt(10, json.getInt("payment_term"));
                 pst.setInt(11, json.getInt("room_fee"));
                 pst.setInt(12, json.getInt("room_deposit"));
-                pst.setDate(13, convertToDate(json.getString("room_startdate")));
-                pst.setDate(14, convertToDate(json.getString("room_enddate")));
-                pst.setDate(15, convertToDate(json.getString("room_enddate")));
+                pst.setDate(13, convertToDate(json.getString("room_start_date")));
+                pst.setDate(14, convertToDate(json.getString("room_end_date")));
+                pst.setDate(15, convertToDate(json.getString("room_end_date")));
 
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()){
@@ -113,8 +121,8 @@ public class SystemDao {
                     pst = cn.prepareStatement(UPDATE_CONTRACT_MAIN_OWNER_SIDE);
                     pst.setInt(1, contract_details_id);
                     pst.setInt(2, 1);
-                    pst.setString(3, owner_info.getEmail());
-                    pst.setString(4, renter_info.getEmail());
+                    pst.setString(3, json.getString("owner_mail"));
+                    pst.setString(4, json.getString("renter_mail"));
                     pst.setInt(5, 1);
 
                     ResultSet rs_2 = pst.executeQuery();
@@ -138,6 +146,8 @@ public class SystemDao {
         }
         return result;
     }
+
+
 
 
     private static final String GET_CONTRACT_INFORMATION_BY_EMAIL = "SELECT cd.* \n" +
@@ -167,6 +177,7 @@ public class SystemDao {
                     jsonObject.put("owner_identify_card", rs.getString("owner_identify_card"));
                     jsonObject.put("owner_address", rs.getString("owner_address"));
                     jsonObject.put("owner_birthday", rs.getDate("owner_birthday").toString());
+                    jsonObject.put("owner_sign", rs.getString("owner_sign"));
 
                     jsonObject.put("renter_full_name", rs.getString("renter_full_name"));
                     jsonObject.put("renter_phone", rs.getString("renter_phone"));

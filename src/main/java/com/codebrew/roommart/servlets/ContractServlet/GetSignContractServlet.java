@@ -29,24 +29,24 @@ public class GetSignContractServlet extends HttpServlet {
         Account acc = (Account) session.getAttribute("USER");
         SystemDao dao = new SystemDao();
 
-        String decodeString = null;
-        JSONObject jsonObject = null;
+        String owner_mail = null;
+        String renter_mail = null;
 
         try{
             if (data != null) {
-                decodeString = EncodeUtils.decodeString(data);
-                jsonObject = new JSONObject(decodeString);
+                String decodeString = EncodeUtils.decodeString(data);
+
+                renter_mail = (decodeString.split("&")[0]).split("=")[1];
+                owner_mail = (decodeString.split("&")[1]).split("=")[1];
             }
 
-            if ( acc != null && jsonObject != null ){
-                if (acc.getRole() == 1){ // Owner
-                    jsonObject.put("owner_sign", sign_bytea);
+            if ( acc != null && owner_mail != null  && renter_mail != null){
 
-                    String object_string = jsonObject.toString();
-                    String encode_object_string = EncodeUtils.encodeString(object_string);
+                if (acc.getRole() == 1){ // Owner
 
                     // SEND MAIL FOR USER
-                    boolean check = new EmailUtils().sendContractConfirmationEmail(jsonObject.getString("renter_mail"), encode_object_string) && dao.updateContractOwnerSide(jsonObject);
+                    boolean check = new EmailUtils().sendContractConfirmationEmail(renter_mail, data);
+                    dao.updateContractSign(acc.getEmail(), renter_mail, 1, sign_bytea);
 
                     if (check){
                         url = "dashboard";
@@ -59,8 +59,9 @@ public class GetSignContractServlet extends HttpServlet {
                         request.setAttribute("RESPONSE_MSG", status);
                     }
 
-                } else if (acc.getRole() == 3 && acc.getEmail().equals(jsonObject.getString("renter_email"))) { // Renter
-                    boolean check = dao.updateContractRenterSide(acc.getEmail(), sign_bytea);
+                } else if (acc.getRole() == 3 && acc.getEmail().equals(renter_mail)) { // Renter
+                    boolean check = dao.updateContractSign(owner_mail, acc.getEmail(), 3, sign_bytea);
+
                     if (check){
                         url = "dashboard";
                         response.sendRedirect(url);
