@@ -27,12 +27,43 @@ public class HostelDAO implements IHostelDAO {
                     "VALUES (?, ?, ?, GETDATE(), 1)";
     @Override
     public Hostel getHostelById(int hostelId) {
-        return null;
-    }
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String GET_HOSTEL_BY_ID =
+                        "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM Hostels WHERE hostel_id = ?";
 
-    @Override
-    public Hostel getHostelByRoomId(int roomId) {
-        return null;
+                pst = cn.prepareStatement(GET_HOSTEL_BY_ID);
+                pst.setInt(1, hostelId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    String name =  rs.getString("name");
+                    String address =  rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = Hostel.builder()
+                            .hostelID(hostelId)
+                            .hostelOwnerAccountID(hostelOwnerAccountID)
+                            .hostelName(name)
+                            .address(address)
+                            .ward(ward)
+                            .district(district)
+                            .city(city)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return hostel;
     }
 
     @Override
@@ -112,26 +143,6 @@ public class HostelDAO implements IHostelDAO {
             OwnerUtils.closeSQL(cn, pst, rs);
         }
         return listHostels;
-    }
-
-    @Override
-    public boolean updateHostel(Hostel hostel, int hostelID) {
-        return false;
-    }
-
-    @Override
-    public Hostel getHostelByRenterId(int renterId) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Hostel> getListHostel() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Integer> getListRenterIdByHostelId(int hostelId) {
-        return null;
     }
 
     @Override
@@ -215,5 +226,34 @@ public class HostelDAO implements IHostelDAO {
         } finally {
             OwnerUtils.closeSQL(cn, ptm, rs);
         }
+    }
+
+    @Override
+    public boolean checkOwnerRoom(int accId, int roomId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT R.room_id FROM Rooms AS R JOIN Hostels AS H ON R.hostel_id = H.hostel_id\n" +
+                        "WHERE R.room_id = ? AND H.owner_account_id = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomId);
+                pst.setInt(2, accId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    result = true;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return result;
     }
 }

@@ -29,27 +29,30 @@
 
 </head>
 
-<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+<%--<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">--%>
+<body>
 
-<c:if test="${requestScope.RESPONSE_MSG eq null}">
-    <div id="preloader">
-        <div class="dots">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-</c:if>
+<%--<c:if test="${requestScope.RESPONSE_MSG eq null}">--%>
+<%--    <div id="preloader">--%>
+<%--        <div class="dots">--%>
+<%--            <div></div>--%>
+<%--            <div></div>--%>
+<%--            <div></div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</c:if>--%>
+
+<%--<h1>Hello </h1>--%>
 
 <!-- Navbar -->
-<%@include file="components/navbar.jsp" %>
+<%@include file="../components/navbar.jsp"%>
 
 <!-- Body -->
 <div class="container">
     <div class="row position-relative">
         <!-- Side bar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="components/sidebar.jsp" %>
+            <%@include file="../components/sidebar.jsp" %>
         </div>
 
         <!-- Content -->
@@ -189,15 +192,15 @@
 </div>
 
 <!-- Footer -->
-<%@include file="components/footer.jsp" %>
+<%--<%@include file="../components/footer.jsp" %>--%>
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
-<!-- Toast element -->
+<%--<!-- Toast element -->--%>
 <div id="toast">&nbsp;</div>
 
-<!-- Script Bootstrap !important -->
+<%--<!-- Script Bootstrap !important -->--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
@@ -211,55 +214,55 @@
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
-<script src="./assets/js/sendWebsocket.js"></script>
-<script src="./assets/js/receiveWebsocket.js"></script>
+<%--<script src="./assets/js/sendWebsocket.js"></script>--%>
+<%--<script src="./assets/js/receiveWebsocket.js"></script>--%>
 
-<script>
-    <c:choose>
-    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
-    toast({
-        title: 'Thành công',
-        message: '${requestScope.RESPONSE_MSG.content}',
-        type: 'success',
-        duration: 5000
-    });
-    </c:when>
-    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
-    toast({
-        title: 'Lỗi',
-        message: '${requestScope.RESPONSE_MSG.content}',
-        type: 'error',
-        duration: 5000
-    });
-    </c:when>
-    </c:choose>
-</script>
+<%--<script>--%>
+<%--    <c:choose>--%>
+<%--    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">--%>
+<%--    toast({--%>
+<%--        title: 'Thành công',--%>
+<%--        message: '${requestScope.RESPONSE_MSG.content}',--%>
+<%--        type: 'success',--%>
+<%--        duration: 5000--%>
+<%--    });--%>
+<%--    </c:when>--%>
+<%--    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">--%>
+<%--    toast({--%>
+<%--        title: 'Lỗi',--%>
+<%--        message: '${requestScope.RESPONSE_MSG.content}',--%>
+<%--        type: 'error',--%>
+<%--        duration: 5000--%>
+<%--    });--%>
+<%--    </c:when>--%>
+<%--    </c:choose>--%>
+<%--</script>--%>
 
-<script type="text/javascript">
-    // Send
-    <c:if test="${requestScope.CREATE_BILL_MSG.status == true}">
-    const params = new Object();
-    params.sender = "hostel_owner";
-    params.receiver = "hostel_renter";
-    params.hostel_receiver_id = null;
-    params.account_receiver_id = "${requestScope.RENTER_ID}";
-    params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
-    sendToWebSocket(params);
-    </c:if>
+<%--<script type="text/javascript">--%>
+<%--    // Send--%>
+<%--    <c:if test="${requestScope.CREATE_BILL_MSG.status == true}">--%>
+<%--    const params = new Object();--%>
+<%--    params.sender = "hostel_owner";--%>
+<%--    params.receiver = "hostel_renter";--%>
+<%--    params.hostel_receiver_id = null;--%>
+<%--    params.account_receiver_id = "${requestScope.RENTER_ID}";--%>
+<%--    params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";--%>
+<%--    sendToWebSocket(params);--%>
+<%--    </c:if>--%>
 
-    // Receive
-    receiveWebsocket(alertPushNoti);
+<%--    // Receive--%>
+<%--    receiveWebsocket(alertPushNoti);--%>
 
-    // Close when leave
-    window.onbeforeunload = function(){
-        receiveWebsocket.disconnectWebSocket();
-    };
-</script>
+<%--    // Close when leave--%>
+<%--    window.onbeforeunload = function(){--%>
+<%--        receiveWebsocket.disconnectWebSocket();--%>
+<%--    };--%>
+<%--</script>--%>
 
-<c:if test="${requestScope.RESPONSE_MSG eq null}">
-    <!-- Loader -->
-    <script src="./assets/js/loading-handler.js"></script>
-</c:if>
+<%--<c:if test="${requestScope.RESPONSE_MSG eq null}">--%>
+<%--    <!-- Loader -->--%>
+<%--    <script src="./assets/js/loading-handler.js"></script>--%>
+<%--</c:if>--%>
 </body>
 
 </html>

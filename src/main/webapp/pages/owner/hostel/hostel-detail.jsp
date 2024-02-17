@@ -80,7 +80,7 @@
                             Thêm dịch vụ
                         </button>
                         <!-- Add room button -->
-                        <a href="addRoom?hostelID=${hostelInformation.hostelID}" class="hostel-actions__btn hostel-actions__btn-room">
+                        <a href="/RoomMart/ownerAddRoom?hostelID=${hostelInformation.hostelID}" class="hostel-actions__btn hostel-actions__btn-room">
                             Thêm phòng
                         </a>
                     </div>
@@ -126,7 +126,7 @@
                                             </td>
                                             <td>
                                                 <!-- Room detail link -->
-                                                <a href="/roomDetail?roomID=${room.roomId}" class="room-detail-link">Xem chi tiết</a>
+                                                <a href="/RoomMart/ownerRoomDetail?roomID=${room.roomId}" class="room-detail-link">Xem chi tiết</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
