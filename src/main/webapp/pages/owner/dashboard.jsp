@@ -69,7 +69,7 @@
 
         <!-- Welcome -->
         <div class="content-welcome mt-5">
-          <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex == true ? "male" : "female"}.jpg" alt="User avatar" class="welcome-image">
+          <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex == true ? "male" : "female"}.png" alt="User avatar" class="welcome-image">
           <div class="welcome-content">
             <div class="welcome-title">Chào mừng, <span>${sessionScope.USER.accountInfo.fullname}</span></div>
             <c:choose>

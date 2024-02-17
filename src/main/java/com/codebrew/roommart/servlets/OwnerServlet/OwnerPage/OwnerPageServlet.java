@@ -9,6 +9,9 @@ import java.io.IOException;
 public class OwnerPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("CURRENT_PAGE", "dashboard");
         request.getRequestDispatcher("pages/owner/dashboard.jsp").forward(request, response);
     }
 

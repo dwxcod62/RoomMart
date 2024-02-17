@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="copyright-wrapper d-flex justify-content-center">
-                    <div class="copyright-content">&copy; 2022 HQT Team. All rights reserved.</div>
+                    <div class="copyright-content">&copy; 2024 Room Mart + . All rights reserved.</div>
                 </div>
             </div>
         </div>
