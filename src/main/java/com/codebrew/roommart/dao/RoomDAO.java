@@ -1,7 +1,6 @@
 package com.codebrew.roommart.dao;
 import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.Map;
 import com.codebrew.roommart.dto.Room;
@@ -160,6 +159,139 @@ public class RoomDAO {
         }
         return isInserted;
 
+
+    }
+    public boolean deleteRoom(int roomID){
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dqp6vdayn",
+                "api_key", "527664667972471",
+                "api_secret", "HzMyAcz7DKbWinMpZEsLe64XkUo",
+                "secure", true));
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isSuccess = false;
+        ResultSet rs = null;
+        List<String> imageUrls = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                //get img url to delete in cloudinary
+                System.out.println("step 1 - get url img to delete from cloudinary");
+                String sql ="SELECT imgurl\n" +
+                        "FROM roomimgs\n" +
+                        "WHERE room_id = ?;";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        imageUrls.add(rs.getString("imgurl"));
+
+
+                    }
+                }else {imageUrls = null;}
+                try {
+                    // List chứa public ID của các ảnh cần xóa
+                    List<String> publicIds = new ArrayList<>();
+
+                    // Lặp qua danh sách các URL và lấy public ID từ mỗi URL
+                    for (String imageUrl : imageUrls) {
+                        String publicId = String.valueOf(cloudinary.url().publicId(imageUrl));
+                        publicIds.add(publicId);
+                    }
+
+                    // Xóa lô ảnh từ Cloudinary bằng public ID của các ảnh
+                    Map<String, Object> result = cloudinary.api().deleteResources(publicIds, ObjectUtils.emptyMap());
+
+                    System.out.println("Đã xóa các ảnh thành công!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Xảy ra lỗi khi xóa các ảnh từ Cloudinary.");
+                }
+
+                System.out.println("step 2 - delete imgurl from database");
+                String sqlDeleteImg = "DELETE FROM roomimgs WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteImg);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() > 0) {
+                    isSuccess = true;
+                } else {
+                    isSuccess = false;
+                }
+                if (isSuccess){
+                    System.out.println("-> delete oke");
+
+                }else {
+                    System.out.println("-> delete fail");
+
+                }
+                //delete r
+                System.out.println("step 3 - delete remain from db");
+                String sqlDeleteConsume = "DELETE FROM consumes WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteConsume);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() == 0) {
+                    isSuccess = false;
+
+                    System.out.println("-> DELETE FROM consumes fail");
+                } else {
+                    System.out.println("-> DELETE FROM consumes oke");
+                    isSuccess = true;
+
+                }
+                String sqlDeleteInfrastureRoom = "DELETE FROM infrastructuresroom WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteInfrastureRoom);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() == 0) {
+                    isSuccess = false;
+
+                    System.out.println("-> DELETE FROM infrastructuresroom fail");
+                } else {
+                    System.out.println("-> DELETE FROM infrastructuresroom oke");
+                    isSuccess = true;
+
+                }
+                String sqlDeleteRoom = "DELETE FROM rooms WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteRoom);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() == 0) {
+                    isSuccess = false;
+                    System.out.println("-> DELETE FROM room fail");
+
+                    cn.rollback();
+                } else {
+                    System.out.println("-> DELETE FROM room oke");
+                    isSuccess = true;
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isSuccess;
 
     }
     public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls,
@@ -568,7 +700,7 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
 
 
                 }
-            }else {imgUrls = null;}
+            }else {imageUrls = null;}
             try {
                 // List chứa public ID của các ảnh cần xóa
                 List<String> publicIds = new ArrayList<>();
