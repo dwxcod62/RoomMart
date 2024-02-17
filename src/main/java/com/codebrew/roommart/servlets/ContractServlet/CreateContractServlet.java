@@ -34,6 +34,8 @@ public class CreateContractServlet extends HttpServlet {
             request.setAttribute("RESPONSE_MSG", status);
         }
 
+        System.out.println("a");
+
         try {
             if (data != null) {
                 AccountDao dao = new AccountDao();
