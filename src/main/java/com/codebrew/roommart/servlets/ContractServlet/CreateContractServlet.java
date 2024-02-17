@@ -34,7 +34,7 @@ public class CreateContractServlet extends HttpServlet {
             request.setAttribute("RESPONSE_MSG", status);
         }
 
-        System.out.println("c");
+        System.out.println("d");
 
         try {
             if (data != null) {
