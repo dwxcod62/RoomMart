@@ -20,8 +20,8 @@ public class UserInformation {
     String phone;
     String address;
     String cccd;
+    int account_id;
     Information information;
-
     public UserInformation(String fullname, String email, String birthday, boolean sex, String phone, String address, String cccd) {
         this.fullname = fullname;
         this.email = email;
