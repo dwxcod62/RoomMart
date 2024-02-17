@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Contract</title>
@@ -77,16 +79,17 @@
                         <h3 class="h3-text">
                                 <span class="span-text">Ông: </span
                                 ><span class="span-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span
-                        ><span class="span-text">[]</span>
+                        ><span class="span-text">${requestScope.OWNER_INFO.getFullname()}</span>
                         </h3>
 
                         <h3 class="h3-text">
-                            <span class="span-text">CMND số: []; Số điện thoại : []</span>
+                            <span class="span-text">CMND số: ${requestScope.OWNER_INFO.getCccd()}; Số điện thoại : ${requestScope.OWNER_INFO.getPhone()}</span>
                         </h3>
 
                         <h3 class="h3-text">
                                 <span class="span-text">HKTT: </span
                                 ><span class="span-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                                <span class="span-text"> ${requestScope.OWNER_INFO.getAddress()} </span>
                         </h3>
 
                         <h3 class="h3-text">
@@ -99,17 +102,12 @@
                         </h3>
 
                         <h3 class="h3-text">
-                                <span class="span-text">Ông/Bà: [] Sinh năm: []</span
+                                <span class="span-text">Ông/Bà: ${requestScope.RENTER_INFO.getFullname()} Sinh năm: ${requestScope.RENTER_INFO.getBirthday()}</span
                                 ><span class="span-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
                         </h3>
 
                         <h3 class="h3-text">
-                                <span class="span-text">HKTT: </span
-                                ><span class="span-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                        </h3>
-
-                        <h3 class="h3-text">
-                            <span class="span-text">CMND số: [] ; Số điện thoại : []</span>
+                            <span class="span-text">CMND số: ${requestScope.RENTER_INFO.getCccd()}; Số điện thoại : ${requestScope.RENTER_INFO.getPhone()}</span>
                         </h3>
 
                         <h3 class="h3-text">
@@ -139,14 +137,14 @@
 
                         <h3 class="h3-text">
                                 <span class="span-text"
-                                >2.1 Thời hạn cho thuê&nbsp; nhà nêu tại điều 1 của hợp đồng này là: [] năm, kể từ ngày [] tháng [] năm [] đến
-                                    ngày [] tháng [] năm []</span
+                                >2.1 Thời hạn cho thuê&nbsp; nhà nêu tại điều 1 của hợp đồng này là: ${requestScope.between}, kể từ ${requestScope.room_startdate} đến
+                                    ${requestScope.room_enddate}</span
                                 >
                         </h3>
 
                         <h3 class="h3-text">
                                 <span class="span-text"
-                                >2.2 Bên B đặt cọc cho bên A một khoản tiền là: [] khoản tiền đặt cọc này được bên A trả lại cho bên B khi hết
+                                >2.2 Bên B đặt cọc cho bên A một khoản tiền là: ${requestScope.room_deposit} khoản tiền đặt cọc này được bên A trả lại cho bên B khi hết
                                     thời hạn hợp đồng này.</span
                                 >
                         </h3>
@@ -163,12 +161,12 @@
                         </h3>
 
                         <h3 class="h3-text">
-                            <span class="span-text">- Giá thuê nhà hàng tháng là [] /01 tháng </span>
+                            <span class="span-text">- Giá thuê nhà hàng tháng là ${requestScope.room_fee} /01 tháng </span>
                         </h3>
 
                         <h3 class="h3-text">
                                 <span class="span-text"
-                                >- Bên B thanh toán cho Bên A theo định kỳ [] tháng/lần. Và sẽ được thực hiện trong suốt thời hạn cho thuê.</span
+                                >- Bên B thanh toán cho Bên A theo định kỳ ${requestScope.payment_term} tháng/lần. Và sẽ được thực hiện trong suốt thời hạn cho thuê.</span
                                 >
                         </h3>
 
@@ -491,14 +489,32 @@
                                 <td style="padding-left: 5.4pt; padding-right: 5.4pt; vertical-align: top; width: 225.1pt">
                                     <h3 class="h3-text-2">
                                         <span class="span-text bold">BÊN CHO THUÊ (BÊN A)</span>
-                                        <div class="col-md-12">
-                                            <img id="sig-image" src="" alt="Your signature will go here!" class="alt-text" />
-                                        </div>
+                                        <c:choose>
+                                            <c:when test="${requestScope.USER_CONTRACT == 1 || requestScope.USER_CONTRACT == '1' }">
+                                                <div class="col-md-12">
+                                                    <img id="sig-image" src="" alt="Your signature will go here!" class="alt-text" />
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="col-md-12">
+                                                    <img src="${requestScope.OWNER_SIGN}" class="alt-text" />
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </h3>
                                 </td>
                                 <td style="padding-left: 5.4pt; padding-right: 5.4pt; vertical-align: top; width: 225.1pt">
                                     <h3 class="h3-text-2">
                                         <span class="span-text bold">BÊN THUÊ (BÊN B)</span>
+                                        <c:choose>
+                                            <c:when test="${requestScope.USER_CONTRACT == 3 || requestScope.USER_CONTRACT == '3' }">
+                                                <div class="col-md-12">
+                                                    <img id="sig-image" src="" alt="Your signature will go here!" class="alt-text" />
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </h3>
                                 </td>
                             </tr>
@@ -521,10 +537,28 @@
                         </table>
                     </div>
                 </div>
+                <div class="container my-5">
+                    <div class="row">
+                        <form action="sign" method="post">
+                            <input id="asdfgh" name="asdfgh" style="display: none" value="" >
+                            <input name="data" style="display: none" value="${param.data}" >
+                            <div class="col text-right">
+                                <button type="submit" class="btn btn-primary btn-block">Gửi</button>
+                            </div>
+
+                            <c:choose>
+                                <c:when test="${requestScope.USER_CONTRACT == 1 || requestScope.USER_CONTRACT == '1' }">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-danger btn-block">Hủy</button>
+                                    </div>
+                                </c:when>
+                            </c:choose>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <script src="./assets/js/contract/sign.js"></script>
-
 </body>
 </html>

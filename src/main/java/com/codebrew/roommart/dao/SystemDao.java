@@ -4,6 +4,7 @@ package com.codebrew.roommart.dao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.UserInformation;
 import com.codebrew.roommart.utils.DatabaseConnector;
+import org.json.JSONObject;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -12,6 +13,193 @@ import java.time.LocalDate;
 
 
 public class SystemDao {
+
+
+    private java.sql.Date convertToDate(String date_string ){
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date utilDate = sdf.parse(date_string);
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            return sqlDate;
+        } catch ( Exception e){
+            return null;
+        }
+    }
+
+    private static final String UPDATE_CONTRACT_RENTER_SIDE = "UPDATE contract_details\n" +
+            "SET renter_sign = ?\n" +
+            "FROM contract_main\n" +
+            "WHERE contract_main.contract_details_id = contract_details.contract_details_id\n" +
+            "AND contract_main.renter_id = ?";
+
+    public boolean updateContractRenterSide(String email, String sign){
+        boolean result = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            AccountDao dao = new AccountDao();
+            if (cn != null) {
+                pst = cn.prepareStatement(UPDATE_CONTRACT_RENTER_SIDE);
+
+                pst.setString(1, sign);
+                pst.setString(2, email);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    result = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+
+    private static final String UPDATE_CONTRACT_OWNER_SIDE =
+            "INSERT INTO contract_details ( owner_full_name, owner_birthday, owner_address, owner_identify_card, owner_phone, \n" +
+            "renter_full_name, renter_birthday, renter_phone, renter_identify_card, month_per_pay, \n" +
+            "cost_per_month, deposit, start_date, end_date, current_day )\n" +
+            "Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) returning contract_details_id " ;
+
+    private  static final String UPDATE_CONTRACT_MAIN_OWNER_SIDE = "INSERT INTO contract_main ( contract_details_id, contract_status, owner_id, renter_id, room_id)\n" +
+            "values ( ?, ?, ?, ?, ?) returning contract_id";
+
+    public boolean updateContractOwnerSide(JSONObject json){
+        boolean result = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            AccountDao dao = new AccountDao();
+            if (cn != null) {
+                pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIDE);
+
+                UserInformation owner_info = dao.getInfoByMailForContact(json.getString("owner_mail"));
+                pst.setString(1, owner_info.getFullname());
+                pst.setDate(2, convertToDate(owner_info.getBirthday()));
+                pst.setString(3, owner_info.getAddress());
+                pst.setString(4, owner_info.getCccd());
+                pst.setString(5, owner_info.getPhone());
+
+                UserInformation renter_info = dao.getInfoByMailForContact(json.getString("renter_mail"));
+                pst.setString(6, owner_info.getFullname());
+                pst.setDate(7, convertToDate(owner_info.getBirthday()));
+                pst.setString(8, owner_info.getPhone());
+                pst.setString(9, owner_info.getCccd());
+
+                pst.setInt(10, json.getInt("payment_term"));
+                pst.setInt(11, json.getInt("room_fee"));
+                pst.setInt(12, json.getInt("room_deposit"));
+                pst.setDate(13, convertToDate(json.getString("room_startdate")));
+                pst.setDate(14, convertToDate(json.getString("room_enddate")));
+                pst.setDate(15, convertToDate(json.getString("room_enddate")));
+
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    int contract_details_id = rs.getInt("contract_details_id");
+                    pst = cn.prepareStatement(UPDATE_CONTRACT_MAIN_OWNER_SIDE);
+                    pst.setInt(1, contract_details_id);
+                    pst.setInt(2, 1);
+                    pst.setString(3, owner_info.getEmail());
+                    pst.setString(4, renter_info.getEmail());
+                    pst.setInt(5, 1);
+
+                    ResultSet rs_2 = pst.executeQuery();
+                    if (rs_2 != null && rs_2.next()){
+                        int contract_id = rs_2.getInt("contract_id");
+                        result = true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+
+    private static final String GET_CONTRACT_INFORMATION_BY_EMAIL = "SELECT cd.* \n" +
+            "FROM contract_main cm \n" +
+            "JOIN contract_details cd ON cm.contract_details_id = cd.contract_details_id \n" +
+            "WHERE cm.owner_id = ? AND cm.renter_id = ?;";
+
+    public JSONObject getContractInformationByEmail(String owner_mail, String renter_email){
+        JSONObject jsonObject = new JSONObject();;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_CONTRACT_INFORMATION_BY_EMAIL);
+                pst.setString(1, owner_mail);
+                pst.setString(2, renter_email);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    jsonObject.put("current_day", rs.getDate("current_day").toString());
+
+                    jsonObject.put("owner_full_name", rs.getString("owner_full_name"));
+                    jsonObject.put("owner_phone", rs.getString("owner_phone"));
+                    jsonObject.put("owner_identify_card", rs.getString("owner_identify_card"));
+                    jsonObject.put("owner_address", rs.getString("owner_address"));
+                    jsonObject.put("owner_birthday", rs.getDate("owner_birthday").toString());
+
+                    jsonObject.put("renter_full_name", rs.getString("renter_full_name"));
+                    jsonObject.put("renter_phone", rs.getString("renter_phone"));
+                    jsonObject.put("renter_identify_card", rs.getString("renter_identify_card"));
+                    jsonObject.put("renter_birthday", rs.getDate("renter_birthday").toString());
+
+                    jsonObject.put("room_start_date", rs.getDate("start_date").toString());
+                    jsonObject.put("room_end_date", rs.getDate("end_date").toString());
+                    jsonObject.put("room_fee", rs.getDouble("cost_per_month"));
+                    jsonObject.put("payment_term", rs.getInt("month_per_pay"));
+                    jsonObject.put("room_deposit", rs.getDouble("deposit"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return jsonObject;
+    }
 
     public Account getAccountByEmail(String email){
         Connection cn = null;

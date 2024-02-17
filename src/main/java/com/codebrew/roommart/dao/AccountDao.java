@@ -92,7 +92,7 @@ public class AccountDao {
 
 
     private static final String GET_INFO_FOR_CONTRACT =
-            "SELECT ai.account_id, ai.fullname, ai.birthday, ai.phone, ai.identity_card_number  \n" +
+            "SELECT ai.account_id, ai.fullname, ai.birthday, ai.phone, ai.identity_card_number, ai.address  \n" +
             "FROM accountinformations AS ai\n" +
             "JOIN accounts AS ac ON ai.account_id = ac.account_id\n" +
             "WHERE ac.email = ?";
@@ -109,7 +109,7 @@ public class AccountDao {
                 pst.setString(1, email);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    info = UserInformation.builder()
+                    info = UserInformation.builder().account_id(rs.getInt("account_id"))
                             .fullname(rs.getString("fullname"))
                             .address(rs.getString("address"))
                             .cccd(rs.getString("identity_card_number"))
