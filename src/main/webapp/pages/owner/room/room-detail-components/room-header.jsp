@@ -134,7 +134,7 @@
         <c:choose>
             <c:when test="${sessionScope.room.roomStatus eq 1}">
                 <!-- Start create account button -->
-                <a href="create-contract-page?roomID=${param.roomID}&hostelID=${param.hostelID}" class="action-create-account-link">Tạo hợp đồng</a>
+                <a href="create-contract?roomID=${param.roomID}" class="action-create-account-link">Tạo hợp đồng</a>
                 <!-- End create account button -->
             </c:when>
             <c:when test="${sessionScope.room.roomStatus eq 0}">

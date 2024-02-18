@@ -92,10 +92,10 @@ public class AccountDao {
 
 
     private static final String GET_INFO_FOR_CONTRACT =
-            "SELECT ai.account_id, ai.fullname, ai.birthday, ai.phone, ai.identity_card_number, ai.address  \n" +
-            "FROM accountinformations AS ai\n" +
-            "JOIN accounts AS ac ON ai.account_id = ac.account_id\n" +
-            "WHERE ac.email = ?";
+            "SELECT ac.account_id, ai.fullname, ai.birthday, ai.phone, ai.identity_card_number, ai.address  \n" +
+                    "FROM accountinformations AS ai\n" +
+                    "JOIN accounts AS ac ON ai.account_id = ac.account_id\n" +
+                    "WHERE ac.email = ?";
 
     public UserInformation getInfoByMailForContact(String email){
         UserInformation info = null;
