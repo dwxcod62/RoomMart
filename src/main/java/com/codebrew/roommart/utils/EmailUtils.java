@@ -99,9 +99,9 @@ public class EmailUtils {
         return send(receiverEmail, subject, emailContent);
     }
 
-    public boolean sendContractConfirmationEmail(String receiverEmail, String contractData) {
+    public boolean sendContractConfirmationEmail(String receiverEmail, int contractID) {
         String subject = "Xác nhận Hợp đồng Thuê";
-        String contractLink = "http://" + host + ":8080/RoomMart_war_exploded/createContract?data=" + contractData;
+        String contractLink = "http://" + host + ":8080/RoomMart_war_exploded/createContract?id=" + contractID;
         String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"
