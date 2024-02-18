@@ -1,0 +1,284 @@
+.group-img360 .view-img360 {
+    position: relative;
+    width: calc(100% - 112px);
+    height: 100%;
+    margin: 72px auto 16px auto
+}
+
+.group-img360 .show-img {
+    display: table-cell;
+    width: 745px;
+    height: 326px;
+    vertical-align: middle;
+    text-align: center;
+    margin: auto
+}
+
+.group-img360 .tit-img {
+    text-align: center;
+    font-size: 14px;
+    color: #1f5496;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    padding-top: 10px
+}
+
+.nav-img360 {
+    list-style: none;
+    position: absolute;
+    bottom: 65px;
+    left: 25px;
+    padding-right: 5px;
+    background: rgba(0, 0, 0, .5);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#64000000', endColorstr='#64000000');
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px
+}
+
+.nav-img360 li {
+    float: left;
+    margin-left: 5px
+}
+
+.nav-img360 li .nav {
+    float: left;
+    padding: 5px
+}
+
+.icon360-zoomin,
+.icon360-zoomout,
+.icon360-prev,
+.icon360-next,
+.icon360-up,
+.icon360-down,
+.icon360-reload,
+.icon360-viewfull,
+.icon360-globe,
+.icon360-mini {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(image/icon-360.png);
+    background-repeat: no-repeat;
+    cursor: pointer
+}
+
+.icon360-zoomin {
+    background-position: 0 0
+}
+
+.icon360-zoomout {
+    background-position: 0 -20px
+}
+
+.icon360-prev {
+    background-position: 0 -40px
+}
+
+.icon360-next {
+    background-position: 0 -60px
+}
+
+.icon360-up {
+    background-position: 0 -80px
+}
+
+.icon360-down {
+    background-position: 0 -100px
+}
+
+.icon360-reload {
+    background-position: 0 -120px
+}
+
+.icon360-viewfull {
+    background-position: 0 -140px
+}
+
+.icon360-mini {
+    background-position: -30px -140px
+}
+
+.icon360-globe {
+    background-position: 0 -160px
+}
+
+.control-img360 {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    right: 25px;
+    bottom: 60px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, .5);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#64000000', endColorstr='#64000000');
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%
+}
+
+.icon-scan360,
+.icon-deg360 {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: url(image/icon-360.png) no-repeat -20px 0
+}
+
+.icon-deg360 {
+    background: url(image/icon-360.png) no-repeat -22px -160px;
+    position: absolute;
+    left: 0;
+    top: 0
+}
+
+.group-img360 .list-img ul li {
+    position: relative
+}
+
+.group-img360 .list-img ul li .tit360,
+.control-popup360 .list-thumb360 li .tit360 {
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    height: 20px;
+    line-height: 20px;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, .5)
+}
+
+.tit360 .icon360-globe {
+    float: left;
+    margin-right: 3px
+}
+
+.next-thumb360,
+.prev-thumb360 {
+    position: absolute;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background-image: url(image/icon-360.png);
+    background-repeat: no-repeat;
+    cursor: pointer
+}
+
+.next-thumb360 {
+    right: 0;
+    background-position: -20px -70px
+}
+
+.prev-thumb360 {
+    left: 0;
+    background-position: -20px -40px
+}
+
+.close-popup360 {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    height: 30px;
+    width: 30px;
+    background: url(image/icon-360.png) no-repeat -30px -100px;
+    cursor: pointer
+}
+
+.not-supported-browser {
+    margin: 0 auto;
+    width: 300px;
+    background: #000;
+    color: #fff;
+    padding: 5px;
+    font-weight: bold;
+    position: absolute;
+    top: 200px;
+    left: 200px
+}
+
+.full-screen .close-popup360 {
+    display: block
+}
+
+.full-screen .icon360-viewfull {
+    background-position: -30px -140px
+}
+
+.pnlm-about-msg {
+    z-index: -1
+}
+
+.group-img360 .show-img {
+    display: block;
+    height: 419px
+}
+
+.control-img360 {
+    bottom: 10px
+}
+
+.pnlm-compass {
+    background-image: none;
+    width: 40px;
+    height: 40px;
+    right: 24px;
+    bottom: 9px;
+    z-index: 1
+}
+
+.icon-deg360 {
+    border-radius: 25px
+}
+
+.nav-img360 {
+    bottom: 15px;
+    z-index: 2;
+    left: 50px !important
+}
+
+.close-popup360 {
+    display: none;
+    z-index: 1
+}
+
+.control-popup360 {
+    display: none
+}
+
+.control-popup360 .list-thumb360 li {
+    padding: 0;
+    display: inline-block;
+    border: none
+}
+
+.control-popup360 .list-thumb360 li img {
+    width: 107.15px;
+    height: 60px;
+    margin: 2px
+}
+
+.autoplay.on .on-auto,
+.autoplay.off .off-auto {
+    display: block
+}
+
+.autoplay.on .off-auto,
+.autoplay.off .on-auto {
+    display: none
+}
+
+.prev-thumb360 {
+    top: 25px;
+    left: 170px
+}
+
+.next-thumb360 {
+    top: 25px;
+    right: 170px
+}

@@ -1,0 +1,71 @@
+.main-nav {
+  height: var(--navbar-height);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+.main-nav .main-nav__logo {
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+}
+.main-nav .main-nav__logo-img {
+  width: 132px;
+}
+.main-nav .main-nav__title {
+  text-align: end;
+  height: var(--navbar-height);
+  line-height: var(--navbar-height);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.verify-content {
+  min-height: var(--min-body-height);
+}
+
+.verify-form {
+  background-color: var(--white-color);
+  padding: 24px 16px;
+  margin-top: 24px;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow-border-model);
+}
+.verify-form .form-title {
+  color: #009a13;
+  padding: 0 30px;
+}
+.verify-form .form-subtitle span {
+  color: red;
+}
+.verify-form .form-control.btn {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+.verify-form .form-message {
+  margin-bottom: 0;
+  line-height: 2.2rem;
+}
+.verify-form .form-submit {
+  width: 100%;
+  background-color: #20df7f;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+.verify-form .form-submit:hover {
+  background-color: #00c964;
+}
+
+footer {
+  background-color: var(--footer-background-color);
+}
+
+.copyright-wrapper {
+  height: var(--footer-height);
+}
+.copyright-wrapper .copyright-content {
+  line-height: var(--footer-height);
+  color: #a9b3bb;
+}
+
+/*# sourceMappingURL=style.css.map */

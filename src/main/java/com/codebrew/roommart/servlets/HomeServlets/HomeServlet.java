@@ -1,7 +1,9 @@
 package com.codebrew.roommart.servlets.HomeServlets;
 
 import com.codebrew.roommart.dao.RoomDAO;
+import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.Room;
+import com.codebrew.roommart.utils.EncodeUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,12 +20,25 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        System.out.println("HomeServlet============================================");
         RoomDAO rd = new RoomDAO();
+
 
         List<Room> rooms = rd.getAllRoom();
         System.out.println("get size room: "+rooms.size());
-
+        boolean isSuccess = false;
+        if (!rooms.isEmpty()){
+            isSuccess=true;
+        }
+        if (isSuccess) {
+            request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                    .status(true)
+                    .content("Loading room successfully").build());
+        } else {
+            request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                    .status(false)
+                    .content("Loading room fail!").build());
+        }
 
         if (rooms.isEmpty()){
             System.out.println("empty list");
@@ -31,7 +46,7 @@ public class HomeServlet extends HttpServlet {
         }else {
             request.setAttribute("rooms", rooms);
         }
-//        System.out.println("room id "+ rooms.get(0).getRoomId());
+
         request.getRequestDispatcher("home.jsp").forward(request,response);
 
 
@@ -40,44 +55,6 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.setCharacterEncoding("UTF-8");
-        String city = request.getParameter("city") == "" ? "all" : request.getParameter("city");
 
-        String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
-        String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
-        String inputText = request.getParameter("textInput").trim();
-
-
-        request.setAttribute("citySelected", city);
-
-        request.setAttribute("districtSelected", district);
-
-        request.setAttribute("wardSelected", ward);
-
-
-
-        System.out.println(city +" city : " + district + " district : " + ward+" ward");
-
-        RoomDAO rd = new RoomDAO();
-        List<Room> rooms = new ArrayList<>();
-        if(inputText!=null){
-            System.out.println("get input text: " + inputText);
-            rooms = rd.getListRoomsByCondition(city,district,ward, inputText);
-            System.out.println("get size room by condition: "+rooms.size());
-        }else {
-            rooms = rd.getAllRoom();
-            System.out.println("get size room: "+rooms.size());
-        }
-
-
-
-        if (rooms.isEmpty()){
-            System.out.println("EMPTY LIST");
-            request.setAttribute("rooms", null);
-        }else {
-            request.setAttribute("rooms", rooms);
-        }
-//        System.out.println("room id "+ rooms.get(0).getRoomId());
-        request.getRequestDispatcher("home.jsp").forward(request,response);
     }
 }

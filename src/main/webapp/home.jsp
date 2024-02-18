@@ -1,4 +1,4 @@
-
+<%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,15 +17,54 @@
 
 
         <title> ROOMMART </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
-    <link rel="stylesheet" href="https://staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
-<body class="re__body re__body-home">
+<style>
+    #loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8); /* Một lớp mờ */
+        z-index: 9999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
+    }
+
+    #loading-overlay img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body class="re__body re__body-home ${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+
+
+
+<div id="loading-overlay">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+
+
+
 
 <div class="form-content">
 
@@ -46,12 +85,23 @@
             <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">
 
                 <div class="re__control-menu">
+                    <c:if test = "${sessionScope.USER != null}">
+                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
+                            <a href="#AccInformation" class="re__btn re__btn-se-ghost--md">
+                                    ${sessionScope.USER.email.split("@")[0]}
+                            </a>
+                            <span class="re__line"></span>
+                            <a href="logout" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >logout</a>
+                        </div>
+                    </c:if>
+                    <c:if test = "${sessionScope.USER == null}">
+                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
+                            <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>
+                            <span class="re__line"></span>
+                            <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>
+                        </div>
+                    </c:if>
 
-                    <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
-                        <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>
-                        <span class="re__line"></span>
-                        <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" id="kct_username" tracking-id="sign-up-button-seller" tracking-label="loc=Header">Register</a>
-                    </div>
 
                 </div>
                 <!-- icon -->
@@ -108,7 +158,7 @@
         <div class="re__content-block re__home__head-block">
             <div class="re__home-search-box">
                 <!-- form -->
-                <form action="home" method="post" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
+                <form action="search" method="get" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
                     <div class="re__search-box-container">
 
                         <div class="re__search-box-content js__search-box-content">
@@ -118,7 +168,7 @@
                                     <div class="re__search-location-row re__search-location-select-header-item js_search-location-select-header-item">
                                         <i class="js__selected-icon re__icon-search re__city-icon-search"></i>
 
-                                        <input type="text" id="textInput" name="textInput" title="Enter address follow pattern: province,(district),(ward)" class="w3-input w3-animate-input re__city-code-select js__listing-search-select-container js__city-code-select">
+                                        <input value="${requestScope.key}" type="text" id="textInput" name="key" title="Enter address follow pattern: province,(district),(ward)" class="w3-input w3-animate-input re__city-code-select js__listing-search-select-container js__city-code-select">
 
                                         <button type="submit" class="re__btn re__btn-pr-solid--sm re__btn-icon-left--sm re__btn-search" id="btnSearch">
                                             <span>Tìm kiếm</span>
@@ -199,12 +249,14 @@
 
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
-                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${r.roomId}" title="Roommart" previewlistener="true">
+
+                                        <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
+                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${encodedRoomId}" title="Roommart" previewlistener="true">
                                             <div class="re__card-image">
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
                                                 <div class="re__card-image-feature">
-                                                    <i class="re__icon-image"></i>
+                                                    <i class="bi bi-image"></i>
                                                     <span>${not empty r.hostelId ? r.hostelId : 0}</span>
                                                 </div>
 
@@ -235,7 +287,7 @@
                                                         <div class="re__clear"></div>
                                                     </div>
                                                     <div class="re__card-location">
-                                                        <i class="re__icon-location--sm"></i>
+                                                        <i class="bi bi-house-fill"></i>
                                                         <span>${address}</span>
                                                     </div>
                                                     <div class="re__clearfix"></div>
@@ -345,6 +397,26 @@
     }
 
 </script>
-<%--<!--Script-->--%>
+<script src="assets/js/loading-handler.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var loadingOverlay = document.getElementById('loading-overlay');
+        var loader = document.getElementById('preloader');
+        loadingOverlay.style.display = 'block'; // Hiển thị biểu tượng loading
+
+        // Bắt sự kiện load hoàn tất của trang và ẩn biểu tượng loading
+        window.addEventListener("load", function() {
+            loadingOverlay.style.display = 'none';
+        });
+        window.addEventListener('beforeunload', function() {
+            loadingOverlay.style.display = 'block'; // Hiển thị biểu tượng loading khi bắt đầu chuyển trang
+        });
+    });
+
+
+
+
+</script>
+<!--Script-->
 </body>
 </html>

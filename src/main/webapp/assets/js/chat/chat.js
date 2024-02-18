@@ -11,31 +11,31 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
-// var read = false;
+
 const chatForm = document.getElementById("messages");
 const chatInput = document.getElementById("chat-id-1-form");
 const chatHeader = document.getElementById("chatHeader");
-// const readbtn = document.getElementById("read");
-// const role = prompt("Please Tell Us your role");
-// const username = prompt("Please Tell Us your Name");
-// const role = 2;
 
-var username;
 
-// const userid = prompt("Please Tell Us user id");
 
-// const ownerid = prompt("Please Tell Us owner id");
-console.log("username : " + username);
+
+
 console.log("userid : " + renterId);
 console.log("ownerid : " + ownerId);
 const readbtn = document.getElementById("read");
 const sidebarList = document.getElementById("sidebarList");
-// const username = "thanh";
-// const userid = "2";
-// const ownerid = "1";
+const sidebarProfile = document.getElementById("chat-1-user-profile");
 
-// var firebase_ownerId = db.ref(`chats/${ownerid}/`);
-// console.log("firebase_ownerId : "+firebase_ownerId);
+
+
+
+// chat-1-user-profile
+function showProfileSidebar(){
+    sidebarProfile.style.display="block";
+};
+function hideProfileSidebar(){
+    sidebarProfile.style.display="none";
+};
 function showSidebar(){
     sidebarList.style.display="block";
 };
@@ -46,20 +46,20 @@ function hideSidebar(){
 function roleHandler() {
     console.log("role : " + role);
     if (role == 1) {
-        username = "admin";
+         // username = "admin";
         sidebarList.style.display="block";
         if(renterId == "null"){
             chatHeader.style.display="none";
         }
 
     } else {
-        username = "thanh";
+        // username = "thanh";
         readbtn.hidden = true;
         chatForm.hidden = false;
         chatInput.hidden = false;
 
     }
-    console.log("Username: "+username)
+    console.log("Acc name: "+username);
 }
 
 window.onload = roleHandler();
@@ -125,6 +125,9 @@ if(role==1){
         console.log("user check : " + snapshot.key);
         const fetchChat2 = db.ref(`chats/${ownerId}/${snapshot.key}/`);
         var count = 0;
+        var renterName ="";
+        var newMess ="";
+
         //   const userList = `<li class="user-list"><a href="#adudu">${snapshot.key}</a></li>`;
         fetchChat2.on("child_added", function (snapshot2) {
             const messages = snapshot2.val();
@@ -132,8 +135,14 @@ if(role==1){
                 count++;
                 console.log("red - messages.read : " + messages.read);
             }
+            if (username != messages.username){
+                renterName = messages.username;
+                newMess = messages.message;
+            }
+
+
         });
-        const userList2 = `<a class="text-reset nav-link p-0 mb-6" href="chat?renterId=${snapshot.key}">
+        let userList2 = `<a class="text-reset nav-link p-0 mb-6" href="chat?renterId=${snapshot.key}">
                                             <div class="card card-active-listener">
                                                 <div class="card-body">
 
@@ -146,10 +155,10 @@ if(role==1){
                                                         
                                                         <div class="media-body overflow-hidden">
                                                             <div class="d-flex align-items-center mb-1">
-                                                                <h6 class="text-truncate mb-0 mr-auto">User ${snapshot.key}</h6>
+                                                                <h6 class="text-truncate mb-0 mr-auto">${renterName} (User)</h6>
                                                                 
                                                             </div>
-                                                            <div class="text-truncate">Anna Bridges: Hey, Maher! How are you? The weather is great isn't it?</div>
+                                                            <div class="text-truncate">${newMess}</div>
                                                         </div>
                                                     </div>
 
@@ -175,7 +184,7 @@ fetchChat.on("child_added", function (snapshot) {
     // fetch existing chat messages
     const messages = snapshot.val();
 
-    const message2 =
+    let message2 =
         username === messages.username
             ? ` <div class="message message-right">
                                     <!-- Avatar -->
@@ -209,7 +218,7 @@ fetchChat.on("child_added", function (snapshot) {
                                 </div>`
             : ` <div class="message">
                                     <!-- Avatar -->
-                                    <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-1-user-profile">
+                                    <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" onclick="showProfileSidebar()">
                                         <img class="avatar-img" src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.png" alt="">
                                     </a>
 

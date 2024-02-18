@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
+
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
 
     <!-- Title -->
@@ -16,6 +17,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-create-account-style/style.css">
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
+</head>
+<style>#loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Một lớp mờ */
+    z-index: 9999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
+}
+
+#loading-overlay img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
     <!-- Core CSS -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
@@ -63,12 +88,14 @@
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-6 m-auto">
                     <!-- Form body -->
-                    <form action="addRoom" method="post" class="custom-form add-room-form" id="add-hostel-form">
+                    <form action="${requestScope.rid eq null ? 'addRoom' : 'updateRoom'}" method="post" enctype="multipart/form-data" class="custom-form add-room-form" id="add-hostel-form">
                         <!-- Title -->
                         <div class="form-header">
-                            <div class="form-title main-title">Thêm phòng mới</div>
+                            <div class="form-title main-title">${requestScope.rid eq null ? "Thêm phòng mới" : "Cập nhật phòng"}</div>
                         </div>
                         <!-- Warning -->
+                        <c:if test="${requestScope.rid eq null}">
+
                         <div class="form-warning">
                             <p><span>*</span> Để tạo cùng lúc nhiều phòng, hãy thay đổi số lượng
                                 phòng cần tạo,
@@ -76,13 +103,30 @@
                             <p><span>*</span> Khi tạo nhiều phòng cùng lúc, tên phòng sẽ được tạo ngẫu nhiên,
                                 bạn có thể đổi tên phòng sau này!</p>
                         </div>
+                          
+                        </c:if>
+                        <c:if test="${requestScope.rid != null}">
+                            <div class="form-warning">
+                                <p><span>*</span>Nếu cập nhật ảnh của phòng thì tất cả ảnh cũ sẽ bị xoá và thay bằng ảnh mới! </p>
+
+                            </div>
+                        </c:if>
                         <div class="spacer"></div>
                         <!-- Input -->
+                        <c:if test="${requestScope.rid eq null}">
                         <div class="form-group">
                             <div class="form-wrapper">
                                 <label for="room-quantity" class="form-label">Số lượng: <span>*</span></label>
-                                <input id="room-quantity" name="room-quantity" type="number" value="1"
-                                       class="form-control">
+                                <input id="room-quantity" name="room-quantity" type="number" value="1" class="form-control">
+                            </div>
+                            <span class="form-message"></span>
+                        </div>
+                        </c:if>
+                        <div class="form-group">
+                            <div class="form-wrapper">
+                                <label for="room-img" class="form-label">Room Images: <span>*</span></label>
+                                <input id="room-img" type="file" name="fileImage" multiple class="form-control">
+
                             </div>
                             <span class="form-message"></span>
                         </div>
@@ -90,7 +134,7 @@
                             <div class="form-wrapper">
                                 <label for="room-name" class="form-label">Phòng số: </label>
                                 <input id="room-name" name="room-name" type="number" class="form-control"
-                                       placeholder="Phòng số ...">
+                                       placeholder="Phòng số ..." value="${requestScope.rid != null ? r.roomNumber  : "..."}">
                             </div>
                             <span class="form-message"></span>
                         </div>
@@ -98,16 +142,21 @@
                             <div class="form-wrapper">
                                 <label for="room-capacity" class="form-label">Số lượng thành viên tối đa:
                                     <span>*</span></label>
-                                <input id="room-capacity" name="room-capacity" type="number" value="1"
-                                       class="form-control">
+
+                                <input id="room-capacity" name="room-capacity" type="number"
+                                       class="form-control" value="${requestScope.rid != null ? r.capacity:1}">
                             </div>
+
+
                             <span class="form-message"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-wrapper">
                                 <label for="room-area" class="form-label fill-label">
                                     Diện tích <span>*</span></label>
-                                <input id="room-area" name="room-area" value="20" type="number"
+
+                                <input id="room-area" name="room-area" value="${requestScope.rid != null ? r.roomArea:20}" type="number"
+
                                        class="form-control">
                                 <span class="form-unit d-block text-end" style="width: 34px;">m2</span>
                             </div>
@@ -120,14 +169,29 @@
                                 </label>
                                 <select id="room-floor" class="form-control fill-input"
                                         name="room-floor">
+
+                                    <c:if test="${requestScope.rid eq null}">
                                     <option value="1" selected>Có</option>
                                     <option value="0">Không</option>
+                                    </c:if>
+                                    <c:if test="${requestScope.r.hasAttic == 1}">
+                                        <option value="1" selected>Có</option>
+                                        <option value="0">Không</option>
+                                    </c:if>
+                                    <c:if test="${requestScope.r.hasAttic == 0}">
+                                        <option value="1" >Có</option>
+                                        <option value="0" selected>Không</option>
+                                    </c:if>
+
                                 </select>
                                 <span class="fill-unit"></span>
                             </div>
                             <span class="form-message"></span>
                         </div>
                         <div class="spacer"></div>
+
+                        <c:if test="${requestScope.rid eq null}">
+
                         <div class="infrastructure-group">
                             <div class="form-header">
                                 <div class="form-title infrastructure-title">Cơ sở vật chất</div>
@@ -189,12 +253,22 @@
                                 <span class="form-message"></span>
                             </div>
                         </div>
+<
+                        </c:if>
+
                         <div class="spacer"></div>
                         <!-- Action -->
                         <div class="add-room-action">
                             <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="form-submit">Hủy bỏ</a>
                             <input type="hidden" name="hostelID" value="${requestScope.hostel.hostelID}">
-                            <button class="form-submit">Tạo phòng</button>
+
+                            <c:if test="${requestScope.rid != null}">
+
+                                <input type="hidden" name="RoomID" value="${requestScope.r.roomId}">
+                            </c:if>
+<%--                            change hostelID ben Servlet--%>
+                            <button class="form-submit">${requestScope.rid eq null?"Tạo phòng":"Cập nhật"}</button>
+
                         </div>
                     </form>
                 </div>
@@ -211,16 +285,18 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <!-- Jquery -->
-<script src="./assets/js/jquery-3.5.1.min.js"></script>
+
+<script src="assets/js/jquery-3.5.1.min.js"></script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Link your script here -->
-<script src="./assets/js/handle-main-navbar.js"></script>
-<script src="./assets/js/valid-form.js"></script>
+<script src="assets/js/handle-main-navbar.js"></script>
+<script src="assets/js/valid-form.js"></script>
 <!-- Push notification -->
-<script src="./assets/js/push-notification-alert.js"></script>
+<script src="assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
-<script src="./assets/js/receiveWebsocket.js"></script>
+<script src="assets/js/receiveWebsocket.js"></script>
+
 <script>
 
     Validator({
@@ -228,7 +304,34 @@
         formGroupSelector: '.form-group',
         errorSelector: '.form-message',
         rules: [
+            Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
+            Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
+            Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
+            Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
+            Validator.isInteger('#room-capacity', 'Số lượng người phải là số nguyên'),
+            Validator.maxNumber('#room-area', 1000, 'Vui lòng nhập giá trị dưới 1000'),
+            Validator.minNumber('#room-area', 1, 'Vui lòng nhập giá trị tối thiểu là 1'),
+        ]
+    });
+
+    function getParent(element, selector) {
+        while (element.parentElement) {
+            if (element.parentElement.matches(selector)) {
+                return element.parentElement;
+            }
+            element = element.parentElement;
+        }
+    }
+
+
+if (${requestScope.rid eq null}){
+    Validator({
+        form: '#add-hostel-form',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
             Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
+
             Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
             Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
             Validator.isInteger('#room-quantity', 'Số lượng phòng phải là số nguyên'),
@@ -250,28 +353,24 @@
         ]
     });
 
-    function getParent(element, selector) {
-        while (element.parentElement) {
-            if (element.parentElement.matches(selector)) {
-                return element.parentElement;
-            }
-            element = element.parentElement;
-        }
-    }
-
     const inputName = document.querySelector('#room-name');
+    const fileImg = document.querySelector('#room-img');
     const errorElement = getParent(inputName, ".form-group").querySelector('.form-message');
-
     document.querySelector('#room-quantity').addEventListener('change', (e) => {
-        if (e.target.value != '1') {
-            inputName.setAttribute("disabled", "true");
-            inputName.value = "0";
-            errorElement.innerHTML = "";
-        } else {
-            inputName.removeAttribute("disabled");
-            inputName.value = "";
-        }
-    })
+    if (e.target.value != '1') {
+        inputName.setAttribute("disabled", "true");
+        inputName.value = "0";
+        fileImg.setAttribute("disabled", "true");
+        fileImg.setAttribute("required","true");
+        errorElement.innerHTML = "";
+    } else {
+        inputName.removeAttribute("disabled");
+        inputName.value = "";
+        fileImg.removeAttribute("disabled");
+    }
+})
+}
+
 </script>
 
 <c:choose>
@@ -285,7 +384,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body pt-5 pb-5">
-                        ${requestScope.RESPONSE_MSG.content}
+                            ${requestScope.RESPONSE_MSG.content}
+
                     </div>
                     <div class="modal-footer justify-content-between">
                         <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="btn btn-secondary">Quay về khu trọ</a>
@@ -301,11 +401,13 @@
     </c:when>
     <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
         <!-- Alert Modal -->
-        <div class="modal fade" id="alert-modal" tabindex="-1" aria-labelledby="alert-modal-label" aria-hidden="true">
+
+        <div class="modal fade" id="alert-modal" tabindex="-1" aria-labelledby="alert-modal-label2" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-danger" id="alert-modal-label">Thất bại</h5>
+                        <h5 class="modal-title text-danger" id="alert-modal-label2">Thất bại</h5>
+
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body pt-5 pb-5">
@@ -337,7 +439,8 @@
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
     <!-- Loader -->
-    <script src="./assets/js/loading-handler.js"></script>
+
+    <script src="assets/js/loading-handler.js"></script>
 </c:if>
 
 </body>

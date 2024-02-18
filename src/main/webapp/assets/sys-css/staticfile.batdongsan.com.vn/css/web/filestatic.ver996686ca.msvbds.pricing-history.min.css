@@ -1,0 +1,1132 @@
+@keyframes gradient-animation-card-skeleton {
+    from {
+        left: 0%
+    }
+    to {
+        left: 100%
+    }
+}
+
+.re__pricing-history .re__product-chart {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 24px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart {
+    margin: 0 0 8px 0;
+    overflow: hidden
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__title {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #2C2C2C;
+    margin: 0 0px 24px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-sapo {
+    overflow: hidden;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 20px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-sapo ul.list-cate li {
+    float: left
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-sapo ul.list-time {
+    float: right
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-sapo ul.list-time li {
+    float: left
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo {
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #F2F2F2;
+    border-radius: 8px;
+    padding: 16px 0
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col {
+    float: left;
+    width: calc(100%/3);
+    overflow: hidden;
+    padding: 0 20px;
+    border-left: 1px solid #F2F2F2
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col .text-big {
+    overflow: hidden;
+    margin-bottom: 12px;
+    height: 32px;
+    display: table
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col .text-big strong {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #2C2C2C;
+    float: left;
+    display: table-cell;
+    vertical-align: middle
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col .text-big i {
+    display: table-cell;
+    vertical-align: middle
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col .text-small {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    color: #505050;
+    height: 40px;
+    overflow: hidden
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col.re__col-1 {
+    border-left: 0px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col.re__col-1 .text-big span {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    color: #2C2C2C;
+    float: left;
+    margin-top: 9px;
+    margin-left: 4px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col.re__col-2 .text-big strong {
+    float: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col.re__col-2.no-data {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo .re__chart-col.re__col-3 .text-big strong {
+    float: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2 .re__chart-col.re__col-1 {
+    width: 50%
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2 .re__chart-col.re__col-2 {
+    display: none;
+    width: 50%
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2 .re__chart-col.re__col-2 .text-big {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #999;
+    line-height: 32px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2 .re__chart-col.re__col-2.no-data {
+    display: block
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2 .re__chart-col.re__col-3 {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2-short-data .re__chart-col.re__col-1 {
+    width: 50%
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2-short-data .re__chart-col.re__col-2 {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2-short-data .re__chart-col.re__col-2.no-data {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-subsapo.col-2-short-data .re__chart-col.re__col-3 {
+    width: 50%
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart {
+    position: relative;
+    float: left;
+    width: 100%
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart table {
+    width: 100%;
+    border: 1px solid #ebedf0;
+    border-collapse: collapse;
+    margin: 0px 0 4px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart table td {
+    border: 1px solid #ebedf0;
+    padding: 4px 0;
+    text-align: center;
+    min-width: 100px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart table td.td-chart {
+    text-align: left;
+    padding-left: 16px;
+    min-width: 130px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart table td.td-chart span {
+    display: inline-block;
+    margin-right: 8px;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart table td.td-1 span {
+    background-color: #e03c31
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart table td.td-2 span {
+    background-color: #004e7f
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart table td.td-3 span {
+    background-color: #008f3d
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart .re__chart-unit {
+    font-weight: 400;
+    text-align: right
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart .re__box-gap {
+    height: calc(100% - 80px)
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart .re__view-more {
+    background: #ffffff;
+    color: #004e7f;
+    font-weight: 500;
+    text-align: center
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart .re__view-more .re__gradient {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart .re__view-more .re__box-gap {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart .re__view-more .box-view-less {
+    display: inline-block
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart .re__view-more .box-view-more {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas {
+    margin-top: 24px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-title {
+    display: block;
+    overflow: hidden;
+    width: 100%
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-title .ct-content {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: normal !important;
+    color: #999;
+    margin-left: 5px;
+    margin-bottom: 12px;
+    float: left
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-footer {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 16px;
+    text-align: center
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-footer .cf-content {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: normal !important;
+    color: #505050;
+    display: inline-block;
+    width: auto;
+    margin-right: 24px;
+    padding-left: 28px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-footer .cf-content.labels-1 {
+    background: url(/images/chart/label-max.svg) no-repeat 0px center transparent
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-footer .cf-content.labels-2 {
+    background: url(/images/chart/label-avg.svg) no-repeat 0px center transparent
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-footer .cf-content.labels-3 {
+    background: url(/images/chart/label-min.svg) no-repeat 0px center transparent
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-footer .cf-content.labels-4 {
+    margin-right: 0px;
+    background: url(/images/chart/label-price.svg) no-repeat 4px center transparent
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas .chart-footer .cf-content.labels-4.cf-hide {
+    display: none
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__div-chart-canvas canvas {
+    position: relative;
+    min-height: 120px;
+    max-height: 520px;
+    z-index: 1;
+    background: transparent
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-no-data {
+    padding: 55px 32px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-no-data .chart-img {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    text-align: center
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-no-data .chart-img img {
+    width: 130px;
+    height: 130px
+}
+
+.re__pricing-history .re__product-chart .re__detail-chart .re__chart-no-data .chart-text {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    color: #999;
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    text-align: center
+}
+
+.re__pricing-history .re__pricing-history-note {
+    overflow: hidden;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 4px;
+    background: #F0EAF4;
+    margin: 16px 0px;
+    display: table
+}
+
+.re__pricing-history .re__pricing-history-note .col {
+    display: table-cell;
+    vertical-align: middle
+}
+
+.re__pricing-history .re__pricing-history-note .col.col-1 {
+    font-size: 24px;
+    width: 24px
+}
+
+.re__pricing-history .re__pricing-history-note .col.col-2 {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    color: #2C2C2C;
+    width: calc(100% - 24px - 8px);
+    padding-left: 8px
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 {
+    display: none;
+    background-image: url(/images/Product/PricingHistory/illus_kyc_web.svg), url(/images/Product/PricingHistory/background_kyc_web_2.svg);
+    background-position: right bottom, right top;
+    background-repeat: no-repeat, no-repeat;
+    padding: 16px 24px;
+    margin-bottom: 40px;
+    clear: both
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-title {
+    max-width: 548px;
+    margin-bottom: 4px
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-title span {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #2C2C2C
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-title span span {
+    color: #009BA1
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-subtitle {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-subtitle i {
+    margin-right: 16px;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border-radius: 100%
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-subtitle i::before {
+    padding: 8px;
+    display: block
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-subtitle div {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-subtitle div span {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    color: #2C2C2C;
+    max-width: 350px
+}
+
+.re__pricing-history .re__pricing-history-kyc--block-v1 .re__pricing-history-kyc-button {
+    margin-top: 24px
+}
+
+.re__pricing-history .re__pricing-history-kyc-v2 {
+    margin-top: -24px;
+    margin-bottom: 40px;
+    padding: 39px 40px;
+    text-align: center;
+    position: relative;
+    border: 1px solid #F2F2F2;
+    border-radius: 8px;
+    clear: both
+}
+
+.re__pricing-history .re__pricing-history-kyc-v2::before {
+    background-image: url(/images/Product/PricingHistory/background_kyc_v2.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    content: ' ';
+    display: block;
+    position: absolute;
+    z-index: 1
+}
+
+.re__pricing-history .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-img {
+    width: 130px;
+    height: 130px;
+    margin: auto;
+    margin-bottom: 16px
+}
+
+.re__pricing-history .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-title {
+    margin-bottom: 24px;
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    letter-spacing: -.2px
+}
+
+.re__pricing-history .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-button {
+    position: relative;
+    z-index: 2
+}
+
+.re__pricing-history .re__pricing-history-kyc--ph-title {
+    font-family: "Lexend Medium", Roboto, Arial !important;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: normal !important;
+    letter-spacing: -.2px;
+    color: #2C2C2C;
+    margin: 0 0px 24px;
+    clear: both;
+    overflow: hidden;
+    width: 100%;
+    float: left
+}
+
+#chartjs-tooltip {
+    opacity: 1;
+    position: absolute;
+    background: #fff;
+    border-radius: 4px;
+    padding: 8px 12px !important;
+    box-shadow: 0px 0px 16px 0px rgba(182, 182, 182, 0.42);
+    width: 195px;
+    z-index: 2
+}
+
+#chartjs-tooltip::before {
+    content: "";
+    border: 8px solid #fff;
+    position: absolute;
+    left: 195px;
+    top: 20px;
+    border-right: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent
+}
+
+#chartjs-tooltip.right::before {
+    content: "";
+    border: 8px solid #fff;
+    position: absolute;
+    left: -16px;
+    top: 20px;
+    border-left: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent
+}
+
+#chartjs-tooltip.top::before {
+    content: "";
+    border: 8px solid #fff;
+    position: absolute;
+    left: 94.5px;
+    top: 56px;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    border-bottom: 8px solid transparent
+}
+
+#chartjs-tooltip.bottom::before {
+    content: "";
+    border: 8px solid #fff;
+    position: absolute;
+    left: 94.5px;
+    top: -16px;
+    border-right: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-left: 8px solid transparent
+}
+
+#chartjs-tooltip table {
+    border: 0px;
+    margin: 0px !important
+}
+
+#chartjs-tooltip table tr,
+#chartjs-tooltip table td {
+    border: 0px !important;
+    text-align: left !important;
+    padding: 0px !important
+}
+
+#chartjs-tooltip table tr .row,
+#chartjs-tooltip table td .row {
+    width: 100%;
+    overflow: hidden
+}
+
+#chartjs-tooltip table tr .row.r-1,
+#chartjs-tooltip table td .row.r-1 {
+    margin-bottom: 4px
+}
+
+#chartjs-tooltip .chartjs-tooltip-key span {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: normal !important;
+    color: #2C2C2C;
+    display: inline-block;
+    overflow: hidden
+}
+
+#chartjs-tooltip .chartjs-tooltip-key span.color {
+    line-height: 20px
+}
+
+#chartjs-tooltip .chartjs-tooltip-key span.txt-left {
+    float: left
+}
+
+#chartjs-tooltip .chartjs-tooltip-key span.txt-right {
+    float: right
+}
+
+#chartjs-tooltip .chartjs-tooltip-key span.txt-right.color {
+    font-family: "Roboto Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    color: #009BA1
+}
+
+#chartjs-tooltip-border {
+    opacity: 1;
+    position: absolute;
+    border: 0.6px solid #999;
+    position: absolute;
+    height: auto;
+    bottom: 66px;
+    z-index: 0
+}
+
+.re__div-chart-canvas.active #chartjs-tooltip-border {
+    opacity: 1 !important;
+    z-index: 0 !important
+}
+
+.re__div-chart-canvas.active #chartjs-tooltip {
+    opacity: 1 !important;
+    z-index: 2 !important
+}
+
+#chartjs-labels-yaxes {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    z-index: 2
+}
+
+#chartjs-labels-yaxes .labels-yaxes {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    width: 100%;
+    height: 20px
+}
+
+#chartjs-labels-yaxes .labels-yaxes span {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: normal !important;
+    color: #2C2C2C;
+    text-align: center;
+    display: block;
+    width: 54px;
+    position: absolute
+}
+
+.pricing-history-content {
+    display: none
+}
+
+.pricing-history-content .ph--skeleton {
+    display: none !important
+}
+
+.pricing-history-content.skeleton .ph-product-chart .re__chart-subsapo,
+.pricing-history-content.skeleton .ph-product-chart .re__div-chart,
+.pricing-history-content.skeleton .pi-extented,
+.pricing-history-content.skeleton .re__pricing-history-note {
+    display: none !important
+}
+
+.pricing-history-content.skeleton .ph-product-chart {
+    margin-bottom: 0px
+}
+
+.pricing-history-content.skeleton .ph-product-chart .re__detail-chart {
+    margin-bottom: 0px
+}
+
+.pricing-history-content.skeleton .ph--skeleton {
+    display: block !important
+}
+
+.pricing-history-skeleton {
+    display: none;
+    margin-bottom: 40px
+}
+
+.pricing-history-skeleton .skeleton-content {
+    display: inline-block;
+    min-height: 12px;
+    min-width: 36px;
+    position: relative;
+    border-radius: 9px;
+    overflow: hidden;
+    background: #e2e2e2
+}
+
+.pricing-history-skeleton .skeleton-content:before {
+    content: "";
+    position: absolute;
+    left: 0%;
+    top: 0;
+    height: 100%;
+    width: 50px;
+    background: linear-gradient(to right, #e2e2e2 25%, #d5d5d5 50%, #e2e2e2 100%);
+    animation-name: gradient-animation-card-skeleton;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    filter: blur(5px)
+}
+
+.pricing-history-skeleton .skeleton-content::before {
+    width: 24px;
+    filter: blur(0px)
+}
+
+.pricing-history-skeleton .re__detail-chart .re__title {
+    display: block !important
+}
+
+.pricing-history-skeleton .re__detail-chart .re__title .skeleton-content {
+    min-height: 18px;
+    min-width: 300px
+}
+
+.pricing-history-skeleton .re__detail-chart .re__title .skeleton-content::before {
+    width: 50px;
+    filter: blur(0px)
+}
+
+.pricing-history-skeleton .re__detail-chart .re__chart-sapo ul.list-cate li {
+    line-height: 0 !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important
+}
+
+.pricing-history-skeleton .re__detail-chart .re__chart-sapo ul.list-time li {
+    line-height: 0 !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important
+}
+
+.pricing-history-skeleton .re__detail-chart .re__chart-subsapo .re__chart-col .text-big span {
+    margin: 0;
+    padding: 0
+}
+
+.pricing-history-skeleton .re__detail-chart .re__chart-subsapo .re__chart-col .text-big .skeleton-content {
+    margin-left: 0;
+    min-height: 18px;
+    min-width: 72px
+}
+
+.pricing-history-skeleton .re__detail-chart .re__chart-subsapo .re__chart-col .text-small {
+    height: auto !important
+}
+
+.pricing-history-skeleton .re__detail-chart .re__chart-subsapo .re__chart-col .text-small .skeleton-content {
+    min-height: 12px;
+    min-width: 176px
+}
+
+.pricing-history-skeleton .re__detail-chart .re__chart-subsapo .re__chart-col .text-small .skeleton-content.r2 {
+    min-width: 112px
+}
+
+.pricing-history-skeleton .re__detail-chart .re__div-chart-canvas {
+    width: 100%
+}
+
+.pricing-history-skeleton .re__detail-chart .re__div-chart-canvas .chart-canvas {
+    margin: 42px auto 26px;
+    width: 100%;
+    aspect-ratio: 666.5/236;
+    background: url(/images/chart/chart-skeleton.svg) no-repeat 0 0 transparent;
+    background-size: 100%
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented {
+    overflow: hidden;
+    border: 1px solid #F2F2F2;
+    border-radius: 8px;
+    padding-bottom: 8px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row {
+    width: 100%;
+    float: left
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row.pricing-insight-title {
+    border-bottom: 0px solid #F2F2F2;
+    padding: 0px;
+    overflow: hidden;
+    height: auto !important
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row.pricing-insight-title span {
+    float: left;
+    margin-top: 4px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row.pricing-insight-title span.skeleton-content {
+    min-width: 112px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row.pricing-insight-title .pricing-insight-col.pricing-insight-col2 span {
+    float: none;
+    text-align: center
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row.pricing-insight-title .pricing-insight-col.pricing-insight-col2 span.skeleton-content {
+    min-width: 112px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col {
+    float: left;
+    padding: 10px 0
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col.pricing-insight-col1 {
+    width: calc(100% - 155px - 148px - 64px);
+    margin-right: 16px;
+    margin-left: 16px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col.pricing-insight-col1 a {
+    float: left;
+    margin-right: 4px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col.pricing-insight-col1 a .skeleton-content {
+    min-width: 238px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col.pricing-insight-col2 {
+    width: 155px;
+    text-align: center;
+    margin-right: 16px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col.pricing-insight-col2 .skeleton-content {
+    min-width: 76px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col.pricing-insight-col3 {
+    width: 148px;
+    text-align: right;
+    padding: 10px 0 5px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row .pricing-insight-col.pricing-insight-col3 a .skeleton-content {
+    min-width: 76px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row.pricing-insight-row-view .pricing-insight-col.pricing-insight-col1 span {
+    float: left
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented .pricing-insight-row.pricing-insight-row-view .pricing-insight-col.pricing-insight-col1 .labled-text-small {
+    background: #999;
+    font-family: "Roboto Medium", Roboto, Arial !important;
+    font-size: 10px;
+    line-height: 20px;
+    font-weight: normal !important;
+    line-height: 12px;
+    color: #fff;
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 2px;
+    margin-top: 2px
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented-bottom {
+    text-align: center
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented-bottom .re__btn {
+    display: inline-block;
+    margin: 8px 0 0;
+    padding: 0
+}
+
+.pricing-history-skeleton .re__pricing-insight-extented-bottom .re__btn .skeleton-content {
+    min-width: 112px;
+    min-height: 30px
+}
+
+.re__pricing-history-kyc-skeleton {
+    display: none;
+    overflow: hidden;
+    border: 1px solid #F2F2F2;
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin-bottom: 40px
+}
+
+.re__pricing-history-kyc-skeleton .skeleton-content {
+    display: inline-block;
+    min-height: 12px;
+    min-width: 36px;
+    position: relative;
+    border-radius: 9px;
+    overflow: hidden;
+    background: #e2e2e2
+}
+
+.re__pricing-history-kyc-skeleton .skeleton-content:before {
+    content: "";
+    position: absolute;
+    left: 0%;
+    top: 0;
+    height: 100%;
+    width: 50px;
+    background: linear-gradient(to right, #e2e2e2 25%, #d5d5d5 50%, #e2e2e2 100%);
+    animation-name: gradient-animation-card-skeleton;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    filter: blur(5px)
+}
+
+.re__pricing-history-kyc-skeleton .skeleton-content::before {
+    width: 24px;
+    filter: blur(0px)
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-title {
+    margin-bottom: 16px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-title .skeleton-content {
+    min-width: 449px;
+    min-height: 14px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-title .skeleton-content.r2 {
+    min-width: 204px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle {
+    float: left;
+    width: 100%;
+    margin-bottom: 8px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle i {
+    margin-right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    overflow: hidden;
+    display: inline-block;
+    float: left
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle i .skeleton-content {
+    min-width: 40px;
+    min-height: 40px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle div {
+    float: left;
+    line-height: 20px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle div .skeleton-content {
+    min-width: 248px;
+    min-height: 12px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle.r1 div .skeleton-content {
+    margin-top: 14px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle.r2 {
+    margin-bottom: 16px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle.r2 div .skeleton-content {
+    min-width: 300px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-subtitle.r2 div .skeleton-content.r2 {
+    min-width: 124px
+}
+
+.re__pricing-history-kyc-skeleton .re__pricing-history-kyc-button .skeleton-content {
+    min-width: 132px;
+    min-height: 32px
+}
+
+.re__pricing-history-kyc--block-v2 {
+    display: none
+}
+
+.re__pricing-history-kyc--block-v2-skeleton {
+    display: none;
+    margin-bottom: 40px
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .skeleton-content {
+    display: inline-block;
+    min-height: 12px;
+    min-width: 36px;
+    position: relative;
+    border-radius: 9px;
+    overflow: hidden;
+    background: #e2e2e2
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .skeleton-content:before {
+    content: "";
+    position: absolute;
+    left: 0%;
+    top: 0;
+    height: 100%;
+    width: 50px;
+    background: linear-gradient(to right, #e2e2e2 25%, #d5d5d5 50%, #e2e2e2 100%);
+    animation-name: gradient-animation-card-skeleton;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    filter: blur(5px)
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .skeleton-content::before {
+    width: 24px;
+    filter: blur(0px)
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .re__pricing-history-kyc--ph-title .skeleton-content {
+    min-width: 172px;
+    min-height: 18px
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .re__pricing-history-kyc-v2::before {
+    content: none
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-img {
+    width: 58px;
+    height: 58px;
+    margin: auto;
+    margin-bottom: 52px;
+    margin-top: 35px
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-title {
+    margin-bottom: 24px
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-title .skeleton-content {
+    min-width: 366px
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-title .skeleton-content.r2 {
+    min-width: 260px
+}
+
+.re__pricing-history-kyc--block-v2-skeleton .re__pricing-history-kyc-v2 .re__pricing-history-kyc-v2-button .skeleton-content {
+    min-width: 132px;
+    min-height: 32px
+}
+
+.re__pricing-history--kyc .pricing-history-skeleton {
+    display: none
+}
+
+.re__pricing-history--kyc .re__pricing-history-kyc--block-v1,
+.re__pricing-history--kyc .re__pricing-history-kyc--block-v2 {
+    display: block
+}
+
+.re__pricing-history--product-chart .re__pricing-history-kyc--block-v1,
+.re__pricing-history--product-chart .re__pricing-history-kyc--block-v2 {
+    display: none
+}
+
+.re__pricing-history--product-chart .pricing-history-skeleton {
+    display: block
+}
+
+.ph-survey-ldp,
+.ph-survey-srp {
+    display: none;
+    overflow: hidden
+}
+
+.ph-survey-ldp ._hj-widget-container,
+.ph-survey-ldp ._hj-widget-theme-light,
+.ph-survey-srp ._hj-widget-container,
+.ph-survey-srp ._hj-widget-theme-light {
+    background: #F2F2F2;
+    margin-bottom: 16px;
+    overflow: hidden
+}
+
+.ph-survey-ldp ._hj-widget-container [class^="__styles__globalStyles"],
+.ph-survey-ldp ._hj-widget-container [class*="__styles__globalStyles"],
+.ph-survey-ldp ._hj-widget-theme-light [class^="__styles__globalStyles"],
+.ph-survey-ldp ._hj-widget-theme-light [class*="__styles__globalStyles"],
+.ph-survey-srp ._hj-widget-container [class^="__styles__globalStyles"],
+.ph-survey-srp ._hj-widget-container [class*="__styles__globalStyles"],
+.ph-survey-srp ._hj-widget-theme-light [class^="__styles__globalStyles"],
+.ph-survey-srp ._hj-widget-theme-light [class*="__styles__globalStyles"] {
+    padding: 0px !important
+}
+
+.ph-survey-ldp ._hj-widget-container [class^="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-ldp ._hj-widget-container [class^="__styles__globalStyles"] [class*="__styles__surveyContainer"],
+.ph-survey-ldp ._hj-widget-container [class*="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-ldp ._hj-widget-container [class*="__styles__globalStyles"] [class*="__styles__surveyContainer"],
+.ph-survey-ldp ._hj-widget-theme-light [class^="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-ldp ._hj-widget-theme-light [class^="__styles__globalStyles"] [class*="__styles__surveyContainer"],
+.ph-survey-ldp ._hj-widget-theme-light [class*="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-ldp ._hj-widget-theme-light [class*="__styles__globalStyles"] [class*="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-container [class^="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-container [class^="__styles__globalStyles"] [class*="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-container [class*="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-container [class*="__styles__globalStyles"] [class*="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-theme-light [class^="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-theme-light [class^="__styles__globalStyles"] [class*="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-theme-light [class*="__styles__globalStyles"] [class^="__styles__surveyContainer"],
+.ph-survey-srp ._hj-widget-theme-light [class*="__styles__globalStyles"] [class*="__styles__surveyContainer"] {
+    margin: 16px auto
+}
+
+.clear-both {
+    clear: both
+}

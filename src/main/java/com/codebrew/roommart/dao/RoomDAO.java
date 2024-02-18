@@ -1,7 +1,6 @@
 package com.codebrew.roommart.dao;
 import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.Map;
 import com.codebrew.roommart.dto.Room;
@@ -16,6 +15,105 @@ public class RoomDAO {
     private static final String ADD_IMGs = "INSERT INTO roomimgs (room_id,imgurl) \n" +
             "VALUES (?, ?)";
     private static final String COUNT_ROOM = "SELECT COUNT(*) AS room_count FROM rooms";
+    private static final String INSERT_ROOM =
+            "DO $$\n" +
+            "DECLARE \n" +
+            "    roomID INT;\n" +
+            "    restQuantity INT := ?;\n" +
+            "    windowQuantity INT := ?;\n" +
+            "    doorQuantity INT := ?;\n" +
+            "    airConditionQuantity INT := ?;\n" +
+            "BEGIN\n" +
+            "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
+            "VALUES (?, ?, ?, ?, ?, ?)  RETURNING room_id INTO roomID;\n" +
+            "    INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+            "    VALUES (0, 0, CURRENT_DATE, 0, roomID);\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN restQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Nhà vệ sinh'));\n" +
+            "        restQuantity := restQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN windowQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa sổ'));\n" +
+            "        windowQuantity := windowQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN doorQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa ra vào'));\n" +
+            "        doorQuantity := doorQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN airConditionQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Máy lạnh'));\n" +
+            "        airConditionQuantity := airConditionQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "END $$;\n";
+
+    private static final String INSERT_MANY_ROOM=
+            "DO $$\n" +
+            "DECLARE \n" +
+            "    roomID INT;\n" +
+            "    restQuantity INT := 1;\n" +
+            "    windowQuantity INT := 1;\n" +
+            "    doorQuantity INT := 1;\n" +
+            "    airConditionQuantity INT := 1;\n" +
+            "    room_num INT;\n" +
+            "\n" +
+            "\n" +
+            "BEGIN\n" +
+            "\n" +
+            "SELECT room_number INTO room_num\n" +
+            "    FROM Rooms\n" +
+            "    WHERE hostel_id = ?\n" +
+            "    ORDER BY room_number DESC\n" +
+            "    LIMIT 1;\n" +
+            "\n" +
+            "    IF room_num IS NULL THEN\n" +
+            "        room_num := 1;\n" +
+            "    ELSE\n" +
+            "        room_num := room_num + 1;\n" +
+            "    END IF;\n" +
+            "\n" +
+            "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
+            "VALUES (?, room_num, ?, ?, ?, ?)  RETURNING room_id INTO roomID;\n" +
+            "\n" +
+            "    INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+            "    VALUES (0, 0, CURRENT_DATE, 0, roomID);\n" +
+            "\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN restQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Nhà vệ sinh'));\n" +
+            "        restQuantity := restQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN windowQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa sổ'));\n" +
+            "        windowQuantity := windowQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN doorQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa ra vào'));\n" +
+            "        doorQuantity := doorQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "\n" +
+            "    LOOP\n" +
+            "        EXIT WHEN airConditionQuantity <= 0;\n" +
+            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+            "        VALUES (roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Máy lạnh'));\n" +
+            "        airConditionQuantity := airConditionQuantity - 1;\n" +
+            "    END LOOP;\n" +
+            "END $$;\n";
+
     public boolean addImgbyId(int room_Id,List<String> imgUrls){
         Connection cn = null;
         PreparedStatement pst = null;
@@ -63,7 +161,144 @@ public class RoomDAO {
 
 
     }
-    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls) {
+    public boolean deleteRoom(int roomID){
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dqp6vdayn",
+                "api_key", "527664667972471",
+                "api_secret", "HzMyAcz7DKbWinMpZEsLe64XkUo",
+                "secure", true));
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isSuccess = false;
+        ResultSet rs = null;
+        List<String> imageUrls = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                //get img url to delete in cloudinary
+                System.out.println("step 1 - get url img to delete from cloudinary");
+                String sql ="SELECT imgurl\n" +
+                        "FROM roomimgs\n" +
+                        "WHERE room_id = ?;";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        imageUrls.add(rs.getString("imgurl"));
+
+
+                    }
+                }else {imageUrls = null;}
+                try {
+                    // List chứa public ID của các ảnh cần xóa
+                    List<String> publicIds = new ArrayList<>();
+
+                    // Lặp qua danh sách các URL và lấy public ID từ mỗi URL
+                    for (String imageUrl : imageUrls) {
+                        String publicId = String.valueOf(cloudinary.url().publicId(imageUrl));
+                        publicIds.add(publicId);
+                    }
+
+                    // Xóa lô ảnh từ Cloudinary bằng public ID của các ảnh
+                    Map<String, Object> result = cloudinary.api().deleteResources(publicIds, ObjectUtils.emptyMap());
+
+                    System.out.println("Đã xóa các ảnh thành công!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Xảy ra lỗi khi xóa các ảnh từ Cloudinary.");
+                }
+
+                System.out.println("step 2 - delete imgurl from database");
+                String sqlDeleteImg = "DELETE FROM roomimgs WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteImg);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() > 0) {
+                    isSuccess = true;
+                } else {
+                    isSuccess = false;
+                }
+                if (isSuccess){
+                    System.out.println("-> delete oke");
+
+                }else {
+                    System.out.println("-> delete fail");
+
+                }
+                //delete r
+                System.out.println("step 3 - delete remain from db");
+                String sqlDeleteConsume = "DELETE FROM consumes WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteConsume);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() == 0) {
+                    isSuccess = false;
+
+                    System.out.println("-> DELETE FROM consumes fail");
+                } else {
+                    System.out.println("-> DELETE FROM consumes oke");
+                    isSuccess = true;
+
+                }
+                String sqlDeleteInfrastureRoom = "DELETE FROM infrastructuresroom WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteInfrastureRoom);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() == 0) {
+                    isSuccess = false;
+
+                    System.out.println("-> DELETE FROM infrastructuresroom fail");
+                } else {
+                    System.out.println("-> DELETE FROM infrastructuresroom oke");
+                    isSuccess = true;
+
+                }
+                String sqlDeleteRoom = "DELETE FROM rooms WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteRoom);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() == 0) {
+                    isSuccess = false;
+                    System.out.println("-> DELETE FROM room fail");
+
+                    cn.rollback();
+                } else {
+                    System.out.println("-> DELETE FROM room oke");
+                    isSuccess = true;
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isSuccess;
+
+    }
+    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls,
+                              int quantity1, int status1,
+                               int quantity2, int status2,
+                               int quantity3, int status3,
+                               int quantity4, int status4) {
 
         //connect db
         Connection cn = null;
@@ -74,6 +309,7 @@ public class RoomDAO {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 // Insert new room include Nhà vệ sinh, cửa sổ, cửa ra vào, máy lạnh theo thứ tự
+                System.out.println("step1 - insert room");
                 String sql ="    INSERT INTO rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
                         "    VALUES (?, ?, ?, ?, ?, ?)\n";
 
@@ -96,8 +332,71 @@ public class RoomDAO {
                         room_Id = rs.getInt(1);
 
                     }
+                    System.out.println("step2-add remain");
+                    String sql2 =  "DO $$\n" +
+                            "DECLARE \n" +
 
-                    isInserted =addImgbyId(room_Id,imgUrls);
+                            "    roomID INT :='"+room_Id+"';\n" +
+                            "    restQuantity INT := '"+quantity1+"';\n" +
+                            "    windowQuantity INT := '"+quantity2+"';\n" +
+                            "    doorQuantity INT := '"+quantity3+"';\n" +
+                            "    airConditionQuantity INT := '"+quantity4+"';\n" +
+                            "BEGIN\n" +
+                            "    INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                            "    VALUES (0, 0, CURRENT_DATE, 0, roomID);\n" +
+
+                            "    LOOP\n" +
+                            "        EXIT WHEN restQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status1+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Nhà vệ sinh'));\n" +
+                            "        restQuantity := restQuantity - 1;\n" +
+                            "    END LOOP;\n" +
+                            "    LOOP\n" +
+                            "        EXIT WHEN windowQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status2+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa sổ'));\n" +
+                            "        windowQuantity := windowQuantity - 1;\n" +
+                            "    END LOOP;\n" +
+                            "    LOOP\n" +
+                            "        EXIT WHEN doorQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status3+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa ra vào'));\n" +
+                            "        doorQuantity := doorQuantity - 1;\n" +
+                            "    END LOOP;\n" +
+                            "    LOOP\n" +
+                            "        EXIT WHEN airConditionQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status4+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Máy lạnh'));\n" +
+                            "        airConditionQuantity := airConditionQuantity - 1;\n" +
+                            "    END LOOP;\n"+
+                            "END $$;\n";
+
+                    pst = cn.prepareStatement(sql2);
+
+                    if (pst.executeUpdate() > 0) {
+                        isInserted = true;
+                    } else {
+                        isInserted = false;}
+
+                    if (imgUrls != null){
+                    System.out.println("step 3 - add imgs");
+
+                    pst = cn.prepareStatement(ADD_IMGs);
+
+                    for (int i = 0; i < imgUrls.size(); i++) {
+                        // Set giá trị cho Prepared Statement
+                        pst.setInt(1, room_Id);
+                        pst.setString(2, imgUrls.get(i));
+
+                        // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                        if (pst.executeUpdate() > 0) {
+                            isInserted = true;
+                        } else {
+                            isInserted = false;
+                            break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
+                        }
+                    }}
+
 
 // Kiểm tra kết quả cuối cùng và commit hoặc rollback
                     if (isInserted) {
@@ -138,6 +437,367 @@ public class RoomDAO {
         }
         return isInserted;
     }
+    public boolean deleteImgs(int roomId){
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dqp6vdayn",
+                "api_key", "527664667972471",
+                "api_secret", "HzMyAcz7DKbWinMpZEsLe64XkUo",
+                "secure", true));
+        cloudinary.config.secure = true;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isInserted = false;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                String sql ="SELECT imgurl\n" +
+                        "FROM roomimgs\n" +
+                        "WHERE room_id = ?;";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomId);
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+
+
+
+                    }
+                }else {}
+
+                if (pst.executeUpdate() > 0) {
+
+                    pst = cn.prepareStatement(sql);
+
+                    pst = cn.prepareStatement(ADD_IMGs);
+
+                    // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                    if (pst.executeUpdate() > 0) {
+                        isInserted = true;
+                    } else {
+                        isInserted = false;
+
+                    }
+
+// Kiểm tra kết quả cuối cùng và commit hoặc rollback
+                    if (isInserted) {
+                        cn.setAutoCommit(false);
+                        cn.commit();
+                        cn.setAutoCommit(true);
+                    } else {
+
+                        cn.rollback();
+                        cn.setAutoCommit(true);
+                    }
+
+
+
+                }else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isInserted;
+    }
+    public boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,String imgUrls,
+                               int quantity1, int status1,
+                               int quantity2, int status2,
+                               int quantity3, int status3,
+                               int quantity4, int status4) {
+
+        //connect db
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isInserted = false;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                int rn = 0;
+                System.out.println("step 0 - get max room number");
+                String sql3="SELECT COALESCE(MAX(room_number), 0) + 1 as rn FROM Rooms WHERE hostel_id = '"+hostelID+"'";
+                pst = cn.prepareStatement(sql3);
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                           rn = rs.getInt("rn");
+                    }
+                }
+
+
+                // Insert new room include Nhà vệ sinh, cửa sổ, cửa ra vào, máy lạnh theo thứ tự
+                System.out.println("step1 - insert room");
+                String sql ="    INSERT INTO rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
+                        "    VALUES (?, ?, ?, ?, ?, ?)\n";
+
+                pst = cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                pst.setInt(1, hostelID);
+                pst.setInt(2, rn);
+                pst.setInt(3, capacity);
+                pst.setDouble(4, roomArea);
+                pst.setInt(5, attic);
+                pst.setInt(6, roomStatus);
+
+
+
+
+                if (pst.executeUpdate() > 0) {
+
+                    int room_Id = -1;
+                    rs = pst.getGeneratedKeys();
+                    if (rs.next()) {
+                        room_Id = rs.getInt(1);
+
+                    }
+                    System.out.println("step2-add remain");
+                    String sql2 = "DO $$\n" +
+                            "DECLARE \n" +
+                            "    roomID INT := '"+room_Id+"';\n" +
+                            "    restQuantity INT := '"+quantity1+"';\n" +
+                            "    windowQuantity INT := '"+quantity2+"';\n" +
+                            "    doorQuantity INT := '"+quantity3+"';\n" +
+                            "    airConditionQuantity INT := '"+quantity4+"';\n" +
+                            "BEGIN\n" +
+                            "    INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                            "    VALUES (0, 0, CURRENT_DATE, 0, roomID);\n" +
+                            "    LOOP\n" +
+                            "        EXIT WHEN restQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status1+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Nhà vệ sinh'));\n" +
+                            "        restQuantity := restQuantity - 1;\n" +
+                            "    END LOOP;\n" +
+                            "    LOOP\n" +
+                            "        EXIT WHEN windowQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status2+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa sổ'));\n" +
+                            "        windowQuantity := windowQuantity - 1;\n" +
+                            "    END LOOP;\n" +
+                            "    LOOP\n" +
+                            "        EXIT WHEN doorQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status3+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Cửa ra vào'));\n" +
+                            "        doorQuantity := doorQuantity - 1;\n" +
+                            "    END LOOP;\n" +
+                            "    LOOP\n" +
+                            "        EXIT WHEN airConditionQuantity <= 0;\n" +
+                            "        INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                            "        VALUES (roomID, 1, "+status4+", (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = 'Máy lạnh'));\n" +
+                            "        airConditionQuantity := airConditionQuantity - 1;\n" +
+                            "    END LOOP;\n" +
+                            "END $$;\n";
+
+
+
+                    pst = cn.prepareStatement(sql2);
+                    System.out.println("step 3 - add imgs");
+                    pst = cn.prepareStatement(ADD_IMGs);
+
+
+                        // Set giá trị cho Prepared Statement
+                        pst.setInt(1, room_Id);
+                        pst.setString(2, imgUrls);
+
+                        // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                        if (pst.executeUpdate() > 0) {
+                            isInserted = true;
+                        } else {
+                            isInserted = false;
+
+                        }
+
+// Kiểm tra kết quả cuối cùng và commit hoặc rollback
+                    if (isInserted) {
+                        cn.setAutoCommit(false);
+                        cn.commit();
+                        cn.setAutoCommit(true);
+                    } else {
+
+                        cn.rollback();
+                        cn.setAutoCommit(true);
+                    }
+
+
+
+                }else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isInserted;
+    }
+//    quantity1
+//    quantity2
+//    quantity3
+//    quantity4
+public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic,List<String> imgUrls) {
+    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "dqp6vdayn",
+            "api_key", "527664667972471",
+            "api_secret", "HzMyAcz7DKbWinMpZEsLe64XkUo",
+            "secure", true));
+    Connection cn = null;
+    PreparedStatement pst = null;
+    boolean isSuccess = false;
+    ResultSet rs = null;
+    List<String> imageUrls = new ArrayList<>();
+    try {
+        cn = DatabaseConnector.makeConnection();
+        if (cn != null) {
+            cn.setAutoCommit(false);
+
+            //get img url to delete in cloudinary
+            if (!imgUrls.isEmpty()){
+                System.out.println("step 1 - get url img to delete from cloudinary");
+                String sql ="SELECT imgurl\n" +
+                        "FROM roomimgs\n" +
+                        "WHERE room_id = ?;";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        imageUrls.add(rs.getString("imgurl"));
+
+
+                    }
+                }else {imageUrls = null;}
+                System.out.println("imageUrls: "+imageUrls);
+                if (!imageUrls.isEmpty()){
+                    try {
+                        // List chứa public ID của các ảnh cần xóa
+                        List<String> publicIds = new ArrayList<>();
+
+                        // Lặp qua danh sách các URL và lấy public ID từ mỗi URL
+                        for (String imageUrl : imageUrls) {
+                            String publicId = String.valueOf(cloudinary.url().publicId(imageUrl));
+                            publicIds.add(publicId);
+                        }
+
+                        // Xóa lô ảnh từ Cloudinary bằng public ID của các ảnh
+                        Map<String, Object> result = cloudinary.api().deleteResources(publicIds, ObjectUtils.emptyMap());
+
+                        System.out.println("Đã xóa các ảnh thành công!");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Xảy ra lỗi khi xóa các ảnh từ Cloudinary.");
+                    }
+                }
+
+                System.out.println("step 2 - delete imgurl from database");
+                String sqlDeleteImg = "DELETE FROM roomimgs WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlDeleteImg);
+                pst.setInt(1, roomID);
+                if (pst.executeUpdate() > 0) {
+                    System.out.println("Records deleted successfully.");
+                } else {
+                    System.out.println("No records found to delete.");
+                }
+            }
+
+
+
+            System.out.println("step 3 - update new list img and information");
+
+            String sqlUpdateRoom = "UPDATE Rooms\n" +
+                    "SET room_number = ?, capacity = ?, room_area = ?, has_attic = ?\n" +
+                    "WHERE room_id = ?";
+
+
+            pst = cn.prepareStatement(sqlUpdateRoom);
+            pst.setInt(1, roomNumber);
+            pst.setInt(2, capacity);
+            pst.setDouble(3, roomArea);
+            pst.setInt(4, hasAttic);
+            pst.setInt(5, roomID);
+
+            if (pst.executeUpdate() == 0) {
+                cn.rollback();
+            } else {
+                if (!imgUrls.isEmpty()){
+                    System.out.println("-> add imgs to db");
+
+                    pst = cn.prepareStatement(ADD_IMGs);
+
+                    for (int i = 0; i < imgUrls.size(); i++) {
+                        // Set giá trị cho Prepared Statement
+                        pst.setInt(1, roomID);
+                        pst.setString(2, imgUrls.get(i));
+
+                        // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                        if (pst.executeUpdate() > 0) {
+                            isSuccess = true;
+                        } else {
+                            isSuccess = false;
+                            break;  // Nếu một trong những lần thêm không thành công, thoát khỏi vòng lặp
+                        }
+                    }}
+
+                cn.commit();
+            }
+            cn.setAutoCommit(true);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (pst != null) {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (cn != null) {
+            try {
+                cn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    return isSuccess;
+}
     public List<String>getListImgByRoomId(int rid){
         System.out.println("getListImgByRoomId");
         Connection cn = null;
@@ -204,8 +864,7 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 //room_id	property_id	room_number	room_area	attic	room_status
-                String groupBySql=
-                        " GROUP BY \n" +
+                String groupBySql=" GROUP BY \n" +
                                 "    rooms.room_id, \n"+
                                 "    room_number, \n" +
                                 "    capacity, \n" +
@@ -216,7 +875,7 @@ public class RoomDAO {
                                 "    address,\n" +
                                 "    city,\n" +
                                 "    ward,\n" +
-                                "    district\n"+"ORDER BY \n" +
+                                "    district\n"+" ORDER BY \n" +
                                 "    rooms.room_id ASC;";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
@@ -239,33 +898,46 @@ public class RoomDAO {
                         "JOIN \n" +
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
                         "JOIN \n" +
-                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n";
+                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n  where 1=1 ";
 
 
                 if(inputText!=null){
-                    sql += " WHERE LOWER(hostels.city) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.district) LIKE '%" + inputText.toLowerCase() + "%' or LOWER(hostels.ward) LIKE '%" + inputText.toLowerCase() + "%' \n";
-                    sql+= " OR LOWER(hostels.name) LIKE '%" + inputText.toLowerCase() + "%' "+" OR LOWER(hostels.address) LIKE '%" + inputText.toLowerCase() + "%' ";
-                    sql+= " OR rooms.room_number = '" + inputText + "' " + " OR rooms.room_area = '" + inputText + "' ";
 
-                } else if  (city != "all" && city!= null) {
+                    try{
+                        int input_number = Integer.parseInt(inputText);
+                        sql += " AND ( rooms.room_number = '"+input_number+"'  OR rooms.room_area =  '"+input_number+"')";
+                    }catch (Exception e){
+                        System.out.println("int parse error");
+                        String inputTextLower = inputText.toLowerCase();
+                        sql += "AND ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputTextLower + "%')\n";
+
+                    }
+
+
+                }
+                if  (!city.equalsIgnoreCase("all") && city!= null) {
                     System.out.println("CITY NOT EMPTY");
 //                    String c = "Thành Phố Hà Nội";
 //                    if(c.equalsIgnoreCase(city)){
 //                        System.out.println(c + " == " +city);
 //                    }else System.out.println(c + " != " +city);
-                    sql += " WHERE hostels.city LIKE '" + city + "'";
-                    if (district != "all" && district != "" && city!= null) {
+                    sql += " AND( hostels.city LIKE '" + city + "'";
+                    if (!district .equalsIgnoreCase("all") && district != "" && city!= null) {
                         System.out.println("district not empty : " +district);
 
                         sql += " AND hostels.district LIKE '" + district + "'";
-                        if (ward != "all" && district != "" && city!= null) {
+                        if (!ward .equalsIgnoreCase("all") && district != "" && city!= null) {
                             System.out.println("ward not empty : " + ward);
 
                             sql += " AND hostels.ward = '" + ward + "'";
                         }
+
                     }
+                    sql+=")\n";
                 }
                 sql+=groupBySql;
+//                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -384,6 +1056,8 @@ public class RoomDAO {
                         "    district \n"+"ORDER BY \n" +
                         "    rooms.room_id DESC;";
 
+
+
                 pst = cn.prepareStatement(sql);
 
                 rs = pst.executeQuery();
@@ -467,7 +1141,6 @@ public class RoomDAO {
                 //room_id	property_id	room_number	room_area	attic	room_status
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
-
                         "    room_number, \n" +
                         "    capacity, \n" +
                         "    room_area, \n" +
