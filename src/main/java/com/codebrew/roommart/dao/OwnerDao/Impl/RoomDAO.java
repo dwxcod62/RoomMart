@@ -14,6 +14,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDAO implements IRoomDAO {
+
+    private static final String CHECK_ROOM_OWNER = "";
+
+    @Override
+    public boolean checkRoomOwner(int owner_id, int room_id, int hostel_id){
+        boolean result = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(CHECK_ROOM_OWNER);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    result = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
     @Override
     public List<Room> getListRoomsByHostelId(int hostelID) {
         Connection cn = null;
@@ -75,7 +107,7 @@ public class RoomDAO implements IRoomDAO {
             if (cn != null) {
 
                 // select room theo ownerId
-                String sql = "SELECT room_id, Hostels.hostel_id as 'hostel_id', room_number, room_status\n" +
+                String sql = "SELECT room_id, Hostels.hostel_id as hostel_id, room_number, room_status\n" +
                         "FROM Hostels, Rooms\n" +
                         "WHERE Hostels.owner_account_id = ?\n" +
                         "AND Hostels.hostel_id = Rooms.hostel_id\n";
@@ -146,7 +178,7 @@ public class RoomDAO implements IRoomDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                String sql = "SELECT room_id, H.hostel_id as 'hostel_id', room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
+                String sql = "SELECT room_id, H.hostel_id as hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
                         "FROM Rooms R JOIN Hostels H ON R.hostel_id = H.hostel_id\n" +
                         "WHERE R.room_id = ?\n" +
                         "AND H.hostel_id = ?\n";

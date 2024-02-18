@@ -71,7 +71,7 @@
                     <!-- Hostel information -->
                     <div class="hostel-infor">
                         <h2 class="hostel-name">${hostelInformation.hostelName}</h2>
-                        <div class="hostel-address">${hostelInformation.address}, ${hostelInformation.district.split('-')[1]}, ${hostelInformation.city.split('-')[1]}</div>
+                        <div class="hostel-address">${hostelInformation.address}, ${hostelInformation.ward},  ${hostelInformation.district}, ${hostelInformation.city}</div>
                     </div>
                     <div class="hostel-actions">
                         <!-- Add service button -->
@@ -80,7 +80,7 @@
                             Thêm dịch vụ
                         </button>
                         <!-- Add room button -->
-                        <a href="/RoomMart/ownerAddRoom?hostelID=${hostelInformation.hostelID}" class="hostel-actions__btn hostel-actions__btn-room">
+                        <a href="ownerAddRoom?hostelID=${hostelInformation.hostelID}" class="hostel-actions__btn hostel-actions__btn-room">
                             Thêm phòng
                         </a>
                     </div>
@@ -126,7 +126,7 @@
                                             </td>
                                             <td>
                                                 <!-- Room detail link -->
-                                                <a href="/RoomMart/ownerRoomDetail?roomID=${room.roomId}" class="room-detail-link">Xem chi tiết</a>
+                                                <a href="ownerRoomDetail?roomID=${room.roomId}&hostelID=${param.hostelID}" class="room-detail-link">Xem chi tiết</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

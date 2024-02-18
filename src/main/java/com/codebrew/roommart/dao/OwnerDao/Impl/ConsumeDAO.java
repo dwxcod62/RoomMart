@@ -65,10 +65,10 @@ public class ConsumeDAO implements IConsumeDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                String sql = "SELECT TOP 1 consume_id, number_electric, number_water, update_date, status \n" +
+                String sql = "SELECT consume_id, number_electric, number_water, update_date, status \n" +
                         "FROM Consumes\n" +
                         "WHERE room_id = ?\n" +
-                        "ORDER BY update_date DESC";
+                        "ORDER BY update_date DESC  LIMIT 1";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -108,7 +108,7 @@ public class ConsumeDAO implements IConsumeDAO {
             if (cn != null) {
                 String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
                         "FROM Consumes\n" +
-                        "WHERE room_id = ?\n AND status = 0" +
+                        "WHERE room_id = ?\n AND status = 0\n" +
                         "ORDER BY update_date DESC";
 
                 pst = cn.prepareStatement(sql);

@@ -22,10 +22,10 @@ public class BillDAO implements IBillDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                String sql = "SELECT TOP 1 bill_id, total_money, created_date, bill_title, expired_payment_date, payment_date, status, Bill.payment_id as 'payment_id'\n" +
+                String sql = "SELECT bill_id, total_money, created_date, bill_title, expired_payment_date, payment_date, status, Bill.payment_id as payment_id\n" +
                         "FROM Bill, Payment\n" +
                         "WHERE room_id = ?\n" +
-                        "ORDER BY created_date DESC";
+                        "ORDER BY created_date DESC LIMIT 1";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);

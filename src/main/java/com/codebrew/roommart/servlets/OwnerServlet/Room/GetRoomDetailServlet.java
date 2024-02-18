@@ -24,7 +24,7 @@ import java.util.List;
 public class GetRoomDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String ERROR = "error-page";
+            String ERROR = "error";
             String url = "pages/owner/room/room-detail.jsp";
 
             try {
@@ -37,8 +37,6 @@ public class GetRoomDetailServlet extends HttpServlet {
 
                 int roomId = (request.getParameter("roomID") != null ) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
 //                int roomId = Integer.parseInt(request.getParameter("roomID"));
-
-
 
                 // Check xem roomID có thuộc ownerID không
                 if (new HostelDAO().checkOwnerRoom(accID, roomId)) {
@@ -56,8 +54,8 @@ public class GetRoomDetailServlet extends HttpServlet {
                         Hostel hostel = new HostelDAO().getHostelById(hostelID);
                         session.setAttribute("hostel", hostel);
 
-                        Contract contract = new ContractDAO().getContract(roomId);
-                        request.setAttribute("contractRoom", contract);
+//                        Contract contract = new ContractDAO().getContract(roomId);
+//                        request.setAttribute("contractRoom", contract);
 
                         List<Consume> consumeList = consumeDAO.getConsumeHistory(roomId);
                         request.setAttribute("consumeList", consumeList);
@@ -71,16 +69,16 @@ public class GetRoomDetailServlet extends HttpServlet {
                         Bill bill = new BillDAO().getLastBill(roomId);
                         request.setAttribute("billRoom", bill);
 
-                        List<Consume> consumeThisMonth = new ConsumeDAO().getConsumeThisMonth(roomId);
+                        List<Consume> consumeThisMonth = consumeDAO.getConsumeThisMonth(roomId);
                         request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
-                        if (contract != null) {
-                            Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
-                            request.setAttribute("renterAccount", renterAccount);
-
-                            List<Roommate> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(contract.getRenterId()); // loi khong the convert to int
-                            request.setAttribute("listRoommatesInfo", null);
-                        }
+//                        if (contract != null) {
+//                            Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
+//                            request.setAttribute("renterAccount", renterAccount);
+//
+//                            List<Roommate> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(contract.getRenterId()); // loi khong the convert to int
+//                            request.setAttribute("listRoommatesInfo", null);
+//                        }
 
                         List<Payment> payments = new PaymentDAO().getPaymentList();
                         request.setAttribute("paymentList", payments);
