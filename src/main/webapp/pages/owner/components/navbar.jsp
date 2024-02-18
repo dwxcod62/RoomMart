@@ -6,7 +6,7 @@
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
                     <a href="dashboard" class="main-nav__logo-link">
-                        <img class="main-nav__logo-img" src="./assets/images/logos/logo-room-mart.png" alt="Logo">
+                        <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -99,56 +99,56 @@
                             </div>
                         </a>
                     </li>
-                <!--    <li class="notification__item">
-                        <a href="">
-                            <div class="marker"></div>
-                            <div class="notification__item-img">
-                                <i class="notification__item-icon fa-solid fa-circle-exclamation"></i>
-                            </div>
-                            <div class="notification__item-info">
-                                <div class="notification__item-name">
-                                    <div class="room">
-                                        Phòng số 11
-                                    </div>
-                                    <div class="hostel">
-                                        <span>Khu trọ:</span> Nova land
-                                    </div>
+                    <!--    <li class="notification__item">
+                            <a href="">
+                                <div class="marker"></div>
+                                <div class="notification__item-img">
+                                    <i class="notification__item-icon fa-solid fa-circle-exclamation"></i>
                                 </div>
-                                <div class="notification__item-content">
-                                    Anh ơi bóng đèn trong nhà vệ sinh phòng em bị hư, mong anh sớm
-                                    qua sửa chữa giúp em với ạ!
-                                </div>
-                                <div class="notification__item-time">
-                                    18 tiếng trước
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="notification__item readed">
-                        <a href="">
-                            <div class="marker"></div>
-                            <div class="notification__item-img">
-                                <i class="notification__item-icon success fa-solid fa-circle-exclamation"></i>
-                            </div>
-                            <div class="notification__item-info">
-                                <div class="notification__item-name">
-                                    <div class="room">
-                                        Phòng số 11
+                                <div class="notification__item-info">
+                                    <div class="notification__item-name">
+                                        <div class="room">
+                                            Phòng số 11
+                                        </div>
+                                        <div class="hostel">
+                                            <span>Khu trọ:</span> Nova land
+                                        </div>
                                     </div>
-                                    <div class="hostel">
-                                        <span>Khu trọ:</span> Nova land
+                                    <div class="notification__item-content">
+                                        Anh ơi bóng đèn trong nhà vệ sinh phòng em bị hư, mong anh sớm
+                                        qua sửa chữa giúp em với ạ!
+                                    </div>
+                                    <div class="notification__item-time">
+                                        18 tiếng trước
                                     </div>
                                 </div>
-                                <div class="notification__item-content">
-                                    Anh ơi bóng đèn trong nhà vệ sinh phòng em bị hư, mong anh sớm
-                                    qua sửa chữa giúp em với ạ!
+                            </a>
+                        </li>
+                        <li class="notification__item readed">
+                            <a href="">
+                                <div class="marker"></div>
+                                <div class="notification__item-img">
+                                    <i class="notification__item-icon success fa-solid fa-circle-exclamation"></i>
                                 </div>
-                                <div class="notification__item-time">
-                                    18 tiếng trước
+                                <div class="notification__item-info">
+                                    <div class="notification__item-name">
+                                        <div class="room">
+                                            Phòng số 11
+                                        </div>
+                                        <div class="hostel">
+                                            <span>Khu trọ:</span> Nova land
+                                        </div>
+                                    </div>
+                                    <div class="notification__item-content">
+                                        Anh ơi bóng đèn trong nhà vệ sinh phòng em bị hư, mong anh sớm
+                                        qua sửa chữa giúp em với ạ!
+                                    </div>
+                                    <div class="notification__item-time">
+                                        18 tiếng trước
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </li> -->
+                            </a>
+                        </li> -->
                 </ul>
             </div>
 

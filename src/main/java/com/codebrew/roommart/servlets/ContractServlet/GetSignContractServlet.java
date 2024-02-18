@@ -3,6 +3,7 @@ package com.codebrew.roommart.servlets.ContractServlet;
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Status;
+import com.codebrew.roommart.dto.UserInformation;
 import com.codebrew.roommart.utils.EmailUtils;
 import com.codebrew.roommart.utils.EncodeUtils;
 import org.json.JSONObject;
@@ -23,74 +24,53 @@ public class GetSignContractServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "error";
         String sign_bytea = request.getParameter("asdfgh");
-        String data = request.getParameter("data");
+
+        JSONObject jsonObject = null;
+        UserInformation renter_info = null;
+        UserInformation owner_info = null;
 
         HttpSession session = request.getSession(true);
         Account acc = (Account) session.getAttribute("USER");
-        SystemDao dao = new SystemDao();
 
-        String owner_mail = null;
-        String renter_mail = null;
+        if ( acc != null){
+            try{
+                SystemDao dao = new SystemDao();
 
-        try{
-            if (data != null) {
-                String decodeString = EncodeUtils.decodeString(data);
+                if ( acc.getRole()  == 1){
+                    renter_info = (UserInformation) session.getAttribute("CONTRACT_RENTER_USER");
 
-                renter_mail = (decodeString.split("&")[0]).split("=")[1];
-                owner_mail = (decodeString.split("&")[1]).split("=")[1];
-            }
+                    int contract_id = dao.updateContractSign(acc.getAccId(), renter_info.getAccount_id(), sign_bytea);
 
-            if ( acc != null && owner_mail != null  && renter_mail != null){
-
-                if (acc.getRole() == 1){ // Owner
-
-                    // SEND MAIL FOR USER
-                    boolean check = new EmailUtils().sendContractConfirmationEmail(renter_mail, data);
-                    dao.updateContractSign(acc.getEmail(), renter_mail, 1, sign_bytea);
-
+                    String email = (String) session.getAttribute("RENTER_MAIL");
+                    boolean check = new EmailUtils().sendContractConfirmationEmail(email , contract_id);
                     if (check){
                         url = "dashboard";
                         response.sendRedirect(url);
                     } else {
-                        url = "error";
                         Status status = Status.builder()
                                 .status(false)
                                 .content("Some thing wrong!").build();
                         request.setAttribute("RESPONSE_MSG", status);
+                        request.getRequestDispatcher(url).forward(request, response);
                     }
+                } else if ( acc.getRole() == 3){
+                    int contract_id = dao.updateRenterContractSign( (int) session.getAttribute("CONTRACT_ID") , sign_bytea);
 
-                } else if (acc.getRole() == 3 && acc.getEmail().equals(renter_mail)) { // Renter
-                    boolean check = dao.updateContractSign(owner_mail, acc.getEmail(), 3, sign_bytea);
-
-                    if (check){
+                    if (contract_id > 0){
                         url = "dashboard";
                         response.sendRedirect(url);
                     } else {
-                        url = "error";
                         Status status = Status.builder()
                                 .status(false)
                                 .content("Some thing wrong!").build();
                         request.setAttribute("RESPONSE_MSG", status);
+                        request.getRequestDispatcher(url).forward(request, response);
                     }
                 }
 
-            } else if ( acc == null) {
-                url = "login";
-                Status status = Status.builder()
-                        .status(false)
-                        .content("Vui lòng đăng nhập trước khi dùng dịch vụ")
-                        .build();
-                request.setAttribute("RESPONSE_MSG", status);
-            } else {
-                Status status = Status.builder()
-                        .status(false)
-                        .content("Đừng nghịch nữa coi")
-                        .build();
-                request.setAttribute("RESPONSE_MSG", status);
+            } catch ( Exception e){
+                e.printStackTrace();
             }
-        } catch ( Exception e){
-            e.printStackTrace();
         }
-        request.getRequestDispatcher(url).forward(request, response);
     }
 }
