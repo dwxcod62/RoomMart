@@ -22,7 +22,6 @@ public class RoomDAO implements IRoomDAO {
         boolean result = false;
         Connection cn = null;
         PreparedStatement pst = null;
-
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
