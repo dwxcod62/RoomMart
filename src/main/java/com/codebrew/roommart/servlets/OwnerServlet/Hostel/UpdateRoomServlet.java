@@ -4,15 +4,13 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.codebrew.roommart.dao.RoomDAO;
 import com.codebrew.roommart.dto.HandlerStatus;
+import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 import com.codebrew.roommart.dto.Room;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -50,19 +48,19 @@ public class UpdateRoomServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "roomDetail"; // thay url cho nay
+
         int roomID = Integer.parseInt(request.getParameter("roomID"));
         int roomNumber = Integer.parseInt(request.getParameter("room-name"));
         int capacity = Integer.parseInt(request.getParameter("room-capacity"));
         double roomArea = Double.parseDouble(request.getParameter("room-area"));
         int attic = Integer.parseInt(request.getParameter("room-floor"));
+        HttpSession session = request.getSession();
+        int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
 
+//        request.setAttribute("hostelID",hostelID);
+//        request.setAttribute("roomID",roomID);
+        String url = "ownerRoomDetail?roomID="+roomID+"&hostelID="+hostelID; // thay url cho nay
 
-//        int roomID = 38;
-//        int roomNumber = 405;
-//        int capacity = 10;
-//        double roomArea = 500;
-//        int attic = 1;
         RoomDAO roomDao = new RoomDAO();
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "dqp6vdayn",
@@ -116,7 +114,8 @@ public class UpdateRoomServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+//            request.getRequestDispatcher(url).forward(request, response);
+            response.sendRedirect(url);
         }
     }
     private String getFileName(Part part) {

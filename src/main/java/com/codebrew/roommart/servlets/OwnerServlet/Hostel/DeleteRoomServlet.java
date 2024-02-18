@@ -1,6 +1,7 @@
 package com.codebrew.roommart.servlets.OwnerServlet.Hostel;
 
 import com.codebrew.roommart.dao.RoomDAO;
+import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,6 +19,9 @@ public class DeleteRoomServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
                 int roomID = Integer.parseInt(request.getParameter("rid"));
         System.out.println("delete room");
+        HttpSession session = request.getSession();
+        int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
+        String url = "detailHostel?hostelID="+hostelID;
         RoomDAO roomDao = new RoomDAO();
         try {
             roomDao.deleteRoom(roomID);
@@ -25,5 +29,6 @@ public class DeleteRoomServlet extends HttpServlet {
         }catch (Exception e){
             System.out.println("delete room error");
         }
+        response.sendRedirect(url);
     }
 }

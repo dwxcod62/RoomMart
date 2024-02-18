@@ -88,7 +88,7 @@
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-6 m-auto">
                     <!-- Form body -->
-                    <form action="${requestScope.rid eq null ? 'addRoom' : 'updateRoom'}" method="post" enctype="multipart/form-data" class="custom-form add-room-form" id="add-hostel-form">
+                    <form action="${requestScope.rid eq null ? 'ownerAddRoom' : 'updateRoom'}" method="post" enctype="multipart/form-data" class="custom-form add-room-form" id="add-hostel-form">
                         <!-- Title -->
                         <div class="form-header">
                             <div class="form-title main-title">${requestScope.rid eq null ? "Thêm phòng mới" : "Cập nhật phòng"}</div>
