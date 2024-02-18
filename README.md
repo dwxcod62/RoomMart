@@ -1,4 +1,21 @@
+
+
 ## Preview Screenshot
+
+
+## Technology
+**1. Frontend**
+- HTML, CSS, Javascript, Bootstrap, jQuery
+
+**2. Backend**
+- Servlets - a Java programming language class
+
+## Use Cases
+- [ ] Login
+- [x] Logout
+- [x] Bla Bla
+
+## Reference
 
 ## Contributors 🔥
 <table>
@@ -12,3 +29,4 @@
     </tr>
     </tbody>
 </table>
+
