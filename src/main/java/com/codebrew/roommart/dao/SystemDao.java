@@ -14,6 +14,44 @@ import java.time.LocalDate;
 
 public class SystemDao {
 
+    public boolean isRenterRentingRoom(int renter_id){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean st = false;
+
+        String sql = "select contract_id from contract_main \n" +
+                "where c_status = 1 and  renter_id = ?";
+        try {
+            cn = DatabaseConnector.makeConnection();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, renter_id);
+            rs = pst.executeQuery();
+            if (rs != null && rs.next()){
+                st = true;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return st;
+    }
+
 
     private java.sql.Date convertToDate(String date_string ){
         try{
