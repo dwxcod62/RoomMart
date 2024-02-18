@@ -1,3 +1,6 @@
+<%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +11,7 @@
     <title>Chat</title>
 
     <!-- Template core CSS -->
-    <link href="assets/scss/chat_style/template.min.css" rel="stylesheet">
+    <link href="assets/css/chat_style/template.min.css" rel="stylesheet">
     <%--        <link rel="stylesheet" href="assets/scss/chat_style/chat.css">--%>
 
 </head>
@@ -38,7 +41,8 @@
 
 
             <li class="nav-item mt-xl-9">
-                <a class="nav-link position-relative p-0 py-xl-3" href="roomDetail?rid=${requestScope.roomId}" title="Back" >
+                <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(requestScope.roomId)}" />
+                <a class="nav-link position-relative p-0 py-xl-3" href="roomDetail?rid=${encodedRoomId}" title="Back" >
                     <i class="icon-lg fe-chevron-left"></i>
 
                 </a>
@@ -78,7 +82,7 @@
                         <div class="container-fluid py-6">
 
                             <!-- Title -->
-                            <h2 class="font-bold mb-6">Chats for ${sessionScope.role==1? "Admin":"User"} </h2>
+                            <h2 class="font-bold mb-6">Chats for ${sessionScope.role==1? "Owner":"User"} </h2>
                             <!-- Title -->
 
 
@@ -152,7 +156,7 @@
                                             <img class="avatar-img" src="https://i.imgur.com/a8AWgbF.png" alt="">
                                         </div>
 
-                                        <h5>Owner ${sessionScope.ownerId}</h5>
+                                        <h5>${requestScope.infor.fullname}</h5>
 <%--                                        <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML.</p>--%>
                                     </div>
                                 </div>
@@ -167,7 +171,7 @@
                                             <div class="media align-items-center">
                                                 <div class="media-body">
                                                     <p class="small text-muted mb-0">Country</p>
-                                                    <p>Owner country</p>
+                                                    <p>${requestScope.infor.address}</p>
                                                 </div>
                                                 <i class="text-muted icon-sm fe-globe"></i>
                                             </div>
@@ -177,7 +181,7 @@
                                             <div class="media align-items-center">
                                                 <div class="media-body">
                                                     <p class="small text-muted mb-0">Phone</p>
-                                                    <p>+84 xxxx xxxx</p>
+                                                    <p>${requestScope.infor.phone}</p>
                                                 </div>
                                                 <i class="text-muted icon-sm fe-mic"></i>
                                             </div>
@@ -187,7 +191,7 @@
                                             <div class="media align-items-center">
                                                 <div class="media-body">
                                                     <p class="small text-muted mb-0">Email</p>
-                                                    <p>xxxx@gmail.com</p>
+                                                    <p>${requestScope.infor.email}</p>
                                                 </div>
                                                 <i class="text-muted icon-sm fe-mail"></i>
                                             </div>
@@ -250,7 +254,7 @@
                                     </div>
 
                                     <div class="media-body align-self-center text-truncate">
-                                        <h6 class="text-truncate mb-n1">${sessionScope.role==1? "User":"Owner"} ${sessionScope.role==1?(sessionScope.renterId):sessionScope.ownerId} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}
+                                        <h6 class="text-truncate mb-n1">${requestScope.infor2.fullname} ${sessionScope.role==1? "(User)":(sessionScope.role==2? "(User)":"(Staff)")} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}
                                         </h6>
                                         <button id="read" class="text-uppercase btn-secondary" onclick="showChat()">Connect</button>
                                         <!-- <small class="text-muted">35 members</small>
@@ -343,7 +347,7 @@
 
                                 <!-- Title(mobile) -->
                                 <li class="text-center d-block d-lg-none">
-                                    <h6 class="mb-n2">${sessionScope.role==1? "User":"Owner"} ${sessionScope.role==1?(sessionScope.renterId):sessionScope.ownerId} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}</h6>
+                                    <h6 class="mb-n2">${sessionScope.role==1||sessionScope.role==2 ?"User":"Owner"} ${sessionScope.role==1||sessionScope.role==2?(sessionScope.renterId):sessionScope.ownerId} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}</h6>
                                     <small class="text-muted">Chat Details</small>
                                 </li>
 
@@ -363,7 +367,7 @@
                             <div class="avatar avatar-xl mx-5 mb-5">
                                 <img class="avatar-img" src="https://i.imgur.com/a8AWgbF.png" alt="">
                             </div>
-                            <h5>Username</h5>
+                            <h5>other name 2</h5>
                             <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML, CSS, and JS.</p>
                         </div>
 
@@ -393,7 +397,7 @@
 
 
             <!-- User's details -->
-            <div id="chat-1-user-profile" class="chat-sidebar">
+            <div id="chat-1-user-profile" class="" style="display: none">
                 <div class="d-flex h-100 flex-column">
 
                     <!-- Header -->
@@ -403,14 +407,14 @@
                             <ul class="nav justify-content-between align-items-center">
                                 <!-- Close sidebar -->
                                 <li class="nav-item list-inline-item">
-                                    <a class="nav-link text-muted px-0" href="#" data-chat-sidebar-close="">
+                                    <a class="nav-link text-muted px-0" href="#" data-chat-sidebar-close="" onclick="hideProfileSidebar()">
                                         <i class="icon-md fe-chevron-left"></i>
                                     </a>
                                 </li>
 
                                 <!-- Title(mobile) -->
                                 <li class="text-center d-block d-lg-none">
-                                    <h6 class="mb-n2">William Wright</h6>
+                                    <h6 class="mb-n2">User name</h6>
                                     <small class="text-muted">User Details</small>
                                 </li>
 
@@ -429,19 +433,19 @@
                             <div class="avatar avatar-xl mx-5 mb-5">
                                 <img class="avatar-img" src="https://i.imgur.com/a8AWgbF.png" alt="">
                                 <div class="badge badge-sm badge-pill badge-primary badge-border-basic badge-top-right">
-                                    <span class="text-uppercase">Pro</span>
+                                    <span class="text-uppercase">${sessionScope.role!=1?"Owner":"Renter"}</span>
                                 </div>
                             </div>
-                            <h5>William Wright</h5>
-                            <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML, CSS, and JS.</p>
+                            <h5>${requestScope.infor2.fullname}</h5>
+                            <p class="text-muted">${requestScope.infor2.sex==true?"male":"female"}</p>
                         </div>
 
                         <ul class="list-group list-group-flush mb-8">
                             <li class="list-group-item py-6">
                                 <div class="media align-items-center">
                                     <div class="media-body">
-                                        <p class="small text-muted mb-0">Country</p>
-                                        <p>Warsaw, Poland</p>
+                                        <p class="small text-muted mb-0">Birthday</p>
+                                        <p>${requestScope.infor2.birthday}</p>
                                     </div>
                                     <i class="text-muted icon-sm fe-globe"></i>
                                 </div>
@@ -451,7 +455,7 @@
                                 <div class="media align-items-center">
                                     <div class="media-body">
                                         <p class="small text-muted mb-0">Phone</p>
-                                        <p>+39 02 87 21 43 19</p>
+                                        <p>${requestScope.infor2.phone}</p>
                                     </div>
                                     <i class="text-muted icon-sm fe-mic"></i>
                                 </div>
@@ -461,7 +465,7 @@
                                 <div class="media align-items-center">
                                     <div class="media-body">
                                         <p class="small text-muted mb-0">Email</p>
-                                        <p>anna@gmail.com</p>
+                                        <p>${requestScope.infor2.email}</p>
                                     </div>
                                     <i class="text-muted icon-sm fe-mail"></i>
                                 </div>
@@ -470,8 +474,8 @@
                             <li class="list-group-item py-6">
                                 <div class="media align-items-center">
                                     <div class="media-body">
-                                        <p class="small text-muted mb-0">Time</p>
-                                        <p>10:03 am</p>
+                                        <p class="small text-muted mb-0">Address</p>
+                                        <p>${requestScope.infor2.address}</p>
                                     </div>
                                     <i class="text-muted icon-sm fe-clock"></i>
                                 </div>
@@ -510,8 +514,12 @@
 
     const renterId = "${sessionScope.renterId !=null ? sessionScope.renterId: "null"}";
     const role = "${sessionScope.role !=null ? sessionScope.role: "null"}";
+    const acc = "${sessionScope.USER !=null ? sessionScope.USER: "null"}";
+    const username = "${requestScope.infor.fullname!=null ? requestScope.infor.fullname: "null"}";
 
 
+
+    console.log("acc" + acc);
     console.log("userid : "+renterId);
     console.log("ownerid : "+ownerId);
     console.log("role: "+role)

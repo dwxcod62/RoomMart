@@ -20,7 +20,6 @@ public class ServletListener implements ServletContextListener, HttpSessionListe
         Properties siteMapPro = PropertiesFile.getProperties(context, siteMapPath);
 
         context.setAttribute("SITE_MAP", siteMapPro);
-
     }
 
     @Override

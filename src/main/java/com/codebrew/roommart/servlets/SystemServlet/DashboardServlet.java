@@ -18,7 +18,7 @@ public class DashboardServlet extends HttpServlet {
           if (acc.getRole() == 0){ //  Admin
               url = "thieu.jsp";
           } else if (acc.getRole() == 1) { // Owner
-              url = "thieu.jsp";
+              url = "owner-dashboard";
           } else if (acc.getRole() == 2 ){ // Staff
               url = "thieu.jsp";
           } else if (acc.getRole() == 3) { // Renter

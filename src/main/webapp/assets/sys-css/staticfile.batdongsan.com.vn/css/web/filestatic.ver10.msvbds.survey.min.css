@@ -1,0 +1,87 @@
+@keyframes gradient-animation-card-skeleton {
+    from {
+        left: 0%
+    }
+    to {
+        left: 100%
+    }
+}
+
+.re__survey-ux-rate-container {
+    border-width: 0px !important;
+    width: 464px
+}
+
+.re__survey-ux-rate-container .re__survey-template {
+    display: block
+}
+
+.re__survey-ux-rate-container .re__survey-header {
+    width: 464px !important;
+    height: 180px !important;
+    box-sizing: border-box !important;
+    overflow: hidden;
+    background: url(/images/banners/survey-ux-sisu.png) no-repeat;
+    background-size: cover;
+    border-radius: 8px 8px 0 0
+}
+
+.re__survey-ux-rate-container .re__survey-header .close {
+    color: #2C2C2C !important;
+    cursor: pointer
+}
+
+.re__survey-ux-rate-container .re__survey-body {
+    font-family: "Roboto Regular", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important;
+    color: #2C2C2C
+}
+
+.re__survey-ux-rate-container .re__survey-body strong {
+    font-family: "Roboto Medium", Roboto, Arial !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal !important
+}
+
+.re__survey-ux-rate-container .re__survey-footer {
+    height: auto !important;
+    padding: 16px 24px 24px
+}
+
+.re__survey-ux-rate-container .re__survey-footer .re__survey-link {
+    width: 100%;
+    box-sizing: border-box !important
+}
+
+.re__survey-template {
+    display: none
+}
+
+.survey__close-tab-event-trigger {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 6px;
+    z-index: 1000000
+}
+
+.survey__close-tab-event-trigger--top {
+    top: 0px
+}
+
+.survey__close-tab-event-trigger--bot {
+    top: 90px
+}
+
+.re__fix .survey__close-tab-event-trigger--bot {
+    top: 48px
+}
+
+.re__listing-verified-container .re__survey-header {
+    background: url(/images/banners/survey-listing-verified.png) no-repeat;
+    background-size: cover
+}

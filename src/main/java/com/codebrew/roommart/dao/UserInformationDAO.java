@@ -97,7 +97,7 @@ public class UserInformationDAO {
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
-                    inf = new UserInformation(fullname, email, birthday, sex, phone, address, cccd, rs.getInt("account_id"));
+                    inf = new UserInformation(fullname, email, birthday, sex, phone, address, cccd, rs.getInt("account_id"), null);
                 }
             }
         } catch (Exception e) {

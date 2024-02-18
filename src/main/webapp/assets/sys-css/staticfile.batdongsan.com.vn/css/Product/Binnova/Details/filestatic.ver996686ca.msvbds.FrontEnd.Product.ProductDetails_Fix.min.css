@@ -1,0 +1,268 @@
+.product-detail .detail-product .detail-1 .more,
+.product-detail .div-more .more {
+    background: url(../../../../images/icons/16x16/outline/ic_caret_down.png) no-repeat right 0
+}
+
+.product-detail .repost .ic_report {
+    background: url(../../../../images/icons/24x24/ic_report.png) no-repeat center center
+}
+
+.product-detail .repost .ic_share {
+    background: #f5f6f7 url(../../../../images/icons/24x24/ic_share.png) no-repeat center center
+}
+
+.product-detail .user .phone .icon-phone {
+    background: url(../../../../images/icons/24x24/ic_phone.png) no-repeat right center;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    line-height: 19px
+}
+
+.ic_arrow_top {
+    background: url(../../../../images/icons/24x24/ic_arrow_top_v2.png) no-repeat right center
+}
+
+.product-detail .media-3d:after {
+    background: #fff url('../../../../images/icons/16x16/outline/ic_3d.png') no-repeat center center
+}
+
+.product-detail .media-thumb-3d:after {
+    background: #fff url('../../../../images/icons/16x16/outline/ic_3d.png') no-repeat center center
+}
+
+.swiper-button-next.next1 {
+    background: url(https://file4.batdongsan.com.vn/images/newhome/icon3x/arrow-left.png) no-repeat
+}
+
+.product-share {
+    display: inline-block;
+    cursor: pointer
+}
+
+.product-detail .box-share {
+    z-index: 1
+}
+
+.product-detail .box-share ul li {
+    line-height: 40px;
+    padding: 0
+}
+
+.product-detail .box-share ul li a {
+    display: block;
+    padding: 0 16px;
+    cursor: pointer
+}
+
+.product-detail .box-share ul li div {
+    padding: 0 18px;
+    cursor: pointer
+}
+
+.product-config #popup_feedback {
+    right: 0;
+    top: 60px;
+    width: 390px
+}
+
+.repost a {
+    display: block;
+    cursor: pointer;
+    line-height: 40px;
+    font-weight: 500
+}
+
+.repost a:active {
+    color: inherit
+}
+
+.product-detail .detail-product .detail-1 .view-more,
+.product-detail .detail-product .detail-1 .view-less {
+    cursor: pointer
+}
+
+#product-detail-web .des-product .hidden-mobile,
+.box-round-grey3 .r2 .hidden-mobile {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 28px !important;
+    color: #004e7f !important;
+    padding-left: 4px;
+    display: inline-block;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    padding: 2px 2px 2px 4px;
+    min-width: 150px;
+    margin-right: 4px;
+    height: 32px
+}
+
+#product-detail-web .des-product .hidden-mobile:hover,
+.box-round-grey3 .r2 .hidden-mobile:hover {
+    background: #f5f6f7
+}
+
+#product-detail-web .des-product .hidden-mobile:active,
+.box-round-grey3 .r2 .hidden-mobile:active {
+    background: #edf7ff
+}
+
+#product-detail-web .des-product .hidden-mobile:after,
+.box-round-grey3 .r2 .hidden-mobile:after {
+    content: "HiÃªÌ£n sÃ´Ì";
+    display: inline-block;
+    margin: 2px 2px 2px 4px;
+    float: right;
+    height: 24px;
+    line-height: 24px;
+    background: #055699;
+    border-radius: 2px;
+    padding: 0 8px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: Roboto
+}
+
+#product-detail-web .des-product .showPhone.hidden-mobile:after,
+.box-round-grey3 .r2 .showPhone.hidden-mobile:after {
+    content: "Sao cheÌp"
+}
+
+.des-product .hidden-phone {
+    top: 0;
+    padding: 0;
+    border: 0
+}
+
+.sending {
+    width: 344px;
+    height: 212px;
+    padding: 40px 15px;
+    text-align: center;
+    background: #fff;
+    border-radius: 8px;
+    box-sizing: border-box
+}
+
+.sending img {
+    margin-bottom: 10px
+}
+
+.sending .sending_code {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-bottom: 10px
+}
+
+.sending .sending_msg {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #666
+}
+
+.sending_fail .sending_code {
+    color: #f00
+}
+
+.sending_ok .sending_code {
+    color: #090
+}
+
+.product-detail .detail-product .detail-1 .des-product a {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    color: #004e7f
+}
+
+.product-detail .detail-product .detail-1 .des-product a:hover,
+.product-detail .detail-product .detail-1 .des-product a:active {
+    border-bottom: 1px solid #004e7f
+}
+
+.hidden-mobile,
+.hidden-phone {
+    font-family: Roboto
+}
+
+.product-detail .tile-product .hidden-mobile {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 32px;
+    letter-spacing: -.0016em;
+    color: #2c2f36;
+    margin: 8px 0
+}
+
+.product-detail .detail-product .detail-2 .row-1 .r2 {
+    font-size: 14px;
+    line-height: 20px
+}
+
+.product-detail .detail-product .detail-2 .row-1 .r2 .hidden-mobile {
+    font-size: 14px;
+    line-height: 20px !important;
+    border: 0;
+    box-sizing: initial;
+    margin-left: 4px;
+    margin-right: 0;
+    min-width: 140px;
+    height: 18px
+}
+
+.product-detail .detail-product .detail-2 .row-1 .r2 .hidden-mobile:after {
+    content: "HiÃªÌ£n sÃ´Ì";
+    margin: 1px 1px 1px 2px;
+    float: right;
+    background-size: auto 20px;
+    height: 16px;
+    line-height: 16px;
+    background: #055699;
+    border-radius: 2px;
+    padding: 0 4px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+    font-family: Roboto
+}
+
+.product-detail .detail-product .detail-2 .row-1 .r2 .showPhone.hidden-mobile:after {
+    content: "Sao cheÌp"
+}
+
+.product-detail .map {
+    border-radius: 4px;
+    overflow: hidden
+}
+
+.product-detail .map iframe {
+    width: 100%;
+    height: 100%
+}
+
+#divSendContact .note1 {
+    font-style: normal;
+    font-weight: normal;
+    line-height: 16px;
+    color: #666;
+    padding-bottom: 20px
+}
+
+#btnSendRequest {
+    border: none
+}

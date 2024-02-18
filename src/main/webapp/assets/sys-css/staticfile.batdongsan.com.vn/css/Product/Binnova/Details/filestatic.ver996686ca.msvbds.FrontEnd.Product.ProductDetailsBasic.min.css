@@ -1,0 +1,440 @@
+.product-detail .description {
+    position: relative
+}
+
+.containerTitle.badReport {
+    width: 100%;
+    height: 80px;
+    line-height: 32px;
+    position: relative
+}
+
+.product-detail .tile-product {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 32px;
+    letter-spacing: -.0016em;
+    color: #2c2f36;
+    margin: 8px 0;
+    overflow: hidden;
+    word-break: break-word
+}
+
+.product-detail .tile-product.vip0,
+.product-detail .tile-product.vip1,
+.product-detail .tile-product.vip2 {
+    text-transform: uppercase
+}
+
+.product-detail .short-detail {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #747c87;
+    padding-bottom: 16px
+}
+
+.product-detail .short-detail-wrap {
+    position: relative
+}
+
+.product-detail ul.short-detail-2 {
+    width: 100%;
+    display: block
+}
+
+.product-detail .short-detail-2 .repost {
+    font-weight: 500
+}
+
+.product-detail ul.short-detail-2 li {
+    float: left;
+    margin-right: 64px
+}
+
+.product-detail ul.short-detail-2 li:last-child {
+    margin-right: 0
+}
+
+.product-detail .short-detail-2 .sp1 {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #747c87;
+    width: auto;
+    display: block;
+    margin-bottom: 4px
+}
+
+.product-detail .short-detail-2 .sp2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #2c2f36;
+    width: auto;
+    display: block;
+    margin-top: 4px
+}
+
+.product-detail .detail-product {
+    position: relative;
+    padding-top: 16px
+}
+
+.product-detail .detail-product .title-detail {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #2c2f36;
+    margin-bottom: 16px;
+    display: inline-block;
+    width: 100%
+}
+
+.product-detail .detail-product .detail-1 .des-product {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    color: #2c2f36;
+    overflow: hidden;
+    word-break: break-word
+}
+
+.product-detail .detail-product .detail-1 {
+    position: relative;
+    overflow: hidden;
+    height: 100%
+}
+
+.product-detail .detail-product .detail-1.maxheight {
+    max-height: 280px
+}
+
+.product-detail .detail-product .detail-2 .row-1 {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 12px
+}
+
+.product-detail .detail-product .detail-2 .row-1:last-child {
+    margin-bottom: 0
+}
+
+.product-detail .detail-product .detail-2 .row-1 .r1 {
+    width: 112px;
+    float: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #2c2f36;
+    margin-right: 8px
+}
+
+.product-detail .detail-product .detail-2 .row-1 .r2 {
+    float: left;
+    width: calc(100% - 120px);
+    color: #2c2f36
+}
+
+.detail-product .link {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #004e7f
+}
+
+.detail-product .detail-2 .key {
+    display: flex;
+    flex-direction: row;
+    padding: 6px 16px;
+    background: #f5f6f7;
+    border-radius: 32px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    width: auto;
+    margin-right: 8px;
+    float: left;
+    margin-bottom: 8px
+}
+
+.product-detail ul.short-detail-2 .sp3 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: rgba(0, 0, 0, .8);
+    margin-top: 5px;
+    display: inline-block
+}
+
+.product-detail .view-more,
+.product-detail .view-less {
+    text-align: center;
+    font-size: 14px
+}
+
+.box-view-more {
+    bottom: 0;
+    color: #004e7f;
+    cursor: pointer;
+    left: 0;
+    line-height: 40px;
+    position: absolute;
+    width: 100%
+}
+
+.box-view-more .gradient {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
+    height: 40px;
+    width: 100%
+}
+
+.product-detail .box-view-less {
+    line-height: 40px
+}
+
+.product-detail .detail-product .detail-1 .view-more,
+.product-detail .detail-product .detail-1 .view-less {
+    background: #fff;
+    font-weight: 500;
+    color: #004e7f
+}
+
+.view-more img,
+.view-less img {
+    vertical-align: middle;
+    margin-left: 4px
+}
+
+.product-config {
+    position: relative
+}
+
+.product-detail .note {
+    color: #747c87;
+    text-rendering: geometricPrecision
+}
+
+.product-detail .box-share {
+    background: #fff;
+    box-shadow: 0 16px 64px rgba(3, 44, 71, .12);
+    border-radius: 8px;
+    padding: 8px 0;
+    width: 170px;
+    position: absolute;
+    right: -16px
+}
+
+.product-detail .box-share ul li {
+    padding: 0 16px;
+    line-height: 40px
+}
+
+.product-detail .box-share ul li:hover,
+.product-detail .box-share ul li:active {
+    background: #edf7ff;
+    color: #004e7f
+}
+
+.product-detail .box-share ul li:hover a,
+.product-detail .box-share ul li:active a {
+    color: #004e7f
+}
+
+.product-detail .zalo-share-button {
+    height: 40px !important;
+    cursor: pointer
+}
+
+.product-detail .box-share ul li a {
+    line-height: 40px;
+    color: #2c2f36;
+    font-weight: normal
+}
+
+.product-detail .box-share ul li img {
+    vertical-align: middle;
+    margin-right: 8px
+}
+
+.product-detail .map {
+    width: 100%;
+    height: 288px;
+    position: relative
+}
+
+.product-detail .map-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: none
+}
+
+.product-detail .box-share {
+    z-index: 1
+}
+
+.product-warning {
+    color: #004e7f;
+    padding: 8px 16px;
+    margin: 16px 0;
+    background: #edf7ff;
+    border-radius: 4px;
+    line-height: 20px
+}
+
+#divSendContact {
+    width: 440px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    display: none
+}
+
+#divSendContact .title {
+    font-weight: 500;
+    line-height: 16px;
+    color: #000;
+    padding-bottom: 5px
+}
+
+#divSendContact .note {
+    font-style: normal;
+    font-weight: normal;
+    line-height: 16px;
+    color: #666;
+    padding-bottom: 20px
+}
+
+#divSendContact .row {
+    padding-bottom: 10px;
+    clear: both
+}
+
+#divSendContact .row:after {
+    content: "";
+    display: table;
+    clear: both
+}
+
+#divSendContact .row .colleft {
+    width: 120px;
+    vertical-align: top;
+    float: left;
+    color: #000
+}
+
+#divSendContact .row .colright {
+    width: 280px;
+    vertical-align: top;
+    float: right
+}
+
+#divSendContact .row input,
+#divSendContact .row textarea {
+    border: 1px solid #bfbfbf;
+    box-sizing: border-box;
+    width: 280px;
+    font-family: Roboto;
+    font-size: 14px
+}
+
+#divSendContact .row input {
+    line-height: 30px;
+    padding: 0 5px
+}
+
+#divSendContact .row textarea {
+    height: 62px;
+    padding: 5px
+}
+
+#divSendContact .row img {
+    vertical-align: middle
+}
+
+#divSendContact #btnSendRequest {
+    background: #090;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    color: #fff;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 13px
+}
+
+#divSendContact .error-message {
+    color: #f00;
+    margin-top: 5px
+}
+
+#divSendContact .contact-result {
+    padding-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #319c00;
+    display: none
+}
+
+.fancybox-wrap {
+    overflow: visible !important
+}
+
+.fancybox-skin {
+    background: #fff !important
+}
+
+#popup_feedback input[type="checkbox"] {
+    -webkit-appearance: checkbox
+}
+
+@media only screen and (max-width:1023px) {
+    .main-left {
+        width: 100%
+    }
+    .product-detail .breadcrumb,
+    .product-detail .description,
+    .product-detail .divide,
+    .product-detail .note {
+        max-width: 696px;
+        margin: auto
+    }
+    .product-detail .divide.divide-full {
+        max-width: 100%
+    }
+    .product-detail .map-overlay {
+        display: block;
+        border-radius: 4px
+    }
+}
+
+@media only screen and (max-width:1543px) {
+    .product-detail .map {
+        height: 240px;
+        border-radius: 4px
+    }
+}

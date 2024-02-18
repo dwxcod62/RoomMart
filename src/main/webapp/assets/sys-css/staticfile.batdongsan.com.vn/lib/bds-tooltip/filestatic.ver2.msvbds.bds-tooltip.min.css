@@ -1,0 +1,29 @@
+[data-bds-tooltip] {
+    cursor: pointer
+}
+
+#tooltip a {
+    color: #fff
+}
+
+.bds-tooltip {
+    opacity: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    background: rgba(17, 17, 17, .9);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 13px;
+    padding: .5em 1em;
+    -webkit-transition: opacity .2s ease-in-out;
+    -moz-transition: opacity .2s ease-in-out;
+    -ms-transition: opacity .2s ease-in-out;
+    transition: opacity .2s ease-in-out
+}
+
+.bds-tooltip .text-bold {
+    display: flex;
+    text-decoration: underline
+}
