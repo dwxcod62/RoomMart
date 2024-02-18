@@ -29,6 +29,7 @@
 
 </head>
 
+
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
@@ -43,6 +44,7 @@
 
 <!-- Navbar -->
 <%@include file="../components/navbar.jsp" %>
+
 
 <!-- Body -->
 <div class="container">
@@ -189,15 +191,19 @@
 </div>
 
 <!-- Footer -->
+
 <%@include file="../components/footer.jsp" %>
+
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
+
 
 <!-- Toast element -->
 <div id="toast">&nbsp;</div>
 
 <!-- Script Bootstrap !important -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
@@ -211,6 +217,7 @@
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
+
 <script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 
@@ -260,6 +267,7 @@
     <!-- Loader -->
     <script src="./assets/js/loading-handler.js"></script>
 </c:if>
+
 </body>
 
 </html>

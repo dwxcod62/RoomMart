@@ -20,12 +20,10 @@ public class ShowListHostelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Account acc;
-
         IHostelDAO hostelDAO = new HostelDAO();
         HttpSession session = request.getSession();
-//        acc = (Account) session.getAttribute("USER");
-//        int accountId = acc.getAccountId();
-        int accountId = 1;
+        acc = (Account) session.getAttribute("USER");
+        int accountId = acc.getAccId();
         List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(accountId);
 
         Map<Integer, Integer> ListNumberTotalRoomsOfHostel = new HashMap<>();
@@ -38,7 +36,7 @@ public class ShowListHostelServlet extends HttpServlet {
         }
 
         request.setAttribute("LIST_HOSTEL", listHostel);
-        request.setAttribute("CURRENT_PAGE", "hostel");
+        session.setAttribute("CURRENT_PAGE", "hostel");
 
         request.getRequestDispatcher("pages/owner/hostel/hostel-list.jsp").forward(request, response);
     }

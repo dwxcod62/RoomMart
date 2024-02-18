@@ -38,7 +38,6 @@ public class RegisterInfoServlet extends HttpServlet {
                                     .phone(phone)
                                     .cccd(identify)
                                     .build();
-
         try {
             int role = 3;
             Account acc = dao.resAddAccount(user_info, email, password, role);

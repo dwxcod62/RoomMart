@@ -6,7 +6,7 @@
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
                     <a href="dashboard" class="main-nav__logo-link">
-                        <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
+                        <img class="main-nav__logo-img" src="./assets/images/logos/logo-room-mart.png" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -53,11 +53,11 @@
                     </div>
                     <div id="nav-profile-btn" class="profile">
                         <div class="profile__infor">
-                            <h3 class="infor__name">${sessionScope.USER.accountInfo.information.fullname}</h3>
+                            <h3 class="infor__name">${sessionScope.USER.accountInfo.fullname}</h3>
                             <span class="infor__role">Chủ phòng trọ</span>
                         </div>
                         <div class="profile__avatar">
-                            <img class="avatar__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg"
+                            <img class="avatar__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex ? "male" : "female"}.png"
                                  alt="User avatar">
                         </div>
                     </div>
@@ -156,10 +156,10 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                 <a href="profile" class="action__view-profile-link">
                     <div class="action__image">
-                        <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg" alt="User avatar">
+                        <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex ? "male" : "female"}.png" alt="User avatar">
                     </div>
                     <div class="action__content">
-                        <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>
+                        <div class="title">${sessionScope.USER.accountInfo.fullname}</div>
                         <span class="subtitle">Xem trang cá nhân của bạn</span>
                     </div>
                 </a>

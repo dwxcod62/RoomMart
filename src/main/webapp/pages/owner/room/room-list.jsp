@@ -97,7 +97,7 @@
                                        class="content__tbody-hostel-link">${hosteListName.get(loop.index)}</a>
                                 </td>
                                 <td>
-                                    <a href="roomDetail?roomID=${roomList.roomId}&hostelID=${roomList.hostelId}"
+                                    <a href="ownerRoomDetail?roomID=${roomList.roomId}&hostelID=${roomList.hostelId}"
                                        class="content__tbody-room-link">${roomList.roomNumber}</a>
                                 </td>
                                 <c:if test="${roomList.roomStatus eq 1}">

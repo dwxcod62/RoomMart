@@ -98,4 +98,24 @@ public class EmailUtils {
                 + "</div>";
         return send(receiverEmail, subject, emailContent);
     }
+
+    public boolean sendContractConfirmationEmail(String receiverEmail, String contractData) {
+        String subject = "Xác nhận Hợp đồng Thuê";
+        String contractLink = "http://" + host + ":8080/RoomMart_war_exploded/createContract?data=" + contractData;
+        String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
+                + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
+                + "<div style=\"border-bottom: 1px solid #eee\">"
+                + "<a href=\"\" style=\"font-size: 1.4em; color: #00466a; text-decoration: none; font-weight: 600\">Room Mart+</a>"
+                + "</div>"
+                + "<p style=\"font-size: 1.1em\">Xin chào,</p>"
+                + "<p>Bạn đã nhận được một hợp đồng thuê từ Room Mart+. Vui lòng xác nhận hợp đồng bằng cách nhấp vào liên kết dưới đây:</p>"
+                + "<a href=\"" + contractLink + "\" style=\"background: #00466a; margin: 0 auto; width: max-content; padding: 10px 10px; color: #fff; border-radius: 4px\">Nhấp vào đây để xác nhận hợp đồng</a>"
+                + "<p>Hoặc bạn có thể sao chép và dán liên kết sau vào trình duyệt của mình:<br><a href=\"" + contractLink + "\">" + contractLink + "</a></p>"
+                + "<p style=\"font-size: 0.9em\">Nếu bạn không thực hiện yêu cầu này hoặc có bất kỳ thắc mắc nào, vui lòng bỏ qua email này.</p>"
+                + "<p style=\"font-size: 0.9em\">Trân trọng,<br />RoomMart+</p>"
+                + "<hr style=\"border: none; border-top: 1px solid #eee\" />"
+                + "</div>"
+                + "</div>";
+        return send(receiverEmail, subject, emailContent);
+    }
 }
