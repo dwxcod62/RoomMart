@@ -55,6 +55,14 @@ public class CreateContractServlet extends HttpServlet {
                     int contract_id = Integer.parseInt(request.getParameter("id"));
                     jsonObject = sysDao.getContractInformationByID(contract_id);
 
+                    owner_info = UserInformation.builder()
+                                .fullname(jsonObject.getString("owner_full_name"))
+                                .phone(jsonObject.getString("owner_phone"))
+                                .cccd(jsonObject.getString("owner_identify_card"))
+                                .address(jsonObject.getString("owner_address"))
+                                .birthday(jsonObject.getString("owner_birthday"))
+                                .build();
+
                     session.setAttribute("CONTRACT_ID", contract_id);
                     request.setAttribute("OWNER_SIGN", jsonObject.getString("owner_sign"));
                 }

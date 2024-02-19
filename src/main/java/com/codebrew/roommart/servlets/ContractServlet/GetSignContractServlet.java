@@ -63,7 +63,6 @@ public class GetSignContractServlet extends HttpServlet {
 
                     if (contract_id > 0){
 
-
                         url = "dashboard";
                         response.sendRedirect(url);
                     } else {
