@@ -91,13 +91,12 @@ public class UserInformationDAO {
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     String fullname = rs.getString("fullname");
-                    String email = rs.getString("email");
                     String birthday = rs.getDate("birthday").toString();
                     boolean sex = rs.getBoolean("sex");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
-                    inf = new UserInformation(fullname, email, birthday, sex, phone, address, cccd, rs.getInt("account_id"), null);
+                    inf = new UserInformation(fullname, null, birthday, sex, phone, address, cccd, rs.getInt("account_id"), null);
                 }
             }
         } catch (Exception e) {
