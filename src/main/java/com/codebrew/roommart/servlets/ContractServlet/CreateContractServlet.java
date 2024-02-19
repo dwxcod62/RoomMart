@@ -43,8 +43,11 @@ public class CreateContractServlet extends HttpServlet {
                     owner_info = (UserInformation) session.getAttribute("CONTRACT_OWNER_USER");
                     renter_info = (UserInformation) session.getAttribute("CONTRACT_RENTER_USER");
 
-                    renter_info.setCccd(maskCccd(renter_info.getCccd()));
-                    renter_info.setPhone(maskCccd(renter_info.getPhone()));
+                    UserInformation hidden_renter_info = renter_info;
+
+                    hidden_renter_info.setCccd(maskCccd(renter_info.getCccd()));
+                    hidden_renter_info.setPhone(maskCccd(renter_info.getPhone()));
+                    request.setAttribute("RENTER_INFO", hidden_renter_info);
 
                 }
 
@@ -60,7 +63,6 @@ public class CreateContractServlet extends HttpServlet {
                     String between = countYear(jsonObject.getString("room_start_date"), jsonObject.getString("room_end_date"));
                     request.setAttribute("USER_CONTRACT", acc.getRole());
                     request.setAttribute("OWNER_INFO", owner_info);
-                    request.setAttribute("RENTER_INFO", renter_info);
                     request.setAttribute("room_start_date", formatDate(jsonObject.getString("room_start_date")));
                     request.setAttribute("room_end_date", formatDate(jsonObject.getString("room_end_date")));
                     request.setAttribute("between", between);

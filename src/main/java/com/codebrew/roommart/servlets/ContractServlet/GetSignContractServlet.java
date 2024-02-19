@@ -38,10 +38,15 @@ public class GetSignContractServlet extends HttpServlet {
 
                 if ( acc.getRole()  == 1){
                     renter_info = (UserInformation) session.getAttribute("CONTRACT_RENTER_USER");
+                    jsonObject = (JSONObject) session.getAttribute("CONTRACT_INFORMATION");
+
+                    String email = (String) session.getAttribute("RENTER_MAIL");
+
+                    dao.updateContractOwnerSide(jsonObject, acc.getAccId(), acc.getAccountInfo(), renter_info);
 
                     int contract_id = dao.updateContractSign(acc.getAccId(), renter_info.getAccount_id(), sign_bytea);
 
-                    String email = (String) session.getAttribute("RENTER_MAIL");
+
                     boolean check = new EmailUtils().sendContractConfirmationEmail(email , contract_id);
                     if (check){
                         url = "dashboard";
@@ -57,6 +62,8 @@ public class GetSignContractServlet extends HttpServlet {
                     int contract_id = dao.updateRenterContractSign( (int) session.getAttribute("CONTRACT_ID") , sign_bytea);
 
                     if (contract_id > 0){
+
+
                         url = "dashboard";
                         response.sendRedirect(url);
                     } else {

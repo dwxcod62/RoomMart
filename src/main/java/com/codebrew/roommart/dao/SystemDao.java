@@ -21,7 +21,7 @@ public class SystemDao {
         boolean st = false;
 
         String sql = "select contract_id from contract_main \n" +
-                "where c_status = 1 and  renter_id = ?";
+                "where c_status = 2 and renter_id = ?";
         try {
             cn = DatabaseConnector.makeConnection();
             pst = cn.prepareStatement(sql);
@@ -76,6 +76,37 @@ public class SystemDao {
             "WHERE contract_main.contract_details_id = contract_details.contract_details_id\n" +
             "AND contract_main.renter_id = ? AND contract_main.owner_id = ? returning contract_main.contract_id ";
 
+
+    public void updateContractStatus(int contract_id, int status){
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            AccountDao dao = new AccountDao();
+            if (cn != null) {
+                pst = cn.prepareStatement("UPDATE contract_main set c_status = ? where contract_id = ?");
+
+                pst.setInt(1, status);
+                pst.setInt(2, contract_id);
+
+                pst.executeUpdate();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
     public int updateRenterContractSign(int contract_id , String sign){
         int result = -1;
@@ -157,7 +188,7 @@ public class SystemDao {
     private  static final String UPDATE_CONTRACT_MAIN_OWNER_SIDE = "INSERT INTO contract_main ( contract_details_id, c_status, owner_id, renter_id, room_id)\n" +
             "values ( ?, ?, ?, ?, ?) returning contract_id";
 
-    public boolean updateContractOwnerSide(JSONObject json){
+    public boolean updateContractOwnerSide(JSONObject json, int owner_account_id ,UserInformation owner_info, UserInformation renter_info){
         boolean result = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -168,14 +199,12 @@ public class SystemDao {
             if (cn != null) {
                 pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIDE);
 
-                UserInformation owner_info = dao.getInfoByMailForContact(json.getString("owner_mail"));
                 pst.setString(1, owner_info.getFullname());
                 pst.setDate(2, convertToDate(owner_info.getBirthday()));
                 pst.setString(3, owner_info.getAddress());
                 pst.setString(4, owner_info.getCccd());
                 pst.setString(5, owner_info.getPhone());
 
-                UserInformation renter_info = dao.getInfoByMailForContact(json.getString("renter_mail"));
                 pst.setString(6, renter_info.getFullname());
                 pst.setDate(7, convertToDate(renter_info.getBirthday()));
                 pst.setString(8, renter_info.getPhone());
@@ -194,7 +223,7 @@ public class SystemDao {
                     pst = cn.prepareStatement(UPDATE_CONTRACT_MAIN_OWNER_SIDE);
                     pst.setInt(1, contract_details_id);
                     pst.setInt(2, 1); // 1 la dang cho ben nguoi dung
-                    pst.setInt(3, owner_info.getAccount_id());
+                    pst.setInt(3, owner_account_id);
                     pst.setInt(4, renter_info.getAccount_id());
                     pst.setInt(5, json.getInt("room_id"));
 
