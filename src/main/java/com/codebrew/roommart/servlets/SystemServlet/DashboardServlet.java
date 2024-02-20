@@ -33,6 +33,7 @@ public class DashboardServlet extends HttpServlet {
                     case 3: //  Renter
                         SystemDao dao = new SystemDao();
                         boolean st = dao.isRenterRentingRoom(acc.getAccId());
+                        session.setAttribute("st",st);
                         if (st){
                             url = "Renter-HomePage";
                         } else {

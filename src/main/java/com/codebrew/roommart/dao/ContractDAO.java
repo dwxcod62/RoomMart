@@ -14,6 +14,7 @@ public class ContractDAO {
             "FROM Contracts AS C\n" +
             "JOIN Accounts AS A ON C.renter_id = A.account_id\n" +
             "WHERE A.account_id = ?";
+
     public Contract getContractByRenterId(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -74,4 +75,7 @@ public class ContractDAO {
         }
         return contract;
     }
+
+
+
 }
