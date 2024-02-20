@@ -14,6 +14,44 @@ import java.time.LocalDate;
 
 public class SystemDao {
 
+    public boolean isRenterRentingRoom(int renter_id){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean st = false;
+
+        String sql = "select contract_id from contract_main \n" +
+                "where c_status = 2 and renter_id = ?";
+        try {
+            cn = DatabaseConnector.makeConnection();
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, renter_id);
+            rs = pst.executeQuery();
+            if (rs != null && rs.next()){
+                st = true;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return st;
+    }
+
 
     private java.sql.Date convertToDate(String date_string ){
         try{
@@ -30,16 +68,16 @@ public class SystemDao {
             "SET renter_sign = ?\n" +
             "FROM contract_main\n" +
             "WHERE contract_main.contract_details_id = contract_details.contract_details_id\n" +
-            "AND contract_main.renter_id = ? AND contract_main.owner_id = ? ";
+            "AND contract_main.contract_id = ? and contract_main.renter_id = ? returning contract_main.contract_id";
 
     private static final String UPDATE_CONTRACT_OWNER_SIGN = "UPDATE contract_details\n" +
             "SET owner_sign = ?\n" +
             "FROM contract_main\n" +
             "WHERE contract_main.contract_details_id = contract_details.contract_details_id\n" +
-            "AND contract_main.renter_id = ? AND contract_main.owner_id = ? ";
+            "AND contract_main.renter_id = ? AND contract_main.owner_id = ? returning contract_main.contract_id ";
 
-    public boolean updateContractSign(String owner_mail, String renter_mail, int role,  String sign){
-        boolean result = false;
+
+    public static final void updateContractStatus(int contract_id, int status){
         Connection cn = null;
         PreparedStatement pst = null;
 
@@ -47,17 +85,89 @@ public class SystemDao {
             cn = DatabaseConnector.makeConnection();
             AccountDao dao = new AccountDao();
             if (cn != null) {
-                if ( role == 1 ){
-                    pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIGN);
-                } else {
-                    pst = cn.prepareStatement(UPDATE_CONTRACT_RENTER_SIGN);
-                }
-                pst.setString(1, sign);
-                pst.setString(2, renter_mail);
-                pst.setString(3, owner_mail);
+                pst = cn.prepareStatement("UPDATE contract_main set c_status = ? where contract_id = ?");
 
-                int rowsAffected = pst.executeUpdate();
-                result = (rowsAffected > 0);
+                pst.setInt(1, status);
+                pst.setInt(2, contract_id);
+
+                pst.executeUpdate();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public int updateRenterContractSign(int contract_id , String sign, int acc_id){
+        int result = -1;
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            AccountDao dao = new AccountDao();
+            if (cn != null) {
+                pst = cn.prepareStatement(UPDATE_CONTRACT_RENTER_SIGN);
+
+                pst.setString(1, sign);
+                pst.setInt(2, contract_id);
+                pst.setInt(3, acc_id);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    result = rs.getInt("contract_id");
+                }
+
+                if (result > -1){
+                    updateContractStatus(contract_id, 2);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    public int updateContractSign(int owner_id, int renter_id,  String sign){
+        int result = -1;
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            AccountDao dao = new AccountDao();
+            if (cn != null) {
+                pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIGN);
+
+                pst.setString(1, sign);
+                pst.setInt(2, renter_id);
+                pst.setInt(3, owner_id);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    result = rs.getInt("contract_id");
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,14 +187,14 @@ public class SystemDao {
 
     private static final String UPDATE_CONTRACT_OWNER_SIDE =
             "INSERT INTO contract_details ( owner_full_name, owner_birthday, owner_address, owner_identify_card, owner_phone, \n" +
-            "renter_full_name, renter_birthday, renter_phone, renter_identify_card, month_per_pay, \n" +
-            "cost_per_month, deposit, start_date, end_date, current_day )\n" +
-            "Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) returning contract_details_id " ;
+                    "renter_full_name, renter_birthday, renter_phone, renter_identify_card, month_per_pay, \n" +
+                    "cost_per_month, deposit, start_date, end_date, current_day )\n" +
+                    "Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) returning contract_details_id " ;
 
-    private  static final String UPDATE_CONTRACT_MAIN_OWNER_SIDE = "INSERT INTO contract_main ( contract_details_id, contract_status, owner_id, renter_id, room_id)\n" +
+    private  static final String UPDATE_CONTRACT_MAIN_OWNER_SIDE = "INSERT INTO contract_main ( contract_details_id, c_status, owner_id, renter_id, room_id)\n" +
             "values ( ?, ?, ?, ?, ?) returning contract_id";
 
-    public boolean updateContractOwnerSide(JSONObject json){
+    public boolean updateContractOwnerSide(JSONObject json, int owner_account_id ,UserInformation owner_info, UserInformation renter_info){
         boolean result = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -95,18 +205,16 @@ public class SystemDao {
             if (cn != null) {
                 pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIDE);
 
-                UserInformation owner_info = dao.getInfoByMailForContact(json.getString("owner_mail"));
                 pst.setString(1, owner_info.getFullname());
                 pst.setDate(2, convertToDate(owner_info.getBirthday()));
                 pst.setString(3, owner_info.getAddress());
                 pst.setString(4, owner_info.getCccd());
                 pst.setString(5, owner_info.getPhone());
 
-                UserInformation renter_info = dao.getInfoByMailForContact(json.getString("renter_mail"));
-                pst.setString(6, owner_info.getFullname());
-                pst.setDate(7, convertToDate(owner_info.getBirthday()));
-                pst.setString(8, owner_info.getPhone());
-                pst.setString(9, owner_info.getCccd());
+                pst.setString(6, renter_info.getFullname());
+                pst.setDate(7, convertToDate(renter_info.getBirthday()));
+                pst.setString(8, renter_info.getPhone());
+                pst.setString(9, renter_info.getCccd());
 
                 pst.setInt(10, json.getInt("payment_term"));
                 pst.setInt(11, json.getInt("room_fee"));
@@ -120,10 +228,10 @@ public class SystemDao {
                     int contract_details_id = rs.getInt("contract_details_id");
                     pst = cn.prepareStatement(UPDATE_CONTRACT_MAIN_OWNER_SIDE);
                     pst.setInt(1, contract_details_id);
-                    pst.setInt(2, 1);
-                    pst.setString(3, json.getString("owner_mail"));
-                    pst.setString(4, json.getString("renter_mail"));
-                    pst.setInt(5, 1);
+                    pst.setInt(2, 1); // 1 la dang cho ben nguoi dung
+                    pst.setInt(3, owner_account_id);
+                    pst.setInt(4, renter_info.getAccount_id());
+                    pst.setInt(5, json.getInt("room_id"));
 
                     ResultSet rs_2 = pst.executeQuery();
                     if (rs_2 != null && rs_2.next()){
@@ -153,9 +261,9 @@ public class SystemDao {
     private static final String GET_CONTRACT_INFORMATION_BY_EMAIL = "SELECT cd.* \n" +
             "FROM contract_main cm \n" +
             "JOIN contract_details cd ON cm.contract_details_id = cd.contract_details_id \n" +
-            "WHERE cm.owner_id = ? AND cm.renter_id = ?;";
+            "WHERE cm.contract_id = ? ";
 
-    public JSONObject getContractInformationByEmail(String owner_mail, String renter_email){
+    public JSONObject getContractInformationByID(int contract_id){
         JSONObject jsonObject = new JSONObject();;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -165,8 +273,7 @@ public class SystemDao {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(GET_CONTRACT_INFORMATION_BY_EMAIL);
-                pst.setString(1, owner_mail);
-                pst.setString(2, renter_email);
+                pst.setInt(1, contract_id);
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
@@ -297,9 +404,9 @@ public class SystemDao {
         boolean check = false;
 
         String sql = "update accounts set password = ?, " +
-                    "expired_time_recover_password = null " +
-                    "where request_recover_password_code = ? "
-                    +"RETURNING account_id";
+                "expired_time_recover_password = null " +
+                "where request_recover_password_code = ? "
+                +"RETURNING account_id";
         try {
             cn = DatabaseConnector.makeConnection();
             pst = cn.prepareStatement(sql);
@@ -354,13 +461,13 @@ public class SystemDao {
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     UserInformation info = new UserInformation().builder()
-                                            .fullname(rs.getString("fullname"))
-                                            .birthday(rs.getDate("birthday").toString())
-                                            .address(rs.getString("address"))
-                                            .phone(rs.getString("phone"))
-                                            .cccd(rs.getString("identity_card_number"))
-                                            .sex(rs.getBoolean("sex"))
-                                            .build();
+                            .fullname(rs.getString("fullname"))
+                            .birthday(rs.getDate("birthday").toString())
+                            .address(rs.getString("address"))
+                            .phone(rs.getString("phone"))
+                            .cccd(rs.getString("identity_card_number"))
+                            .sex(rs.getBoolean("sex"))
+                            .build();
                     acc = new Account().builder().
                             accId(rs.getInt("account_id"))
                             .email(uname)
@@ -473,8 +580,8 @@ public class SystemDao {
         PreparedStatement pst = null;
         ResultSet rs = null;
         String sql = "INSERT INTO " +
-                     "Accounts (email, otp) " +
-                     "VALUES (?, ?)";
+                "Accounts (email, otp) " +
+                "VALUES (?, ?)";
 
         boolean isSuccess = false;
         try {
@@ -508,9 +615,9 @@ public class SystemDao {
     }
 
     private static final String RES_UPDATE_ACCOUNT = "UPDATE Accounts "
-                                    + "SET password = ?, token = '' , role = ?, status = 1,  otp = '' "
-                                    + "WHERE email = ? "
-                                    + "RETURNING account_id";
+            + "SET password = ?, token = '' , role = ?, status = 1,  otp = '' "
+            + "WHERE email = ? "
+            + "RETURNING account_id";
     private static final String RES_UPDATE_USERINFORMATION = "INSERT INTO AccountInformations (account_id, fullname, birthday, sex, phone, address, identity_card_number) "
             + "values (?, ?, ?, ?, ?, ?, ?)";
 

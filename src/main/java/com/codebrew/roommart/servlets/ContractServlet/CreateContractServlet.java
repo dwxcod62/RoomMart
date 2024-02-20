@@ -23,61 +23,76 @@ public class CreateContractServlet extends HttpServlet {
         String url = "error";
         HttpSession session = request.getSession(true);
         Account acc = (Account) session.getAttribute("USER");
-        String data = request.getParameter("data");
+
+        UserInformation renter_info = null;
+        UserInformation owner_info = null;
+        JSONObject jsonObject = null;
 
         if (acc == null){
             url = "login";
             Status status = Status.builder()
-                            .status(false)
-                            .content("Vui lòng đăng nhập để sử dụng").build();
-            session.setAttribute("qwerty", data);
+                    .status(false)
+                    .content("Vui lòng đăng nhập để sử dụng").build();
             request.setAttribute("RESPONSE_MSG", status);
-        }
-
-
-        try {
-            if (data != null) {
-                AccountDao dao = new AccountDao();
+        } else {
+            try {
                 SystemDao sysDao = new SystemDao();
-
-                String decodeString = EncodeUtils.decodeString(data);
-
-                String renter_mail = (decodeString.split("&")[0]).split("=")[1];
-                String owner_mail = (decodeString.split("&")[1]).split("=")[1];
-
-                UserInformation owner_info = dao.getInfoByMailForContact(owner_mail);
-                UserInformation renter_info = dao.getInfoByMailForContact(renter_mail);
-
-                JSONObject jsonObject = sysDao.getContractInformationByEmail(owner_mail, renter_mail);
-
                 if ( acc.getRole() == 1 ){
-                    renter_info.setCccd(maskCccd(renter_info.getCccd()));
-                    renter_info.setPhone(maskCccd(renter_info.getPhone()));
+
+                    jsonObject = (JSONObject) session.getAttribute("CONTRACT_INFORMATION") ;
+                    renter_info = (UserInformation) session.getAttribute("CONTRACT_RENTER_USER");
+
+                    UserInformation hidden_renter_info = renter_info;
+
+                    hidden_renter_info.setCccd(maskCccd(renter_info.getCccd()));
+                    hidden_renter_info.setPhone(maskCccd(renter_info.getPhone()));
+                    request.setAttribute("RENTER_INFO", hidden_renter_info);
+                    request.setAttribute("OWNER_INFO", acc.getAccountInfo());
+
                 }
 
                 if ( acc.getRole()  == 3){
+                    int contract_id = Integer.parseInt(request.getParameter("id"));
+                    jsonObject = sysDao.getContractInformationByID(contract_id);
+
+                    owner_info = UserInformation.builder()
+                                .fullname(jsonObject.getString("owner_full_name"))
+                                .phone(jsonObject.getString("owner_phone"))
+                                .cccd(jsonObject.getString("owner_identify_card"))
+                                .address(jsonObject.getString("owner_address"))
+                                .birthday(jsonObject.getString("owner_birthday"))
+                                .build();
+
+                    request.setAttribute("RENTER_INFO", acc.getAccountInfo());
+                    request.setAttribute("OWNER_INFO", owner_info);
+
+                    session.setAttribute("CONTRACT_ID", contract_id);
                     request.setAttribute("OWNER_SIGN", jsonObject.getString("owner_sign"));
                 }
 
-                String between = countYear(jsonObject.getString("room_start_date"), jsonObject.getString("room_end_date"));
+                if (jsonObject != null){
+                    String between = countYear(jsonObject.getString("room_start_date"), jsonObject.getString("room_end_date"));
+                    request.setAttribute("USER_CONTRACT", acc.getRole());
+                    request.setAttribute("room_start_date", formatDate(jsonObject.getString("room_start_date")));
+                    request.setAttribute("room_end_date", formatDate(jsonObject.getString("room_end_date")));
+                    request.setAttribute("between", between);
+                    request.setAttribute("room_fee", jsonObject.getInt("room_fee"));
+                    request.setAttribute("payment_term", jsonObject.getInt("payment_term"));
+                    request.setAttribute("room_deposit", jsonObject.getInt("room_deposit"));
 
-                request.setAttribute("USER_CONTRACT", acc.getRole());
-                request.setAttribute("OWNER_INFO", owner_info);
-                request.setAttribute("RENTER_INFO", renter_info);
-                request.setAttribute("room_start_date", formatDate(jsonObject.getString("room_start_date")));
-                request.setAttribute("room_end_date", formatDate(jsonObject.getString("room_end_date")));
-                request.setAttribute("between", between);
-                request.setAttribute("room_fee", jsonObject.getInt("room_fee"));
-                request.setAttribute("payment_term", jsonObject.getInt("payment_term"));
-                request.setAttribute("room_deposit", jsonObject.getInt("room_deposit"));
+                    url = "contract-details";
 
-                url = "contract-details";
+                } else {
+                    Status status = Status.builder()
+                            .status(false)
+                            .content("Có lỗi xảy ra, vui lòng thực hiện lại hoặc báo cáo lên quản trị viên").build();
+                    request.setAttribute("RESPONSE_MSG", status);
+                }
 
+            } catch ( Exception e){
+                e.printStackTrace();
             }
-        } catch ( Exception e){
-            e.printStackTrace();
         }
-
         request.getRequestDispatcher(url).forward(request, response);
     }
 
@@ -123,15 +138,10 @@ public class CreateContractServlet extends HttpServlet {
 
         if (acc != null ){
             JSONObject jsonObject = new JSONObject();
+            AccountDao dao = new AccountDao();
 
             String renter_email = request.getParameter("room-email");
-
-            // RENTER
-            jsonObject.put("renter_mail", renter_email);
-
-            // OWNER
-            jsonObject.put("owner_mail", acc.getEmail());
-
+            UserInformation renter_info = dao.getInfoByMailForContact(renter_email);
 
             // PROPERTIES
             jsonObject.put("room_start_date", request.getParameter("room-startdate"));
@@ -143,21 +153,24 @@ public class CreateContractServlet extends HttpServlet {
             jsonObject.put("room_deposit", request.getParameter("room-deposit"));
             jsonObject.put("fixed_years", request.getParameter("fixed-years"));
             jsonObject.put("percentage_increase", request.getParameter("percentage-increase"));
+            jsonObject.put("room_id", request.getParameter("room_id"));
 
-            SystemDao dao = new SystemDao();
-            dao.updateContractOwnerSide(jsonObject);
+            session.setAttribute("CONTRACT_OWNER_USER", acc.getAccountInfo());
+            session.setAttribute("CONTRACT_RENTER_USER", renter_info);
+            session.setAttribute("CONTRACT_INFORMATION", jsonObject);
+            session.setAttribute("RENTER_MAIL", renter_email);
 
-            String data = "renter=" + renter_email + "&owner=" + acc.getEmail();
-            String encode_object_string = EncodeUtils.encodeString(data);
+//            SystemDao dao = new SystemDao();
+//            dao.updateContractOwnerSide(jsonObject);
 
-            url = "createContract?data=" + encode_object_string;
+            url = "createContract";
             response.sendRedirect(url);
 
         } else {
             Status status = Status.builder()
-                            .status(false)
-                            .content("Vui lòng đăng nhập trước khi dùng dịch vụ")
-                            .build();
+                    .status(false)
+                    .content("Vui lòng đăng nhập trước khi dùng dịch vụ")
+                    .build();
             request.setAttribute("RESPONSE_MSG", status);
             request.getRequestDispatcher(url).forward(request, response);
         }

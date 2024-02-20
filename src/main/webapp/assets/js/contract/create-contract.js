@@ -1,6 +1,4 @@
 $(document).ready(function(){
-    var isValidEmail = false;
-
     $("#checkButton").click(function(){
         var userEmail = $("#room-email").val();
         var $formGroup = $(this).closest('.form-group');
@@ -18,10 +16,8 @@ $(document).ready(function(){
             success: function(response){
                 if (response === 'true') {
                     $formMessage.text("Email hợp lệ").css("color", "green");
-                    isValidEmail = true;
                 } else {
                     $formMessage.text("Email không hợp lệ hoặc không tồn tại").css("color", "red");
-                    isValidEmail = false;
                 }
             },
             error: function(xhr, status, error){

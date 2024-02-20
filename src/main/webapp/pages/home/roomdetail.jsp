@@ -1,7 +1,12 @@
 
 <%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
+<%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value="vi_VN"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,15 +19,26 @@
     <!-- Site Metas -->
     <title> ROOMMART </title>
 
+    <!-- Link Bootstrap !important -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Core CSS -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
-    <!-- responsive style -->
-    <%--    <link rel="stylesheet" href="assets/css/style.css">--%>
-    <!-- Option 1: Include in HTML -->
+
+    <!-- Link your own CSS here -->
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
+
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
+    <link rel="stylesheet" href="../../assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
 
-<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">--%>
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
 
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/lib/jquery-swiper/css/swiper.min.css" />
@@ -45,7 +61,7 @@
 
 </head>
 
-<body class="re__body re__body-ldp re__new-search-location-focus ${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+<body class="re__body re__body-ldp re__new-search-location-focus over-flow-hidden">
 
 
     <div id="preloader">
@@ -57,91 +73,12 @@
 </div>
 
 
-<div class="form-content">
-
-    <div class="re__bg-header">
-        <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">
-            <div class="re__container-sm">
-                <div class="re__nav" id="naga">
-                    <%--remove--%>
-                </div>
-                <div class="re__bg-pushmenu"></div>
-            </div>
-            <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">
-
-                <div class="re__control-menu">
-
-                    <c:if test = "${sessionScope.USER != null}">
-                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
-                            <a href="#AccInformation" class="re__btn re__btn-se-ghost--md">
-                                    ${sessionScope.USER.email.split("@")[0]}
-                            </a>
-                            <span class="re__line"></span>
-                            <a href="logout" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >logout</a>
-                        </div>
-                    </c:if>
-                    <c:if test = "${sessionScope.USER == null}">
-                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
-                            <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>
-                            <span class="re__line"></span>
-                            <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>
-                        </div>
-                    </c:if>
-
-                </div>
-                <!-- icon -->
-                <div class="re__drop-menu">
-                    <div class="re__left-menu">
-                        <h1>
-                            <a href="home" >
-                                <img style="height: 70px; object-fit: cover;" src="https://i.imgur.com/a8AWgbF.png" error-image-src="https://i.imgur.com/a8AWgbF.png" alt="Roomart" title="Roomart">
-                            </a>
-                        </h1>
-                    </div>
-
-                    <div class="re__right-menu">
-                        <!--Header menu-->
-                        <div class="re__home-header-menu">
-                            <div class="re__home-header-menu">
-                                <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">
-                                    <li class="lv0 ">
-                                        <a href="home">
-                                            <span class="text">Home</span>
-                                        </a><div class="re__arrrow"></div>
-                                    </li>
-                                    <li class="lv0 ">
-                                        <a href="home">
-
-                                            <span class="text">About us</span>
-                                        </a><div class="re__arrrow"></div>
-
-                                    </li>
-                                    <li class="lv0 ">
-                                        <a href="home">
-
-                                            <span class="text">More</span>
-                                        </a><div class="re__arrrow"></div>
-
-                                    </li>
+    <div class="form-content">
 
 
-
-
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-
-
-            </div>
-        </header>
+        <!-- Navbar -->
+        <%@include file="../owner/components/navbar.jsp"%>
     </div>
-</div>
 
 
 
@@ -218,7 +155,20 @@
                             <span class="title">Phòng ngủ</span>
                             <span class="value">${room.capacity} PN</span>
                         </div>
+                        <div class="re__pr-short-info-item js__pr-short-info-item">
+                            <span class="title">Tình Trạng</span>
 
+                                <c:choose>
+                                    <c:when test="${room.roomStatus==0}">
+                                        <span class="value" style="color: lawngreen">Có thể thuê</span>
+                                    </c:when>
+                                    <c:when test="${room.roomStatus==1}">
+                                        <span class="value"> Đã được thuê đến hết ${requestScope.endDate}</span>
+
+                                    </c:when>
+                                </c:choose>
+
+                        </div>
 
                     </div>
 
@@ -226,24 +176,64 @@
                     <div class="re__section re__pr-description js__section js__li-description">
                         <span class="re__section-title">Thông tin mô tả</span>
                         <div class="re__section-body re__detail-content js__section-body js__pr-description js__tracking" trackingid="lead-phone-ldp" trackinglabel="loc=Rent-Listing Details-body,prid=38582357">
-                            Xin chào quý anh/chị . Trân trọng cảm ơn!
-                            <h2>Services: </h2>
-                            <ul>
-                                <c:forEach var="s" items="${requestScope.serviceList}">
-                                    <li>
-                                        <h6>${s.serviceName} : ${s.servicePrice} / ${s.unit}</h6>
 
-                                    </li>
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+
+                                    <th scope="col">Loại dịch vụ</th>
+                                    <th scope="col">Giá trị</th>
+                                    <th scope="col">Đơn vị</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="s" items="${requestScope.serviceList}">
+                                    <tr>
+
+                                        <td>${s.serviceName}</td>
+                                        <td>${s.servicePrice}</td>
+                                        <td>${s.unit}</td>
+                                    </tr>
+
                                 </c:forEach>
-                            </ul>
-                            <h2>Infrastures: </h2>
-                            <ul>
-                                <c:forEach var="f" items="${requestScope.infrasList}">
-                                    <li>
-                                        <h6>${s.infrastructureName}</h6>
-                                    </li>
+
+                                </tbody>
+                            </table>
+
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Loại cơ sở hạ tầng</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Tình trạng</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:if test="${requestScope.infrasListItem ne null}">
+                                    <c:forEach var="s" items="${requestScope.infrasListItem}">
+                                        <tr>
+                                            <td>${s.infrastructureName}</td>
+                                            <td>1</td>
+                                            <td>Đang bảo trì</td>
+                                        </tr>
+
+                                    </c:forEach>
+                                </c:if>
+                                <c:forEach var="s" items="${requestScope.infrasList}">
+                                    <tr>
+                                        <td>${s.name}</td>
+                                        <td>${s.quantity}</td>
+                                        <td>${s.status==1?"Tốt":"Đang Bảo Trì"}</td>
+                                    </tr>
+
                                 </c:forEach>
-                            </ul>
+
+                                </tbody>
+                            </table>
+
                         </div>
                     </div>
                     <div class="re__section re__pr-specs re__pr-specs-v1 js__section js__li-specs">
@@ -259,7 +249,7 @@
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="bi bi-cash"></i></span>
                                     <span class="re__pr-specs-content-item-title">Mức giá</span>
-                                    <span class="re__pr-specs-content-item-value">Price tri&#x1EC7;u/th&#xE1;ng</span>
+                                    <span class="re__pr-specs-content-item-value">Liên hệ</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="bi bi-border-all"></i></span>
@@ -268,13 +258,13 @@
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="bi bi-chevron-up"></i></span>
-                                    <span class="re__pr-specs-content-item-title">Số Attic</span>
-                                    <span class="re__pr-specs-content-item-value">${room.hasAttic} phòng</span>
+                                    <span class="re__pr-specs-content-item-title">Gác xếp</span>
+                                    <span class="re__pr-specs-content-item-value">${r.hasAttic==1?'<i class="fa-solid fa-check" style="font-family:FontAwesome !important;"></i>':'<i class="fa-solid fa-xmark" style="font-family:FontAwesome !important;"></i>'}</span>
                                 </div>
                                 <div class="re__pr-specs-content-item">
                                     <span class="re__pr-specs-content-item-icon"><i class="bi bi-tv"></i></span>
                                     <span class="re__pr-specs-content-item-title">Nội thất</span>
-                                    <span class="re__pr-specs-content-item-value">Contact</span>
+                                    <span class="re__pr-specs-content-item-value">Liên hệ</span>
                                 </div>
                             </div>
                         </div>
@@ -397,9 +387,11 @@
 
             <!-- contact -->
             <div class="re__sidebar-box re__contact-box js__contact-box">
-                <div class="re__contact-name js_contact-name" title="Hi&#x1EBF;u Hu&#x1EF3;nh &amp; C&#x1ED9;ng S&#x1EF1;">
+                <c:set var="name" value="${requestScope.ownerAcc.fullname}"></c:set>
+                <a tracking-id="navigate-agent-profile" tracking-label="source=avatar" href="#"><span class="re__contact-avatar">${name.substring(name.lastIndexOf(" ") + 1)}</span></a>
+                <div class="re__contact-name js_contact-name" title="${requestScope.ownerAcc.fullname}">
                     <a tracking-id="navigate-agent-profile" tracking-label="source=name" href="#information">
-                        Owner name
+                            ${requestScope.ownerAcc.fullname}
                     </a>
                 </div>
 
@@ -412,11 +404,12 @@
 <%--                </a>--%>
 
 <%--                <a class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" href="chat?hostelId=${requestScope.room.hostelId}">Chat</a>--%>
+
             <form action="chat" method="post">
                 <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                 <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
+                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
             </form>
 
             </div>
@@ -443,7 +436,9 @@
 </c:if>
 
 
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/jquery/jquery.common.min.js"></script>
 

@@ -14,5 +14,5 @@ public interface IRoomDAO {
     public boolean updateRoomStatus(int roomID, int status);
     public Room getRoomInfoByRenterId(int renterId);
     public Room getRoomById(int roomId);
-    public boolean checkRoomOwner(int owner_email, int room_id, int hostel_id);
+    public Room checkRoomOwner(int owner_email, int room_id);
 }

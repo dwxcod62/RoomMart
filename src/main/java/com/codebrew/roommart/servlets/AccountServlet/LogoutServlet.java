@@ -31,7 +31,7 @@ public class LogoutServlet extends HttpServlet {
                 }
             }
 
-            url = "loginPage";
+            url = "login";
         }catch (Exception e) {
             log("Error at LogoutServlet: " + e.toString());
         } finally {

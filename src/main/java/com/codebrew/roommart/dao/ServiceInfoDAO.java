@@ -12,11 +12,28 @@ import java.util.List;
 
 public class ServiceInfoDAO {
     private static final String GET_SERVICES_OF_HOSTEL =
-            "SELECT N.hostel_service_id, S.service_id, service_name, valid_date, service_price, unit\n" +
-                    "FROM Services S RIGHT JOIN HostelService N ON S.service_id = N.service_id\n" +
-                    "WHERE N.hostel_id = ?";
+            "SELECT \n" +
+                    "    MIN(N.hostel_service_id) AS hostel_service_id,\n" +
+                    "    S.service_id,\n" +
+                    "    S.service_name,\n" +
+                    "    N.valid_date,\n" +
+                    "    N.service_price,\n" +
+                    "    S.unit\n" +
+                    "FROM \n" +
+                    "    Services S \n" +
+                    "RIGHT JOIN \n" +
+                    "    HostelService N ON S.service_id = N.service_id\n" +
+                    "WHERE \n" +
+                    "    N.hostel_id = ?\n" +
+                    "GROUP BY \n" +
+                    "    S.service_id,\n" +
+                    "    S.service_name,\n" +
+                    "    N.valid_date,\n" +
+                    "    N.service_price,\n" +
+                    "    S.unit;";
 
     public List<ServiceInfo> getServicesOfHostel(int hostelID) {
+//        System.out.println(GET_SERVICES_OF_HOSTEL);
         System.out.println("getServicesOfHostel");
         Connection cn = null;
         PreparedStatement pst = null;

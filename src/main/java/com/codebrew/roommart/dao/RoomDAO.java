@@ -3,6 +3,9 @@ import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
 
 import java.util.Map;
+
+import com.codebrew.roommart.dto.Contract;
+import com.codebrew.roommart.dto.InfrastructureItem;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.RoomInformation;
 import com.codebrew.roommart.utils.DatabaseConnector;
@@ -15,8 +18,7 @@ public class RoomDAO {
     private static final String ADD_IMGs = "INSERT INTO roomimgs (room_id,imgurl) \n" +
             "VALUES (?, ?)";
     private static final String COUNT_ROOM = "SELECT COUNT(*) AS room_count FROM rooms";
-    private static final String INSERT_ROOM =
-            "DO $$\n" +
+    private static final String INSERT_ROOM ="DO $$\n" +
             "DECLARE \n" +
             "    roomID INT;\n" +
             "    restQuantity INT := ?;\n" +
@@ -665,10 +667,6 @@ public class RoomDAO {
         }
         return isInserted;
     }
-//    quantity1
-//    quantity2
-//    quantity3
-//    quantity4
 public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic,List<String> imgUrls) {
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dqp6vdayn",
@@ -851,7 +849,7 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
         }
         return imgs;
     }
-    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText) {
+    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size) {
         System.out.println("get list condition method, CITY get: " +city);
         System.out.println("get by condition input text: " + inputText);
         Connection cn = null;
@@ -876,7 +874,7 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
                                 "    city,\n" +
                                 "    ward,\n" +
                                 "    district\n"+" ORDER BY \n" +
-                                "    rooms.room_id ASC;";
+                                "    rooms.room_id ASC\n";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
 
@@ -905,7 +903,11 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
 
                     try{
                         int input_number = Integer.parseInt(inputText);
+
                         sql += " AND ( rooms.room_number = '"+input_number+"'  OR rooms.room_area =  '"+input_number+"')";
+                        sql += "OR ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputText + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputText + "%')\n";
+
                     }catch (Exception e){
                         System.out.println("int parse error");
                         String inputTextLower = inputText.toLowerCase();
@@ -935,8 +937,12 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
 
                     }
                     sql+=")\n";
+
+
                 }
                 sql+=groupBySql;
+                sql+="OFFSET ("+page+" - 1) * "+page_Size+"\n" +
+                        "LIMIT "+page_Size+";\n";
 //                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
@@ -1007,6 +1013,109 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
         }
         return rooms;
     }
+
+    public int getTotalRoomsByCondition(String city, String district, String ward, String inputText) {
+
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int count=0;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                //room_id	property_id	room_number	room_area	attic	room_status
+
+
+                String sql = "select count(*) as count \n" +
+
+                        "FROM \n" +
+                        "    rooms \n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n where 1=1 " ;
+
+
+                if(inputText!=null&&!inputText.isEmpty()){
+
+                    try{
+                        int input_number = Integer.parseInt(inputText);
+                        sql += " AND ( rooms.room_number = '"+input_number+"'  OR rooms.room_area =  '"+input_number+"')";
+                        sql += "OR ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputText + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputText + "%')\n";
+
+                    }catch (Exception e){
+                        System.out.println("int parse error");
+                        String inputTextLower = inputText.toLowerCase();
+                        sql += "AND ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputTextLower + "%')\n";
+
+                    }
+
+
+                }
+                if  (city!= null&&(!city.equalsIgnoreCase("all")) ) {
+                    System.out.println("CITY NOT EMPTY");
+//                    String c = "Thành Phố Hà Nội";
+//                    if(c.equalsIgnoreCase(city)){
+//                        System.out.println(c + " == " +city);
+//                    }else System.out.println(c + " != " +city);
+                    sql += " AND( hostels.city LIKE '" + city + "'";
+                    if (city!= null && !district .equalsIgnoreCase("all") && district != "" ) {
+                        System.out.println("district not empty : " +district);
+
+                        sql += " AND hostels.district LIKE '" + district + "'";
+                        if (city!= null&&!ward .equalsIgnoreCase("all") && district != "") {
+                            System.out.println("ward not empty : " + ward);
+
+                            sql += " AND hostels.ward = '" + ward + "'";
+                        }
+
+                    }
+                    sql+=")\n";
+                }
+
+//                System.out.println(sql);
+
+                pst = cn.prepareStatement(sql);
+
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                       count = rs.getInt("count");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("error in getTotalRoomsByCondition");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return count;
+    }
+
     public List<Room> getAllRoom() {
 
         Connection cn = null;
@@ -1395,53 +1504,7 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
         return room;
     }
 
-    public int countRoom(){
 
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        int roomCount=0;
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                String sql = COUNT_ROOM;
-
-                pst = cn.prepareStatement(sql);
-
-
-
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    roomCount = rs.getInt("room_count");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return roomCount;
-    }
 
     public Room getRoomInfoByRenterId(int renterId) throws SQLException {
         Connection cn = null;
@@ -1490,4 +1553,57 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
         }
         return roomInfo;
     }
+
+    public Date get_end_date_by_RoomId(int rid) {
+        System.out.println("-> get_end_date_by_RoomId ");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        Date endDate = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_CONTRACT_BY_ROOM_ID);
+//                System.out.println(GET_CONTRACT_BY_ROOM_ID);
+                pst.setInt(1, rid);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    endDate = rs.getDate("end_date");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("get_end_date_by_RoomId error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return endDate;
+    }
+    private static final String
+            GET_CONTRACT_BY_ROOM_ID = "SELECT cd.end_date\n" +
+            "FROM contract_details cd\n" +
+            "JOIN contract_main cm ON cd.contract_details_id = cm.contract_details_id\n" +
+            "WHERE cm.room_id = ?;\n";
 }

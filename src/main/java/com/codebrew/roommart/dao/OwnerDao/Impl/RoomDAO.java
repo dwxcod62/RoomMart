@@ -15,20 +15,32 @@ import java.util.List;
 
 public class RoomDAO implements IRoomDAO {
 
-    private static final String CHECK_ROOM_OWNER = "";
+    private static final String CHECK_ROOM_OWNER = "SELECT *\n" +
+            "FROM rooms\n" +
+            "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n" +
+            "WHERE rooms.room_id = ?\n" +
+            "AND hostels.owner_account_id = ?";
 
     @Override
-    public boolean checkRoomOwner(int owner_id, int room_id, int hostel_id){
-        boolean result = false;
+    public Room checkRoomOwner(int owner_id, int room_id){
+        Room room = null;
         Connection cn = null;
         PreparedStatement pst = null;
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(CHECK_ROOM_OWNER);
+                pst.setInt(1, room_id);
+                pst.setInt(2, owner_id);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()){
-                    result = true;
+                    room = Room.builder()
+                            .roomId(rs.getInt("room_id"))
+                            .hostelId(rs.getInt("hostel_id"))
+                            .roomNumber(rs.getInt("room_number"))
+                            .capacity(rs.getInt("capacity"))
+                            .roomArea(rs.getInt("room_area"))
+                            .build();
                 }
             }
         } catch (Exception e) {
@@ -43,7 +55,7 @@ public class RoomDAO implements IRoomDAO {
                 }
             }
         }
-        return result;
+        return room;
     }
     @Override
     public List<Room> getListRoomsByHostelId(int hostelID) {
