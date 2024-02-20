@@ -40,7 +40,6 @@ public class CreateContractServlet extends HttpServlet {
                 if ( acc.getRole() == 1 ){
 
                     jsonObject = (JSONObject) session.getAttribute("CONTRACT_INFORMATION") ;
-                    owner_info = (UserInformation) session.getAttribute("CONTRACT_OWNER_USER");
                     renter_info = (UserInformation) session.getAttribute("CONTRACT_RENTER_USER");
 
                     UserInformation hidden_renter_info = renter_info;
@@ -48,6 +47,7 @@ public class CreateContractServlet extends HttpServlet {
                     hidden_renter_info.setCccd(maskCccd(renter_info.getCccd()));
                     hidden_renter_info.setPhone(maskCccd(renter_info.getPhone()));
                     request.setAttribute("RENTER_INFO", hidden_renter_info);
+                    request.setAttribute("OWNER_INFO", acc.getAccountInfo());
 
                 }
 
@@ -63,6 +63,9 @@ public class CreateContractServlet extends HttpServlet {
                                 .birthday(jsonObject.getString("owner_birthday"))
                                 .build();
 
+                    request.setAttribute("RENTER_INFO", acc.getAccountInfo());
+                    request.setAttribute("OWNER_INFO", owner_info);
+
                     session.setAttribute("CONTRACT_ID", contract_id);
                     request.setAttribute("OWNER_SIGN", jsonObject.getString("owner_sign"));
                 }
@@ -70,7 +73,6 @@ public class CreateContractServlet extends HttpServlet {
                 if (jsonObject != null){
                     String between = countYear(jsonObject.getString("room_start_date"), jsonObject.getString("room_end_date"));
                     request.setAttribute("USER_CONTRACT", acc.getRole());
-                    request.setAttribute("OWNER_INFO", owner_info);
                     request.setAttribute("room_start_date", formatDate(jsonObject.getString("room_start_date")));
                     request.setAttribute("room_end_date", formatDate(jsonObject.getString("room_end_date")));
                     request.setAttribute("between", between);

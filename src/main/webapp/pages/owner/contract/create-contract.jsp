@@ -283,5 +283,15 @@
 <script src="./assets/js/contract/create-contract.js"></script>
 <script src="./assets/js/contract/contract-validate.js"></script>
 
+<script>
+    function formatNumber(input) {
+        var numStr = input.value.toString();
+        numStr = numStr.replace(/,/g, '');
+        var regex = /(\d)(?=(\d{3})+(?!\d))/g;
+        numStr = numStr.replace(regex, '$1,');
+        input.value = numStr;
+    }
+</script>
+
 </body>
 </html>

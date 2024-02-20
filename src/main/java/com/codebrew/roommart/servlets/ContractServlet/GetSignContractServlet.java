@@ -59,7 +59,7 @@ public class GetSignContractServlet extends HttpServlet {
                         request.getRequestDispatcher(url).forward(request, response);
                     }
                 } else if ( acc.getRole() == 3){
-                    int contract_id = dao.updateRenterContractSign( (int) session.getAttribute("CONTRACT_ID") , sign_bytea);
+                    int contract_id = dao.updateRenterContractSign( (int) session.getAttribute("CONTRACT_ID") , sign_bytea, acc.getAccId());
 
                     if (contract_id > 0){
 
