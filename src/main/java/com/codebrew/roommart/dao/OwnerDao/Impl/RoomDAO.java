@@ -255,6 +255,44 @@ public class RoomDAO implements IRoomDAO {
 
     @Override
     public Room getRoomById(int roomId) {
-        return null;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfor = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(
+                        "SELECT R.room_id, R.room_number, R.room_area, R.capacity, R.has_attic, R.hostel_id, R.room_status\n" +
+                                "FROM Rooms AS R\n" +
+                                "WHERE R.room_id= ?");
+                pst.setInt(1, roomId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int roomID = rs.getInt("room_id");
+                    int hostelId = rs.getInt("hostel_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    int hasAttic = rs.getInt("has_Attic");
+                    int roomStatus = rs.getInt("room_status");
+                    roomInfor = Room
+                            .builder()
+                            .roomId(roomID)
+                            .hostelId(hostelId)
+                            .roomNumber(roomNumber)
+                            .roomArea(roomArea)
+                            .capacity(capacity)
+                            .hasAttic(hasAttic)
+                            .roomStatus(roomStatus)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return roomInfor;
     }
 }
