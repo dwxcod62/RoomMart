@@ -3,6 +3,9 @@ import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
 
 import java.util.Map;
+
+import com.codebrew.roommart.dto.Contract;
+import com.codebrew.roommart.dto.InfrastructureItem;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.RoomInformation;
 import com.codebrew.roommart.utils.DatabaseConnector;
@@ -15,8 +18,7 @@ public class RoomDAO {
     private static final String ADD_IMGs = "INSERT INTO roomimgs (room_id,imgurl) \n" +
             "VALUES (?, ?)";
     private static final String COUNT_ROOM = "SELECT COUNT(*) AS room_count FROM rooms";
-    private static final String INSERT_ROOM =
-            "DO $$\n" +
+    private static final String INSERT_ROOM ="DO $$\n" +
             "DECLARE \n" +
             "    roomID INT;\n" +
             "    restQuantity INT := ?;\n" +
@@ -665,10 +667,6 @@ public class RoomDAO {
         }
         return isInserted;
     }
-//    quantity1
-//    quantity2
-//    quantity3
-//    quantity4
 public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic,List<String> imgUrls) {
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dqp6vdayn",
@@ -1077,7 +1075,7 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
                     sql+=")\n";
                 }
 
-                System.out.println(sql);
+//                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -1555,4 +1553,57 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
         }
         return roomInfo;
     }
+
+    public Date get_end_date_by_RoomId(int rid) {
+        System.out.println("-> get_end_date_by_RoomId ");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        Date endDate = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_CONTRACT_BY_ROOM_ID);
+//                System.out.println(GET_CONTRACT_BY_ROOM_ID);
+                pst.setInt(1, rid);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    endDate = rs.getDate("end_date");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("get_end_date_by_RoomId error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return endDate;
+    }
+    private static final String
+            GET_CONTRACT_BY_ROOM_ID = "SELECT cd.end_date\n" +
+            "FROM contract_details cd\n" +
+            "JOIN contract_main cm ON cd.contract_details_id = cm.contract_details_id\n" +
+            "WHERE cm.room_id = ?;\n";
 }

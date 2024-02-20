@@ -250,7 +250,8 @@
      pr-container re__card-compact re__vip-normal">
 
                                         <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
-                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${encodedRoomId}" title="Roommart" previewlistener="true">
+                                        <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(r.hostelId)}" />
+                                        <a class="js__product-link-for-product-id" href="roomDetail?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Roommart" previewlistener="true">
                                             <div class="re__card-image">
                                                 <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
@@ -268,7 +269,7 @@
                                                         </h3>
                                                     </div>
                                                     <div class="re__card-config">
-                                                        <span class="re__card-config-price">${r.capacity} Peoples</span>
+                                                        <span class="re__card-config-price">${r.capacity} Người</span>
 
                                                         <span class="re__card-config-area">
                                                         <span class="re__card-config-dot">·</span>
@@ -280,7 +281,7 @@
                                                         <span class="re__card-config-dot">·</span>
                                                     </span>
 
-                                                        <span class="re__card-config-price">${r.hasAttic} Attic</span>
+                                                        <span class="re__card-config-price">Gác xếp: ${r.hasAttic==1?'<i class="fa-solid fa-check"></i>':'<i class="fa-solid fa-xmark"></i>'}</span>
 
                                                         <div class="re__clear"></div>
                                                         <div class="re__clear"></div>
@@ -310,7 +311,7 @@
 
                             </c:if>
                             <c:if test="${empty requestScope.rooms}">
-                            <h2>No valid room</h2>
+                            <h2>Không tìm thấy phòng phù hợp</h2>
                             </c:if>
 
                         </div>

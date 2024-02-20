@@ -61,6 +61,9 @@
                                                         </div>
                                                     </div>
                             </c:when>
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'home-room'}">
+                                Chi tiết phòng
+                            </c:when>
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'dashboard'}">
                                 Tổng quan
                             </c:when>
@@ -92,16 +95,26 @@
                     </h3>
                 </div>
                 <div class="main-nav__action">
-                    <div id="nav-notification-btn" class="notification">
-                        <i class="notification__icon fa-solid fa-bell"></i>
 
-                        <!-- Remove class "active" when don't have any new notification -->
-                        <span class="notification__warning active"><i class="fa-solid fa-exclamation"></i></span>
-                    </div>
-                    <div id="nav-profile-btn" class="profile">
-                        <div class="profile__infor">
-                            <h3 class="infor__name">${sessionScope.USER.accountInfo.fullname}</h3>
-                            <span class="infor__role">
+
+                                            <c:if test = "${sessionScope.USER == null}">
+                                                <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
+                                                    <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>
+                                                    <span class="re__line"></span>
+                                                    <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>
+                                                </div>
+                                            </c:if>
+                    <c:if test = "${sessionScope.USER != null}">
+                        <div id="nav-notification-btn" class="notification">
+                            <i class="notification__icon fa-solid fa-bell"></i>
+
+                            <!-- Remove class "active" when don't have any new notification -->
+                            <span class="notification__warning active"><i class="fa-solid fa-exclamation"></i></span>
+                        </div>
+                        <div id="nav-profile-btn" class="profile">
+                            <div class="profile__infor">
+                                <h3 class="infor__name">${sessionScope.USER.accountInfo.fullname}</h3>
+                                <span class="infor__role">
 
                                 <c:choose>
                                     <c:when test="${sessionScope.USER.role == 0}">Admin</c:when>
@@ -110,12 +123,14 @@
                                     <c:when test="${sessionScope.USER.role eq 3}">Người Thuê Phòng</c:when>
                                 </c:choose>
                             </span>
+                            </div>
+                            <div class="profile__avatar">
+                                <img class="avatar__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex ? "male" : "female"}.png"
+                                     alt="User avatar">
+                            </div>
                         </div>
-                        <div class="profile__avatar">
-                            <img class="avatar__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex ? "male" : "female"}.png"
-                                 alt="User avatar">
-                        </div>
-                    </div>
+                    </c:if>
+
                     <div id="menu-sidebar-btn" class="menu-sidebar-btn">
                         <i class="fa-solid fa-bars"></i>
                     </div>
@@ -235,6 +250,7 @@
                     <div class="spacer"></div>
 
                 </c:if>
+
                 <a href="home" class="action__view-profile-link">
                     <div class="action__image">
                         <i class="fa-solid fa-magnifying-glass fa-xl"></i>
@@ -245,6 +261,7 @@
                     </div>
                 </a>
                 <div class="spacer"></div>
+
                 <c:if test="${sessionScope.USER.role == 1}|| ${sessionScope.USER.role == 2}">
                     <a href="Renter-HomePage" class="action__view-profile-link">
                         <div class="action__image">

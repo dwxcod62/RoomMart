@@ -61,6 +61,7 @@ public class InfrastructureDAO {
     }
 
     public List<Infrastructures> getRoomInfrastructures(int roomID) {
+        System.out.println("-> getRoomInfrastructures");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -73,6 +74,7 @@ public class InfrastructureDAO {
                                 "FROM public.InfrastructuresRoom IR\n" +
                                 "JOIN public.InfrastructureItem I ON IR.id_infrastructure_item = I.id_infrastructure_item\n" +
                                 "WHERE IR.room_id = ?";
+//                System.out.println(sql);
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 rs = pst.executeQuery();
@@ -86,6 +88,7 @@ public class InfrastructureDAO {
                     }
                 }
             }
+//            System.out.println("infreature: "+infrastructures);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
