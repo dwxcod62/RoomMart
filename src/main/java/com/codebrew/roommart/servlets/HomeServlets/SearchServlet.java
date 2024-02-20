@@ -28,20 +28,26 @@ public class SearchServlet extends HttpServlet {
 
         request.setAttribute("wardSelected", ward);
 
+        request.setAttribute("key",inputText);
 
+        int page =request.getParameter("page")!=null? Integer.parseInt(request.getParameter("page")):1;
 
         System.out.println(city +" city : " + district + " district : " + ward+" ward");
 
         RoomDAO rd = new RoomDAO();
         List<Room> rooms = new ArrayList<>();
-        if(inputText!=null){
+
             System.out.println("get input text: " + inputText);
-            rooms = rd.getListRoomsByCondition(city,district,ward, inputText);
-            System.out.println("get size room by condition: "+rooms.size());
-        }else {
-            rooms = rd.getAllRoom();
-            System.out.println("get size room: "+rooms.size());
-        }
+            rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12);
+            int total = rd.getTotalRoomsByCondition(city,district,ward,inputText);
+        request.setAttribute("total", Math.ceil((double) total / 12));
+        request.setAttribute("page", page);
+
+            System.out.println("-> get total in condition: " + total);
+
+            System.out.println("->get size room by condition: "+rooms.size());
+
+
 
 
 
