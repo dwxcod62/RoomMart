@@ -15,8 +15,10 @@ import java.util.List;
 public class AccountDao {
 
 
-    private static final String CHECK_ACCOUNT_EXIST_BY_ROLE = "select account_id from accounts where email = ? and role = ?";
-    public boolean checkAccountExistByRole(String email, int role){
+    private static final String CHECK_RENTER_RENTED = "SELECT * FROM contract_main\n" +
+            "WHERE \n" +
+            "    c_status = 2 AND renter_id = ( SELECT account_id FROM accounts WHERE email = ?);";
+    public boolean checkRenterRenting(String email){
         boolean result = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -24,9 +26,8 @@ public class AccountDao {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement(CHECK_ACCOUNT_EXIST_BY_ROLE);
+                pst = cn.prepareStatement(CHECK_RENTER_RENTED);
                 pst.setString(1, email);
-                pst.setInt(2, role);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()){
                     result = true;
