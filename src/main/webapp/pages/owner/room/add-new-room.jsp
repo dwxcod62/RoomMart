@@ -253,18 +253,20 @@
                                 <span class="form-message"></span>
                             </div>
                         </div>
-<
+
                         </c:if>
 
                         <div class="spacer"></div>
                         <!-- Action -->
                         <div class="add-room-action">
-                            <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="form-submit">Hủy bỏ</a>
-                            <input type="hidden" name="hostelID" value="${requestScope.hostel.hostelID}">
+                            <a href="detailHostel?hostelID=${requestScope.hid}" class="form-submit">Hủy bỏ</a>
+                            <input type="hidden" name="hid" value="${requestScope.hid}">
+
 
                             <c:if test="${requestScope.rid != null}">
 
                                 <input type="hidden" name="RoomID" value="${requestScope.r.roomId}">
+
                             </c:if>
 <%--                            change hostelID ben Servlet--%>
                             <button class="form-submit">${requestScope.rid eq null?"Tạo phòng":"Cập nhật"}</button>

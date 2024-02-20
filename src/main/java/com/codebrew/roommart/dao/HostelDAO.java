@@ -65,6 +65,7 @@ public class HostelDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
+
                 pst = cn.prepareStatement(GET_HOSTEL_BY_RENTER_ID);
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
