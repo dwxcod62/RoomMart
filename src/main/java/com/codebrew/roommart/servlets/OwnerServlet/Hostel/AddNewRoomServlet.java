@@ -91,8 +91,8 @@ public class AddNewRoomServlet extends HttpServlet {
         List<String> roomFiles = new ArrayList<>();
 
         List<Part> fileParts = request.getParts().stream().filter(part -> "fileImage".equals(part.getName())).collect(Collectors.toList());
-
-        if (fileParts != null){
+        System.out.println("fileParts:" + fileParts);
+        if (!fileParts.isEmpty()){
             System.out.println(getFileName(fileParts.get(0)));
             Collection<Part> parts = request.getParts().stream()
                     .filter(part -> "fileImage".equals(part.getName()) && part.getSize() > 0)
