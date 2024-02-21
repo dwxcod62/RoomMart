@@ -33,11 +33,15 @@ public class AddNewRoomServlet extends HttpServlet {
         String url = "AddRoomPage";
         try {
             int hostelId = Integer.parseInt(request.getParameter("hostelID"));
-            Hostel hostel = new HostelDAO().getHostelById(hostelId);
-            if (hostel != null) {
-                url = "AddRoomPage";
-                request.setAttribute("hostel", hostel);
-            }
+
+            System.out.println("hostelId="+hostelId);
+            request.setAttribute("hid",hostelId);
+//            Hostel hostel = new HostelDAO().getHostelById(hostelId);
+//            System.out.println("->hostel: "+ hostel);
+//            if (hostel != null) {
+//                url = "AddRoomPage";
+//                request.setAttribute("hostel", hostel);
+//            }
         } catch (Exception e) {
             log("Error at AddRoomPageServlet: " + e.toString());
         } finally {
@@ -113,10 +117,11 @@ public class AddNewRoomServlet extends HttpServlet {
         }
 
         try {
-//            int hostelId = Integer.parseInt(request.getParameter("hostelID"));
-            int hostelId = 4;
-            Hostel hostel = new HostelDAO().getHostelById(hostelId);
-            request.setAttribute("hostel", hostel);
+            int hostelId = Integer.parseInt(request.getParameter("hid"));
+
+
+//            Hostel hostel = new HostelDAO().getHostelById(hostelId);
+            request.setAttribute("hid", hostelId);
             if (quantityRoom > 1) {
                 String tempImg = "https://res.cloudinary.com/dqp6vdayn/image/upload/v1707647165/What-is-a-404-error-code_lu1xgy.png";
                 for (int i = 0; i < quantityRoom; i++) {

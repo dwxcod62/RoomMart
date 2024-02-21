@@ -159,12 +159,15 @@
                             <span class="title">Tình Trạng</span>
 
                                 <c:choose>
-                                    <c:when test="${room.roomStatus==0}">
+                                    <c:when test="${room.roomStatus==1}">
                                         <span class="value" style="color: lawngreen">Có thể thuê</span>
                                     </c:when>
-                                    <c:when test="${room.roomStatus==1}">
+                                    <c:when test="${room.roomStatus==0}">
                                         <span class="value"> Đã được thuê đến hết ${requestScope.endDate}</span>
 
+                                    </c:when>
+                                    <c:when test="${room.roomStatus==-1}">
+                                        <span class="value" style="color: yellow">Đang thuê</span>
                                     </c:when>
                                 </c:choose>
 
