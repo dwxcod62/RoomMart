@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <label for="room-email" class="form-label">Email: <span>*</span></label>
+                                    <label for="room-email"  class="form-label">Email: <span>*</span></label>
                                 </div>
                                 <div class="col-6">
                                     <input
@@ -62,14 +62,7 @@
                                     />
                                 </div>
                             </div>
-                            <div class="row align-items-center my-2">
-                                <div class="col-6">
-                                    <span class="form-message mt-4"> </span>
-                                </div>
-                                <div class="col-6">
-                                    <button type="button" class="btn btn-primary" id="checkButton">Check</button>
-                                </div>
-                            </div>
+                            <span class="form-message mt-4"> </span>
                         </div>
 
                         <div class="form-group">
@@ -111,7 +104,7 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <label for="room-electric" class="form-label">Số điện hiện tại: <span>*</span></label>
+                                    <label for="room-electric" id="electric" class="form-label">Số điện hiện tại: <span>*</span></label>
                                 </div>
                                 <div class="col-6">
                                     <input
@@ -129,7 +122,7 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <label for="room-water" class="form-label">Số nước hiện tại: <span>*</span></label>
+                                    <label for="room-water" id="water" class="form-label">Số nước hiện tại: <span>*</span></label>
                                 </div>
                                 <div class="col-6">
                                     <input
@@ -147,7 +140,7 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <label for="room-fee" class="form-label">Tiền phòng: <span>*</span></label>
+                                    <label for="room-fee" id="fee" class="form-label">Tiền phòng: <span>*</span></label>
                                 </div>
                                 <div class="col-6">
                                     <div class="input-group">
@@ -170,7 +163,7 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <label for="payment-term" class="form-label">Kì hạn trả tiền: <span>*</span></label>
+                                    <label for="payment-term" id="term" class="form-label">Kì hạn trả tiền: <span>*</span></label>
                                 </div>
                                 <div class="col-6">
                                     <div class="input-group">
@@ -195,7 +188,7 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <label for="room-deposit" class="form-label">Tiền cọc: <span>*</span></label>
+                                    <label for="room-deposit" id="deposit" class="form-label">Tiền cọc: <span>*</span></label>
                                 </div>
                                 <div class="col-6">
                                     <input
@@ -288,6 +281,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script src="./assets/js/contract/create-contract.js"></script>
+<script src="./assets/js/contract/contract-validate.js"></script>
+
+<script>
+    function formatNumber(input) {
+        var numStr = input.value.toString();
+        numStr = numStr.replace(/,/g, '');
+        var regex = /(\d)(?=(\d{3})+(?!\d))/g;
+        numStr = numStr.replace(regex, '$1,');
+        input.value = numStr;
+    }
+</script>
 
 </body>
 </html>

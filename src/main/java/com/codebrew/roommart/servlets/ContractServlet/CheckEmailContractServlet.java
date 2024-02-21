@@ -12,7 +12,7 @@ public class CheckEmailContractServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
-        boolean existsInDatabase = new AccountDao().checkAccountExistByRole(email, 3);
+        boolean existsInDatabase = new AccountDao().checkRenterRenting(email);
 
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");

@@ -68,7 +68,7 @@ public class SystemDao {
             "SET renter_sign = ?\n" +
             "FROM contract_main\n" +
             "WHERE contract_main.contract_details_id = contract_details.contract_details_id\n" +
-            "AND contract_main.contract_id = ? returning contract_main.contract_id";
+            "AND contract_main.contract_id = ? and contract_main.renter_id = ? returning contract_main.contract_id";
 
     private static final String UPDATE_CONTRACT_OWNER_SIGN = "UPDATE contract_details\n" +
             "SET owner_sign = ?\n" +
@@ -77,7 +77,7 @@ public class SystemDao {
             "AND contract_main.renter_id = ? AND contract_main.owner_id = ? returning contract_main.contract_id ";
 
 
-    public void updateContractStatus(int contract_id, int status){
+    public static final void updateContractStatus(int contract_id, int status){
         Connection cn = null;
         PreparedStatement pst = null;
 
@@ -108,7 +108,7 @@ public class SystemDao {
 
     }
 
-    public int updateRenterContractSign(int contract_id , String sign){
+    public int updateRenterContractSign(int contract_id , String sign, int acc_id){
         int result = -1;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -121,11 +121,17 @@ public class SystemDao {
 
                 pst.setString(1, sign);
                 pst.setInt(2, contract_id);
+                pst.setInt(3, acc_id);
 
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()){
                     result = rs.getInt("contract_id");
                 }
+
+                if (result > -1){
+                    updateContractStatus(contract_id, 2);
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

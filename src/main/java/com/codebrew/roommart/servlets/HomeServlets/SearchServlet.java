@@ -21,7 +21,6 @@ public class SearchServlet extends HttpServlet {
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
         String inputText = request.getParameter("key").trim();
 
-
         request.setAttribute("citySelected", city);
 
         request.setAttribute("districtSelected", district);
