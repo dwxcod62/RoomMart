@@ -159,14 +159,14 @@
                             <span class="title">Tình Trạng</span>
 
                                 <c:choose>
-                                    <c:when test="${room.roomStatus==1}">
+                                    <c:when test="${room.roomStatus==0}">
                                         <span class="value" style="color: lawngreen">Có thể thuê</span>
                                     </c:when>
-                                    <c:when test="${room.roomStatus==0}">
+                                    <c:when test="${room.roomStatus==2}">
                                         <span class="value"> Đã được thuê đến hết ${requestScope.endDate}</span>
 
                                     </c:when>
-                                    <c:when test="${room.roomStatus==-1}">
+                                    <c:when test="${room.roomStatus==1}">
                                         <span class="value" style="color: yellow">Đang thuê</span>
                                     </c:when>
                                 </c:choose>
@@ -412,7 +412,7 @@
                 <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                 <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
+                <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
             </form>
 
             </div>
@@ -424,7 +424,7 @@
     <!-- end product-detail-->
     <script src="assets/sys-css/staticfile.batdongsan.com.vn/js/Common/Services/filestatic.ver3a77c7a9.msvbds.FrontEnd.UserListingViewedService.min.js" defer></script>
     <script src="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.UserListingViewed.min.js" defer></script>
-
+    <script src="assets/js/chat/chat.js"></script>
 
 
 

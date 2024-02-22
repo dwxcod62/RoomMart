@@ -18,10 +18,6 @@ const chatHeader = document.getElementById("chatHeader");
 
 
 
-
-
-console.log("userid : " + renterId);
-console.log("ownerid : " + ownerId);
 const readbtn = document.getElementById("read");
 const sidebarList = document.getElementById("sidebarList");
 const sidebarProfile = document.getElementById("chat-1-user-profile");
@@ -63,7 +59,12 @@ function roleHandler() {
 }
 
 window.onload = roleHandler();
+console.log("chat js--------------------------------------------------------")
 
+console.log("userid : " + renterId);
+console.log("ownerid : " + ownerId);
+console.log("hostelID:"+hostelID);
+console.log("roomId:"+roomID);
 // document.getElementById("read-form").addEventListener("submit", showChat);
 
 document
@@ -76,9 +77,97 @@ function showChat() {
         fetchChat.child(snapshot.key).update({ read: true });
     });
     //  read = true;
-    readbtn.hidden = true;
-    chatForm.hidden = false;
-    chatInput.hidden = false;
+    var roleP;
+    if (role==1){
+        roleP="Chủ trọ"
+        readbtn.hidden = true;
+        chatForm.hidden = false;
+        chatInput.hidden = false;
+    }
+    if (role==2){
+        roleP="Nhân viên"
+    }
+    if (role==3){
+        roleP="Người dùng"
+    }
+
+    // let message4 =
+    //     username === messages.username
+    //         ? ` <div class="message message-right">
+    //                                 <!-- Avatar -->
+    //                                 <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+    //                                     <img class="avatar-img" src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/sheep_mutton_animal_avatar-512.png" alt="">
+    //                                 </div>
+    //
+    //                                 <!-- Message: body -->
+    //                                 <div class="message-body">
+    //
+    //                                     <!-- Message: row -->
+    //                                     <div class="message-row">
+    //                                         <div class="d-flex align-items-center justify-content-end">
+    //
+    //                                             <!-- Message: content -->
+    //                                             <div class="message-content bg-primary text-white">
+    //                                                 <div>${roleP} Đã kết nối</div>
+    //
+    //                                                 <div class="mt-1">
+    //                                                     <small class="opacity-65">${messages.formattedDate}</small>
+    //                                                 </div>
+    //
+    //                                             </div>
+    //                                             <!-- Message: content -->
+    //
+    //                                         </div>
+    //                                     </div>
+    //                                     <!-- Message: row -->
+    //
+    //                                 </div>
+    //                                 <!-- Message: body -->
+    //                             </div>`
+    //         : ` <div class="message">
+    //                                 <!-- Avatar -->
+    //                                 <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" onclick="showProfileSidebar()">
+    //                                     <img class="avatar-img" src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.png" alt="">
+    //                                 </a>
+    //
+    //                                 <!-- Message: body -->
+    //                                 <div class="message-body">
+    //
+    //                                     <!-- Message: row -->
+    //                                     <div class="message-row">
+    //                                         <div class="d-flex align-items-center">
+    //
+    //                                             <!-- Message: content -->
+    //                                             <div class="message-content bg-light">
+    //                                                 <div>${roleP} đã trở lại </div>
+    //
+    //                                                 <div class="mt-1">
+    //                                                     <small class="opacity-65">${messages.formattedDate}</small>
+    //                                                 </div>
+    //
+    //
+    //                                             </div>
+    //                                             <!-- Message: content -->
+    //
+    //                                         </div>
+    //                                     </div>
+    //                                     <!-- Message: row -->
+    //
+    //                                 </div>
+    //                                 <!-- Message: body -->
+    //                             </div>`;
+
+
+
+        // document.getElementById("messages").innerHTML += message4;
+
+
+
+    if (document.getElementById("messages") != null) {
+        document.getElementById("messages").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+    };
+
 }
 function sendMessage(e) {
     console.log("send message");
@@ -114,6 +203,9 @@ function sendMessage(e) {
         message,
         formattedDate,
         read,
+        hostelID,
+        roomID,
+        role,
     });
 }
 
@@ -183,7 +275,10 @@ fetchChat.on("child_added", function (snapshot) {
 
     // fetch existing chat messages
     const messages = snapshot.val();
-
+    // var link = document.getElementById("link-room-detail");
+    // var stringUrl = "roomDetail?hostelId=${"+messages.hostelID+"}&rid=${"+messages.roomID+"}";
+    // console.log("Room URL: "+stringUrl);
+    // link.href=stringUrl;
     let message2 =
         username === messages.username
             ? ` <div class="message message-right">
@@ -206,6 +301,9 @@ fetchChat.on("child_added", function (snapshot) {
                                                     <div class="mt-1">
                                                         <small class="opacity-65">${messages.formattedDate}</small>
                                                     </div>
+                                                    
+                                                
+
                                                 </div>
                                                 <!-- Message: content -->
 
@@ -236,6 +334,78 @@ fetchChat.on("child_added", function (snapshot) {
                                                     <div class="mt-1">
                                                         <small class="opacity-65">${messages.formattedDate}</small>
                                                     </div>
+                                                 
+                                                    <a class="nav-link" href="roomDetail?hostelId=${messages.hostelID}&rid=${messages.roomID}">
+                                            <i class="fe-chevrons-right"></i>
+                                           Xem Phòng
+                                        </a>
+
+                                                   
+                                                </div>
+                                                <!-- Message: content -->
+
+                                            </div>
+                                        </div>
+                                        <!-- Message: row -->
+
+                                    </div>
+                                    <!-- Message: body -->
+                                </div>`;
+    let message3 =
+        username === messages.username
+            ? ` <div class="message message-right">
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
+                                        <img class="avatar-img" src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/sheep_mutton_animal_avatar-512.png" alt="">
+                                    </div>
+
+                                    <!-- Message: body -->
+                                    <div class="message-body">
+
+                                        <!-- Message: row -->
+                                        <div class="message-row">
+                                            <div class="d-flex align-items-center justify-content-end">
+
+                                                <!-- Message: content -->
+                                                <div class="message-content bg-primary text-white">
+                                                    <div>${messages.message}</div>
+
+                                                    <div class="mt-1">
+                                                        <small class="opacity-65">${messages.formattedDate}</small>
+                                                    </div>
+                                                   
+                                                </div>
+                                                <!-- Message: content -->
+
+                                            </div>
+                                        </div>
+                                        <!-- Message: row -->
+
+                                    </div>
+                                    <!-- Message: body -->
+                                </div>`
+            : ` <div class="message">
+                                    <!-- Avatar -->
+                                    <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" onclick="showProfileSidebar()">
+                                        <img class="avatar-img" src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.png" alt="">
+                                    </a>
+
+                                    <!-- Message: body -->
+                                    <div class="message-body">
+
+                                        <!-- Message: row -->
+                                        <div class="message-row">
+                                            <div class="d-flex align-items-center">
+
+                                                <!-- Message: content -->
+                                                <div class="message-content bg-light">
+                                                    <div>${messages.message}</div>
+
+                                                    <div class="mt-1">
+                                                        <small class="opacity-65">${messages.formattedDate}</small>
+                                                    </div>
+                                                  
+                                                   
                                                 </div>
                                                 <!-- Message: content -->
 
@@ -248,7 +418,18 @@ fetchChat.on("child_added", function (snapshot) {
                                 </div>`;
 
     // append the message on the page
-    document.getElementById("messages").innerHTML += message2;
+
+if(messages.role==='3'){
+    console.log("messrole: "+messages.role)
+    document.getElementById("messages").innerHTML += message2;}
+else {
+    console.log("messrole else"+messages.role)
+    document.getElementById("messages").innerHTML += message3;
+}
+
+
+
+
     if (document
         .getElementById("messages") != null)
     document

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
 <html lang="en">
 
 <!-- Head -->
@@ -26,7 +27,7 @@
 
         <!-- Brand -->
         <a href="home" class="d-none d-xl-block mb-6">
-            <img src="https://i.imgur.com/a8AWgbF.png" class="mx-auto fill-primary" data-inject-svg="" alt="" style="height: 46px;">
+            <img src="./assets/images/logos/logo.png" class="mx-auto fill-primary" data-inject-svg="" alt="" style="height: 46px;">
         </a>
 
         <!-- Menu -->
@@ -42,7 +43,7 @@
 
             <li class="nav-item mt-xl-9">
                 <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(requestScope.roomId)}" />
-                <a class="nav-link position-relative p-0 py-xl-3" href="roomDetail?rid=${encodedRoomId}" title="Back" >
+                <a id="link-room-detail" class="nav-link position-relative p-0 py-xl-3" href="roomDetail?rid=${encodedRoomId}" title="Back" >
                     <i class="icon-lg fe-chevron-left"></i>
 
                 </a>
@@ -153,7 +154,7 @@
                                     <div class="text-center py-6">
                                         <!-- Photo -->
                                         <div class="avatar avatar-xl mb-5">
-                                            <img class="avatar-img" src="https://i.imgur.com/a8AWgbF.png" alt="">
+                                            <img class="avatar-img" src="./assets/images/logos/logo.png" alt="">
                                         </div>
 
                                         <h5>${requestScope.infor.fullname}</h5>
@@ -250,12 +251,15 @@
                             <div class="col-6 col-xl-6">
                                 <div id="chatHeader" class="media text-center text-xl-left">
                                     <div class="avatar avatar-sm d-none d-xl-inline-block mr-5">
-                                        <img src="https://i.imgur.com/a8AWgbF.png" class="avatar-img" alt="">
+                                        <img src="./assets/images/logos/logo.png" class="avatar-img" alt="">
                                     </div>
 
                                     <div class="media-body align-self-center text-truncate">
                                         <h6 class="text-truncate mb-n1">${requestScope.infor2.fullname} ${sessionScope.role==1? "(User)":(sessionScope.role==2? "(User)":"(Staff)")} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}
+                                            <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(requestScope.roomId)}" />
+                                            <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(requestScope.hostelId)}" />
                                         </h6>
+                                        <div id="showRoom"></div>
                                         <button id="read" class="text-uppercase btn-secondary" onclick="showChat()">Connect</button>
                                         <!-- <small class="text-muted">35 members</small>
                                         <small class="text-muted mx-2"> • </small>
@@ -365,7 +369,7 @@
                         <div class="border-bottom text-center py-9 px-10">
                             <!-- Photo -->
                             <div class="avatar avatar-xl mx-5 mb-5">
-                                <img class="avatar-img" src="https://i.imgur.com/a8AWgbF.png" alt="">
+                                <img class="avatar-img" src="./assets/images/logos/logo.png" alt="">
                             </div>
                             <h5>other name 2</h5>
                             <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML, CSS, and JS.</p>
@@ -431,7 +435,7 @@
                         <div class="border-bottom text-center py-9 px-10">
                             <!-- Photo -->
                             <div class="avatar avatar-xl mx-5 mb-5">
-                                <img class="avatar-img" src="https://i.imgur.com/a8AWgbF.png" alt="">
+                                <img class="avatar-img" src="./assets/images/logos/logo.png" alt="">
                                 <div class="badge badge-sm badge-pill badge-primary badge-border-basic badge-top-right">
                                     <span class="text-uppercase">${sessionScope.role!=1?"Owner":"Renter"}</span>
                                 </div>
@@ -516,6 +520,8 @@
     const role = "${sessionScope.role !=null ? sessionScope.role: "null"}";
     const acc = "${sessionScope.USER !=null ? sessionScope.USER: "null"}";
     const username = "${requestScope.infor.fullname!=null ? requestScope.infor.fullname: "null"}";
+    const hostelID = "${requestScope.hostelId !=null ? EncodeUtils.encodeString(requestScope.hostelId): "null"}"
+    const roomID = "${requestScope.roomId !=null ? EncodeUtils.encodeString(requestScope.roomId): "null"}"
 
 
 
@@ -523,6 +529,8 @@
     console.log("userid : "+renterId);
     console.log("ownerid : "+ownerId);
     console.log("role: "+role)
+    console.log("hostelID:"+hostelID);
+    console.log("roomId:"+roomID);
 </script>
 <script src="assets/js/chat/libs/jquery.min.js"></script>
 <script src="assets/js/chat/bootstrap/bootstrap.bundle.min.js"></script>
