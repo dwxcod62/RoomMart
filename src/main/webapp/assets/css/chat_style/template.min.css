@@ -15418,7 +15418,9 @@ a.text-muted.active {
   -ms-flex-order: 2;
   order: 2;
 }
-
+#showroom{
+  visibility: hidden;
+}
 .message-right .message-body {
   -webkit-box-ordinal-group: 2;
   -ms-flex-order: 1;

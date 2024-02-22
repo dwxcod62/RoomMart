@@ -294,7 +294,7 @@
                                                     <div class="re__card-contact">
                                                         <div class="re__card-published-info">
                                 <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                        ${r.roomStatus==1?"Available":"Unavailable"}
+                                        ${r.roomStatus==0?"Có thể thuê":r.roomStatus==2?"Đã Thuê":"Đang duyệt"}
                                 </span>
 
                                                         </div>

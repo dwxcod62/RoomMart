@@ -262,13 +262,23 @@
                 </a>
                 <div class="spacer"></div>
 
-                <c:if test="${sessionScope.USER.role == 1}|| ${sessionScope.USER.role == 2}">
+                <c:if test="${sessionScope.USER.role eq 1 || sessionScope.USER.role eq 2}">
                     <a href="Renter-HomePage" class="action__view-profile-link">
                         <div class="action__image">
                             <i class="fa-solid fa-people-roof fa-xl"></i>
                         </div>
                         <div class="action__content">
                             <div class="title">Quản lý phòng</div>
+
+                        </div>
+                    </a>
+                    <div class="spacer"></div>
+                    <a href="chat" class="action__view-profile-link">
+                        <div class="action__image">
+                            <i class="fa-regular fa-comment"></i>
+                        </div>
+                        <div class="action__content">
+                            <div class="title">Quản lý chat</div>
 
                         </div>
                     </a>

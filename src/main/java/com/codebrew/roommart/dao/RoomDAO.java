@@ -612,6 +612,12 @@ public class RoomDAO {
 
 
                     pst = cn.prepareStatement(sql2);
+                    if (pst.executeUpdate() > 0) {
+                        isInserted = true;
+                    } else {
+                        isInserted = false;
+
+                    }
                     System.out.println("step 3 - add imgs");
                     pst = cn.prepareStatement(ADD_IMGs);
 
@@ -1606,4 +1612,64 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
             "FROM contract_details cd\n" +
             "JOIN contract_main cm ON cd.contract_details_id = cm.contract_details_id\n" +
             "WHERE cm.room_id = ?;\n";
+
+    public boolean checkRoomExist(int roomNumber,int hostelID){
+        boolean isExist = false;
+        System.out.println("-> checkRoomExist ");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int count = 0;
+
+
+        String sql = "SELECT COUNT(*) AS count_roomber\n" +
+                "FROM rooms\n" +
+                "WHERE room_number = ? and hostel_id=?;";
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(sql);
+//                System.out.println(sql);
+                pst.setInt(1, roomNumber);
+                pst.setInt(2, hostelID);
+
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    count = rs.getInt("count_roomber");
+                }
+                if (count!=0){
+                    isExist=true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("checkRoomExist error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+
+        return isExist;
+    }
 }
