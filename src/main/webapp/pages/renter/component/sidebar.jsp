@@ -11,35 +11,35 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetHostelInforServlet" ? "active" : ""}">
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetHostelInforServlet" ? "active" : ""}">
                 <i class="fa-solid fa-person-shelter"></i>
                 <a href="Renter-Home">Thông tin phòng</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetRoomateAccountServlet" ? "active": ""}">
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetRoomateAccountServlet" ? "active": ""}">
                 <i class="fa-solid fa-user-group"></i>
                 <a href="RoommatePage">Xem thành viên</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetContractServlet" ? "active": ""}">
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetContractServlet" ? "active": ""}">
                 <i class="fa-solid fa-file-contract"></i>
                 <a href="ContractPage">Hợp đồng</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetRenterBillServlet" ? "active": ""}">
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetRenterBillServlet" ? "active": ""}">
                 <i class="fa-solid fa-file-invoice-dollar"></i>
                 <a href="InvoiceList">Hóa đơn</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/AddReportServlet" ? "active": ""}" >
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/AddReportServlet" ? "active": ""}" >
                 <i class="fa-solid fa-file-import"></i>
                 <a href="ReportPage">Gửi báo cáo</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetReportServlet" ? "active": ""}">
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetReportServlet" ? "active": ""}">
                 <i class="fa-solid fa-flag"></i>
                 <a href="ReportView">Xem báo cáo</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetNotificationServlet" ? "active": ""}">
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetNotificationServlet" ? "active": ""}">
                 <i class="fa-solid fa-envelope-open-text"></i>
                 <a href="Notification">Thông báo</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetProfileServlet" ? "active": ""}" id="sidebaritem">
+            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetProfileServlet" ? "active": ""}" id="sidebaritem">
                 <i class="fa-solid fa-id-card"></i>
                 <a href="ProfileRenter<%--?<%=account.getAccId()%>--%>">Thông tin cá nhân</a>
             </div>
