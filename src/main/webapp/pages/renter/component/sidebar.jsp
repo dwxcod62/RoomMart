@@ -13,7 +13,7 @@
         <div class="card-body">
             <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetHostelInforServlet" ? "active" : ""}">
                 <i class="fa-solid fa-person-shelter"></i>
-                <a href="HomePage">Thông tin phòng</a>
+                <a href="Renter-Home">Thông tin phòng</a>
             </div>
             <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetRoomateAccountServlet" ? "active": ""}">
                 <i class="fa-solid fa-user-group"></i>
