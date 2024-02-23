@@ -23,10 +23,10 @@ public class ReportDetailDAO implements IReportDetailDAO {
                     "reply_account_id, send_account_id, cate_id, A.room_id, P.hostel_id\n" +
                     "FROM Reports R INNER JOIN Accounts A ON R.send_account_id = A.account_id\n" +
                     "\t\t\t   INNER JOIN Rooms P ON A.room_id = P.room_id\n" +
-                    "\t\t\t   WHERE R.reply_account_id = ? AND R.status like ? AND P.hostel_id like ? AND P.room_id like ? AND R.cate_id like ?\n" +
+                    "\t\t\t   WHERE R.reply_account_id = ? AND R.status = ?\n" +
                     "\t\t\t   ORDER BY R.send_date DESC";
     @Override
-    public List<ReportDetail> getListReports(int hostelOwnerId, String status, String hostelId, String roomId, String cateId) {
+    public List<ReportDetail> getListReports(int hostelOwnerId, int status) {
         Connection conn = null;
         PreparedStatement psm = null;
         ResultSet rs = null;
@@ -38,10 +38,7 @@ public class ReportDetailDAO implements IReportDetailDAO {
             if (conn != null) {
                 psm = conn.prepareStatement(GET_LIST_REPORTS);
                 psm.setInt(1, hostelOwnerId);
-                psm.setString(2, "%" + status + "%");
-                psm.setString(3, "%" + hostelId + "%");
-                psm.setString(4, "%" + roomId + "%");
-                psm.setString(5, "%" + cateId + "%");
+                psm.setInt(2, status);
 
                 rs = psm.executeQuery();
 

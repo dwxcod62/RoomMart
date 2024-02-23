@@ -26,9 +26,9 @@ public class GetOwnerReportServlet extends HttpServlet {
             Account hostelAccount = (Account)session.getAttribute("USER");
             int hostelOwnerId = hostelAccount.getAccId();
 
-            List<ReportDetail> reportNoReplyDetailList = new ReportDetailDAO().getListReports(hostelOwnerId, "0", "", "", "");
-            List<ReportDetail> reportProcessDetailList = new ReportDetailDAO().getListReports(hostelOwnerId, "1", "", "", "");
-            List<ReportDetail> reportFinishedDetailList = new ReportDetailDAO().getListReports(hostelOwnerId, "2", "", "", "");
+            List<ReportDetail> reportNoReplyDetailList = new ReportDetailDAO().getListReports(hostelOwnerId, 0);
+            List<ReportDetail> reportProcessDetailList = new ReportDetailDAO().getListReports(hostelOwnerId, 1);
+            List<ReportDetail> reportFinishedDetailList = new ReportDetailDAO().getListReports(hostelOwnerId, 2);
 
             List<Hostel> hostelList = new HostelDAO().getHostelByOwnerId(hostelOwnerId);
 
