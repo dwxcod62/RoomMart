@@ -30,8 +30,8 @@ public class AccountDAO implements IAccountDAO {
                             accId(rs.getInt("account_id"))
                             .email(rs.getString("email"))
                             .password(rs.getString("password"))
-                            .role(rs.getInt("Role"))
-                            .status(rs.getInt("status"))
+                            .role(rs.getInt("role"))
+                                .status(rs.getInt("status"))
                             .build();
                 }
             }

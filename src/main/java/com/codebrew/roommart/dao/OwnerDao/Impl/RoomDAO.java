@@ -118,10 +118,10 @@ public class RoomDAO implements IRoomDAO {
             if (cn != null) {
 
                 // select room theo ownerId
-                String sql = "SELECT room_id, Hostels.hostel_id as hostel_id, room_number, room_status\n" +
-                        "FROM Hostels, Rooms\n" +
-                        "WHERE Hostels.owner_account_id = ?\n" +
-                        "AND Hostels.hostel_id = Rooms.hostel_id\n";
+                String sql = "SELECT rooms.room_id, rooms.hostel_id, rooms.room_number, rooms.room_status, hostels.name\n" +
+                        "FROM rooms\n" +
+                        "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n" +
+                        "WHERE hostels.owner_account_id = ?";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelOwnerID);
@@ -129,15 +129,12 @@ public class RoomDAO implements IRoomDAO {
                 rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
-                        int roomID = rs.getInt("room_id");
-                        int hostelId = rs.getInt("hostel_id");
-                        int roomNumber = rs.getInt("room_number");
-                        int roomStatus = rs.getInt("room_status");
                         rooms.add(Room.builder()
-                                .roomId(roomID)
-                                .hostelId(hostelId)
-                                .roomNumber(roomNumber)
-                                .roomStatus(roomStatus)
+                                .roomId(rs.getInt("room_id"))
+                                .hostelId(rs.getInt("hostel_id"))
+                                .roomNumber(rs.getInt("room_number"))
+                                .roomStatus(rs.getInt("room_status"))
+                                .hostelName(rs.getString("name"))
                                 .build());
                     }
                 }

@@ -8,8 +8,11 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import com.codebrew.roommart.dao.AccountDao;
+import com.codebrew.roommart.dao.ConsumeDao;
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
+import com.codebrew.roommart.dto.OwnerDTO.Consume;
+import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.Status;
 import com.codebrew.roommart.dto.UserInformation;
 import com.codebrew.roommart.utils.EmailUtils;
@@ -80,6 +83,9 @@ public class CreateContractServlet extends HttpServlet {
                     request.setAttribute("payment_term", jsonObject.getInt("payment_term"));
                     request.setAttribute("room_deposit", jsonObject.getInt("room_deposit"));
 
+
+
+
                     url = "contract-details";
 
                 } else {
@@ -140,20 +146,29 @@ public class CreateContractServlet extends HttpServlet {
             JSONObject jsonObject = new JSONObject();
             AccountDao dao = new AccountDao();
 
+            Room room = (Room) session.getAttribute("room");
+
             String renter_email = request.getParameter("room-email");
             UserInformation renter_info = dao.getInfoByMailForContact(renter_email);
 
             // PROPERTIES
             jsonObject.put("room_start_date", request.getParameter("room-startdate"));
             jsonObject.put("room_end_date", request.getParameter("room-enddate"));
-            jsonObject.put("room_electric", request.getParameter("room-electric"));
-            jsonObject.put("room_water", request.getParameter("room-water"));
             jsonObject.put("room_fee", request.getParameter("room-fee"));
             jsonObject.put("payment_term", request.getParameter("payment-term"));
             jsonObject.put("room_deposit", request.getParameter("room-deposit"));
             jsonObject.put("fixed_years", request.getParameter("fixed-years"));
             jsonObject.put("percentage_increase", request.getParameter("percentage-increase"));
-            jsonObject.put("room_id", request.getParameter("room_id"));
+
+
+            Consume consume = Consume.builder()
+                            .numberElectric(Integer.parseInt(request.getParameter("room-electric")))
+                            .numberWater(Integer.parseInt(request.getParameter("room-water")))
+                            .status(0)
+                            .roomID(room.getRoomId())
+                            .build();
+
+            boolean check = new ConsumeDao().updateConsumeNumber(consume);
 
             session.setAttribute("CONTRACT_OWNER_USER", acc.getAccountInfo());
             session.setAttribute("CONTRACT_RENTER_USER", renter_info);

@@ -38,13 +38,12 @@
             <div class="row my-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-7 col-xxl-6 m-auto">
                     <form action="createContract" method="post" class="custom-form create-room-account-form" id="create-room-account-form">
-                        <input type="hidden" name="room_id" value="${requestScope.ROOM.roomId}" />
                         <div class="form-header">
                             <div class="form-title main-title">Tạo hợp đồng</div>
                         </div>
                         <div class="spacer"></div>
                         <div>
-                            <p><strong class="text-dark">Số phòng:</strong> <span class="text-muted">${requestScope.ROOM.roomNumber}</span></p>
+                            <p><strong class="text-dark">Số phòng:</strong> <span class="text-muted">${sessionScope.ROOM_MAKE_CONTRACT.getRoomNumber()}</span></p>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">

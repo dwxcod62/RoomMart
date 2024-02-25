@@ -89,24 +89,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <c:set var="hosteListName" value="${sessionScope.HOSTEL_LIST_NAME}"/>
                         <c:forEach var="roomList" items="${sessionScope.ROOM_LIST}" varStatus="loop">
                             <tr>
                                 <td>
                                     <a href="detailHostel?hostelID=${roomList.hostelId}"
-                                       class="content__tbody-hostel-link">${hosteListName.get(loop.index)}</a>
+                                       class="content__tbody-hostel-link">${roomList.hostelName}</a>
                                 </td>
                                 <td>
                                     <a href="ownerRoomDetail?roomID=${roomList.roomId}&hostelID=${roomList.hostelId}"
                                        class="content__tbody-room-link">${roomList.roomNumber}</a>
                                 </td>
-                                <c:if test="${roomList.roomStatus eq 1}">
+                                <c:if test="${roomList.roomStatus eq 0}">
                                     <td class="content__tbody-status yes">Sẵn sàng cho thuê</td>
                                 </c:if>
-                                <c:if test="${roomList.roomStatus eq 0}">
+                                <c:if test="${roomList.roomStatus eq 2}">
                                     <td class="content__tbody-status no">Đã cho thuê</td>
                                 </c:if>
-                                <c:if test="${roomList.roomStatus eq -1}">
+                                <c:if test="${roomList.roomStatus eq 1}">
                                     <td class="content__tbody-status wait">Đang tiến hành làm hợp đồng</td>
                                 </c:if>
                             </tr>

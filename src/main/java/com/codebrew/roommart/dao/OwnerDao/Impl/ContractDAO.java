@@ -20,33 +20,26 @@ public class ContractDAO implements IContractDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status\n" +
-                        "FROM Contracts\n" +
-                        "WHERE room_id = ? AND status = 1";
+                String sql = "SELECT *\n" +
+                        "FROM contract_main\n" +
+                        "INNER JOIN contract_details ON contract_main.contract_details_id = contract_details.contract_details_id\n" +
+                        "WHERE contract_main.room_id = ?";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    int contract_id = rs.getInt("contract_id");
-                    int price = rs.getInt("price");
-                    String startDate = rs.getString("start_date");
-                    String expiration = rs.getString("expiration");
-                    int deposit = rs.getInt("deposit");
-                    int hostelAccountId = rs.getInt("hostel_owner_id");
-                    int renterAccountId = rs.getInt("renter_id");
-                    int status = rs.getInt("status");
                     contract = Contract.builder()
-                            .contract_id(contract_id)
-                            .room_id(roomID)
-                            .price(price)
-                            .startDate(startDate)
-                            .expiration(expiration)
-                            .deposit(deposit)
-                            .hostelOwnerId(hostelAccountId)
-                            .renterId(renterAccountId)
-                            .status(status)
+                            .contract_id(rs.getInt("contract_id"))
+                            .deposit(rs.getInt("deposit"))
+                            .expiration(rs.getDate("end_date").toString())
+                            .hostelOwnerId(rs.getInt("owner_id"))
+                            .price(rs.getInt("cost_per_month"))
+                            .renterId(rs.getInt("renter_id"))
+                            .room_id(rs.getInt("room_id"))
+                            .startDate(rs.getDate("start_date").toString())
+                            .status(rs.getInt("c_status"))
                             .build();
                 }
             }

@@ -123,12 +123,12 @@
 
                         <h3 class="h3-text">
                                 <span class="span-text"
-                                >- Bên A đồng ý cho Bên B thuê nhà [] theo Giấy chứng nhận quyền sở hữu nhà ở và quyền sử dụng đất</span
+                                >- Bên A đồng ý cho Bên B thuê phòng số ${sessionScope.room.getRoomNumber()} thuộc khu ${sessionScope.hostel.getHostelName()} theo Giấy chứng nhận quyền sở hữu nhà ở và quyền sử dụng đất</span
                                 >
                         </h3>
 
                         <h3 class="h3-text">
-                            <span class="span-text">- Vị trí và diện tích thuê: [] m <sup>2</sup> </span>
+                            <span class="span-text">- Vị trí và diện tích thuê: ${sessionScope.hostel.getAddress()} , ${sessionScope.room.getRoomArea()} m <sup>2</sup> </span>
                         </h3>
 
                         <h3 class="h3-text">
@@ -181,18 +181,24 @@
                                 >
                         </h3>
 
-                        <h3 class="h3-text">
-                                <span class="span-text"
-                                >- Trong [] năm đầu tiên, từ ngày [] đến hết ngày [], tiền nhà cố định hàng tháng là []. /01 tháng
-                                </span>
-                        </h3>
 
-                        <h3 class="h3-text">
-                                <span class="span-text"
-                                >- Giá thuê nhà trên được giữ ổn định trong []. năm đầu tiên của hợp đồng, từ năm thứ [] trở đi giá thuê nhà sẽ
-                                    tăng không quá [].%.</span
-                                >
-                        </h3>
+<%--                        <c:choose>--%>
+<%--                            <c:when test="${false}">--%>
+<%--                                <<h3 class="h3-text">--%>
+<%--                                <span class="span-text"--%>
+<%--                                >- Trong [] năm đầu tiên, từ ngày [] đến hết ngày [], tiền nhà cố định hàng tháng là []. /01 tháng--%>
+<%--                                </span>--%>
+<%--                                </h3>--%>
+
+<%--                                <h3 class="h3-text">--%>
+<%--                                <span class="span-text"--%>
+<%--                                >- Giá thuê nhà trên được giữ ổn định trong []. năm đầu tiên của hợp đồng, từ năm thứ [] trở đi giá thuê nhà sẽ--%>
+<%--                                    tăng không quá [].%.</span--%>
+<%--                                >--%>
+<%--                                </h3>--%>
+<%--                            </c:when>--%>
+<%--                        </c:choose>--%>
+
 
                         <h3 class="h3-text">
                                 <span class="span-text"

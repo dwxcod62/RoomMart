@@ -2,6 +2,7 @@ package com.codebrew.roommart.servlets.AccountServlet;
 
 import com.codebrew.roommart.dao.AccountDao;
 import com.codebrew.roommart.dto.Account;
+import com.codebrew.roommart.utils.Decorations;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -41,10 +42,23 @@ public class LogoutServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            logout(request, response);
+            return null;
+        }, "LogoutServlet");
+    }
+
+    protected void logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session != null) {
+            System.out.println("User " + ((Account) session.getAttribute("USER")).getEmail() + " dang xuat!");
             session.invalidate();
         }
-        response.sendRedirect("login");
+        try{
+            response.sendRedirect("login");
+        } catch ( Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

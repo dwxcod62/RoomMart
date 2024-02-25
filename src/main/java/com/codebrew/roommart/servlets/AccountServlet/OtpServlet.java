@@ -2,6 +2,7 @@ package com.codebrew.roommart.servlets.AccountServlet;
 
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Status;
+import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EmailUtils;
 import com.codebrew.roommart.utils.EncodeUtils;
 
@@ -14,6 +15,25 @@ import java.io.IOException;
 public class OtpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            checkOTPFromMail(request, response);
+            return null;
+        }, "OtpServlet.doGet");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            checkOTPFromInput(request, response);
+            return null;
+        }, "OtpServlet.doPost");
+    }
+
+    protected void checkOTPFromInput(HttpServletRequest request, HttpServletResponse response){
+
+    }
+
+    protected void checkOTPFromMail(HttpServletRequest request, HttpServletResponse response){
         String url = "login";
         try{
             String data = request.getParameter("data");
@@ -51,9 +71,13 @@ public class OtpServlet extends HttpServlet {
                     SystemDao dao = new SystemDao();
                     boolean check = dao.checkOTP(email, otp);
                     if (check){
+                        System.out.println("check OTP cho " + email + " thanh cong");
+
                         url = "register-information-form";
                         request.setAttribute("EMAIL", email);
                     } else {
+                        System.out.println("check OTP cho " + email + " that bai");
+
                         Status status = Status.builder()
                                 .status(false)
                                 .content("Something wrong, try again!")
@@ -75,14 +99,10 @@ public class OtpServlet extends HttpServlet {
                         .build();
                 request.setAttribute("RESPONSE_MSG", status);
             }
+            request.getRequestDispatcher(url).forward(request, response);
+
         } catch ( Exception e){
             System.out.println(e);
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }

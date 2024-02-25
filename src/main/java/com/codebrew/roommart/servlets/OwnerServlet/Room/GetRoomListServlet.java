@@ -25,13 +25,8 @@ public class GetRoomListServlet extends HttpServlet {
             int accountId = acc.getAccId();
             IRoomDAO roomDAO = new RoomDAO();
             List<Room> roomList = roomDAO.getListRoomsByHostelOwnerId(accountId); // lấy room theo ownerId
-            List<String> hostelListName = new ArrayList<>();
-            for (Room room: roomList) {
-                int hostelID = room.getHostelId();
-                hostelListName.add(new HostelDAO().getHostelById(hostelID).getHostelName()); //lấy tên của Khu trọ để đổ dữ liệu lên jsp (lọc theo khu trọ)
-            }
+
             session.setAttribute("ROOM_LIST", roomList);
-            session.setAttribute("HOSTEL_LIST_NAME", hostelListName);
             session.setAttribute("CURRENT_PAGE", "room");
             request.setAttribute("HOSTEL_LIST", new HostelDAO().getHostelByOwnerId(accountId)); // lấy list hostel theo ownerId
         } catch (Exception e) {

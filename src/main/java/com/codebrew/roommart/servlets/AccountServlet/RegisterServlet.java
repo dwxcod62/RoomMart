@@ -3,6 +3,7 @@ package com.codebrew.roommart.servlets.AccountServlet;
 import com.codebrew.roommart.dao.AccountDao;
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Status;
+import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EmailUtils;
 import com.codebrew.roommart.utils.EncodeUtils;
 import com.codebrew.roommart.utils.RandomUtils;
@@ -21,6 +22,13 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            getEmailAndRegister(request, response);
+            return null;
+        }, "RegisterServlet");
+    }
+
+    protected void getEmailAndRegister(HttpServletRequest request, HttpServletResponse response){
         SystemDao dao = new SystemDao();
         String url = "otp-input";
         boolean status = false;
@@ -35,11 +43,15 @@ public class RegisterServlet extends HttpServlet {
 
                 status = new EmailUtils().sendToken(mail, otp, encodeData) && dao.resAddEmailOtp(mail, otp);
                 if (status){
+                    System.out.println("Dang ki User voi email " + mail + " thanh cong");
+
                     st = Status.builder()
                             .status(true)
                             .content("The password recovery instruction email has been successfully sent to your email!")
                             .build();
                 } else {
+                    System.out.println("Dang ki User voi email " + mail + " that bai");
+
                     st = Status.builder()
                             .status(false)
                             .content("Something Wrong! try again.")
@@ -48,6 +60,8 @@ public class RegisterServlet extends HttpServlet {
                 }
 
             } else {
+                System.out.println("Dang ki User voi email " + mail + " bi trung");
+
                 st = Status.builder()
                         .status(false)
                         .content("Email has already been registerer!")
@@ -58,11 +72,17 @@ public class RegisterServlet extends HttpServlet {
         } catch ( Exception e) {
             System.out.println(e);
         } finally {
-            if (status) {
-                response.sendRedirect(url);
-            } else {
-                request.getRequestDispatcher(url).forward(request, response);
+            try{
+                if (status) {
+                    response.sendRedirect(url);
+                } else {
+                    request.getRequestDispatcher(url).forward(request, response);
+                }
+            } catch ( Exception e){
+                e.printStackTrace();
             }
         }
     }
+
+
 }

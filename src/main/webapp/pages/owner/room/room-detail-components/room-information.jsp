@@ -6,7 +6,7 @@
         <div class="infor-group">Khu trọ trực thuộc:
             <span>${sessionScope.hostel.hostelName}</span></div>
         <div class="infor-group">Địa chỉ:
-            <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+            <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward}, ${sessionScope.hostel.district}, ${sessionScope.hostel.city}</span>
         </div>
         <div class="infor-group">Diện tích:
             <span>${sessionScope.room.roomArea} m2</span></div>
@@ -14,13 +14,13 @@
         <div class="infor-group">Trạng thái:
             <c:choose>
                 <c:when test="${sessionScope.room.roomStatus eq 0}">
-                    <span class="text-danger">Đã được thuê</span>
-                </c:when>
-                <c:when test="${sessionScope.room.roomStatus eq 1}">
                     <span class="text-success">Sẵn sàng cho thuê</span>
                 </c:when>
-                <c:when test="${sessionScope.room.roomStatus eq -1}">
+                <c:when test="${sessionScope.room.roomStatus eq 1}">
                     <span class="text-warning">Đang làm hợp đồng</span>
+                </c:when>
+                <c:when test="${sessionScope.room.roomStatus eq -1}">
+                    <span class="text-danger">Đã được thuê</span>
                 </c:when>
             </c:choose>
         </div>
