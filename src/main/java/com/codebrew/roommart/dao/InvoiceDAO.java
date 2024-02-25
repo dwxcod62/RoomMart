@@ -26,7 +26,7 @@ public class InvoiceDAO {
             "ORDER BY Bill.created_date DESC";
 
     private static final String GET_INVOICE_LIST_BY_OWNER_ACCOUNT_ID =
-            "SELECT DISTINCT bill_id, bill_title, Rooms.room_id AS 'room_id', total_money, created_date\n" +
+            "SELECT DISTINCT bill_id, bill_title, Rooms.room_id AS room_id, total_money, created_date\n" +
                     "FROM Bill, Rooms, Hostels\n" +
                     "WHERE Bill.room_id = Rooms.room_id\n" +
                     "AND Hostels.owner_account_id = ?\n" +
