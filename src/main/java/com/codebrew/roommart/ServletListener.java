@@ -14,11 +14,8 @@ public class ServletListener implements ServletContextListener, HttpSessionListe
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
-
         String siteMapPath = context.getInitParameter("SITEMAP_PROPERTIES");
-
         Properties siteMapPro = PropertiesFile.getProperties(context, siteMapPath);
-
         context.setAttribute("SITE_MAP", siteMapPro);
     }
 

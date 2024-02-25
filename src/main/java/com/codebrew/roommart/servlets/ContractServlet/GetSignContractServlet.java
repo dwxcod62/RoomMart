@@ -2,6 +2,7 @@ package com.codebrew.roommart.servlets.ContractServlet;
 
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
+import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.Status;
 import com.codebrew.roommart.dto.UserInformation;
 import com.codebrew.roommart.utils.EmailUtils;
@@ -41,11 +42,9 @@ public class GetSignContractServlet extends HttpServlet {
                     jsonObject = (JSONObject) session.getAttribute("CONTRACT_INFORMATION");
 
                     String email = (String) session.getAttribute("RENTER_MAIL");
+                    Room room = (Room) session.getAttribute("room");
 
-                    dao.updateContractOwnerSide(jsonObject, acc.getAccId(), acc.getAccountInfo(), renter_info);
-
-                    int contract_id = dao.updateContractSign(acc.getAccId(), renter_info.getAccount_id(), sign_bytea);
-
+                    int contract_id = dao.updateContractOwnerSign(jsonObject, acc.getAccId(), acc.getAccountInfo(), renter_info, sign_bytea, room.getRoomId());
 
                     boolean check = new EmailUtils().sendContractConfirmationEmail(email , contract_id);
                     if (check){

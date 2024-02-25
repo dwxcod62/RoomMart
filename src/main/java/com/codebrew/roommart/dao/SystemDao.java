@@ -185,59 +185,65 @@ public class SystemDao {
     }
 
 
-    private static final String UPDATE_CONTRACT_OWNER_SIDE =
-            "INSERT INTO contract_details ( owner_full_name, owner_birthday, owner_address, owner_identify_card, owner_phone, \n" +
-                    "renter_full_name, renter_birthday, renter_phone, renter_identify_card, month_per_pay, \n" +
-                    "cost_per_month, deposit, start_date, end_date, current_day )\n" +
-                    "Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) returning contract_details_id " ;
+    private static final String INSERT_CONTRACT_DETAILS_QUERY = "INSERT INTO contract_details (current_day, renter_full_name, renter_phone, renter_identify_card, renter_birthday, owner_full_name, owner_phone, owner_identify_card, owner_address, owner_birthday, start_date, end_date, deposit, cost_per_month, month_per_pay, owner_sign) " +
+            "VALUES (CURRENT_DATE , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning contract_details_id ";
 
-    private  static final String UPDATE_CONTRACT_MAIN_OWNER_SIDE = "INSERT INTO contract_main ( contract_details_id, c_status, owner_id, renter_id, room_id)\n" +
-            "values ( ?, ?, ?, ?, ?) returning contract_id";
+    private static final String INSERT_CONTRACT_MAIN_QUERY = "INSERT INTO contract_main (contract_details_id, owner_id, renter_id, room_id) " +
+            "VALUES (?, ?, ?, ?) returning contract_id ";
 
-    public boolean updateContractOwnerSide(JSONObject json, int owner_account_id ,UserInformation owner_info, UserInformation renter_info){
-        boolean result = false;
+    private static final String UPDATE_ROOM_STATUS_QUERY = "UPDATE rooms SET room_status = ? WHERE room_id = ?";
+
+    public int updateContractOwnerSign(JSONObject json, int owner_account_id, UserInformation owner_info, UserInformation renter_info, String owner_sign, int room_id) {
+        int result = -1;
         Connection cn = null;
         PreparedStatement pst = null;
 
         try {
+            int temp = -1;
             cn = DatabaseConnector.makeConnection();
-            AccountDao dao = new AccountDao();
             if (cn != null) {
-                pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIDE);
+                pst = cn.prepareStatement(INSERT_CONTRACT_DETAILS_QUERY);
 
-                pst.setString(1, owner_info.getFullname());
-                pst.setDate(2, convertToDate(owner_info.getBirthday()));
-                pst.setString(3, owner_info.getAddress());
-                pst.setString(4, owner_info.getCccd());
-                pst.setString(5, owner_info.getPhone());
+                pst.setString(1, renter_info.getFullname());
+                pst.setString(2, renter_info.getPhone());
+                pst.setString(3, renter_info.getCccd());
+                pst.setDate(4, convertToDate(renter_info.getBirthday()));
 
-                pst.setString(6, renter_info.getFullname());
-                pst.setDate(7, convertToDate(renter_info.getBirthday()));
-                pst.setString(8, renter_info.getPhone());
-                pst.setString(9, renter_info.getCccd());
+                pst.setString(5, owner_info.getFullname());
+                pst.setString(6, owner_info.getPhone());
+                pst.setString(7, owner_info.getCccd());
+                pst.setString(8, owner_info.getAddress());
+                pst.setDate(9, convertToDate(owner_info.getBirthday()));
 
-                pst.setInt(10, json.getInt("payment_term"));
-                pst.setInt(11, json.getInt("room_fee"));
+                pst.setDate(10, convertToDate(json.getString("room_start_date")));
+                pst.setDate(11, convertToDate(json.getString("room_end_date")));
                 pst.setInt(12, json.getInt("room_deposit"));
-                pst.setDate(13, convertToDate(json.getString("room_start_date")));
-                pst.setDate(14, convertToDate(json.getString("room_end_date")));
-                pst.setDate(15, convertToDate(json.getString("room_end_date")));
+                pst.setInt(13, json.getInt("room_fee"));
+                pst.setInt(14, json.getInt("payment_term"));
+                pst.setString(15, owner_sign);
 
                 ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()){
-                    int contract_details_id = rs.getInt("contract_details_id");
-                    pst = cn.prepareStatement(UPDATE_CONTRACT_MAIN_OWNER_SIDE);
-                    pst.setInt(1, contract_details_id);
-                    pst.setInt(2, 1); // 1 la dang cho ben nguoi dung
-                    pst.setInt(3, owner_account_id);
-                    pst.setInt(4, renter_info.getAccount_id());
-                    pst.setInt(5, json.getInt("room_id"));
+                if (rs != null && rs.next()) {
+                    temp = rs.getInt("contract_details_id");
+                }
 
-                    ResultSet rs_2 = pst.executeQuery();
-                    if (rs_2 != null && rs_2.next()){
-                        int contract_id = rs_2.getInt("contract_id");
-                        result = true;
+                if ( temp > -1){
+                    pst = cn.prepareStatement("INSERT_CONTRACT_MAIN_QUERY");
+
+                    pst.setInt(1, temp);
+                    pst.setInt(2, owner_account_id);
+                    pst.setInt(3, renter_info.getAccount_id());
+                    pst.setInt(4, room_id);
+
+                    rs = pst.executeQuery();
+                    if (rs != null && rs.next()) {
+                        result = rs.getInt("contract_id");
                     }
+
+                    pst = cn.prepareStatement(UPDATE_ROOM_STATUS_QUERY);
+                    pst.setInt(1, 1);
+                    pst.setInt(1, room_id);
+                    pst.executeUpdate();
                 }
             }
         } catch (Exception e) {
@@ -254,8 +260,6 @@ public class SystemDao {
         }
         return result;
     }
-
-
 
 
     private static final String GET_CONTRACT_INFORMATION_BY_EMAIL = "SELECT cd.* \n" +
@@ -746,4 +750,5 @@ public class SystemDao {
         }
         return status;
     }
+
 }

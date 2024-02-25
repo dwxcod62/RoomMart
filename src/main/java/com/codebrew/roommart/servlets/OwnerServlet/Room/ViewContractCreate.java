@@ -15,17 +15,13 @@ public class ViewContractCreate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Account acc = (Account) session.getAttribute("USER");
-        RoomDAO dao = new RoomDAO();
 
-        int room_id = Integer.parseInt(request.getParameter("roomID"));
         String url = "error";
 
-        Room room = dao.checkRoomOwner(acc.getAccId(), room_id);
+        Room room = (Room) session.getAttribute("room");
+
         if (room != null){
             url = "create-contract-page";
-            request.setAttribute("ROOM", room);
-
         } else {
             url = "owner-get-room-list";
             Status status = Status.builder()

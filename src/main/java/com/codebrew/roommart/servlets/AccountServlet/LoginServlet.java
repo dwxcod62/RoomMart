@@ -3,6 +3,7 @@ package com.codebrew.roommart.servlets.AccountServlet;
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Status;
+import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EncodeUtils;
 import com.codebrew.roommart.utils.RandomUtils;
 import org.slf4j.Logger;
@@ -19,10 +20,17 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            login(request, response);
+            return null;
+        }, "LoginServlet");
+    }
+
+    protected void login(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = EncodeUtils.hashSHA256(request.getParameter("pass"));
         String remember = request.getParameter("remember");
-        String redirectUrl = "login";
+        String redirectUrl = "login"; //
 
         try {
             Account account = new SystemDao().getAccountByUsernameAndPassword(email, password);
@@ -38,20 +46,32 @@ public class LoginServlet extends HttpServlet {
                         cookie.setMaxAge(twoDaysInSeconds);
                         response.addCookie(cookie);
                     }
-                    logger.info("{} login success!", email);
+
+                    System.out.println("User " + account.getEmail() + " login success!");
+
                     session.setAttribute("CURRENT_PAGES", "dashboard");
                 } else if (account.getStatus() == -1) {
+                    System.out.println("User " + account.getEmail() + " login fail!");
+
                     request.setAttribute("RESPONSE_MSG", Status.builder().status(false).content("Your account has been locked!").build());
                 } else if (account.getStatus() == 0) {
+                    System.out.println("User " + account.getEmail() + " login fail!");
+
                     request.setAttribute("RESPONSE_MSG", Status.builder().status(false).content("Please verify your account in the email!").build());
                 }
             } else {
+                System.out.println("User " + account.getEmail() + " login fail!");
+
                 request.setAttribute("RESPONSE_MSG", Status.builder().status(false).content("Incorrect username or password!").build());
             }
         } catch (Exception e) {
             logger.error("Error at LoginServlet: {}", e.getMessage());
         } finally {
-            response.sendRedirect(redirectUrl);
+            try {
+                response.sendRedirect(redirectUrl);
+            } catch (IOException e) {
+                logger.error("Error redirecting to {}: {}", redirectUrl, e.getMessage());
+            }
         }
     }
 }

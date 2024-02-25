@@ -46,16 +46,18 @@ public class GetRoomDetailServlet extends HttpServlet {
                     IAccountDAO accountDAO = new AccountDAO();
                     IInfrastructureDAO infrastructureDAO = new InfrastructureDAO();
 
+
                     Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
                     if(room != null){
                         session.setAttribute("room", room);
                         session.setAttribute("current_room_id", room.getRoomId());
 
                         Hostel hostel = new HostelDAO().getHostelById(hostelID);
+
                         session.setAttribute("hostel", hostel);
 
-//                        Contract contract = new ContractDAO().getContract(roomId);
-//                        request.setAttribute("contractRoom", contract);
+                        Contract contract = new ContractDAO().getContract(roomId);
+                        request.setAttribute("contractRoom", contract);
 
                         List<Consume> consumeList = consumeDAO.getConsumeHistory(roomId);
                         request.setAttribute("consumeList", consumeList);
@@ -66,19 +68,20 @@ public class GetRoomDetailServlet extends HttpServlet {
                         List<InfrastructureItem> infrastructureItemList = infrastructureDAO.getAllInfrastructure();
                         request.setAttribute("infrastructureList", infrastructureItemList);
 
-                        Bill bill = new BillDAO().getLastBill(roomId);
-                        request.setAttribute("billRoom", bill);
 
                         List<Consume> consumeThisMonth = consumeDAO.getConsumeThisMonth(roomId);
                         request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
-//                        if (contract != null) {
-//                            Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
-//                            request.setAttribute("renterAccount", renterAccount);
-//
-//                            List<Roommate> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(contract.getRenterId()); // loi khong the convert to int
-//                            request.setAttribute("listRoommatesInfo", null);
-//                        }
+                        if (contract != null) {
+                            Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
+                            request.setAttribute("renterAccount", renterAccount);
+
+                            List<Roommate> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(contract.getRenterId()); // loi khong the convert to int
+                            request.setAttribute("listRoommatesInfo", null);
+                        }
+
+                        Bill bill = new BillDAO().getLastBill(roomId);
+                        request.setAttribute("billRoom", bill);
 
                         List<Payment> payments = new PaymentDAO().getPaymentList();
                         request.setAttribute("paymentList", payments);

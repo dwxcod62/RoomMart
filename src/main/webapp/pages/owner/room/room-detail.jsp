@@ -102,7 +102,7 @@
                             <%@include file="./room-detail-components/room-infrastructure.jsp" %>
                         </div>
                     </div>
-                    <c:if test="${sessionScope.room.roomStatus == 0}">
+                    <c:if test="${sessionScope.room.roomStatus == 2}">
                         <div class="row">
                             <div class="col-12 col-md4">
                                 <button class="btn btn-outline-dark" data-bs-toggle="modal"
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </c:if>
-                    <c:if test="${sessionScope.room.roomStatus == -1}">
+                    <c:if test="${sessionScope.room.roomStatus == 1}">
                         <div class="row">
                             <div class="col-12 col-md4">
                                 <button class="btn btn-outline-dark" data-bs-toggle="modal"

@@ -7,7 +7,7 @@
 <div class="room-header">
     <h2 class="room-name">Phòng ${sessionScope.room.roomNumber}</h2>
     <div class="room-actions">
-        <c:if test="${sessionScope.room.roomStatus == 1}">
+        <c:if test="${sessionScope.room.roomStatus == 0}">
             <!-- Start update room information button -->
             <button class="action-update-btn" data-bs-toggle="modal"
                     data-bs-target="#update-room-infor-modal">Cập nhật
@@ -132,12 +132,12 @@
         <c:set var="consumeEndMonth" value="${consumeThisMonth.get(0)}"/>
 
         <c:choose>
-            <c:when test="${sessionScope.room.roomStatus eq 1}">
+            <c:when test="${sessionScope.room.roomStatus eq 0}">
                 <!-- Start create account button -->
                 <a href="create-contract?roomID=${param.roomID}" class="action-create-account-link">Tạo hợp đồng</a>
                 <!-- End create account button -->
             </c:when>
-            <c:when test="${sessionScope.room.roomStatus eq 0}">
+            <c:when test="${sessionScope.room.roomStatus eq 2}">
                 <c:choose>
                     <c:when test="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric ne 0 &&
                                     consumeEndMonth.numberWater - consumeBeginMonth.numberWater ne 0}">
@@ -155,7 +155,7 @@
                     </c:otherwise>
                 </c:choose>
             </c:when>
-            <c:when test="${sessionScope.room.roomStatus eq -1}">
+            <c:when test="${sessionScope.room.roomStatus eq 1}">
                 <!-- Start view QR Code button -->
                 <form action="get-invite-code" method="post">
                     <button type="submit" class="action-create-account-link" style="margin-right: 0;">Xem mã tham gia</button>
@@ -167,7 +167,7 @@
 </div>
 
 <!-- Modal toggle warning update consume -->
-<c:if test="${sessionScope.room.roomStatus eq 0 && consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric eq 0 &&
+<c:if test="${sessionScope.room.roomStatus eq 2 && consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric eq 0 &&
               consumeEndMonth.numberWater - consumeBeginMonth.numberWater eq 0}">
     <div class="modal fade" id="calculateRoomPriceModel" tabindex="-1" aria-labelledby="updateServicesModelLabel"
          aria-hidden="true">
