@@ -256,4 +256,46 @@ public class HostelDAO implements IHostelDAO {
         }
         return result;
     }
+
+    @Override
+    public Hostel getHostelByRoomId(int roomId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String GET_HOSTEL_BY_ROOM_ID =
+                        "SELECT H.hostel_id, owner_account_id, name, address, ward, district, city\n" +
+                                "FROM Hostels H JOIN Rooms R ON H.hostel_id = R.hostel_id WHERE R.room_id = ?";
+                pst = cn.prepareStatement(GET_HOSTEL_BY_ROOM_ID);
+                pst.setInt(1, roomId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    int hostelId = rs.getInt("hostel_id");
+                    String name =  rs.getString("name");
+                    String address =  rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = Hostel.builder()
+                            .hostelID(hostelId)
+                            .hostelOwnerAccountID(hostelOwnerAccountID)
+                            .hostelName(name)
+                            .address(address)
+                            .ward(ward)
+                            .district(district)
+                            .city(city)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return hostel;
+    }
 }
