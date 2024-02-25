@@ -3,10 +3,12 @@ package com.codebrew.roommart.servlets.OwnerServlet.Hostel;
 import com.codebrew.roommart.dao.OwnerDao.IHostelDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.ServiceDAO;
+import com.codebrew.roommart.dao.ServiceInfoDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.HostelService;
 import com.codebrew.roommart.dto.OwnerDTO.HandlerStatus;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
+import com.codebrew.roommart.dto.ServiceInfo;
 import com.codebrew.roommart.dto.Services;
 
 import javax.servlet.*;
@@ -21,6 +23,9 @@ import java.util.Map;
 public class AddNewHostelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServiceInfoDAO sid = new ServiceInfoDAO();
+        List<Services> services = sid.getAllServices();
+        request.setAttribute("serviceList",services);
         request.getRequestDispatcher("pages/owner/hostel/add-new-hostel.jsp").forward(request, response);
     }
 
@@ -43,7 +48,7 @@ public class AddNewHostelServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at AddHostel: " + e.toString());
         } finally {
-            response.sendRedirect("/RoomMart/owner-hostel-list");
+            response.sendRedirect("/owner-hostel-list");
         }
     }
 }

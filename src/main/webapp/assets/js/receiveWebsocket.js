@@ -1,5 +1,5 @@
 function receiveWebsocket(callback) {
-    const websocket = new WebSocket("ws://localhost:8080/HappyHostel/push-noti-websocket");
+    const websocket = new WebSocket("ws://localhost:8080/RoomMart/push-noti-websocket");
     websocket.onmessage = function(message) { processMessage(message); };
     websocket.onclose
 
