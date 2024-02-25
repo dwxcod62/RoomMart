@@ -26,47 +26,64 @@ public class GetHostelInfoServlet extends HttpServlet {
             int renterId = acc.getAccId();
 
             HostelDAO hostelDAO = new HostelDAO();
+            RoomDAO roomDAO = new RoomDAO();
+
             UserInformationDAO userInfoDAO = new UserInformationDAO();
             request.setAttribute("uri", request.getRequestURI());
 
+            //Get Hostel
+            Hostel hostel = (Hostel) session.getAttribute("HOSTEL");
+            if (hostel == null) {
+                hostel = hostelDAO.getHostelByRenterId(renterId);
+                session.setAttribute("HOSTEL", hostel);
+                url = SUCCESS;
+            }
+
             //Get Room
-            Hostel hostel = hostelDAO.getHostelByRenterId(renterId);
-            if (hostel != null) {
-                request.setAttribute("HOSTEL", hostel);
+            Room room = (Room) session.getAttribute("ROOM_INFOR");
+            if (room == null) {
+                room = roomDAO.getRoomByRenterId(renterId);
+                session.setAttribute("ROOM_INFOR", room);
                 url = SUCCESS;
             }
 
-            //Get Hostel Owner Info
-            UserInformation accountInfo = userInfoDAO.getHostelOwnerInfoByRenterId(1);
-            if (accountInfo != null) {
-                request.setAttribute("ACCOUNT_INFOR", accountInfo);
-                url = SUCCESS;
-            }
-
-            //Get Room Info
-            List<Roommate> roommateInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(1);
-            int numberOfMembers = roommateInfo.size();
-            request.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
-
-            Room roomInfo = new RoomDAO().getRoomInfoByRenterId(1);
-            if (roomInfo != null) {
-                request.setAttribute("ROOM_INFOR", roomInfo);
-                url = SUCCESS;
-            }
-
-            //Get Infrastructure
-            infrastructures = new InfrastructureDAO().getRoomInfrastructures(1);
-                if (infrastructures.size() > 0) {
-                request.setAttribute("INFRASTRUCTURES", infrastructures);
-                url = SUCCESS;
-            }
-
-            //Get Service
-            serviceInfo = new ServiceInfoDAO().getServicesOfHostel(1);
-            if (serviceInfo != null) {
-                request.setAttribute("SERVICES", serviceInfo);
-                url = SUCCESS;
-            }
+//            Hostel hostel = hostelDAO.getHostelByRenterId(renterId);
+//            if (hostel != null) {
+//                request.setAttribute("HOSTEL", hostel);
+//                url = SUCCESS;
+//            }
+//
+//            //Get Hostel Owner Info
+//            UserInformation accountInfo = userInfoDAO.getHostelOwnerInfoByRenterId(1);
+//            if (accountInfo != null) {
+//                request.setAttribute("ACCOUNT_INFOR", accountInfo);
+//                url = SUCCESS;
+//            }
+//
+//            //Get Room Info
+//            List<Roommate> roommateInfo = new RoommateInfoDAO().getListRoommatesByRenterID(1);
+//            int numberOfMembers = roommateInfo.size();
+//            request.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
+//
+//            Room roomInfo = new RoomDAO().getRoomInfoByRenterId(1);
+//            if (roomInfo != null) {
+//                request.setAttribute("ROOM_INFOR", roomInfo);
+//                url = SUCCESS;
+//            }
+//
+//            //Get Infrastructure
+//            infrastructures = new InfrastructureDAO().getRoomInfrastructures(1);
+//                if (infrastructures.size() > 0) {
+//                request.setAttribute("INFRASTRUCTURES", infrastructures);
+//                url = SUCCESS;
+//            }
+//
+//            //Get Service
+//            serviceInfo = new ServiceInfoDAO().getServicesOfHostel(1);
+//            if (serviceInfo != null) {
+//                request.setAttribute("SERVICES", serviceInfo);
+//                url = SUCCESS;
+//            }
 //
 //            //Get Account Infor
 //            accInfo = new InformationDAO().getAccountInformationById(renterId);
