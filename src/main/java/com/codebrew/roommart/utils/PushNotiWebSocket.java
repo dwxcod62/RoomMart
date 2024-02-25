@@ -16,7 +16,7 @@ import java.util.*;
 
 @ServerEndpoint(value = "/push-noti-websocket", configurator = GetHttpSessionConfigurator.class)
 public class PushNotiWebSocket {
-    static Set<Session> users = Collections.synchronizedSet(new HashSet<>());//Mỗi khi một kết nối mới được mở, phiên của nó sẽ được thêm vào tập hợp này.
+    static Set<Session> users = Collections.synchronizedSet(new HashSet<>());
 
     @OnOpen
     public void handleOpen(Session session) {

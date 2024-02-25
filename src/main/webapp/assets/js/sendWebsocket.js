@@ -1,4 +1,6 @@
-const websocket = new WebSocket("ws://localhost:8080/RoomMart_war_exploded/push-noti-websocket");
+
+
+const websocket = new WebSocket("ws://localhost:8080/RoomMart/push-noti-websocket");
 function sendMessage(message) {
     // let i = 0;
     // do {
