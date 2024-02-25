@@ -26,36 +26,37 @@ public class GetContractServlet extends HttpServlet {
             HttpSession session = request.getSession();
             acc = (Account)session.getAttribute("USER");
             int accId = acc.getAccId();
-            UserInformationDAO infoDao = new UserInformationDAO();
+            ContractDAO infoDao = new ContractDAO();
 
             //Get Renter
-            UserInformation renterInfo = infoDao.getAccountInformationById(accId);
+            UserInformation renterInfo = infoDao.getContractByRenterId(accId);
             if (renterInfo != null) {
                 request.setAttribute("RENTER_INFO", renterInfo);
                 url = SUCCESS;
             }
             request.setAttribute("uri", request.getRequestURI());
+
             //Get HostelOwner
-            UserInformation ownerInfo = infoDao.getHostelOwnerInfoByRenterId(accId);
-            if (ownerInfo!=null){
+            UserInformation ownerInfo = infoDao.getOwnerByContractDetails(accId);
+            if (ownerInfo != null){
                 request.setAttribute("OWNER_INFO", ownerInfo);
                 url = SUCCESS;
             }
+
             //Get Hostel Address
-            HostelDAO hostelDAO = new HostelDAO();
-            Hostel hostel = hostelDAO.getHostelByRenterId(accId);
-            if (hostel!=null){
-                request.setAttribute("HOSTEL", hostel);
+            Hostel hostelInfo = infoDao.getHostelByContractDetails(accId);
+            if (hostelInfo != null){
+                request.setAttribute("HOSTEL", hostelInfo);
                 url = SUCCESS;
             }
+
             //Get Contract Information
-            ContractDAO contractDAO = new ContractDAO();
-            Contract contract = contractDAO.getContractByRenterId(accId);
-            if (contract!=null){
-                request.setAttribute("CONTRACT", contract);
+            Contract contractInfo = infoDao.getInfoContract(accId);
+             if (contractInfo != null){
+                request.setAttribute("CONTRACT", contractInfo);
                 url = SUCCESS;
-            }
-//
+             }
+
 //            session.setAttribute("CURRENT_PAGE", "hostel-renter-page");
         } catch (Exception e) {
             log("Error at GetContractServlet: " + e.toString());
