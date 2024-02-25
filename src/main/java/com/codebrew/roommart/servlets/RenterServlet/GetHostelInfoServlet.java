@@ -1,7 +1,8 @@
-package com.codebrew.roommart.servlets.RenterServlets;
+package com.codebrew.roommart.servlets.RenterServlet;
 
 import com.codebrew.roommart.dao.*;
 import com.codebrew.roommart.dto.*;
+import com.codebrew.roommart.utils.Decorations;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,6 +16,19 @@ public class GetHostelInfoServlet extends HttpServlet {
     public static final String SUCCESS = "/pages/renter/renter-room-info.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            try {
+                load_hostel_info(request, response);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }, "GetHostelInfoServlet");
+    }
+
+    protected void load_hostel_info(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
         Account acc;
         List<Infrastructures> infrastructures;
