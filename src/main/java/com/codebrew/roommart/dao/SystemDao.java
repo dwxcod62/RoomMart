@@ -188,8 +188,8 @@ public class SystemDao {
     private static final String INSERT_CONTRACT_DETAILS_QUERY = "INSERT INTO contract_details (current_day, renter_full_name, renter_phone, renter_identify_card, renter_birthday, owner_full_name, owner_phone, owner_identify_card, owner_address, owner_birthday, start_date, end_date, deposit, cost_per_month, month_per_pay, owner_sign) " +
             "VALUES (CURRENT_DATE , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning contract_details_id ";
 
-    private static final String INSERT_CONTRACT_MAIN_QUERY = "INSERT INTO contract_main (contract_details_id, owner_id, renter_id, room_id) " +
-            "VALUES (?, ?, ?, ?) returning contract_id ";
+    private static final String INSERT_CONTRACT_MAIN_QUERY = "INSERT INTO contract_main (contract_details_id, owner_id, renter_id, room_id, c_status ) " +
+            "VALUES (?, ?, ?, ?, ?) returning contract_id ";
 
     private static final String UPDATE_ROOM_STATUS_QUERY = "UPDATE rooms SET room_status = ? WHERE room_id = ?";
 
@@ -228,12 +228,13 @@ public class SystemDao {
                 }
 
                 if ( temp > -1){
-                    pst = cn.prepareStatement("INSERT_CONTRACT_MAIN_QUERY");
+                    pst = cn.prepareStatement(INSERT_CONTRACT_MAIN_QUERY);
 
                     pst.setInt(1, temp);
                     pst.setInt(2, owner_account_id);
                     pst.setInt(3, renter_info.getAccount_id());
                     pst.setInt(4, room_id);
+                    pst.setInt(5, 1);
 
                     rs = pst.executeQuery();
                     if (rs != null && rs.next()) {
@@ -242,7 +243,7 @@ public class SystemDao {
 
                     pst = cn.prepareStatement(UPDATE_ROOM_STATUS_QUERY);
                     pst.setInt(1, 1);
-                    pst.setInt(1, room_id);
+                    pst.setInt(2, room_id);
                     pst.executeUpdate();
                 }
             }
