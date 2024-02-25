@@ -309,6 +309,13 @@
     </c:when>
 </c:choose>
 
+    <script src="./assets/js/sendWebsocket.js"></script>
+    <script>
+
+        sendToWebSocket("hostel_owner", "hostel_renter", 23, 23, "messages","chat");
+
+    </script>
+
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
@@ -318,6 +325,9 @@
         receiveWebsocket.disconnectWebSocket();
     };
 </script>
+
+
+
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
     <!-- Loader -->

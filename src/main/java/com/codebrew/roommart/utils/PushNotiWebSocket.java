@@ -1,10 +1,8 @@
 package com.codebrew.roommart.utils;
-
-
-
 import com.codebrew.roommart.dao.HostelDAO;
 import com.codebrew.roommart.dto.Account;
 import com.google.gson.Gson;
+
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -26,6 +24,7 @@ public class PushNotiWebSocket {
     @OnMessage
     public void handleMessage(String Message) throws IOException {
         JsonObject json = Json.createReader(new StringReader(Message)).readObject();
+        System.out.println(json);
         HashMap<String, Object> map = new Gson().fromJson(json.toString(), HashMap.class);
 
         String sender = map.get("sender").toString();

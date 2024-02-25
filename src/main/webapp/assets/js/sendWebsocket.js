@@ -17,9 +17,10 @@ function sendMessage(message) {
 }
 
 
-function sendToWebSocket({ sender, receiver, hostel_receiver_id = null, account_receiver_id = null, messages,chat }){
+function sendToWebSocket( sender, receiver, hostel_receiver_id = null, account_receiver_id = null, messages,chat ){
+    console.log(sender);
 //sender : hostel_owner,hostel_renter,system
-    const message2 = `{"sender":"${sender}","receiver":"${receiver}","hostel_receiver_id":"${hostel_receiver_id}","account_receiver_id":"${account_receiver_id}","message":"${messages}"},"chat":"${chat}"`;
+    const message2 = `{"sender":"${sender}","receiver":"${receiver}","hostel_receiver_id":"${hostel_receiver_id}","account_receiver_id":"${account_receiver_id}","message":"${messages}"}`;
     const message = {
         sender:sender,
         receiver:receiver,
@@ -28,7 +29,6 @@ function sendToWebSocket({ sender, receiver, hostel_receiver_id = null, account_
         message:messages,
         chat:chat};
 
-    console.log(sender, receiver, hostel_receiver_id, account_receiver_id, messages, chat, message);
-    sendMessage(JSON.stringify(message));
+    sendMessage(message2);
 
 }
