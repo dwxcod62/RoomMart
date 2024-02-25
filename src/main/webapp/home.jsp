@@ -404,8 +404,8 @@
             citis.options.add(opt);
         }
         citis.onchange = function () {
-            district.length = 1;
-            ward.length = 1;
+            districts.length = 1;
+            wards.length = 1;
             if(this.options[this.selectedIndex].dataset.id != ""){
                 const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
@@ -414,12 +414,12 @@
                     opt.value = k.Name;
                     opt.text = k.Name;
                     opt.setAttribute('data-id', k.Id);
-                    district.options.add(opt);
+                    districts.options.add(opt);
                 }
             }
         };
-        district.onchange = function () {
-            ward.length = 1;
+        districts.onchange = function () {
+            wards.length = 1;
             const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
             if (this.options[this.selectedIndex].dataset.id != "") {
                 const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;

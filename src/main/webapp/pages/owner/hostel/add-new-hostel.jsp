@@ -87,10 +87,7 @@
                                         <label for="hostel-province" class="form-label">Tỉnh/TP: <span>*</span></label>
                                         <select name="hostel-province" id="hostel-province"
                                             class="form-control form-select">
-                                            <option value="">Chọn tỉnh/thành phố</option>
-                                            <option value="1">Ha Noi</option>
-                                            <option value="2">HCM</option>
-                                            <option value="3">Da Nang</option>
+                                            <option value="all" selected>Chọn tỉnh thành</option>
                                         </select>
                                         <span class="form-message"></span>
                                     </div>
@@ -100,10 +97,7 @@
                                         <label for="hostel-district" class="form-label">Quận/Huyện: <span>*</span></label>
                                         <select name="hostel-district" id="hostel-district"
                                             class="form-control form-select" >
-                                            <option value="">Chọn quận/huyện</option>
-                                            <option value="1">Huyen 1</option>
-                                            <option value="2">Huyen 2</option>
-                                            <option value="3">Huyen 3</option>
+                                            <option value="all" selected>Chọn quận huyện</option>
                                         </select>
                                         <span class="form-message"></span>
                                     </div>
@@ -112,10 +106,7 @@
                                     <div class="form-group">
                                         <label for="hostel-ward" class="form-label">Phường/Xã: <span>*</span></label>
                                         <select name="hostel-ward" id="hostel-ward" class="form-control form-select">
-                                            <option value="">Chọn phường/xã</option>
-                                            <option value="1">Xa 1</option>
-                                            <option value="2">Xa 2</option>
-                                            <option value="3">Xa 3</option>
+                                            <option value="all" selected>Chọn phường xã</option>
                                         </select>
                                         <span class="form-message"></span>
                                     </div>
@@ -153,6 +144,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-md-10 m-auto">
+
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
                                                 <label for="hostel-wifi" class="form-label fill-label">Wifi:</label>
@@ -162,7 +154,7 @@
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
-                                        <div class="form-group price-service-fill">
+                                        <div class="form-group price-service-fill" >
                                             <div class="fill-group">
                                                 <label for="hostel-manage" class="form-label fill-label">Phí quản lý:</label>
                                                 <input id="hostel-manage" name="hostel-manage" value="0" type="number" placeholder="Nhập giá"
@@ -217,10 +209,12 @@
     <!-- Jquery -->
     <script src="./assets/js/jquery-3.5.1.min.js"></script>
     <!-- Axios -->
-<%--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--%>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Link your script here -->
     <script src="./assets/js/handle-main-navbar.js"></script>
-    <script src="./assets/js/handle-address.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+<%--    <script src="./assets/js/handle-address.js"></script>--%>
     <script src="./assets/js/valid-form.js"></script>
     <!-- Push notification -->
     <script src="./assets/js/push-notification-alert.js"></script>
@@ -329,6 +323,63 @@
     <!-- Loader -->
     <script src="./assets/js/loading-handler.js"></script>
 </c:if>
+
+    <script>
+
+        var citis = document.getElementById("hostel-province");
+        var districts = document.getElementById("hostel-district");
+        var wards = document.getElementById("hostel-ward");
+        var Parameter = {
+            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+            method: "GET",
+            responseType: "application/json",
+        };
+        var promise = axios(Parameter);
+        promise.then(function (result) {
+            renderCity(result.data);
+        });
+
+        function renderCity(data) {
+            for (const x of data) {
+                var opt = document.createElement('option');
+                opt.value = x.Name;
+                opt.text = x.Name;
+                opt.setAttribute('data-id', x.Id);
+                citis.options.add(opt);
+            }
+            citis.onchange = function () {
+                districts.length = 1;
+                wards.length = 1;
+                if(this.options[this.selectedIndex].dataset.id != ""){
+                    const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+
+                    for (const k of result[0].Districts) {
+                        var opt = document.createElement('option');
+                        opt.value = k.Name;
+                        opt.text = k.Name;
+                        opt.setAttribute('data-id', k.Id);
+                        districts.options.add(opt);
+                    }
+                }
+            };
+            districts.onchange = function () {
+                wards.length = 1;
+                const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+                if (this.options[this.selectedIndex].dataset.id != "") {
+                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                    for (const w of dataWards) {
+                        var opt = document.createElement('option');
+                        opt.value = w.Name;
+                        opt.text = w.Name;
+                        opt.setAttribute('data-id', w.Id);
+                        wards.options.add(opt);
+                    }
+                }
+            };
+        }
+
+    </script>
 
 </body>
 
