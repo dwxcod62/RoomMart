@@ -129,43 +129,18 @@ public class SystemDao {
                 }
 
                 if (result > -1){
-                    updateContractStatus(contract_id, 2);
-                }
+                    pst = cn.prepareStatement("UPDATE contract_main set c_status = ? where contract_id = ? returning room_id");
+                    pst.setInt(1, 2);
+                    pst.setInt(2, result);
+                    rs = pst.executeQuery();
+                    if (rs != null && rs.next()){
+                        result = rs.getInt("room_id");
+                        pst = cn.prepareStatement("UPDATE rooms set room_status = ? where room_id = ? ");
+                        pst.setInt(1, 2);
+                        pst.setInt(2, result);
 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cn != null && pst != null) {
-                try {
-                    pst.close();
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return result;
-    }
-
-    public int updateContractSign(int owner_id, int renter_id,  String sign){
-        int result = -1;
-        Connection cn = null;
-        PreparedStatement pst = null;
-
-        try {
-            cn = DatabaseConnector.makeConnection();
-            AccountDao dao = new AccountDao();
-            if (cn != null) {
-                pst = cn.prepareStatement(UPDATE_CONTRACT_OWNER_SIGN);
-
-                pst.setString(1, sign);
-                pst.setInt(2, renter_id);
-                pst.setInt(3, owner_id);
-
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()){
-                    result = rs.getInt("contract_id");
+                        pst.executeUpdate();
+                    }
                 }
 
             }
