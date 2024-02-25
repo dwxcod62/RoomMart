@@ -20,7 +20,8 @@ public class GetRoommateInfoServlet extends HttpServlet {
 
             Account account = (Account) session.getAttribute("USER");
 
-            List<Roommate> list = new RoommateInfoDAO().getListRoommatesOfAnAccount(account.getAccId());
+            List<Roommate> list = new RoommateInfoDAO().getListRoommatesByRenterID(account.getAccId());
+
             request.setAttribute("listRoommateInfor", list);
             request.setAttribute("uri", request.getRequestURI());
             request.getRequestDispatcher("/pages/renter/renter-roommate.jsp").forward(request, response);

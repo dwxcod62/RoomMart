@@ -44,7 +44,7 @@ public class GetHostelInfoServlet extends HttpServlet {
             }
 
             //Get Room Info
-            List<Roommate> roommateInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(1);
+            List<Roommate> roommateInfo = new RoommateInfoDAO().getListRoommatesByRenterID(1);
             int numberOfMembers = roommateInfo.size();
             request.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
 
