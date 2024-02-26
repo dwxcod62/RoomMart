@@ -271,6 +271,7 @@ public class SystemDao {
                     jsonObject.put("renter_identify_card", rs.getString("renter_identify_card"));
                     jsonObject.put("renter_birthday", rs.getDate("renter_birthday").toString());
 
+                    jsonObject.put("current_day", rs.getDate("current_day").toString());
                     jsonObject.put("room_start_date", rs.getDate("start_date").toString());
                     jsonObject.put("room_end_date", rs.getDate("end_date").toString());
                     jsonObject.put("room_fee", rs.getDouble("cost_per_month"));

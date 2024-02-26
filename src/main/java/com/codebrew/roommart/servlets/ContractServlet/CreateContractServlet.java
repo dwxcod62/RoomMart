@@ -9,12 +9,16 @@ import java.time.Period;
 
 import com.codebrew.roommart.dao.AccountDao;
 import com.codebrew.roommart.dao.ConsumeDao;
+import com.codebrew.roommart.dao.ContractDAO;
+import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.OwnerDTO.Consume;
+import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.Status;
 import com.codebrew.roommart.dto.UserInformation;
+import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EmailUtils;
 import com.codebrew.roommart.utils.EncodeUtils;
 import org.json.JSONObject;
@@ -138,6 +142,50 @@ public class CreateContractServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if ( action.equals("create")){
+            Decorations.measureExecutionTime(() -> {
+                try {
+                    get_info_contract(request, response);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ServletException e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
+            }, "CreateContractServlet.doPost.create");
+        } else if ( action.equals("delete")){
+            Decorations.measureExecutionTime(() -> {
+                try {
+                    delete_contract(request, response);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
+            }, "CreateContractServlet.doPost.delete");
+        }
+
+    }
+
+    protected void delete_contract(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(true);
+        Account acc = (Account) session.getAttribute("USER");
+        Room room = (Room) session.getAttribute("room");
+        Hostel hostel = (Hostel) session.getAttribute("hostel");
+
+        if (new HostelDAO().checkOwnerRoom(acc.getAccId(), room.getRoomId())) {
+            new ContractDAO().deleteContract(room.getRoomId());
+            System.out.println("- Xoa hop dong cho room co id : "+ room.getRoomId());
+            response.sendRedirect("ownerRoomDetail?roomID=" + room.getRoomId() + "&hostelID=" + hostel.getHostelID());
+        } else {
+            System.out.println("- Co loi xay ra khi xoa hop dong cho room co id : "+ room.getRoomId());
+            response.sendRedirect("ownerRoomDetail?roomID=" + room.getRoomId() + "&hostelID=" + hostel.getHostelID());
+        }
+    }
+
+    protected void get_info_contract(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String url = "login";
         HttpSession session = request.getSession(true);
         Account acc = (Account) session.getAttribute("USER");
@@ -160,20 +208,29 @@ public class CreateContractServlet extends HttpServlet {
             jsonObject.put("fixed_years", request.getParameter("fixed-years"));
             jsonObject.put("percentage_increase", request.getParameter("percentage-increase"));
 
+            System.out.println("- Put thong tin vao json thanh cong");
 
             Consume consume = Consume.builder()
-                            .numberElectric(Integer.parseInt(request.getParameter("room-electric")))
-                            .numberWater(Integer.parseInt(request.getParameter("room-water")))
-                            .status(0)
-                            .roomID(room.getRoomId())
-                            .build();
+                    .numberElectric(Integer.parseInt(request.getParameter("room-electric")))
+                    .numberWater(Integer.parseInt(request.getParameter("room-water")))
+                    .status(0)
+                    .roomID(room.getRoomId())
+                    .build();
 
             boolean check = new ConsumeDao().updateConsumeNumber(consume);
+
+            if (check){
+                System.out.println("- Them Consume vao DB thanh cong");
+            } else {
+                System.out.println("- Them Consume vao DB that bai");
+            }
 
             session.setAttribute("CONTRACT_OWNER_USER", acc.getAccountInfo());
             session.setAttribute("CONTRACT_RENTER_USER", renter_info);
             session.setAttribute("CONTRACT_INFORMATION", jsonObject);
             session.setAttribute("RENTER_MAIL", renter_email);
+
+            System.out.println("- Them gia tri vao session ");
 
 //            SystemDao dao = new SystemDao();
 //            dao.updateContractOwnerSide(jsonObject);
@@ -182,6 +239,8 @@ public class CreateContractServlet extends HttpServlet {
             response.sendRedirect(url);
 
         } else {
+            System.out.println("- Da co loi xay ra");
+
             Status status = Status.builder()
                     .status(false)
                     .content("Vui lòng đăng nhập trước khi dùng dịch vụ")
@@ -190,4 +249,5 @@ public class CreateContractServlet extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
+
 }
