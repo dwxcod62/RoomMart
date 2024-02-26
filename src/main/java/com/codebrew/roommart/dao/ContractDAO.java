@@ -1,15 +1,14 @@
 package com.codebrew.roommart.dao;
 
-import com.codebrew.roommart.dto.Contract;
-import com.codebrew.roommart.dto.Hostel;
-import com.codebrew.roommart.dto.Room;
-import com.codebrew.roommart.dto.UserInformation;
+import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContractDAO {
     private static final String
@@ -37,6 +36,13 @@ public class ContractDAO {
             "rooms.has_attic, rooms.room_status\n" +
             "FROM contract_main\n" +
             "INNER JOIN rooms ON contract_main.room_id = rooms.room_id\n" +
+            "WHERE contract_main.renter_id = ?";
+    private static final String
+            GET_INFRASTRUCTURES_BY_CONTRACT = "SELECT DISTINCT infrastructureitem.infrastructure_name, infrastructuresroom.quantity\n" +
+            "FROM contract_main\n" +
+            "JOIN rooms ON contract_main.room_id = rooms.room_id\n" +
+            "JOIN infrastructuresroom ON rooms.room_id = infrastructuresroom.room_id\n" +
+            "JOIN infrastructureitem ON infrastructuresroom.id_infrastructure_item = infrastructureitem.id_infrastructure_item\n" +
             "WHERE contract_main.renter_id = ?";
     private static final String
             GET_INFO_CONTRACT = "SELECT cd.start_date, cd.end_date, cd.deposit, cd.cost_per_month\n" +
@@ -255,6 +261,56 @@ public class ContractDAO {
             }
         }
         return roomInfor;
+    }
+
+    public List<Infrastructures> getInfrastructuresByContract(int renterId){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Infrastructures> infrastructuresList = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_INFRASTRUCTURES_BY_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+            }  if (rs != null && rs.next()) {
+                String name = rs.getString("infrastructure_name");
+                int quantity = rs.getInt("quantity");
+
+                Infrastructures infrastructures = Infrastructures.builder()
+                        .name(name)
+                        .quantity(quantity)
+                        .build();
+
+                infrastructuresList.add(infrastructures);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return infrastructuresList;
     }
 
     public Contract getInfoContract(int renterId) {

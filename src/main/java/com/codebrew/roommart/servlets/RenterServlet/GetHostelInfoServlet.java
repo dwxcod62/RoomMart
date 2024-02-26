@@ -31,8 +31,8 @@ public class GetHostelInfoServlet extends HttpServlet {
     protected void load_hostel_info(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
         Account acc;
-        List<Infrastructures> infrastructures;
         List<ServiceInfo> serviceInfo;
+        List<Infrastructures> infrastructures;
         UserInformation accInfo;
         try {
             HttpSession session = request.getSession();
@@ -73,6 +73,14 @@ public class GetHostelInfoServlet extends HttpServlet {
             request.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
 
               //Get Infrastructure
+            infrastructures = (List<Infrastructures>) session.getAttribute("INFRASTRUCTURESS");
+            if (infrastructures == null) {
+                infrastructures = contractDAO.getInfrastructuresByContract(renterId);
+                session.setAttribute("INFRASTRUCTURESS", infrastructures);
+                url = SUCCESS;
+            }
+            System.out.println(infrastructures);
+
 //            infrastructures = new InfrastructureDAO().getRoomInfrastructures(1);
 //                if (infrastructures.size() > 0) {
 //                request.setAttribute("INFRASTRUCTURES", infrastructures);
