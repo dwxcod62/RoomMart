@@ -11,7 +11,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
-
+console.log(db);
 const chatForm = document.getElementById("messages");
 const chatInput = document.getElementById("chat-id-1-form");
 const chatHeader = document.getElementById("chatHeader");
@@ -43,7 +43,10 @@ function roleHandler() {
     console.log("role : " + role);
     if (role == 1) {
          // username = "admin";
+        showChat();
         sidebarList.style.display="block";
+        chatInput.hidden=true;
+        showChat();
         if(renterId == "null"){
             chatHeader.style.display="none";
         }
@@ -72,17 +75,20 @@ document
     .addEventListener("submit", sendMessage);
 
 function showChat() {
+    const fetchChat2 = db.ref(`chats/${ownerId}/${renterId}/`);
     console.log("show chat");
-    fetchChat.on("child_added", function (snapshot) {
-        fetchChat.child(snapshot.key).update({ read: true });
+    fetchChat2.on("child_added", function (snapshot) {
+        fetchChat2.child(snapshot.key).update({ read: true });
     });
     //  read = true;
     var roleP;
+    console.log("check role handle")
     if (role==1){
         roleP="Chủ trọ"
         readbtn.hidden = true;
         chatForm.hidden = false;
         chatInput.hidden = false;
+
     }
     if (role==2){
         roleP="Nhân viên"
@@ -91,75 +97,7 @@ function showChat() {
         roleP="Người dùng"
     }
 
-    // let message4 =
-    //     username === messages.username
-    //         ? ` <div class="message message-right">
-    //                                 <!-- Avatar -->
-    //                                 <div class="avatar avatar-sm ml-4 ml-lg-5 d-none d-lg-block">
-    //                                     <img class="avatar-img" src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/sheep_mutton_animal_avatar-512.png" alt="">
-    //                                 </div>
-    //
-    //                                 <!-- Message: body -->
-    //                                 <div class="message-body">
-    //
-    //                                     <!-- Message: row -->
-    //                                     <div class="message-row">
-    //                                         <div class="d-flex align-items-center justify-content-end">
-    //
-    //                                             <!-- Message: content -->
-    //                                             <div class="message-content bg-primary text-white">
-    //                                                 <div>${roleP} Đã kết nối</div>
-    //
-    //                                                 <div class="mt-1">
-    //                                                     <small class="opacity-65">${messages.formattedDate}</small>
-    //                                                 </div>
-    //
-    //                                             </div>
-    //                                             <!-- Message: content -->
-    //
-    //                                         </div>
-    //                                     </div>
-    //                                     <!-- Message: row -->
-    //
-    //                                 </div>
-    //                                 <!-- Message: body -->
-    //                             </div>`
-    //         : ` <div class="message">
-    //                                 <!-- Avatar -->
-    //                                 <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" onclick="showProfileSidebar()">
-    //                                     <img class="avatar-img" src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.png" alt="">
-    //                                 </a>
-    //
-    //                                 <!-- Message: body -->
-    //                                 <div class="message-body">
-    //
-    //                                     <!-- Message: row -->
-    //                                     <div class="message-row">
-    //                                         <div class="d-flex align-items-center">
-    //
-    //                                             <!-- Message: content -->
-    //                                             <div class="message-content bg-light">
-    //                                                 <div>${roleP} đã trở lại </div>
-    //
-    //                                                 <div class="mt-1">
-    //                                                     <small class="opacity-65">${messages.formattedDate}</small>
-    //                                                 </div>
-    //
-    //
-    //                                             </div>
-    //                                             <!-- Message: content -->
-    //
-    //                                         </div>
-    //                                     </div>
-    //                                     <!-- Message: row -->
-    //
-    //                                 </div>
-    //                                 <!-- Message: body -->
-    //                             </div>`;
 
-
-
-        // document.getElementById("messages").innerHTML += message4;
 
 
 
@@ -187,6 +125,17 @@ function sendMessage(e) {
     console.log("timestamp : " + timestamp);
     const messageInput = document.getElementById("chat-id-1-input");
     const message = messageInput.value;
+    // sendToWebSocket("hostel_owner", "hostel_renter", 23, 23, "messages","chat");
+
+    if (accId==renterId){
+        console.log("Send notify to owner");
+        sendToWebSocket("hostel_renter", "hostel_owner", null, ownerId, null,message,null,null);
+    }
+    if (accId==ownerId){
+        console.log("Send notify to renter");
+
+        sendToWebSocket( "hostel_owner","hostel_renter", null, renterId, null,message,roomID,hostelID);
+    }
 
     // clear the input box
     messageInput.value = "";
@@ -230,6 +179,7 @@ if(role==1){
             if (username != messages.username){
                 renterName = messages.username;
                 newMess = messages.message;
+
             }
 
 
@@ -242,7 +192,7 @@ if(role==1){
                                                         
                                                         
                                                         <div class="avatar mr-5">
-                                                            <img class="avatar-img" src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/sheep_mutton_animal_avatar-512.png" alt="${snapshot.key}">
+                                                            <img class="avatar-img" src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.png" alt="${snapshot.key}">
                                                         </div>
                                                         
                                                         <div class="media-body overflow-hidden">
@@ -264,6 +214,7 @@ if(role==1){
                                             </div>
                                         </a>`;
         // append the message on the page
+
         document.getElementById("user-list").innerHTML += userList2;
     });
 
@@ -275,6 +226,7 @@ fetchChat.on("child_added", function (snapshot) {
 
     // fetch existing chat messages
     const messages = snapshot.val();
+    console.log("messages: "+messages);
     // var link = document.getElementById("link-room-detail");
     // var stringUrl = "roomDetail?hostelId=${"+messages.hostelID+"}&rid=${"+messages.roomID+"}";
     // console.log("Room URL: "+stringUrl);
