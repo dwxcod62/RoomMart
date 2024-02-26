@@ -39,16 +39,14 @@ public class GetHostelInfoServlet extends HttpServlet {
             acc = (Account) session.getAttribute("USER");
             int renterId = acc.getAccId();
 
-            HostelDAO hostelDAO = new HostelDAO();
-            RoomDAO roomDAO = new RoomDAO();
+            ContractDAO contractDAO = new ContractDAO();
 
-            UserInformationDAO userInfoDAO = new UserInformationDAO();
             request.setAttribute("uri", request.getRequestURI());
 
             //Get Hostel
             Hostel hostel = (Hostel) session.getAttribute("HOSTEL");
             if (hostel == null) {
-                hostel = hostelDAO.getHostelByRenterId(renterId);
+                hostel = contractDAO.getHostelByContract(renterId);
                 session.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }
@@ -56,36 +54,25 @@ public class GetHostelInfoServlet extends HttpServlet {
             //Get Room
             Room room = (Room) session.getAttribute("ROOM_INFOR");
             if (room == null) {
-                room = roomDAO.getRoomByRenterId(renterId);
+                room = contractDAO.getRoomByContract(renterId);
                 session.setAttribute("ROOM_INFOR", room);
                 url = SUCCESS;
             }
 
-//            Hostel hostel = hostelDAO.getHostelByRenterId(renterId);
-//            if (hostel != null) {
-//                request.setAttribute("HOSTEL", hostel);
-//                url = SUCCESS;
-//            }
-//
-//            //Get Hostel Owner Info
-//            UserInformation accountInfo = userInfoDAO.getHostelOwnerInfoByRenterId(1);
-//            if (accountInfo != null) {
-//                request.setAttribute("ACCOUNT_INFOR", accountInfo);
-//                url = SUCCESS;
-//            }
-//
-//            //Get Room Info
-//            List<Roommate> roommateInfo = new RoommateInfoDAO().getListRoommatesByRenterID(1);
-//            int numberOfMembers = roommateInfo.size();
-//            request.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
-//
-//            Room roomInfo = new RoomDAO().getRoomInfoByRenterId(1);
-//            if (roomInfo != null) {
-//                request.setAttribute("ROOM_INFOR", roomInfo);
-//                url = SUCCESS;
-//            }
-//
-//            //Get Infrastructure
+            //Get Hostel Owner Info
+            UserInformation userInformation = (UserInformation) session.getAttribute("ACCOUNT_INFOR");
+            if (userInformation == null) {
+                userInformation = contractDAO.getOwnerByContractDetails(renterId);
+                session.setAttribute("ACCOUNT_INFOR", userInformation);
+                url = SUCCESS;
+            }
+
+            //Get Room Info
+            List<Roommate> roommateInfo = new RoommateInfoDAO().getListRoommatesByRenterID(renterId);
+            int numberOfMembers = roommateInfo.size();
+            request.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
+
+              //Get Infrastructure
 //            infrastructures = new InfrastructureDAO().getRoomInfrastructures(1);
 //                if (infrastructures.size() > 0) {
 //                request.setAttribute("INFRASTRUCTURES", infrastructures);

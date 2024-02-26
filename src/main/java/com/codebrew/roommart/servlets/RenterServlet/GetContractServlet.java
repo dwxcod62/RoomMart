@@ -44,7 +44,7 @@ public class GetContractServlet extends HttpServlet {
             }
 
             //Get Hostel Address
-            Hostel hostelInfo = infoDao.getHostelByContractDetails(accId);
+            Hostel hostelInfo = infoDao.getHostelByContract(accId);
             if (hostelInfo != null){
                 request.setAttribute("HOSTEL", hostelInfo);
                 url = SUCCESS;

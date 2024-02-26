@@ -2,6 +2,7 @@ package com.codebrew.roommart.dao;
 
 import com.codebrew.roommart.dto.Contract;
 import com.codebrew.roommart.dto.Hostel;
+import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.UserInformation;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
@@ -31,7 +32,12 @@ public class ContractDAO {
             "JOIN rooms r ON cm.room_id = r.room_id " +
             "JOIN hostels h ON r.hostel_id = h.hostel_id " +
             "WHERE cm.renter_id = ?";
-
+    private static final String
+            GET_ROOM_BY_CONTRACT = "SELECT rooms.room_number, rooms.capacity, rooms.room_area, " +
+            "rooms.has_attic, rooms.room_status\n" +
+            "FROM contract_main\n" +
+            "INNER JOIN rooms ON contract_main.room_id = rooms.room_id\n" +
+            "WHERE contract_main.renter_id = ?";
     private static final String
             GET_INFO_CONTRACT = "SELECT cd.start_date, cd.end_date, cd.deposit, cd.cost_per_month\n" +
             "FROM contract_main cm\n" +
@@ -143,7 +149,7 @@ public class ContractDAO {
         return accountInfor;
     }
 
-    public Hostel getHostelByContractDetails(int renterId){
+    public Hostel getHostelByContract(int renterId){
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -195,6 +201,60 @@ public class ContractDAO {
             }
         }
         return hostelInfor;
+    }
+
+    public Room getRoomByContract(int renterId){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfor = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_ROOM_BY_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+            }  if (rs != null && rs.next()) {
+                int room_number = rs.getInt("room_number");
+                int capacity = rs.getInt("capacity");
+                int room_area = rs.getInt("room_area");
+                int has_attic = rs.getInt("has_attic");
+                int room_status = rs.getInt("room_status");
+
+                roomInfor = Room.builder()
+                        .roomNumber(room_number)
+                        .capacity(capacity)
+                        .roomArea(room_area)
+                        .hasAttic(has_attic)
+                        .roomStatus(room_status)
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return roomInfor;
     }
 
     public Contract getInfoContract(int renterId) {
