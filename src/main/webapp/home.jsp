@@ -349,7 +349,8 @@
 
     <!-- food section -->
 
-
+<!-- Push notification element -->
+<div id="push-noti"></div>
 
 <!-- end food section -->
 <%
@@ -374,6 +375,22 @@
 <script src="./assets/js/receiveWebsocket.js"></script>
 <script src="./assets/js/loading-handler.js"></script>
 
+<script src="./assets/js/sendWebsocket.js"></script>
+<script>
+
+    sendToWebSocket("hostel_owner", "hostel_renter", null, 22, null," chat chat chat chat chat chat chat chat chat chat");
+
+</script>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function () {
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

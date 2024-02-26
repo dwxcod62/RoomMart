@@ -19,7 +19,13 @@
 <!-- Head -->
 
 <body>
-
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 <div class="layout">
 
     <!-- Navigation -->
@@ -43,10 +49,17 @@
 
             <li class="nav-item mt-xl-9">
                 <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(requestScope.roomId)}" />
-                <a id="link-room-detail" class="nav-link position-relative p-0 py-xl-3" href="roomDetail?rid=${encodedRoomId}" title="Back" >
+                <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(requestScope.hostelId)}" />
+
+<%--                <a id="link-room-detail" class="nav-link position-relative p-0 py-xl-3" href="roomDetail?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Back" >--%>
+<%--                    <i class="icon-lg fe-chevron-left"></i>--%>
+
+<%--                </a>--%>
+                <a id="link-room-detail" class="nav-link position-relative p-0 py-xl-3" href="javascript:history.back()" title="Back" >
                     <i class="icon-lg fe-chevron-left"></i>
 
                 </a>
+<%--                <a href="javascript:history.back()" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Go Back</a>--%>
             </li>
             <!-- Chats -->
             <li class="nav-item mt-xl-9">
@@ -154,7 +167,7 @@
                                     <div class="text-center py-6">
                                         <!-- Photo -->
                                         <div class="avatar avatar-xl mb-5">
-                                            <img class="avatar-img" src="./assets/images/logos/logo.png" alt="">
+                                            <img class="avatar-img" src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/sheep_mutton_animal_avatar-512.png" alt="">
                                         </div>
 
                                         <h5>${requestScope.infor.fullname}</h5>
@@ -251,11 +264,11 @@
                             <div class="col-6 col-xl-6">
                                 <div id="chatHeader" class="media text-center text-xl-left">
                                     <div class="avatar avatar-sm d-none d-xl-inline-block mr-5">
-                                        <img src="./assets/images/logos/logo.png" class="avatar-img" alt="">
+                                        <img src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.png" class="avatar-img" alt="">
                                     </div>
 
                                     <div class="media-body align-self-center text-truncate">
-                                        <h6 class="text-truncate mb-n1">${requestScope.infor2.fullname} ${sessionScope.role==1? "(User)":(sessionScope.role==2? "(User)":"(Staff)")} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}
+                                        <h6 class="text-truncate mb-n1">${requestScope.infor2.fullname} ${sessionScope.role==1? "(User)":(sessionScope.role==2? "(User)":(sessionScope.role==3? "(Owner)":"(Staff)"))} ${sessionScope.role!=1? " - Hostel ":""} ${sessionScope.role!=1?(requestScope.hostelId):""}
                                             <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(requestScope.roomId)}" />
                                             <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(requestScope.hostelId)}" />
                                         </h6>
@@ -369,7 +382,7 @@
                         <div class="border-bottom text-center py-9 px-10">
                             <!-- Photo -->
                             <div class="avatar avatar-xl mx-5 mb-5">
-                                <img class="avatar-img" src="./assets/images/logos/logo.png" alt="">
+                                <img class="avatar-img" src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.pngg" alt="">
                             </div>
                             <h5>other name 2</h5>
                             <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML, CSS, and JS.</p>
@@ -435,7 +448,7 @@
                         <div class="border-bottom text-center py-9 px-10">
                             <!-- Photo -->
                             <div class="avatar avatar-xl mx-5 mb-5">
-                                <img class="avatar-img" src="./assets/images/logos/logo.png" alt="">
+                                <img class="avatar-img" src="https://animalcharityevaluators.org/wp-content/uploads/2016/09/animals-now-logo-icon-only.png" alt="">
                                 <div class="badge badge-sm badge-pill badge-primary badge-border-basic badge-top-right">
                                     <span class="text-uppercase">${sessionScope.role!=1?"Owner":"Renter"}</span>
                                 </div>
@@ -520,12 +533,17 @@
     const role = "${sessionScope.role !=null ? sessionScope.role: "null"}";
     const acc = "${sessionScope.USER !=null ? sessionScope.USER: "null"}";
     const username = "${requestScope.infor.fullname!=null ? requestScope.infor.fullname: "null"}";
-    const hostelID = "${requestScope.hostelId !=null ? EncodeUtils.encodeString(requestScope.hostelId): "null"}"
-    const roomID = "${requestScope.roomId !=null ? EncodeUtils.encodeString(requestScope.roomId): "null"}"
+    const hostelID = "${requestScope.hostelId !=null ? EncodeUtils.encodeString(requestScope.hostelId): "null"}";
+    const roomID = "${requestScope.roomId !=null ? EncodeUtils.encodeString(requestScope.roomId): "null"}";
+    const accId = "${sessionScope.USER.accId !=null ? sessionScope.USER.accId: "null"}";
 
 
 
-    console.log("acc" + acc);
+
+
+
+
+    console.log("accId" + accId);
     console.log("userid : "+renterId);
     console.log("ownerid : "+ownerId);
     console.log("role: "+role)
@@ -537,10 +555,15 @@
 
 <script src="assets/js/chat/plugins/plugins.bundle.js"></script>
 <script src="assets/js/chat/template.js"></script>
+
+
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <%--<script src="index.js"></script>--%>
 <script src="assets/js/chat/chat.js"></script>
+<script src="assets/js/sendWebsocket.js"></script>
+
+<script src="assets/js/loading-handler.js"></script>
 
 <!-- Scripts -->
 
