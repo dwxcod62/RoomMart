@@ -145,7 +145,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
     <!-- Axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<%--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--%>
 <%--    <script src="./assets/js/owner/update-hostel/handle-address.js"></script>--%>
     <script src="./assets/js/valid-form.js"></script>
     <!-- Push notification -->

@@ -75,24 +75,24 @@
           <div class="row">
             <div class="col-12 col-md-8 col-lg-8 col-xl-7 m-auto">
               <div class="account__wrapper">
-                <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg" alt="User avatar"
+                <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex == true ? "male" : "female"}.jpg" alt="User avatar"
                      class="account__sub-img">
                 <div class="account__sub-info">
-                  <h2 class="account__sub-name">${sessionScope.USER.accountInfo.information.fullname}</h2>
+                  <h2 class="account__sub-name">${sessionScope.USER.accountInfo.fullname}</h2>
                   <p class="account__sub-role">Chủ trọ</p>
                 </div>
               </div>
               <div class="account__wrapper">
                 <div class="account__group">
                   <p class="account__title">Họ và tên:</p>
-                  <h3 class="account__content">${sessionScope.USER.accountInfo.information.fullname}</h3>
+                  <h3 class="account__content">${sessionScope.USER.accountInfo.fullname}</h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Giới tính:</p>
                   <h3 class="account__content">
                     <c:choose>
-                      <c:when test="${sessionScope.USER.accountInfo.information.sex ne null}">
-                        ${sessionScope.USER.accountInfo.information.sex eq 1 ? "Nam" : "Nữ"}
+                      <c:when test="${sessionScope.USER.accountInfo.sex ne null}">
+                        ${sessionScope.USER.accountInfo.sex eq true ? "Nam" : "Nữ"}
                       </c:when>
                       <c:otherwise>
                         Trống
@@ -104,8 +104,8 @@
                   <p class="account__title">Ngày tháng năm sinh:</p>
                   <h3 class="account__content">
                     <c:choose>
-                      <c:when test="${sessionScope.USER.accountInfo.information.birthday ne null}">
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${sessionScope.USER.accountInfo.information.birthday}" var="dateOfBirth"/>
+                      <c:when test="${sessionScope.USER.accountInfo.birthday ne null}">
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${sessionScope.USER.accountInfo.birthday}" var="dateOfBirth"/>
                         <fmt:formatDate var="dateOfBirthFormatted" pattern="dd/MM/yyyy" value="${dateOfBirth}"/>
                         ${dateOfBirthFormatted}
                       </c:when>
@@ -117,22 +117,22 @@
                 </div>
                 <div class="account__group">
                   <p class="account__title">Email:</p>
-                  <h3 class="account__content">${sessionScope.USER.accountInfo.information.email eq null ? "Trống" : sessionScope.USER.accountInfo.information.email}</h3>
+                  <h3 class="account__content">${sessionScope.USER.accountInfo.email eq null ? "Trống" : sessionScope.USER.accountInfo.email}</h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Số điện thoại:</p>
-                  <h3 class="account__content">${sessionScope.USER.accountInfo.information.phone eq null ? "Trống" : sessionScope.USER.accountInfo.information.phone}</h3>
+                  <h3 class="account__content">${sessionScope.USER.accountInfo.phone eq null ? "Trống" : sessionScope.USER.accountInfo.phone}</h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Địa chỉ:</p>
                   <h3 class="account__content">
-                    ${sessionScope.USER.accountInfo.information.address eq null ? "Trống" : sessionScope.USER.accountInfo.information.address}
+                    ${sessionScope.USER.accountInfo.address eq null ? "Trống" : sessionScope.USER.accountInfo.address}
                   </h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Số CMND/CCCD:</p>
                   <h3 class="account__content">
-                    ${sessionScope.USER.accountInfo.information.cccd eq null ? "Trống" : sessionScope.USER.accountInfo.information.cccd}
+                    ${sessionScope.USER.accountInfo.cccd eq null ? "Trống" : sessionScope.USER.accountInfo.cccd}
                   </h3>
                 </div>
               </div>
@@ -154,7 +154,7 @@
             <div class="col-md-10 col-lg-9 col-xl-8 m-auto">
               <div class="update__wrapper">
                 <div class="update__image">
-                  <img id="update__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg"
+                  <img id="update__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex == true ? "male" : "female"}.jpg"
                        alt="" class="update__img">
                   <input id="update__input-img" type="file"
                          accept="image/x-png,image/gif,image/jpeg" class="update__input-img">
@@ -164,15 +164,15 @@
                   <div class="form-group col-6">
                     <label for="fullname" class="form-label">Họ và tên:
                       <span>*</span></label>
-                    <input id="fullname" name="fullname" value="${sessionScope.USER.accountInfo.information.fullname}" type="text"
+                    <input id="fullname" name="fullname" value="${sessionScope.USER.accountInfo.fullname}" type="text"
                            class="form-control" placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
                     <label for="gender" class="form-label">Giới tính:</label>
                     <select id="gender" name="gender" class="form-control">
-                      <option value="1" ${sessionScope.USER.accountInfo.information.sex eq 1 ? "selected" : ""}>Nam</option>
-                      <option value="0" ${sessionScope.USER.accountInfo.information.sex eq 0 ? "selected" : ""}>Nữ</option>
+                      <option value="1" ${sessionScope.USER.accountInfo.sex eq true ? "selected" : ""}>Nam</option>
+                      <option value="0" ${sessionScope.USER.accountInfo.sex eq false ? "selected" : ""}>Nữ</option>
                     </select>
                     <span class="form-message"></span>
                   </div>
@@ -185,25 +185,25 @@
                   <div class="form-group col-6">
                     <label for="cccd" class="form-label">Số CMND/CCCD:
                       <span>*</span></label>
-                    <input id="cccd" name="cccd" value="${sessionScope.USER.accountInfo.information.cccd}" type="text" class="form-control"
+                    <input id="cccd" name="cccd" value="${sessionScope.USER.accountInfo.cccd}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
                     <label for="email" class="form-label">Email: <span>*</span></label>
-                    <input id="email" name="email" value="${sessionScope.USER.accountInfo.information.email}" type="text" class="form-control"
+                    <input id="email" name="email" value="${sessionScope.USER.accountInfo.email}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
                     <label for="phone" class="form-label">Số điện thoại:</label>
-                    <input id="phone" name="phone" value="${sessionScope.USER.accountInfo.information.phone}" type="text" class="form-control"
+                    <input id="phone" name="phone" value="${sessionScope.USER.accountInfo.phone}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-12">
                     <label for="address" class="form-label">Địa chỉ:</label>
-                    <input id="address" name="address" value="${sessionScope.USER.accountInfo.information.address}" type="text" class="form-control"
+                    <input id="address" name="address" value="${sessionScope.USER.accountInfo.address}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>

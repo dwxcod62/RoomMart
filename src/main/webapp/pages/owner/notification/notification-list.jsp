@@ -115,10 +115,10 @@
                             <c:forEach var="notification" items="${requestScope.NOTIFICATION_LIST}">
                                 <tr>
                                     <td class="text-center">
-                                        <a href="owner-review-notification?action=view&notification_id=${notification.notification_id}">#NF${notification.notification_id}</a>
+                                        <a href="ReviewNotificationServlet?action=view&notification_id=${notification.notification_id}">#NF${notification.notification_id}</a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="owner-review-notification?action=view&notification_id=${notification.notification_id}">${notification.title}</a>
+                                        <a href="ReviewNotificationServlet?action=view&notification_id=${notification.notification_id}">${notification.title}</a>
                                     </td>
                                     <td class="text-center">
                                         <fmt:parseDate var="ParseDate" value="${notification.createDate}" pattern="yyyy-MM-dd" />
