@@ -23,7 +23,22 @@
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
-<style>#loading-overlay {
+<style>
+    /* CSS cho nút khi ở trạng thái disabled */
+    button[disabled] {
+        pointer-events: none; /* Không cho phép sự kiện click */
+        background-color: grey; /* Màu nền xám */
+
+        opacity: 0.5; /* Độ mờ */
+    }
+
+    /* Không cho phép hover khi disabled */
+    button[disabled]:hover {
+        background-color: grey; /* Giữ màu nền xám */
+        color: #666; /* Giữ màu chữ tương phản */
+        cursor: default; /* Không hiển thị icon chuột */
+    }
+    #loading-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -100,8 +115,8 @@
                             <p><span>*</span> Để tạo cùng lúc nhiều phòng, hãy thay đổi số lượng
                                 phòng cần tạo,
                                 mặc định để 1 là tạo 1 phòng!</p>
-                            <p><span>*</span> Khi tạo nhiều phòng cùng lúc, tên phòng sẽ được tạo ngẫu nhiên,
-                                bạn có thể đổi tên phòng sau này!</p>
+                            <p><span>*</span> Khi tạo nhiều phòng cùng lúc, tên phòng,ảnh phòng sẽ được tạo ngẫu nhiên,
+                                bạn có thể đổi tên phòng, ảnh phòng sau này!</p>
                         </div>
                           
                         </c:if>
@@ -134,9 +149,9 @@
                             <div class="form-wrapper">
                                 <label for="room-name" class="form-label">Phòng số: </label>
                                 <input id="room-name" name="room-name" type="number" class="form-control"
-                                       placeholder="Phòng số ..." value="${requestScope.rid != null ? r.roomNumber  : "..."}">
+                                       placeholder="Phòng số ..." >
                             </div>
-                            <span class="form-message"></span>
+                            <span id="form-mess-roomNumber" class="form-message"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-wrapper">
@@ -260,7 +275,7 @@
                         <!-- Action -->
                         <div class="add-room-action">
                             <a href="detailHostel?hostelID=${requestScope.hid}" class="form-submit">Hủy bỏ</a>
-                            <input type="hidden" name="hid" value="${requestScope.hid}">
+                            <input id="hostID" type="hidden" name="hid" value="${requestScope.hid}">
 
 
                             <c:if test="${requestScope.rid != null}">
@@ -269,7 +284,7 @@
 
                             </c:if>
 <%--                            change hostelID ben Servlet--%>
-                            <button class="form-submit">${requestScope.rid eq null?"Tạo phòng":"Cập nhật"}</button>
+                            <button id="submitBTN" class="form-submit">${requestScope.rid eq null?"Tạo phòng":"Cập nhật"}</button>
 
                         </div>
                     </form>
@@ -332,6 +347,7 @@ if (${requestScope.rid eq null}){
         formGroupSelector: '.form-group',
         errorSelector: '.form-message',
         rules: [
+
             Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
 
             Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
@@ -360,6 +376,7 @@ if (${requestScope.rid eq null}){
     const errorElement = getParent(inputName, ".form-group").querySelector('.form-message');
     document.querySelector('#room-quantity').addEventListener('change', (e) => {
     if (e.target.value != '1') {
+        document.getElementById("submitBTN").removeAttribute("disabled");
         inputName.setAttribute("disabled", "true");
         inputName.value = "0";
         fileImg.setAttribute("disabled", "true");
@@ -445,6 +462,44 @@ if (${requestScope.rid eq null}){
     <script src="assets/js/loading-handler.js"></script>
 </c:if>
 
+<script>
+
+
+    var hostelId = $("#hostID").val();
+    var submitBtn = document.getElementById("submitBTN");
+    console.log(submitBtn.innerText);
+    var fm = document.getElementById("form-mess-roomNumber");
+
+    console.log("hostelid:"+hostelId);
+    var roomNumber = document.getElementById("room-name");
+    if (document.getElementById("room-quantity").value == '1'){ roomNumber.onblur = function(){
+        console.log("Người dùng đã thoát khỏi trường nhập liệu");
+        console.log("room enter: " + roomNumber.value);
+        $.ajax({
+            url: "check-room-exist",
+            type: "GET",
+            data: { roomNum: roomNumber.value, hostelID: hostelId },
+            success: function (response) {
+                console.log("repsonse: "+response)
+                if (response === "true") {
+                    submitBtn.setAttribute("disabled", "true");;
+                    fm.innerText = "Phòng đã tồn tại";
+                } else {
+
+                    submitBtn.removeAttribute("disabled");
+                    fm.innerText = "";
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr, status, error);
+
+            },
+        });
+    };};
+
+
+
+</script>
 </body>
 
 </html>

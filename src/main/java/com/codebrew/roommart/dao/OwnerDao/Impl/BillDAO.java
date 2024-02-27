@@ -7,10 +7,10 @@ import com.codebrew.roommart.dto.Payment;
 import com.codebrew.roommart.utils.DatabaseConnector;
 import com.codebrew.roommart.utils.OwnerUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class BillDAO implements IBillDAO {
     @Override
@@ -114,5 +114,60 @@ public class BillDAO implements IBillDAO {
             OwnerUtils.closeSQL(cn, pst, rs);
         }
         return paymentName;
+    }
+
+    @Override
+    public ArrayList<Bill> GetListBillByHostel(String hostelName) {
+        Bill bill = null;
+        ArrayList<Bill> listBill = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //select * from [dbo].[Bill] where created_date BETWEEN  '2022-06-22' AND '2022-10-22'
+        try {
+            cn = DatabaseConnector.makeConnection();
+            String Get_List_Bill_By_Hostel = "select A.bill_id, A.bill_title, A.created_date, A.expired_payment_date , A.payment_date,A.payment_id, A.room_id, A.status, A.total_money\n" +
+                    "from Bill A join Rooms B on A.room_id = B.room_id join Hostels C on B.hostel_id = C.hostel_id\n" +
+                    "where C.name = ?";
+            ptm = cn.prepareStatement(Get_List_Bill_By_Hostel);
+            ptm.setString(1, hostelName);
+            rs = ptm.executeQuery();
+            while (rs != null && rs.next()) {
+                //A.bill_id, A.bill_title, A.created_date, A.expired_payment_date , A.payment_date, A.status, A.total_money
+                int billID = rs.getInt("bill_id");
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+                listBill.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, ptm, rs);
+        }
+        return listBill;
     }
 }

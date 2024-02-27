@@ -46,6 +46,8 @@
 }
 
 footer {
+  position: relative;
+  z-index: 3;
   background-color: var(--footer-background-color);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
@@ -58,7 +60,7 @@ footer {
 .dashboard {
   width: 20%;
   min-height: calc(100vh - 80px);
-  background-color: #f7f7f7;
+  background-color: #fff;
   padding: 0;
 }
 .dashboard .infor-top {
@@ -82,50 +84,57 @@ footer {
   font-size: 18px;
 }
 .dashboard .card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  padding: 20px 0;
+  background-color: #fff;
+  transition: all 0.4s ease;
   border: none;
+  z-index: 2;
 }
 .dashboard .card .card-body {
-  background-color: #f7f7f7;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px 16px;
 }
-.dashboard .card .card-body .sidebar-item {
-  width: 100%;
-  text-align: left;
-  padding: 15px 0 15px 15px;
-  background-color: #f7f7f7;
-  border-radius: 4px;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  display: grid;
-  grid-template-columns: 1fr 6fr;
-  column-gap: 5px;
+
+.dashboard .card .card-body .list {
+  list-style: none;
 }
-.dashboard .card .card-body .sidebar-item i {
-  font-size: 18px;
-  line-height: 100%;
-}
-.dashboard .card .card-body .sidebar-item a {
-  color: #000000;
-  font-size: 18px;
+
+.dashboard .card .card-body .list .nav-link {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  padding: 14px 12px;
+  border-radius: 8px;
   text-decoration: none;
-  line-height: 100%;
 }
-.dashboard .card .card-body .sidebar-item:hover {
-  background-color: #4554fc;
+
+.dashboard .card .card-body .lists .nav-link:hover{
+  background-color: #4070f4;
 }
-.dashboard .card .card-body .sidebar-item:hover i {
-  color: #FFFFFF;
+
+.dashboard .card .card-body .lists .nav-link .icon {
+  margin-right: 14px;
+  font-size: 20px;
+  color: #707070;
 }
-.dashboard .card .card-body .sidebar-item:hover a {
-  color: #FFFFFF;
+
+.dashboard .card .card-body .lists .nav-link .link {
+  font-size: 16px;
+  color: #707070;
+  font-weight: 400;
 }
-.dashboard .card .card-body .active {
-  background-color: #4554fc;
-}
-.dashboard .card .card-body .active i {
-  color: #FFFFFF;
-}
-.dashboard .card .card-body .active a {
-  color: #FFFFFF;
+
+.dashboard .card .card-body .lists .nav-link:hover .icon,
+.dashboard .card .card-body .lists .nav-link:hover .link {
+  color: #fff;
 }
 
 body {

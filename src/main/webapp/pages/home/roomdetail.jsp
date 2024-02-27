@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="../../assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
+    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
 
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />
 
@@ -52,7 +52,7 @@
     <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/filestatic.ver7.msvbds.speedup.min.js" async="" data-cfasync="false"></script>
 
     <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Common/Global/filestatic.ver7.msvbds.Extensions.min.js" async="" data-cfasync="false"></script>
-    <script async src="src/main/webapp/assets/sys-css/securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<%--    <script async src="src/main/webapp/assets/sys-css/securepubads.g.doubleclick.net/tag/js/gpt.js"></script>--%>
     <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3a77c7a9.msvbds.FrontEnd.GAMBannerViewer.min.js" async="" data-cfasync="false"></script>
     <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3.msvbds.FrontEnd.GAMBannerScript.min.js" async="" data-cfasync="false"></script>
 
@@ -88,7 +88,11 @@
 
     <!-- Product-detail-->
     <div  class="re__ldp re__main-content-layout js__main-container ">
+        <div class="re__main-content">
+            <a href="javascript:history.back()" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Go Back</a>
 
+
+        </div>
         <div class="re__main-content">
 
 
@@ -159,14 +163,14 @@
                             <span class="title">Tình Trạng</span>
 
                                 <c:choose>
-                                    <c:when test="${room.roomStatus==1}">
+                                    <c:when test="${room.roomStatus==0}">
                                         <span class="value" style="color: lawngreen">Có thể thuê</span>
                                     </c:when>
-                                    <c:when test="${room.roomStatus==0}">
+                                    <c:when test="${room.roomStatus==2}">
                                         <span class="value"> Đã được thuê đến hết ${requestScope.endDate}</span>
 
                                     </c:when>
-                                    <c:when test="${room.roomStatus==-1}">
+                                    <c:when test="${room.roomStatus==1}">
                                         <span class="value" style="color: yellow">Đang thuê</span>
                                     </c:when>
                                 </c:choose>
@@ -279,8 +283,8 @@
             </div>
 
             <div class="re__divide-8"></div>
-            <div class="re__section re__pr-more-listing re__similar-listing js__section js__similar-listing lazyload" data-script="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.SimilarListing.Lazy.min.js">
-                    <span tracking-id="same-area-title-ldp" class="re__section-title">
+            <div class="re__section re__pr-more-listing re__similar-listing js__section js__similar-listing lazyload">
+                    <span class="re__section-title">
         Bất động sản dành cho bạn
 
     </span>
@@ -295,7 +299,8 @@
                                     <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
                                         <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
-                                        <a class="js__product-link-for-product-id" href="roomDetail?rid=${encodedRoomId}" >
+                                        <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(r.hostelId)}" />
+                                        <a class="js__product-link-for-product-id"  href="roomDetail?hostelId=${encodedHostelId}&rid=${encodedRoomId}" >
                                             <div class="re__card-image
             ">
                                                 <img alt="Ảnh đại diện" class="pr-img lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}">
@@ -412,7 +417,7 @@
                 <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                 <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                <button class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
+                <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
             </form>
 
             </div>
@@ -421,10 +426,13 @@
 
         </div>
     </div>
+    <%@include file="../owner/components/footer.jsp"%>
+    <!-- Push notification element -->
+    <div id="push-noti"></div>
     <!-- end product-detail-->
-    <script src="assets/sys-css/staticfile.batdongsan.com.vn/js/Common/Services/filestatic.ver3a77c7a9.msvbds.FrontEnd.UserListingViewedService.min.js" defer></script>
-    <script src="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.UserListingViewed.min.js" defer></script>
-
+    <script src="./assets/sys-css/staticfile.batdongsan.com.vn/js/Common/Services/filestatic.ver3a77c7a9.msvbds.FrontEnd.UserListingViewedService.min.js" defer></script>
+    <script src="./assets/sys-css/staticfile.batdongsan.com.vn/js/Product/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.UserListingViewed.min.js" defer></script>
+<%--    <script src="assets/js/chat/chat.js"></script>--%>
 
 
 
@@ -454,7 +462,28 @@
 
 
 <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Product/Binnova/Details/filestatic.ver3a77c7a9.msvbds.FrontEnd.Product.Details.MediaSlide.min.js"></script>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+    <script src="./assets/js/receiveWebsocket.js"></script>
+    <script src="./assets/js/sendWebsocket.js"></script>
 
+
+    <script>
+
+        sendToWebSocket("hostel_owner", "hostel_renter", null, 22, null," chat chat chat chat chat chat chat chat chat chat");
+
+
+    </script>
+
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
+
+        // Close when leave
+        window.onbeforeunload = function(){
+            receiveWebsocket.disconnectWebSocket();
+        };
+    </script>
     <!-- Loader -->
     <script src="assets/js/loading-handler.js"></script>
 

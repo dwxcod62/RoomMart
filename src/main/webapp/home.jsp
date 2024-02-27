@@ -294,7 +294,7 @@
                                                     <div class="re__card-contact">
                                                         <div class="re__card-published-info">
                                 <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                        ${r.roomStatus==1?"Available":"Unavailable"}
+                                        ${r.roomStatus==0?"Có thể thuê":r.roomStatus==2?"Đã Thuê":"Đang duyệt"}
                                 </span>
 
                                                         </div>
@@ -349,7 +349,8 @@
 
     <!-- food section -->
 
-
+<!-- Push notification element -->
+<div id="push-noti"></div>
 
 <!-- end food section -->
 <%
@@ -374,6 +375,22 @@
 <script src="./assets/js/receiveWebsocket.js"></script>
 <script src="./assets/js/loading-handler.js"></script>
 
+<script src="./assets/js/sendWebsocket.js"></script>
+<script>
+
+    sendToWebSocket("hostel_owner", "hostel_renter", null, 22, null," chat chat chat chat chat chat chat chat chat chat");
+
+</script>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function () {
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -404,8 +421,8 @@
             citis.options.add(opt);
         }
         citis.onchange = function () {
-            district.length = 1;
-            ward.length = 1;
+            districts.length = 1;
+            wards.length = 1;
             if(this.options[this.selectedIndex].dataset.id != ""){
                 const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
@@ -414,12 +431,12 @@
                     opt.value = k.Name;
                     opt.text = k.Name;
                     opt.setAttribute('data-id', k.Id);
-                    district.options.add(opt);
+                    districts.options.add(opt);
                 }
             }
         };
-        district.onchange = function () {
-            ward.length = 1;
+        districts.onchange = function () {
+            wards.length = 1;
             const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
             if (this.options[this.selectedIndex].dataset.id != "") {
                 const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;

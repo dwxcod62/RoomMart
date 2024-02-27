@@ -7,6 +7,7 @@ import com.codebrew.roommart.dao.HostelOwnerDAO;
 import com.codebrew.roommart.dao.UserInformationDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.UserInformation;
+import com.codebrew.roommart.utils.EncodeUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,6 +20,7 @@ public class ChatServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         System.out.println("ChatServlet======================================================");
+        System.out.println("owner");
         HttpSession session = request.getSession();
         HostelOwnerDAO hod = new HostelOwnerDAO();
         Account acc = (Account) session.getAttribute("USER");
@@ -42,6 +44,7 @@ public class ChatServlet extends HttpServlet {
         int ownerId=0;
         if(role==1){
             ownerId = acc.getAccId(); // get from acc id
+
         }
 
         System.out.println("est");
@@ -70,6 +73,7 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("renter");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         HostelOwnerDAO hod = new HostelOwnerDAO();
@@ -95,6 +99,9 @@ public class ChatServlet extends HttpServlet {
             System.out.println("ownerid (session): "+ownerId);
             System.out.println("renterid (session): "+renterId);
             System.out.println("hostelid :"+hostelId);
+
+
+
 
             request.setAttribute("infor",ui);
             request.setAttribute("hostelId",hostelId);
