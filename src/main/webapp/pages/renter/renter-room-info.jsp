@@ -1,4 +1,4 @@
-<%--<%@ page import="com.codebrew.roommart.dto.Account" %>--%>
+<%@ page import="com.codebrew.roommart.dto.Account" %><%--<%@ page import="com.codebrew.roommart.dto.Account" %>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -28,18 +28,14 @@
 </head>
 
 <body>
-<%--<%--%>
-<%--    Account account = (Account) session.getAttribute("USER");--%>
-<%--%>--%>
-
+    <%   Account account = (Account) session.getAttribute("USER");%>
 <div>
 
 
     <div class="row main-body" style="padding: 0;margin: 0;">
-
+        <%@include file="component/navbar.jsp" %>
         <%@include file="component/sidebar.jsp" %>
         <div class="content">
-            <%@include file="component/navbar.jsp" %>
             <h1 class="title">Tổng Quan Thông Tin Về Phòng Trọ</h1>
             <div class="main-information">
                 <h2 style="text-align: center;font-size: 26px; margin: 10px 0 20px 0">Thông tin phòng trọ</h2>

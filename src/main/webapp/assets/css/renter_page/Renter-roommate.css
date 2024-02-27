@@ -176,21 +176,32 @@ body {
   width: 70%;
   text-align: center;
   font-size: 25px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
-.content table tr th {
-  font-size: 24px;
-  border: 1px solid black;
-  font-weight: 500;
+
+.content table th {
+  background-color: #f2f2f2;
 }
-.content table tr td {
-  border: 1px solid black;
-  font-size: 20px;
+
+.content table th td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
+
+.content table tr:last-child td {
+  border-bottom: none;
+}
+
 .content table tr td .btnAction {
   width: 100%;
   text-decoration: none;
   background-color: #fff;
-  color: blue;
+  color: #5578C6;
 }
 .content .modal-header h5 {
   width: 100%;
