@@ -33,7 +33,6 @@ public class GetHostelInfoServlet extends HttpServlet {
         Account acc;
         List<ServiceInfo> serviceInfo;
         List<Infrastructures> infrastructures;
-        UserInformation accInfo;
         try {
             HttpSession session = request.getSession();
             acc = (Account) session.getAttribute("USER");
@@ -81,19 +80,12 @@ public class GetHostelInfoServlet extends HttpServlet {
             }
 
             //Get Service
-            infrastructures = (List<Infrastructures>) session.getAttribute("INFRASTRUCTURES");
-            if (infrastructures == null) {
-                infrastructures = contractDAO.getInfrastructuresByContract(renterId);
-                session.setAttribute("INFRASTRUCTURES", infrastructures);
+            serviceInfo = (List<ServiceInfo>) session.getAttribute("SERVICES");
+            if (serviceInfo == null) {
+                serviceInfo = contractDAO.getServicesByContract(renterId);
+                session.setAttribute("SERVICES", serviceInfo);
                 url = SUCCESS;
             }
-//
-//            //Get Account Infor
-//            accInfo = new InformationDAO().getAccountInformationById(renterId);
-//            if (accInfo != null) {
-//                req.setAttribute("ACC_INFO", accInfo);
-//                url = SUCCESS;
-//            }
 
 //            session.setAttribute("CURRENT_PAGE", "hostel-renter-page");
         } catch (Exception e) {

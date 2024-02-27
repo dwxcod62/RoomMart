@@ -45,6 +45,13 @@ public class ContractDAO {
             "JOIN infrastructureitem ON infrastructuresroom.id_infrastructure_item = infrastructureitem.id_infrastructure_item\n" +
             "WHERE contract_main.renter_id = ?";
     private static final String
+            GET_SERVICES_BY_CONTRACT = "SELECT s.service_name, hs.service_price, s.unit\n" +
+            "FROM contract_main cm\n" +
+            "JOIN rooms r ON cm.room_id = r.room_id\n" +
+            "JOIN hostelservice hs ON r.hostel_id = hs.hostel_id\n" +
+            "JOIN services s ON hs.service_id = s.service_id\n" +
+            "WHERE cm.renter_id = ?";
+    private static final String
             GET_INFO_CONTRACT = "SELECT cd.start_date, cd.end_date, cd.deposit, cd.cost_per_month\n" +
             "FROM contract_main cm\n" +
             "JOIN contract_details cd ON cm.contract_details_id = cd.contract_details_id\n" +
@@ -315,6 +322,59 @@ public class ContractDAO {
         return infrastructuresList;
     }
 
+    public List<ServiceInfo> getServicesByContract(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<ServiceInfo> servicesList = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_SERVICES_BY_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    String serviceName = rs.getString("service_name");
+                    String unit = rs.getString("unit");
+                    int servicePrice = rs.getInt("service_price");
+
+                    ServiceInfo serviceInfo = ServiceInfo.builder()
+                            .serviceName(serviceName)
+                            .unit(unit)
+                            .servicePrice(servicePrice)
+                            .build();
+
+                    servicesList.add(serviceInfo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return servicesList;
+    }
 
     public Contract getInfoContract(int renterId) {
         Connection cn = null;
