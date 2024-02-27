@@ -113,13 +113,13 @@
                                             <td>${room.roomNumber}</td>
                                             <td>
                                                 <c:choose>
-                                                    <c:when test="${room.roomStatus eq 0}">
+                                                    <c:when test="${room.roomStatus eq 2}">
                                                         <span class="text-danger">Đã có người thuê</span>
                                                     </c:when>
-                                                    <c:when test="${room.roomStatus eq 1}">
+                                                    <c:when test="${room.roomStatus eq 0}">
                                                         <span class="text-success">Sẵn sàng cho thuê</span>
                                                     </c:when>
-                                                    <c:when test="${room.roomStatus eq -1}">
+                                                    <c:when test="${room.roomStatus eq 1}">
                                                         <span class="text-warning">Đang làm hợp đồng</span>
                                                     </c:when>
                                                 </c:choose>
