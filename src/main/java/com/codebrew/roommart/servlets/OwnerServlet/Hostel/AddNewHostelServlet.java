@@ -48,7 +48,7 @@ public class AddNewHostelServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at AddHostel: " + e.toString());
         } finally {
-            response.sendRedirect("/owner-hostel-list");
+            response.sendRedirect("owner-hostel-list");
         }
     }
 }

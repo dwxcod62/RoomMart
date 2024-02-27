@@ -19,4 +19,6 @@ public interface IHostelDAO {
     public boolean checkOwnerRoom(int accId, int roomId);
 
     public Hostel getHostelByRoomId(int roomId);
+
+    public boolean updateHostel(Hostel hostel, int hostelID);
 }

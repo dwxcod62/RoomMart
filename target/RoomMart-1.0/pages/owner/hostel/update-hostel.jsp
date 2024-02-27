@@ -153,89 +153,89 @@
     <!-- Web socket -->
     <script src="./assets/js/receiveWebsocket.js"></script>
 
-<%--    <script>--%>
-<%--        let maxNumber = 1000000;--%>
-<%--        let minNumber = 0;--%>
+    <script>
+        let maxNumber = 1000000;
+        let minNumber = 0;
 
-<%--        Validator({--%>
-<%--            form: '#form-update-hostel',--%>
-<%--            formGroupSelector: '.form-group',--%>
-<%--            errorSelector: '.form-message',--%>
-<%--            rules: [--%>
-<%--                Validator.isRequired('#hostel-name', 'Vui lòng nhập tên của khu trọ'),--%>
-<%--                Validator.isRequired('#hostel-address', 'Vui lòng nhập địa chỉ của khu trọ'),--%>
-<%--                Validator.isRequired('#hostel-province', 'Vui lòng chọn tỉnh/thành phố'),--%>
-<%--                Validator.isRequired('#hostel-district', 'Vui lòng chọn quận/huyện'),--%>
-<%--                Validator.isRequired('#hostel-ward', 'Vui lòng chọn phường/xã')--%>
-<%--            ]--%>
-<%--        });--%>
-<%--    </script>--%>
+        Validator({
+            form: '#form-update-hostel',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#hostel-name', 'Vui lòng nhập tên của khu trọ'),
+                Validator.isRequired('#hostel-address', 'Vui lòng nhập địa chỉ của khu trọ'),
+                Validator.isRequired('#hostel-province', 'Vui lòng chọn tỉnh/thành phố'),
+                Validator.isRequired('#hostel-district', 'Vui lòng chọn quận/huyện'),
+                Validator.isRequired('#hostel-ward', 'Vui lòng chọn phường/xã')
+            ]
+        });
+    </script>
 
-<%--    <script type="text/javascript">--%>
-<%--        // Receive--%>
-<%--        receiveWebsocket(alertPushNoti);--%>
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
 
-<%--        // Close when leave--%>
-<%--        window.onbeforeunload = function(){--%>
-<%--            receiveWebsocket.disconnectWebSocket();--%>
-<%--        };--%>
-<%--    </script>--%>
-<%--    <script>--%>
+        // Close when leave
+        window.onbeforeunload = function(){
+            receiveWebsocket.disconnectWebSocket();
+        };
+    </script>
+    <script>
 
-<%--        var citis = document.getElementById("hostel-province");--%>
-<%--        var districts = document.getElementById("hostel-district");--%>
-<%--        var wards = document.getElementById("hostel-ward");--%>
-<%--        var Parameter = {--%>
-<%--            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",--%>
-<%--            method: "GET",--%>
-<%--            responseType: "application/json",--%>
-<%--        };--%>
-<%--        var promise = axios(Parameter);--%>
-<%--        promise.then(function (result) {--%>
-<%--            renderCity(result.data);--%>
-<%--        });--%>
+        var citis = document.getElementById("hostel-province");
+        var districts = document.getElementById("hostel-district");
+        var wards = document.getElementById("hostel-ward");
+        var Parameter = {
+            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+            method: "GET",
+            responseType: "application/json",
+        };
+        var promise = axios(Parameter);
+        promise.then(function (result) {
+            renderCity(result.data);
+        });
 
-<%--        function renderCity(data) {--%>
-<%--            for (const x of data) {--%>
-<%--                var opt = document.createElement('option');--%>
-<%--                opt.value = x.Name;--%>
-<%--                opt.text = x.Name;--%>
-<%--                opt.setAttribute('data-id', x.Id);--%>
-<%--                citis.options.add(opt);--%>
-<%--            }--%>
-<%--            citis.onchange = function () {--%>
-<%--                districts.length = 1;--%>
-<%--                wards.length = 1;--%>
-<%--                if(this.options[this.selectedIndex].dataset.id != ""){--%>
-<%--                    const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);--%>
+        function renderCity(data) {
+            for (const x of data) {
+                var opt = document.createElement('option');
+                opt.value = x.Name;
+                opt.text = x.Name;
+                opt.setAttribute('data-id', x.Id);
+                citis.options.add(opt);
+            }
+            citis.onchange = function () {
+                districts.length = 1;
+                wards.length = 1;
+                if(this.options[this.selectedIndex].dataset.id != ""){
+                    const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
-<%--                    for (const k of result[0].Districts) {--%>
-<%--                        var opt = document.createElement('option');--%>
-<%--                        opt.value = k.Name;--%>
-<%--                        opt.text = k.Name;--%>
-<%--                        opt.setAttribute('data-id', k.Id);--%>
-<%--                        districts.options.add(opt);--%>
-<%--                    }--%>
-<%--                }--%>
-<%--            };--%>
-<%--            districts.onchange = function () {--%>
-<%--                wards.length = 1;--%>
-<%--                const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);--%>
-<%--                if (this.options[this.selectedIndex].dataset.id != "") {--%>
-<%--                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;--%>
+                    for (const k of result[0].Districts) {
+                        var opt = document.createElement('option');
+                        opt.value = k.Name;
+                        opt.text = k.Name;
+                        opt.setAttribute('data-id', k.Id);
+                        districts.options.add(opt);
+                    }
+                }
+            };
+            districts.onchange = function () {
+                wards.length = 1;
+                const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+                if (this.options[this.selectedIndex].dataset.id != "") {
+                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
 
-<%--                    for (const w of dataWards) {--%>
-<%--                        var opt = document.createElement('option');--%>
-<%--                        opt.value = w.Name;--%>
-<%--                        opt.text = w.Name;--%>
-<%--                        opt.setAttribute('data-id', w.Id);--%>
-<%--                        wards.options.add(opt);--%>
-<%--                    }--%>
-<%--                }--%>
-<%--            };--%>
-<%--        }--%>
+                    for (const w of dataWards) {
+                        var opt = document.createElement('option');
+                        opt.value = w.Name;
+                        opt.text = w.Name;
+                        opt.setAttribute('data-id', w.Id);
+                        wards.options.add(opt);
+                    }
+                }
+            };
+        }
 
-<%--    </script>--%>
+    </script>
 
 </body>
 
