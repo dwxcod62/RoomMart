@@ -48,18 +48,6 @@
                         <span class="link">Thông báo</span>
                     </a>
                 </li>
-                <li class="list">
-                    <a href="ProfileRenter" class="nav-link">
-                        <i class="bx bx-id-card icon"></i>
-                        <span class="link">Thông tin cá nhân</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <a href="logout" class="nav-link">
-                        <i class="bx bx-id-card icon"></i>
-                        <span class="link">Đăng xuất</span>
-                    </a>
-                </li>
             </ul>
 <%--            <div class="sidebar-item ${requestScope.uri eq "/RoomMart/GetHostelInforServlet" ? "active" : ""}">--%>
 <%--                <i class="fa-solid fa-person-shelter"></i>--%>
