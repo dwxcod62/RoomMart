@@ -72,27 +72,21 @@ public class GetHostelInfoServlet extends HttpServlet {
             int numberOfMembers = roommateInfo.size();
             request.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
 
-              //Get Infrastructure
-            infrastructures = (List<Infrastructures>) session.getAttribute("INFRASTRUCTURESS");
+            //Get Infrastructure
+            infrastructures = (List<Infrastructures>) session.getAttribute("INFRASTRUCTURES");
             if (infrastructures == null) {
                 infrastructures = contractDAO.getInfrastructuresByContract(renterId);
-                session.setAttribute("INFRASTRUCTURESS", infrastructures);
+                session.setAttribute("INFRASTRUCTURES", infrastructures);
                 url = SUCCESS;
             }
-            System.out.println(infrastructures);
 
-//            infrastructures = new InfrastructureDAO().getRoomInfrastructures(1);
-//                if (infrastructures.size() > 0) {
-//                request.setAttribute("INFRASTRUCTURES", infrastructures);
-//                url = SUCCESS;
-//            }
-//
-//            //Get Service
-//            serviceInfo = new ServiceInfoDAO().getServicesOfHostel(1);
-//            if (serviceInfo != null) {
-//                request.setAttribute("SERVICES", serviceInfo);
-//                url = SUCCESS;
-//            }
+            //Get Service
+            infrastructures = (List<Infrastructures>) session.getAttribute("INFRASTRUCTURES");
+            if (infrastructures == null) {
+                infrastructures = contractDAO.getInfrastructuresByContract(renterId);
+                session.setAttribute("INFRASTRUCTURES", infrastructures);
+                url = SUCCESS;
+            }
 //
 //            //Get Account Infor
 //            accInfo = new InformationDAO().getAccountInformationById(renterId);

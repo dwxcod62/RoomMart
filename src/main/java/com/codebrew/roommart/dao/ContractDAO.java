@@ -38,7 +38,7 @@ public class ContractDAO {
             "INNER JOIN rooms ON contract_main.room_id = rooms.room_id\n" +
             "WHERE contract_main.renter_id = ?";
     private static final String
-            GET_INFRASTRUCTURES_BY_CONTRACT = "SELECT DISTINCT infrastructureitem.infrastructure_name, infrastructuresroom.quantity\n" +
+            GET_INFRASTRUCTURES_BY_CONTRACT = "SELECT infrastructureitem.infrastructure_name, infrastructuresroom.quantity\n" +
             "FROM contract_main\n" +
             "JOIN rooms ON contract_main.room_id = rooms.room_id\n" +
             "JOIN infrastructuresroom ON rooms.room_id = infrastructuresroom.room_id\n" +
@@ -263,31 +263,33 @@ public class ContractDAO {
         return roomInfor;
     }
 
-    public List<Infrastructures> getInfrastructuresByContract(int renterId){
+    public List<Infrastructures> getInfrastructuresByContract(int renterId) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        List<Infrastructures> infrastructuresList = new ArrayList<>();
+        ArrayList<Infrastructures> infrastructuresList = new ArrayList<>();
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(GET_INFRASTRUCTURES_BY_CONTRACT);
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
-            }  if (rs != null && rs.next()) {
-                String name = rs.getString("infrastructure_name");
-                int quantity = rs.getInt("quantity");
+                while (rs.next()) {
+                    String name = rs.getString("infrastructure_name");
+                    int quantity = rs.getInt("quantity");
 
-                Infrastructures infrastructures = Infrastructures.builder()
-                        .name(name)
-                        .quantity(quantity)
-                        .build();
+                    Infrastructures infrastructures = Infrastructures.builder()
+                            .name(name)
+                            .quantity(quantity)
+                            .build();
 
-                infrastructuresList.add(infrastructures);
+                    infrastructuresList.add(infrastructures);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            // Close resources
             if (rs != null) {
                 try {
                     rs.close();
@@ -312,6 +314,7 @@ public class ContractDAO {
         }
         return infrastructuresList;
     }
+
 
     public Contract getInfoContract(int renterId) {
         Connection cn = null;
