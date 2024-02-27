@@ -298,4 +298,40 @@ public class HostelDAO implements IHostelDAO {
         }
         return hostel;
     }
+
+    @Override
+    public boolean updateHostel(Hostel hostel, int hostelID) {
+        boolean checkUpdate = false;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String UPDATE_HOSTEL =
+                        "UPDATE Hostels SET name = ?, address = ?, ward = ?, district = ?, city = ? WHERE hostel_id = ?";
+                ptm = cn.prepareStatement(UPDATE_HOSTEL);
+                ptm.setString(1, hostel.getHostelName());
+                ptm.setString(2, hostel.getAddress());
+                ptm.setString(3, hostel.getWard());
+                ptm.setString(4, hostel.getDistrict());
+                ptm.setString(5, hostel.getCity());
+                ptm.setInt(6, hostelID);
+                checkUpdate = ptm.executeUpdate() > 0;
+
+                if (!checkUpdate) {
+                    cn.rollback();
+                } else {
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, ptm, null);
+        }
+        return checkUpdate;
+    }
 }

@@ -19,12 +19,7 @@ import java.util.List;
 
 public class ReportDetailDAO implements IReportDetailDAO {
     private static final String GET_LIST_REPORTS =
-            "SELECT id_report, send_date, content, R.status, reply_date, reply, complete_date, \n" +
-                    "reply_account_id, send_account_id, cate_id, A.room_id, P.hostel_id\n" +
-                    "FROM Reports R INNER JOIN Accounts A ON R.send_account_id = A.account_id\n" +
-                    "\t\t\t   INNER JOIN Rooms P ON A.room_id = P.room_id\n" +
-                    "\t\t\t   WHERE R.reply_account_id = ? AND R.status = ?\n" +
-                    "\t\t\t   ORDER BY R.send_date DESC";
+            "SELECT * from Reports where reply_account_id = ? and status = ?";
     @Override
     public List<ReportDetail> getListReports(int hostelOwnerId, int status) {
         Connection conn = null;
@@ -36,6 +31,7 @@ public class ReportDetailDAO implements IReportDetailDAO {
         try {
             conn = DatabaseConnector.makeConnection();
             if (conn != null) {
+                System.out.println(hostelOwnerId + ", " + status);
                 psm = conn.prepareStatement(GET_LIST_REPORTS);
                 psm.setInt(1, hostelOwnerId);
                 psm.setInt(2, status);
@@ -54,8 +50,6 @@ public class ReportDetailDAO implements IReportDetailDAO {
                         int reply_account_id = rs.getInt("reply_account_id");
                         int send_account_id = rs.getInt("send_account_id");
                         int cate_id = rs.getInt("cate_id");
-                        int room_id = rs.getInt("room_id");
-                        int hostel_id = rs.getInt("hostel_id");
                         Report report = Report.builder()
                                 .reportID(id_report)
                                 .sendDate(send_date)
@@ -67,16 +61,16 @@ public class ReportDetailDAO implements IReportDetailDAO {
                                 .replyAccountID(reply_account_id)
                                 .sendAccountID(send_account_id)
                                 .cateID(cate_id).build();
-                        UserInformation renterInformation = new UserInfoDAO().getAccountInformationById(send_account_id);
-                        ReportCategory category = new ReportCategoryDAO().getReportCategoryById(cate_id);
-                        Room room = new RoomDAO().getRoomById(room_id);
-                        Hostel hostel = new HostelDAO().getHostelById(hostel_id);
-                        list.add(ReportDetail.builder()
-                                .renterInformation(renterInformation)
-                                .report(report)
-                                .category(category)
-                                .room(room)
-                                .hostel(hostel).build());
+//                        UserInformation renterInformation = new UserInfoDAO().getAccountInformationById(send_account_id);
+//                        ReportCategory category = new ReportCategoryDAO().getReportCategoryById(cate_id);
+//                        Room room = new RoomDAO().getRoomById(room_id);
+//                        Hostel hostel = new HostelDAO().getHostelById(hostel_id);
+//                        list.add(ReportDetail.builder()
+//                                .renterInformation(renterInformation)
+//                                .report(report)
+//                                .category(category)
+//                                .room(room)
+//                                .hostel(hostel).build());
                     }
                 }
             }
