@@ -17,10 +17,10 @@ function sendMessage(message) {
 }
 
 
-function sendToWebSocket( sender, receiver, hostel_receiver_id = null, account_receiver_id = null, messages,chat ){
-    console.log(sender);
+function sendToWebSocket( sender, receiver, hostel_receiver_id = null, account_receiver_id = null, messages=null,chat=null,hostelId=null,roomId=null ){
+    console.log(sender,receiver,account_receiver_id,messages,chat);
 //sender : hostel_owner,hostel_renter,system
-    const message2 = `{"sender":"${sender}","receiver":"${receiver}","hostel_receiver_id":"${hostel_receiver_id}","account_receiver_id":"${account_receiver_id}","message":"${messages}"}`;
+    const message2 = `{"sender":"${sender}","receiver":"${receiver}","hostel_receiver_id":"${hostel_receiver_id}","account_receiver_id":"${account_receiver_id}","message":"${messages}","chat":"${chat}","hid":"${hostelId}","rid":"${roomId}"}`;
     const message = {
         sender:sender,
         receiver:receiver,

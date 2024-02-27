@@ -3,6 +3,7 @@ package com.codebrew.roommart.servlets.HomeServlets;
 import com.codebrew.roommart.dao.RoomDAO;
 import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.Room;
+import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EncodeUtils;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,26 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            try {
+                load_home(request, response);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }, "HomeServlet");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+    }
+
+    protected void load_home(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
-        System.out.println("HomeServlet============================================");
         RoomDAO rd = new RoomDAO();
         HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
@@ -43,7 +63,6 @@ public class HomeServlet extends HttpServlet {
 
         request.setAttribute("key",inputText);
         request.setAttribute("page", page);
-        System.out.println(city +" city : " + district + " district : " + ward+" ward");
         int total = rd.getTotalRoomsByCondition(city,district,ward,inputText);
         System.out.println("-> get total in condition: " + total);
         List<Room> rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12);
@@ -71,13 +90,5 @@ public class HomeServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("home.jsp").forward(request,response);
-
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
     }
 }

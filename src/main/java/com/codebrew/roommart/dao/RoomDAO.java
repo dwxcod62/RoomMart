@@ -115,6 +115,11 @@ public class RoomDAO {
             "        airConditionQuantity := airConditionQuantity - 1;\n" +
             "    END LOOP;\n" +
             "END $$;\n";
+    private  static  final  String
+            GET_ROOM_BY_RENTER_ID = "SELECT r.room_number, r.capacity, r.has_attic, r.room_area " +
+            "FROM rooms r " +
+            "INNER JOIN contract_main cm ON r.room_id = cm.room_id " +
+            "WHERE cm.renter_id = ?";
 
     public boolean addImgbyId(int room_Id,List<String> imgUrls){
         Connection cn = null;
@@ -1510,56 +1515,6 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
         return room;
     }
 
-
-
-    public Room getRoomInfoByRenterId(int renterId) throws SQLException {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Room roomInfo = null;
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT R.* FROM Rooms R " +
-                        "INNER JOIN Contracts C ON R.room_id = C.room_id " +
-                        "WHERE C.renter_id = ?";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, renterId);
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    int room_id = rs.getInt("room_id");
-                    int hostel_id = rs.getInt("hostel_id");
-                    int roomNumber = rs.getInt("room_number");
-                    double roomArea = rs.getInt("room_area");
-                    int capacity = rs.getInt("capacity");
-                    roomInfo = Room
-                            .builder()
-                            .roomId(room_id)
-                            .hostelId(hostel_id)
-                            .roomNumber(roomNumber)
-                            .capacity(capacity)
-                            .roomArea(roomArea)
-                            .build();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("error in getRoomInfoByRenterId");
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (pst != null) {
-                pst.close();
-            }
-            if (cn != null) {
-                cn.close();
-            }
-        }
-        return roomInfo;
-    }
-
     public Date get_end_date_by_RoomId(int rid) {
         System.out.println("-> get_end_date_by_RoomId ");
         Connection cn = null;
@@ -1668,8 +1623,46 @@ public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomA
                 }
             }
         }
-
-
         return isExist;
+    }
+
+    public Room getRoomByRenterId(int renterId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room room = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_ROOM_BY_RENTER_ID);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int room_number = rs.getInt("room_number");
+                    int capacity = rs.getInt("capacity");
+                    int room_area = rs.getInt("room_area");
+                    int has_attic = rs.getInt("has_attic");
+                    room = Room.builder()
+                            .roomNumber(room_number)
+                            .capacity(capacity)
+                            .roomArea(room_area)
+                            .hasAttic(has_attic)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return room;
     }
 }

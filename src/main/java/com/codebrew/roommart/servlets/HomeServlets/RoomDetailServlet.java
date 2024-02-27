@@ -16,14 +16,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import com.cloudinary.*;
+import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EncodeUtils;
 
 @WebServlet(name = "RoomDetailServlet", value = "/RoomDetailServlet")
 public class RoomDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            try {
+                load_rd(request, response);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }, "RoomDetailServlet");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+    protected void load_rd(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        System.out.println("RoomDetailServlet==============================================================");
         String decodeRoomId = null;
         String decodeHostelId = null;
         String rid_raw = null;
@@ -32,12 +49,14 @@ public class RoomDetailServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("CURRENT_PAGE","home-room");
         try{
+            System.out.println("rid: "+request.getParameter("rid"));
             decodeRoomId = EncodeUtils.decodeString(request.getParameter("rid"));
+            System.out.println("decodeRoomId: "+decodeRoomId);
             decodeHostelId = EncodeUtils.decodeString(request.getParameter("hostelId"));
             System.out.println("decodeRoomId: " +decodeRoomId);
             System.out.println("decodeHostelId: " +decodeHostelId);
-             rid_raw = decodeRoomId;
-             hostelId_raw = decodeHostelId;
+            rid_raw = decodeRoomId;
+            hostelId_raw = decodeHostelId;
         }catch (Exception e){
             System.out.println("RoomDetail Servlet error - decode id");
             request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
@@ -47,7 +66,7 @@ public class RoomDetailServlet extends HttpServlet {
         int rid=0;
         int hostelId=0;
         try {
-                   rid = Integer.parseInt(rid_raw);
+            rid = Integer.parseInt(rid_raw);
             hostelId = Integer.parseInt(hostelId_raw);
 
 
@@ -55,7 +74,7 @@ public class RoomDetailServlet extends HttpServlet {
             System.out.println("RoomDetail Servlet error - Parse int id error");
             request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
 
-           return;
+            return;
 
         }
         //call dao
@@ -119,10 +138,5 @@ public class RoomDetailServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }
