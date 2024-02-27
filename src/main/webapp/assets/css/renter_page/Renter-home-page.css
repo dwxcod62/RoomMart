@@ -251,6 +251,7 @@ footer {
   padding: 14px 12px;
   border-radius: 8px;
   text-decoration: none;
+  margin-bottom: 15px;
 }
 
 .dashboard .card .card-body .lists .nav-link:hover{
