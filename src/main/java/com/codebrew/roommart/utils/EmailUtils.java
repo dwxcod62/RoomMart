@@ -44,7 +44,7 @@ public class EmailUtils {
 
     public boolean sendToken(String receiverEmail, String otp, String data) {
         String subject = "OTP from send-otp";
-        String lik = "http://" + host +":8080/RoomMart_war_exploded/otp?data=" + data;
+        String lik = "http://" + host +":8080/RoomMart/otp?data=" + data;
         String content = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"
@@ -64,7 +64,7 @@ public class EmailUtils {
 
     public boolean sendRecoverPass(String receiverEmail, String data) {
         String subject = "Recover Password!";
-        String recoveryLink = "http://" + host +":8080/RoomMart_war_exploded/password-reset?data=" + data;
+        String recoveryLink = "http://" + host +":8080/RoomMart/password-reset?data=" + data;
         String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"
@@ -101,7 +101,7 @@ public class EmailUtils {
 
     public boolean sendContractConfirmationEmail(String receiverEmail, int contractID) {
         String subject = "Xác nhận Hợp đồng Thuê";
-        String contractLink = "http://" + host + ":8080/RoomMart_war_exploded/createContract?id=" + contractID;
+        String contractLink = "http://" + host + ":8080/RoomMart/contract?id=" + contractID;
         String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"

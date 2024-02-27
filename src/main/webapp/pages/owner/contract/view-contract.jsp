@@ -499,7 +499,7 @@
                                             <h3 class="h3-text-2">
                                                 <span class="span-text bold">BÊN CHO THUÊ (BÊN A)</span>
                                                 <div class="col-md-12">
-                                                    <img  src="${requestScope.OWNER_SIGN}" alt="Your signature will go here!" class="alt-text" style="width: 50%; height: auto;"/>
+                                                    <img id="sig-image"  alt="Click here to sign!" class="alt-text" style="width: 50%; height: auto;"/>
                                                 </div>
                                             </h3>
                                         </td>
@@ -512,7 +512,7 @@
                                             </h3
                                         </td>
                                     </c:when>
-                                    <c:when test="${true}">
+                                    <c:when test="${requestScope.contract_status eq 1}">
                                         <c:choose>
                                             <c:when test="${sessionScope.USER.getRole() eq 1}">
                                                 <td style="padding-left: 5.4pt; padding-right: 5.4pt; vertical-align: top; width: 225.1pt">
@@ -532,12 +532,12 @@
                                                     </h3>
                                                 </td>
                                             </c:when>
-                                            <c:when test="${true}">
+                                            <c:when test="${sessionScope.USER.getRole() eq 3}">
                                                 <td style="padding-left: 5.4pt; padding-right: 5.4pt; vertical-align: top; width: 225.1pt">
                                                     <h3 class="h3-text-2">
                                                         <span class="span-text bold">BÊN CHO THUÊ (BÊN A)</span>
                                                         <div class="col-md-12">
-                                                            <img id="sig-image" src="${requestScope.OWNER_SIGN}" alt="Click here to sign!" class="alt-text" style="width: 50%; height: auto;"/>
+                                                            <img  src="${requestScope.OWNER_SIGN}" alt="Click here to sign!" class="alt-text" style="width: 50%; height: auto;"/>
                                                         </div>
                                                     </h3>
                                                 </td>
@@ -545,7 +545,7 @@
                                                     <h3 class="h3-text-2">
                                                         <span class="span-text bold">BÊN THUÊ (BÊN B)</span>
                                                         <div class="col-md-12">
-                                                            <img src="./assets/images/system/sign.jpg" alt="Your signature will go here!" class="alt-text" style="width: 50%; height: auto;"/>
+                                                            <img id="sig-image"  alt="Your signature will go here!" class="alt-text" style="width: 50%; height: auto;"/>
                                                         </div>
                                                     </h3>
                                                 </td>
@@ -594,7 +594,7 @@
                 <div class="container my-5">
                     <div class="row">
                         <c:choose>
-                            <c:when test="${requestScope.contract_status eq 0 || sessionScope.USER.getRole() eq 1 }">
+                            <c:when test="${requestScope.contract_status eq 0 && sessionScope.USER.getRole() eq 1 }">
                                 <form action="sign" method="post" class="d-flex justify-content-between align-items-center w-100">
                                     <input id="asdfgh" name="asdfgh" style="display: none" value="">
                                     <button type="submit" class="btn btn-primary flex-grow-1">Gửi</button>
@@ -602,12 +602,18 @@
                                     <button type="button" class="btn btn-danger flex-grow-1 mr-2" >Hủy</button>
                                 </form>
                             </c:when>
-                            <c:when test="${true}">
-                                <form action="createContract?action=delete" method="post" class="d-flex justify-content-between align-items-center w-100">
-                                    <input id="asdfgh" name="asdfgh" style="display: none" value="">
+                            <c:when test="${requestScope.contract_status eq 1 && sessionScope.USER.getRole() eq 1 }">
+                                <div class="d-flex justify-content-between align-items-center w-100">
                                     <input  class="hidden flex-grow-1 mr-2" style="visibility: hidden;" ></input>
                                     <input  class="hidden flex-grow-1 mr-2" style="visibility: hidden;" ></input>
-                                    <button type="submit" class="btn btn-danger flex-grow-1 mr-2" >Hủy</button>
+                                    <button type="button" class="btn btn-danger flex-grow-1 mr-2" >Hủy</button>
+                                </div>
+                            </c:when>
+                            <c:when test="${requestScope.contract_status eq 1 && sessionScope.USER.getRole() eq 3 }">
+                                <form action="sign" method="post" class="d-flex justify-content-between align-items-center w-100">
+                                    <button type="submit" class="btn btn-primary flex-grow-1">Gửi</button>
+                                    <input  class="hidden flex-grow-1 mr-2" style="visibility: hidden;" ></input>
+                                    <input  class="hidden flex-grow-1 mr-2" style="visibility: hidden;" ></input>
                                 </form>
                             </c:when>
                         </c:choose>
