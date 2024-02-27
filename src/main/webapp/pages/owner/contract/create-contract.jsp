@@ -37,13 +37,13 @@
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
             <div class="row my-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-7 col-xxl-6 m-auto">
-                    <form action="createContract" method="post" class="custom-form create-room-account-form" id="create-room-account-form">
+                    <form action="create-contract" method="post" class="custom-form create-room-account-form" id="create-room-account-form">
                         <div class="form-header">
                             <div class="form-title main-title">Tạo hợp đồng</div>
                         </div>
                         <div class="spacer"></div>
                         <div>
-                            <p><strong class="text-dark">Số phòng:</strong> <span class="text-muted">${sessionScope.ROOM_MAKE_CONTRACT.getRoomNumber()}</span></p>
+                            <p><strong class="text-dark">Số phòng:</strong> <span class="text-muted">${sessionScope.room.getRoomNumber()}</span></p>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
