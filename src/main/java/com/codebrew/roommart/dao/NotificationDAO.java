@@ -75,6 +75,7 @@ public class NotificationDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
+                System.out.println(accId);
                 pst = cn.prepareStatement(GET_NOTIFICATION_BY_OWNER_ID);
                 pst.setInt(1, accId);
                 rs = pst.executeQuery();
