@@ -3,51 +3,126 @@ nav {
   top: 0;
   left: 0;
   z-index: 3;
-  background-color: #333;
+  border-bottom: 1px solid lightslategray;
 }
 
 .navbar {
-  color: #fff;
   padding: 25px 100px;
 }
 
 .navbar .navbar-logo img {
-  max-height: 40px;
+  width: 100px;
+  height: auto;
 }
 
 .navbar .navbar-icons {
   display: flex;
 }
 
+.navbar .navbar-icons .notification-icon {
+  margin-right: 50px;
+}
+
 .navbar .navbar-icons .icon {
   width: 30px;
   height: 30px;
-  margin-left: 10px;
+  font-size: 30px;
   cursor: pointer;
 }
 
-/* Styling for notification and settings popups */
-.navbar .navbar-icons .notification-popup,
-.navbar .navbar-icons .settings-popup {
-  display: none;
+.user-menu {
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  z-index: 1;
+  top: calc(100% + 10px);
+  /* Chuyển popup xuống dưới setting */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: none;
+  /* Ẩn popup mặc định */
 }
 
-.navbar .navbar-icons .notification-popup p,
-.navbar .navbar-icons .settings-popup p {
+.user-menu.active {
+  display: block;
+  top: calc(100% + 10px);
+  /* Đặt vị trí cho popup */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.user-menu .arrow-up {
+  position: absolute;
+  top: -12px;
+  left: 65%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 12px solid #C8C9C7;
+}
+
+.user-menu .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.user-menu .user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-menu .avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-menu .avatar img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.user-menu .info .name {
   margin: 0;
 }
 
-.navbar .navbar-icons .notification-icon:hover .notification-popup,
-.navbar .navbar-icons .settings-icon:hover .settings-popup {
-  display: block;
+.user-menu .info .email {
+  font-size: 14px;
+  color: #777;
 }
 
+.user-menu .user-menu-items {
+  margin-top: 15px;
+}
+
+.user-menu .user-menu-item {
+  display: block;
+  padding: 10px 0;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.user-menu .user-menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.user-menu .user-menu-item.active {
+  font-weight: bold;
+}
 
 .nut_dropdown {
   background-color: #04b904;
