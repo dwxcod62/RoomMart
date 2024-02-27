@@ -1,3 +1,52 @@
+.navbar {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  background-color: #333;
+  color: #fff;
+  padding: 25px 100px;
+}
+
+.navbar .navbar-logo img {
+  max-height: 40px;
+}
+
+.navbar .navbar-icons {
+  display: flex;
+}
+
+.navbar .navbar-icons .icon {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Styling for notification and settings popups */
+.navbar .navbar-icons .notification-popup,
+.navbar .navbar-icons .settings-popup {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 1;
+}
+
+.navbar .navbar-icons .notification-popup p,
+.navbar .navbar-icons .settings-popup p {
+  margin: 0;
+}
+
+.navbar .navbar-icons .notification-icon:hover .notification-popup,
+.navbar .navbar-icons .settings-icon:hover .settings-popup {
+  display: block;
+}
+
+
 .nut_dropdown {
   background-color: #04b904;
   color: white;
@@ -85,7 +134,6 @@ footer {
 }
 .dashboard .card {
   position: absolute;
-  top: 0;
   left: 0;
   height: 100%;
   width: 260px;
@@ -161,7 +209,7 @@ body {
   min-height: calc(100vh - 80px);
   display: grid;
   row-gap: 20px;
-  padding: 30px 40px;
+  padding: 120px 40px 30px 40px;
 }
 .content .hidden_notification {
   display: none;

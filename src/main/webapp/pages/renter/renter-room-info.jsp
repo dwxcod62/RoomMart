@@ -33,10 +33,9 @@
 
 
     <div class="row main-body" style="padding: 0;margin: 0;">
-
+        <%@include file="component/navbar.jsp" %>
         <%@include file="component/sidebar.jsp" %>
         <div class="content">
-            <%@include file="component/navbar.jsp" %>
             <h1 class="title">Tổng Quan Thông Tin Về Phòng Trọ</h1>
             <div class="main-information">
                 <h2 style="text-align: center;font-size: 26px; margin: 10px 0 20px 0">Thông tin phòng trọ</h2>

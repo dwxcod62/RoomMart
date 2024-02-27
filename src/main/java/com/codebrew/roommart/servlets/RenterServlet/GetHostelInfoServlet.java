@@ -18,17 +18,15 @@ public class GetHostelInfoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Decorations.measureExecutionTime(() -> {
             try {
-                load_hostel_info(request, response);
-            } catch (ServletException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
+                Load_Renter_Hostel_Info(request, response);
+            } catch (ServletException | IOException e) {
                 throw new RuntimeException(e);
             }
             return null;
         }, "GetHostelInfoServlet");
     }
 
-    protected void load_hostel_info(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void Load_Renter_Hostel_Info(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
         Account acc;
         List<ServiceInfo> serviceInfo;
