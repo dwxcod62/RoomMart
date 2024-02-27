@@ -32,9 +32,9 @@
 
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
+        <%@include file="component/navbar.jsp"%>
         <%@include file="component/sidebar.jsp"%>
         <div class="content row">
-            <%@include file="component/navbar.jsp"%>
             <div class="report">
                 <h2>Chi Tiết Báo Cáo</h2>
                 <c:forEach var="rp" items="${REPORT_LIST}">
@@ -88,6 +88,7 @@
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
+<script src="./assets/js/renter/Renter-navbar.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

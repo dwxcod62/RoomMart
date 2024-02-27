@@ -42,7 +42,7 @@
                 <span class="link">Thông tin cá nhân</span>
             </a>
             <a href="logout" class="user-menu-item">
-                <i class="bx bx-id-card icon"></i>
+                <i class="bx bx-exit icon"></i>
                 <span class="link">Đăng xuất</span>
             </a>
         </div>
