@@ -1,8 +1,6 @@
 package com.codebrew.roommart.dao;
 
-import com.codebrew.roommart.dto.Contract;
-import com.codebrew.roommart.dto.Hostel;
-import com.codebrew.roommart.dto.UserInformation;
+import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.utils.DatabaseConnector;
 import org.json.JSONObject;
 
@@ -10,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContractDAO {
 
@@ -453,4 +453,165 @@ public class ContractDAO {
         }
         return contractInfor;
     }
+
+    public Room getRoomByContract(int renterId){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfor = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_ROOM_BY_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+            }  if (rs != null && rs.next()) {
+                int room_number = rs.getInt("room_number");
+                int capacity = rs.getInt("capacity");
+                int room_area = rs.getInt("room_area");
+                int has_attic = rs.getInt("has_attic");
+                int room_status = rs.getInt("room_status");
+
+                roomInfor = Room.builder()
+                        .roomNumber(room_number)
+                        .capacity(capacity)
+                        .roomArea(room_area)
+                        .hasAttic(has_attic)
+                        .roomStatus(room_status)
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return roomInfor;
+    }
+
+    public List<Infrastructures> getInfrastructuresByContract(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Infrastructures> infrastructuresList = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_INFRASTRUCTURES_BY_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    String name = rs.getString("infrastructure_name");
+                    int quantity = rs.getInt("quantity");
+
+                    Infrastructures infrastructures = Infrastructures.builder()
+                            .name(name)
+                            .quantity(quantity)
+                            .build();
+
+                    infrastructuresList.add(infrastructures);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return infrastructuresList;
+    }
+
+    public List<ServiceInfo> getServicesByContract(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<ServiceInfo> servicesList = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_SERVICES_BY_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    String serviceName = rs.getString("service_name");
+                    String unit = rs.getString("unit");
+                    int servicePrice = rs.getInt("service_price");
+
+                    ServiceInfo serviceInfo = ServiceInfo.builder()
+                            .serviceName(serviceName)
+                            .unit(unit)
+                            .servicePrice(servicePrice)
+                            .build();
+
+                    servicesList.add(serviceInfo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return servicesList;
+    }
+
 }
