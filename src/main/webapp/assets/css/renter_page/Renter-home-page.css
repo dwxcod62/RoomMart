@@ -6,34 +6,34 @@ nav {
   border-bottom: 1px solid lightslategray;
 }
 
-.navbar {
+nav .navbar {
   padding: 25px 100px;
 }
 
-.navbar .navbar-logo img {
+nav .navbar .navbar-logo img {
   width: 100px;
   height: auto;
+  cursor: pointer;
 }
 
-.navbar .navbar-icons {
+nav .navbar .navbar-icons {
   display: flex;
 }
 
-.navbar .navbar-icons .notification-icon {
+nav .navbar .navbar-icons .notification-icon {
   margin-right: 50px;
 }
 
-.navbar .navbar-icons .icon {
+nav .navbar .navbar-icons .icon {
   width: 30px;
   height: 30px;
   font-size: 30px;
   cursor: pointer;
 }
 
-.user-menu {
+nav .user-menu {
   position: absolute;
   top: calc(100% + 10px);
-  /* Chuyển popup xuống dưới setting */
   left: 50%;
   transform: translateX(-50%);
   background-color: #fff;
@@ -43,21 +43,19 @@ nav {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: none;
-  /* Ẩn popup mặc định */
 }
 
-.user-menu.active {
+nav .user-menu.active {
   display: block;
   top: calc(100% + 10px);
-  /* Đặt vị trí cho popup */
   left: 50%;
   transform: translateX(-50%);
 }
 
-.user-menu .arrow-up {
+nav .user-menu .arrow-up {
   position: absolute;
   top: -12px;
-  left: 65%;
+  left: 70%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
@@ -66,7 +64,7 @@ nav {
   border-bottom: 12px solid #C8C9C7;
 }
 
-.user-menu .close {
+nav .user-menu .close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -74,12 +72,14 @@ nav {
   color: black;
 }
 
-.user-menu .user-info {
+nav .user-menu .user-info {
   display: flex;
   align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #C8C9C7;
 }
 
-.user-menu .avatar {
+nav .user-menu .avatar {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -90,37 +90,49 @@ nav {
   align-items: center;
 }
 
-.user-menu .avatar img {
+nav .user-menu .avatar img {
   max-width: 100%;
   max-height: 100%;
 }
 
-.user-menu .info .name {
+nav .user-menu .info .name {
   margin: 0;
 }
 
-.user-menu .info .email {
+nav .user-menu .info .email {
   font-size: 14px;
   color: #777;
 }
 
-.user-menu .user-menu-items {
+nav .user-menu .user-menu-items {
   margin-top: 15px;
 }
 
-.user-menu .user-menu-item {
-  display: block;
-  padding: 10px 0;
+nav .user-menu .user-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 12px;
+  border-radius: 8px;
   text-decoration: none;
   color: #333;
   transition: background-color 0.3s ease;
 }
 
-.user-menu .user-menu-item:hover {
+nav .user-menu .user-menu-item .icon {
+  margin-right: 14px;
+  font-size: 18px;
+}
+
+nav .user-menu .user-menu-item .link {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+nav .user-menu .user-menu-item:hover {
   background-color: #f0f0f0;
 }
 
-.user-menu .user-menu-item.active {
+nav .user-menu .user-menu-item.active {
   font-weight: bold;
 }
 

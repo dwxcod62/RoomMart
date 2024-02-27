@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <%   Account account = (Account) session.getAttribute("USER");%>
+    <%  Account account = (Account) session.getAttribute("USER");   %>
 <div>
     <div class="row main-body" style="padding: 0;margin: 0;">
         <%@include file="component/navbar.jsp" %>

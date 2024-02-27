@@ -3,7 +3,7 @@
 
 <nav>
     <div class="navbar">
-        <div class="navbar-logo">
+        <div class="navbar-logo" onclick="goToHomePage()">
             <img src="./assets/images/logos/logo.png" alt="">
         </div>
         <div class="navbar-center"></div>
@@ -11,8 +11,8 @@
             <div class="notification-icon">
                 <i class="bx bx-bell icon"></i>
             </div>
-            <div class="settings-icon">
-                <img src="./assets/images/favicon/checked.jpg" alt="" class="icon" onclick="toggleUserMenu()">
+            <div class="user-icon">
+                <i class="bx bx-user-circle icon" onclick="toggleUserMenu()"></i>
             </div>
         </div>
     </div>
@@ -20,26 +20,31 @@
     <!-- User menu popup -->
     <div id="userMenu" class="user-menu">
         <div class="arrow-up"></div>
-        <a href="#" class="close" onclick="hideUserMenu()"> <!-- Change href="#" to your desired close action -->
-            <svg class="ri ri-close" role="img" width="17" height="17">
-<%--                <use xlink:href="/content/map.svg#ri-close"></use>--%>
-            </svg>
+        <a href="" class="close" onclick="hideUserMenu(event)">
+            <i class='bx bx-x bx-lg' style="color: rgba(0, 0, 0, 0.8);"></i>
         </a>
         <div class="user-info d-flex align-items-center">
             <div class="avatar">
                 <div class="alternate">
                 </div>
-                <img class="photo" src="https://via.placeholder.com/150" alt=""> <!-- Avatar photo -->
+                <img class="photo" src="https://via.placeholder.com/150" alt="">
             </div>
             <div class="info">
-                <h4 class="name heading m-b-0">Finn Finn</h4> <!-- User name -->
-                <div class="email small">chiakhoa712@gmail.com</div> <!-- User email -->
+                <h4 class="name heading m-b-0">
+                    ${sessionScope.USER.getAccountInfo().getFullname()}
+                </h4> <!-- User name -->
+                <div class="email small">${sessionScope.USER.getEmail()}</div>
             </div>
         </div>
         <div class="user-menu-items">
-            <a href="#/2113847/account/profile" class="user-menu-item">Account Settings</a>
-            <!-- Account settings link -->
-            <a href="/account/logout" class="user-menu-item">Sign Out</a> <!-- Sign out link -->
+            <a href="ProfileRenter" class="user-menu-item">
+                <i class="bx bx-id-card icon"></i>
+                <span class="link">Thông tin cá nhân</span>
+            </a>
+            <a href="logout" class="user-menu-item">
+                <i class="bx bx-id-card icon"></i>
+                <span class="link">Đăng xuất</span>
+            </a>
         </div>
     </div>
 
