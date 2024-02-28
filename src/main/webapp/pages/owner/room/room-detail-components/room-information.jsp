@@ -19,7 +19,7 @@
                 <c:when test="${sessionScope.room.roomStatus eq 1}">
                     <span class="text-warning">Đang làm hợp đồng</span>
                 </c:when>
-                <c:when test="${sessionScope.room.roomStatus eq -1}">
+                <c:when test="${sessionScope.room.roomStatus eq 2}">
                     <span class="text-danger">Đã được thuê</span>
                 </c:when>
             </c:choose>
