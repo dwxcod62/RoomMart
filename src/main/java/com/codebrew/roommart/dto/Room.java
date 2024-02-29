@@ -23,4 +23,5 @@ public class Room {
     String QRCode;
     Date expiredTimeCode;
     RoomInformation roomInformation;
+    String imgUrl;
 }
