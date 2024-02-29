@@ -32,8 +32,6 @@ nav .navbar .navbar-icons .icon {
 }
 
 nav .user-menu {
-  width: 300px;
-  height: 250px;
   position: absolute;
   top: calc(100% + 10px);
   left: 50%;
