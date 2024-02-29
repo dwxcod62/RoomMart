@@ -865,6 +865,66 @@ public List<String>getListImgByRoomId(int rid){
         return rooms;
     }
 
+    public boolean checkRoomExist(int roomNumber,int hostelID){
+        boolean isExist = false;
+        System.out.println("-> checkRoomExist ");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int count = 0;
+
+
+        String sql = "SELECT COUNT(*) AS count_roomber\n" +
+                "FROM rooms\n" +
+                "WHERE room_number = ? and hostel_id=?;";
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(sql);
+//                System.out.println(sql);
+                pst.setInt(1, roomNumber);
+                pst.setInt(2, hostelID);
+
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    count = rs.getInt("count_roomber");
+                }
+                if (count!=0){
+                    isExist=true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("checkRoomExist error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+
+        return isExist;
+    }
+
 }
 
 
