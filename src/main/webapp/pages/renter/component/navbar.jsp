@@ -27,13 +27,14 @@
             <div class="avatar">
                 <div class="alternate">
                 </div>
-                <img class="photo" src="https://via.placeholder.com/150" alt="">
+                <img class="photo" src="./assets/images/logos/logo.png" alt="">
             </div>
             <div class="info">
-                <h4 class="name heading m-b-0">
-                    ${sessionScope.USER.getAccountInfo().getFullname()}
+                <h4 class="name heading m-b-0"> Lê Bạch Ngọc Khôi Nguyên
+<%--                    ${sessionScope.USER.getAccountInfo().getFullname()}--%>
                 </h4> <!-- User name -->
-                <div class="email small">${sessionScope.USER.getEmail()}</div>
+<%--                <div class="email small">${sessionScope.USER.getEmail()}</div>--%>
+                <div class="email small">nguyenle19032003@gmail.com</div>
             </div>
         </div>
         <div class="user-menu-items">
