@@ -23,8 +23,8 @@ public class RoommateInfoDao {
             "SELECT ri.roomate_info_id, ri.fullname, ri.email, " +
                     "ri.birthday, ri.sex, ri.phone, ri.address, ri.parent_name, ri.parent_phone\n" +
                     "FROM roomateinformations ri\n" +
-                    "JOIN contract_main cm ON ri.contract_id = cm.contract_id\n" +
-                    "WHERE cm.renter_id = ?";
+                    "JOIN Contracts c ON c.renter_id = ri.account_renter_id\n" +
+                    "WHERE room_id IN (SELECT room_id FROM Contracts WHERE renter_id = ?)";
 
 
     // ------------------------------ Func ------------------------------

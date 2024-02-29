@@ -1,5 +1,6 @@
-<%@ page import="com.codebrew.roommart.dto.Roommate" %>
+<%@ page import="com.codebrew.roommart.dto.RoommateInfo" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -28,8 +29,8 @@
 <body>
 <div>
         <%
-        ArrayList<Roommate> listRoommateInfor = (ArrayList<Roommate>) request.getAttribute("listRoommateInfor");
-//    Account account = (Account)session.getAttribute("USER");
+        ArrayList<RoommateInfo> listRoommateInfor = (ArrayList<RoommateInfo>) request.getAttribute("listRoommateInfor");
+        Account account = (Account)session.getAttribute("USER");
   %>
     <!-- navbar -->
 
