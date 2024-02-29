@@ -251,7 +251,7 @@
 
                                             <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
                                             <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(r.hostelId)}" />
-                                            <a class="js__product-link-for-product-id" href="roomDetail?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Roommart" previewlistener="true">
+                                            <a class="js__product-link-for-product-id" href="roomDetailH?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Roommart" previewlistener="true">
                                                 <div class="re__card-image">
                                                     <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
