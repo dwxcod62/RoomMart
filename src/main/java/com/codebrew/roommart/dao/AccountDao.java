@@ -192,4 +192,34 @@ public class AccountDao {
         return acc;
     }
 
+    public boolean updateTokenByUserName(String token, String username) {
+        boolean result = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sqlUpdateStatus = "Update [dbo].[Accounts]\n" +
+                        "Set token = ?\n" +
+                        "Where username = ?";
+                pst = cn.prepareStatement(sqlUpdateStatus);
+                pst.setString(1, token);
+                pst.setString(2, username);
+                result = pst.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    pst.close();
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
 }
