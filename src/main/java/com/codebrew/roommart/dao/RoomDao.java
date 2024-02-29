@@ -1240,6 +1240,107 @@ public List<String>getListImgByRoomId(int rid){
         return isSuccess;
 
     }
+    public int getTotalRoomsByCondition(String city, String district, String ward, String inputText) {
+
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int count=0;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                //room_id	property_id	room_number	room_area	attic	room_status
+
+
+                String sql = "select count(*) as count \n" +
+
+                        "FROM \n" +
+                        "    rooms \n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n where 1=1 " ;
+
+
+                if(inputText!=null&&!inputText.isEmpty()){
+
+                    try{
+                        int input_number = Integer.parseInt(inputText);
+                        sql += " AND ( rooms.room_number = '"+input_number+"'  OR rooms.room_area =  '"+input_number+"')";
+                        sql += "OR ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputText + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputText + "%')\n";
+
+                    }catch (Exception e){
+                        System.out.println("int parse error");
+                        String inputTextLower = inputText.toLowerCase();
+                        sql += "AND ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputTextLower + "%')\n";
+
+                    }
+
+
+                }
+                if  (city!= null&&(!city.equalsIgnoreCase("all")) ) {
+                    System.out.println("CITY NOT EMPTY");
+//                    String c = "Thành Phố Hà Nội";
+//                    if(c.equalsIgnoreCase(city)){
+//                        System.out.println(c + " == " +city);
+//                    }else System.out.println(c + " != " +city);
+                    sql += " AND( hostels.city LIKE '" + city + "'";
+                    if (city!= null && !district .equalsIgnoreCase("all") && district != "" ) {
+                        System.out.println("district not empty : " +district);
+
+                        sql += " AND hostels.district LIKE '" + district + "'";
+                        if (city!= null&&!ward .equalsIgnoreCase("all") && district != "") {
+                            System.out.println("ward not empty : " + ward);
+
+                            sql += " AND hostels.ward = '" + ward + "'";
+                        }
+
+                    }
+                    sql+=")\n";
+                }
+
+//                System.out.println(sql);
+
+                pst = cn.prepareStatement(sql);
+
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        count = rs.getInt("count");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("error in getTotalRoomsByCondition");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return count;
+    }
 
 }
 
