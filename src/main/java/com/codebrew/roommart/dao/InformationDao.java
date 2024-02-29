@@ -15,6 +15,10 @@ public class InformationDao {
                     "AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
                     "FROM AccountInformations INNER JOIN Hostels ON AccountInformations.account_id=Hostels.owner_account_id\n" +
                     "WHERE Hostels.hostel_id= ?";
+    private static final String GET_RENTER_INFO_BY_ID =
+            "SELECT *\n" +
+                    "FROM AccountInformations\n" +
+                    "WHERE account_id = ?";
     //-------------------------------------Method-----------------------------------------
     public Information getHostelOwnerInfoByHostelId(int hostelId) throws SQLException {
         System.out.println("getHostelOwnerInfoByHostelId");
@@ -63,4 +67,6 @@ public class InformationDao {
         }
         return accountInfor;
     }
+
+
 }

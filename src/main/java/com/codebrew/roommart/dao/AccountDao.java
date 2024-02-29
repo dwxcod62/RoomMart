@@ -129,7 +129,8 @@ public class AccountDao {
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
-                    inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd));
+                    int account_id = rs.getInt("account_id");
+                    inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd,account_id));
                 }
             }
         } catch (Exception e) {
