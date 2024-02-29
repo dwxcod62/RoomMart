@@ -85,6 +85,7 @@ public class ChatServlet extends HttpServlet {
 
         AccountInfo ui = uid.getAccountInformationById(acc.getAccId());
 
+
 //        int renterId = acc.getAccId();
         int renterId = acc.getAccId();
         int role = acc.getRole();
@@ -98,7 +99,7 @@ public class ChatServlet extends HttpServlet {
 
             int ownerId = hod.getOwnerIdByHostelId(hostelId);
             AccountInfo owner_ui = uid.getAccountInformationById(ownerId);
-            request.setAttribute("infor2",owner_ui);
+            request.setAttribute("infor2",owner_ui.getInformation());
             System.out.println("ownerid (session): "+ownerId);
             System.out.println("renterid (session): "+renterId);
             System.out.println("hostelid :"+hostelId);

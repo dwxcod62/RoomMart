@@ -109,6 +109,7 @@ public class AccountDao {
     }
 
     public AccountInfo getAccountInformationById(int accId) {
+
         Connection cn = null;
         PreparedStatement pst = null;
         AccountInfo inf = null;
@@ -130,7 +131,9 @@ public class AccountDao {
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
                     int account_id = rs.getInt("account_id");
+
                     inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd,account_id));
+
                 }
             }
         } catch (Exception e) {
@@ -151,6 +154,7 @@ public class AccountDao {
                 }
             }
         }
+
         return inf;
     }
 
