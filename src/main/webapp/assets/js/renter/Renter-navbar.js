@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var parts = fullName.split(" "); // Tách chuỗi thành mảng các từ
         if (parts.length > 1) {
             // Nếu có ít nhất 2 từ, lấy từ đầu tiên và từ cuối cùng
-            return parts[0] + " " + parts[parts.length - 1];
+            return parts[parts.length - 1]  + " " + parts[0];
         } else {
             // Nếu chỉ có một từ, trả về chuỗi ban đầu
             return fullName;

@@ -30,11 +30,10 @@
                 <img class="photo" src="./assets/images/logos/logo.png" alt="">
             </div>
             <div class="info">
-                <h4 class="name heading m-b-0"> Lê Bạch Ngọc Khôi Nguyên
-<%--                    ${sessionScope.USER.getAccountInfo().getFullname()}--%>
+                <h4 class="name heading m-b-0">
+                     ${sessionScope.USER.accountInfo.information.fullname}
                 </h4> <!-- User name -->
-<%--                <div class="email small">${sessionScope.USER.getEmail()}</div>--%>
-                <div class="email small">nguyenle19032003@gmail.com</div>
+                <div class="email small">${sessionScope.USER.getAccountInfo().getInformation().getEmail()}</div>
             </div>
         </div>
         <div class="user-menu-items">
