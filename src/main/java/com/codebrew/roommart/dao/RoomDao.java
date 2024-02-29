@@ -729,9 +729,9 @@ public List<String>getListImgByRoomId(int rid){
                         "    hostels.name, \n" +
                         "    address,\n" +
                         "    city,\n" +
-                        "    ward,\n" +
+                        "    ward, price,\n" +
                         "    district\n"+" ORDER BY \n" +
-                        "    rooms.price \n"+
+
                         "    rooms.room_id ASC\n";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
@@ -746,8 +746,8 @@ public List<String>getListImgByRoomId(int rid){
                         "    city,\n" +
                         "    ward,\n" +
                         "    district,\n" +
-                        "    MIN(imgURL.imgurl) AS imgUrl,\n" +
-                        "    count(imgURL.imgurl) as count_img\n" +
+                        "    MIN(imgURL.url_img) AS imgUrl,\n" +
+                        "    count(imgURL.url_img) as count_img\n" +
                         "    \n" +
                         "FROM \n" +
                         "    rooms \n" +
@@ -757,7 +757,7 @@ public List<String>getListImgByRoomId(int rid){
                         "    imgURL ON rooms.room_id = imgURL.room_id \n  where 1=1 ";
 
 
-                if(inputText!=null){
+                if(!inputText.isEmpty()){
 
                     try{
                         int input_number = Integer.parseInt(inputText);
@@ -776,18 +776,18 @@ public List<String>getListImgByRoomId(int rid){
 
 
                 }
-                if  (!city.equalsIgnoreCase("all") && city!= null) {
+                if  (!city.equalsIgnoreCase("all") && !city.isEmpty()) {
                     System.out.println("CITY NOT EMPTY");
 //                    String c = "Thành Phố Hà Nội";
 //                    if(c.equalsIgnoreCase(city)){
 //                        System.out.println(c + " == " +city);
 //                    }else System.out.println(c + " != " +city);
                     sql += " AND( hostels.city LIKE '" + city + "'";
-                    if (!district .equalsIgnoreCase("all") && district != "" && city!= null) {
+                    if (!district .equalsIgnoreCase("all") && !district.isEmpty() && !city.isEmpty()) {
                         System.out.println("district not empty : " +district);
 
                         sql += " AND hostels.district LIKE '" + district + "'";
-                        if (!ward .equalsIgnoreCase("all") && district != "" && city!= null) {
+                        if (!ward .equalsIgnoreCase("all") && !district.isEmpty() && !city.isEmpty()) {
                             System.out.println("ward not empty : " + ward);
 
                             sql += " AND hostels.ward = '" + ward + "'";
@@ -806,8 +806,8 @@ public List<String>getListImgByRoomId(int rid){
                     sql += " AND rooms.price <= " + highPrice;
                 }
                 sql+=groupBySql;
-                sql+=" OFFSET ("+page+" - 1) * "+page_Size+"\n" +
-                        " LIMIT "+page_Size+";\n";
+                sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
+                        " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
                 System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
