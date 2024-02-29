@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.dto.RoomInformation;
+import com.codebrew.roommart.dto.Contract;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
 import java.sql.*;
@@ -16,6 +17,11 @@ public class RoomDao {
     //--------------------------------SQL query----------------------------------
     private static final String ADD_IMGs = "INSERT INTO imgURL (room_id,url_img) \n" +
             "VALUES (?, ?)";
+    private static final String
+            GET_CONTRACT_BY_ROOM_ID = "SELECT cd.end_date\n" +
+            "FROM contract_details cd\n" +
+            "JOIN contract_main cm ON cd.contract_details_id = cm.contract_details_id\n" +
+            "WHERE cm.room_id = ?;\n";
     //--------------------------------Method-------------------------------------
     public List<Room> getListRoomsByHostelId(int hostelID) {
         Connection cn = null;
@@ -924,6 +930,54 @@ public List<String>getListImgByRoomId(int rid){
 
         return isExist;
     }
+    public Date get_end_date_by_RoomId(int rid) {
+        System.out.println("-> get_end_date_by_RoomId ");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        Date endDate = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_CONTRACT_BY_ROOM_ID);
+//                System.out.println(GET_CONTRACT_BY_ROOM_ID);
+                pst.setInt(1, rid);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    endDate = rs.getDate("end_date");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("get_end_date_by_RoomId error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return endDate;
+    }
+
 
 }
 
