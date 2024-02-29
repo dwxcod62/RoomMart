@@ -19,6 +19,12 @@ public class RoommateInfoDao {
             "SELECT roomate_info_id, fullname, email, birthday, sex, phone, address, \n" +
             "identity_card_number, parent_name, parent_phone FROM [dbo].[RoomateInformations] \n" +
             "WHERE account_renter_id = ?";
+    private static final String GET_LIST_ROOMMATES_BY_RENTER_ID =
+            "SELECT ri.roomate_info_id, ri.fullname, ri.email, " +
+                    "ri.birthday, ri.sex, ri.phone, ri.address, ri.parent_name, ri.parent_phone\n" +
+                    "FROM roomateinformations ri\n" +
+                    "JOIN contract_main cm ON ri.contract_id = cm.contract_id\n" +
+                    "WHERE cm.renter_id = ?";
 
 
     // ------------------------------ Func ------------------------------
@@ -45,6 +51,46 @@ public class RoommateInfoDao {
                             .phone(rs.getString("phone"))
                             .address(rs.getString("address"))
                             .cccd(rs.getString("identity_card_number"))
+                            .build();
+                    RoommateInfo roommateInfo = RoommateInfo.builder()
+                            .roommateID(rs.getInt("roomate_info_id"))
+                            .information(information)
+                            .parentName(rs.getString("parent_name"))
+                            .parentPhone(rs.getString("parent_phone")).build();
+                    list.add(roommateInfo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) rs.close();
+            if (psm != null) psm.close();
+            if (conn != null) conn.close();
+        }
+        return list;
+    }
+
+    public List<RoommateInfo> getListRoommatesByRenterID(int renterId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+
+        List<RoommateInfo> list = new ArrayList<RoommateInfo>();
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(GET_LIST_ROOMMATES_BY_RENTER_ID);
+                psm.setInt(1, renterId);
+                rs = psm.executeQuery();
+
+                while (rs.next()) {
+                    Information information = Information.builder()
+                            .fullname(rs.getString("fullname"))
+                            .email(rs.getString("email"))
+                            .birthday(rs.getDate("birthday").toString())
+                            .sex(rs.getInt("sex"))
+                            .phone(rs.getString("phone"))
+                            .address(rs.getString("address"))
                             .build();
                     RoommateInfo roommateInfo = RoommateInfo.builder()
                             .roommateID(rs.getInt("roomate_info_id"))
