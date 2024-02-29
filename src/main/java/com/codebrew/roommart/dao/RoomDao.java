@@ -706,7 +706,7 @@ public List<String>getListImgByRoomId(int rid){
         return room;
     }
 
-    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size) {
+    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size,int lowPrice,int highPrice) {
         System.out.println("get list condition method, CITY get: " +city);
         System.out.println("get by condition input text: " + inputText);
         Connection cn = null;
@@ -731,10 +731,11 @@ public List<String>getListImgByRoomId(int rid){
                         "    city,\n" +
                         "    ward,\n" +
                         "    district\n"+" ORDER BY \n" +
+                        "    rooms.price \n"+
                         "    rooms.room_id ASC\n";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
-
+                        "    rooms.price, \n" +
                         "    room_number, \n" +
                         "    capacity, \n" +
                         "    room_area, \n" +
@@ -745,15 +746,15 @@ public List<String>getListImgByRoomId(int rid){
                         "    city,\n" +
                         "    ward,\n" +
                         "    district,\n" +
-                        "    MIN(roomimgs.imgurl) AS imgUrl,\n" +
-                        "    count(roomimgs.imgurl) as count_img\n" +
+                        "    MIN(imgURL.imgurl) AS imgUrl,\n" +
+                        "    count(imgURL.imgurl) as count_img\n" +
                         "    \n" +
                         "FROM \n" +
                         "    rooms \n" +
                         "JOIN \n" +
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
                         "JOIN \n" +
-                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n  where 1=1 ";
+                        "    imgURL ON rooms.room_id = imgURL.room_id \n  where 1=1 ";
 
 
                 if(inputText!=null){
@@ -796,10 +797,17 @@ public List<String>getListImgByRoomId(int rid){
                     sql+=")\n";
 
 
+
+                }
+                if (lowPrice>0){
+                    sql += " AND rooms.price >= " + lowPrice;
+                }
+                if (highPrice>0){
+                    sql += " AND rooms.price <= " + highPrice;
                 }
                 sql+=groupBySql;
-                sql+="OFFSET ("+page+" - 1) * "+page_Size+"\n" +
-                        "LIMIT "+page_Size+";\n";
+                sql+=" OFFSET ("+page+" - 1) * "+page_Size+"\n" +
+                        " LIMIT "+page_Size+";\n";
                 System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
@@ -809,7 +817,7 @@ public List<String>getListImgByRoomId(int rid){
                 if (rs != null) {
                     while (rs.next()) {
                         int roomID = rs.getInt("room_id");
-
+                        int price = rs.getInt("price");
                         int roomNumber = rs.getInt("room_number");
                         int capacity = rs.getInt("capacity");
                         double roomArea = rs.getDouble("room_area");
@@ -830,6 +838,7 @@ public List<String>getListImgByRoomId(int rid){
 
                         rooms.add(Room.builder()
                                 .roomId(roomID)
+                                .price(price)
                                 .hostelId(imgNumber)
                                 .roomNumber(roomNumber)
                                 .roomArea(roomArea)
