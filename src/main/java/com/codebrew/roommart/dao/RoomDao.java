@@ -700,6 +700,171 @@ public List<String>getListImgByRoomId(int rid){
         return room;
     }
 
+    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size) {
+        System.out.println("get list condition method, CITY get: " +city);
+        System.out.println("get by condition input text: " + inputText);
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                //room_id	property_id	room_number	room_area	attic	room_status
+                String groupBySql=" GROUP BY \n" +
+                        "    rooms.room_id, \n"+
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district\n"+" ORDER BY \n" +
+                        "    rooms.room_id ASC\n";
+                String sql = "SELECT \n" +
+                        "    rooms.room_id, \n" +
+
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district,\n" +
+                        "    MIN(roomimgs.imgurl) AS imgUrl,\n" +
+                        "    count(roomimgs.imgurl) as count_img\n" +
+                        "    \n" +
+                        "FROM \n" +
+                        "    rooms \n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
+                        "JOIN \n" +
+                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n  where 1=1 ";
+
+
+                if(inputText!=null){
+
+                    try{
+                        int input_number = Integer.parseInt(inputText);
+
+                        sql += " AND ( rooms.room_number = '"+input_number+"'  OR rooms.room_area =  '"+input_number+"')";
+                        sql += "OR ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputText + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputText + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputText + "%')\n";
+
+                    }catch (Exception e){
+                        System.out.println("int parse error");
+                        String inputTextLower = inputText.toLowerCase();
+                        sql += "AND ( CAST(LOWER(hostels.city) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.district) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+" or CAST(LOWER(hostels.ward) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%' ";
+                        sql += " OR CAST(LOWER(hostels.name) AS VARCHAR) LIKE "+"'%" + inputTextLower + "%'"+"  OR CAST(LOWER(hostels.address) AS VARCHAR) LIKE  "+"'%" + inputTextLower + "%')\n";
+
+                    }
+
+
+                }
+                if  (!city.equalsIgnoreCase("all") && city!= null) {
+                    System.out.println("CITY NOT EMPTY");
+//                    String c = "Thành Phố Hà Nội";
+//                    if(c.equalsIgnoreCase(city)){
+//                        System.out.println(c + " == " +city);
+//                    }else System.out.println(c + " != " +city);
+                    sql += " AND( hostels.city LIKE '" + city + "'";
+                    if (!district .equalsIgnoreCase("all") && district != "" && city!= null) {
+                        System.out.println("district not empty : " +district);
+
+                        sql += " AND hostels.district LIKE '" + district + "'";
+                        if (!ward .equalsIgnoreCase("all") && district != "" && city!= null) {
+                            System.out.println("ward not empty : " + ward);
+
+                            sql += " AND hostels.ward = '" + ward + "'";
+                        }
+
+                    }
+                    sql+=")\n";
+
+
+                }
+                sql+=groupBySql;
+                sql+="OFFSET ("+page+" - 1) * "+page_Size+"\n" +
+                        "LIMIT "+page_Size+";\n";
+                System.out.println(sql);
+
+                pst = cn.prepareStatement(sql);
+
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int roomID = rs.getInt("room_id");
+
+                        int roomNumber = rs.getInt("room_number");
+                        int capacity = rs.getInt("capacity");
+                        double roomArea = rs.getDouble("room_area");
+                        int hasAttic = rs.getInt("has_attic");
+                        int roomStatus = rs.getInt("room_status");
+                        String hname = rs.getString("name");
+                        String address = rs.getString("address");
+                        String city2 = rs.getString("city");
+                        String district2 = rs.getString("district");
+                        String ward2 = rs.getString("ward");
+                        int imgNumber = rs.getInt("count_img");
+                        String img = rs.getString("imgUrl");
+                        List<String> imgList = new ArrayList<>();
+                        imgList.add(img);
+
+                        RoomInformation roomInformation = new RoomInformation(hname,address,ward2,district2,city2);
+
+
+                        rooms.add(Room.builder()
+                                .roomId(roomID)
+                                .hostelId(imgNumber)
+                                .roomNumber(roomNumber)
+                                .roomArea(roomArea)
+                                .capacity(capacity)
+                                .roomStatus(roomStatus)
+                                .hasAttic(hasAttic)
+                                .roomInformation(roomInformation)
+                                .imgUrl(imgList)
+                                .build());
+                    }
+                }else {rooms=null;}
+            }
+        } catch (Exception e) {
+            System.out.println("error in getListRoomsByCondition");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return rooms;
+    }
+
 }
 
 
