@@ -25,4 +25,5 @@ public class Room {
     Date expiredTimeCode;
     RoomInformation roomInformation;
     List<String> imgUrl;
+    int price;
 }

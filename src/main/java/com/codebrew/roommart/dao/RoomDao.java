@@ -978,6 +978,125 @@ public List<String>getListImgByRoomId(int rid){
         return endDate;
     }
 
+    public List<Room> getAllRecommendRoom(int rid) {
+        System.out.println("getAllRecommendRoom");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                //room_id	property_id	room_number	room_area	attic	room_status
+                String sql = "SELECT \n" +
+                        "    rooms.room_id, \n" +
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district,\n" +
+                        "    MIN(roomimgs.imgurl) AS imgUrl,\n" +
+                        "    count(roomimgs.imgurl) as count_img\n" +
+                        "    \n" +
+                        "FROM \n" +
+                        "    rooms \n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
+                        "JOIN \n" +
+                        "    roomimgs ON rooms.room_id = roomimgs.room_id \n" +
+                        " WHERE rooms.room_id <> ? and (rooms.price BETWEEN rooms.price-500000 AND rooms.price+1000000) and rooms.hostel_id = (select hostel_id from rooms where room_id = ?)\n"+
+                        "GROUP BY \n" +
+                        "    rooms.room_id, \n" +
+                        "    room_number, \n" +
+                        "    capacity, \n" +
+                        "    room_area, \n" +
+                        "    has_attic, \n" +
+                        "    room_status,\n" +
+                        "    hostels.name, \n" +
+                        "    address,\n" +
+                        "    city,\n" +
+                        "    ward,\n" +
+                        "    district \n"+"ORDER BY \n" +
+                        "    rooms.room_id DESC limit 5;";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, rid);
+                pst.setInt(2, rid);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int roomID = rs.getInt("room_id");
+
+                        int roomNumber = rs.getInt("room_number");
+                        int capacity = rs.getInt("capacity");
+                        double roomArea = rs.getDouble("room_area");
+                        int hasAttic = rs.getInt("has_attic");
+                        int roomStatus = rs.getInt("room_status");
+                        String hname = rs.getString("name");
+                        String address = rs.getString("address");
+                        String city = rs.getString("city");
+                        String district = rs.getString("district");
+                        String ward = rs.getString("ward");
+                        String img = rs.getString("imgUrl");
+                        int imgNumber = rs.getInt("count_img");
+                        List<String> imgList = new ArrayList<>();
+                        imgList.add(img);
+
+                        RoomInformation roomInformation = new RoomInformation(hname,address,ward,district,city);
+                        rooms.add(Room.builder()
+                                .roomId(roomID)
+                                .hostelId(imgNumber) // number of image :))
+                                .roomNumber(roomNumber)
+                                .roomArea(roomArea)
+                                .capacity(capacity)
+                                .roomStatus(roomStatus)
+                                .hasAttic(hasAttic)
+                                .roomInformation(roomInformation)
+                                .imgUrl(imgList)
+                                .build());
+                    }
+                }else {rooms=null;}
+
+
+
+
+            }
+        } catch (Exception e) {
+            System.out.println("error getAllRoom");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return rooms;
+    }
 
 }
 
