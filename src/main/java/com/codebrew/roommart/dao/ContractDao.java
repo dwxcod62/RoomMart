@@ -1,9 +1,6 @@
 package com.codebrew.roommart.dao;
 
-import com.codebrew.roommart.dto.Hostel;
-import com.codebrew.roommart.dto.Information;
-import com.codebrew.roommart.dto.Room;
-import com.codebrew.roommart.dto.ServiceInfo;
+import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
 import java.sql.Connection;
@@ -271,5 +268,56 @@ public class ContractDao {
             }
         }
         return servicesList;
+    }
+    public List<Infrastructures> getInfrastructuresByContract(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Infrastructures> infrastructuresList = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_INFRASTRUCTURES_BY_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    String name = rs.getString("infrastructure_name");
+                    int quantity = rs.getInt("quantity");
+
+                    Infrastructures infrastructures = Infrastructures.builder()
+                            .name(name)
+                            .quantity(quantity)
+                            .build();
+
+                    infrastructuresList.add(infrastructures);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return infrastructuresList;
     }
 }
