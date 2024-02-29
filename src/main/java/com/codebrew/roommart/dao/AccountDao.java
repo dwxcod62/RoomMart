@@ -1,8 +1,9 @@
 package com.codebrew.roommart.dao;
 
 import com.codebrew.roommart.dto.Account;
-import com.codebrew.roommart.dto.Roommate;
-import com.codebrew.roommart.dto.UserInformation;
+import com.codebrew.roommart.dto.AccountInfo;
+import com.codebrew.roommart.dto.Information;
+import com.codebrew.roommart.dto.RoommateInfo;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
 import java.sql.Connection;
@@ -14,44 +15,148 @@ import java.util.List;
 
 public class AccountDao {
 
+    private Account getAccount(ResultSet rs) {
+        Account acc = null;
+        AccountInfo accInf = null;
+        List<RoommateInfo> roommateInfoList = new ArrayList<>();
+        try {
+            int accId = rs.getInt("account_id");
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            String createdate = rs.getString("create_date");
+            int status = rs.getInt("status");
+            int role = rs.getInt("role");
+            int roomId = rs.getInt("room_id");
+            if (role == 2) { //Renter
+                roommateInfoList = new RoommateInfoDao().getListRoommatesOfAnAccount(accId);
+                accInf = getAccountInformationById(accId);
+                acc = Account.builder()
+                        .accId(accId)
+                        .username(username)
+                        .password(password)
+                        .createDate(createdate)
+                        .status(status)
+                        .role(role)
+                        .roomId(roomId)
+                        .accountInfo(accInf)
+                        .roommateInfo(roommateInfoList)
+                        .build();
+            } else {
+                accInf = getAccountInformationById(accId);
+                acc = Account.builder()
+                        .accId(accId)
+                        .username(username)
+                        .password(password)
+                        .createDate(createdate)
+                        .status(status)
+                        .role(role)
+                        .roomId(-1)
+                        .accountInfo(accInf)
+                        .roommateInfo(null)
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return acc;
+    }
 
-    private static final String CHECK_RENTER_RENTED = "SELECT * FROM contract_main\n" +
-            "WHERE \n" +
-            "    c_status = 2 AND renter_id = ( SELECT account_id FROM accounts WHERE email = ?);";
-    public boolean checkRenterRenting(String email){
-        boolean result = false;
+    public Account getAccountByUsernameAndPassword(String username, String password) {
         Connection cn = null;
         PreparedStatement pst = null;
-
+        ResultSet rs = null;
+        Account acc = null;
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement(CHECK_RENTER_RENTED);
-                pst.setString(1, email);
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()){
-                    result = true;
+                String sql = "SELECT *\n" +
+                        "FROM [dbo].[Accounts]\n" +
+                        "WHERE [username] = ? AND [password] = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setString(1, username);
+                pst.setString(2, password);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    acc = getAccount(rs);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null) {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
                 try {
                     pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
                     cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
-        return result;
+        return acc;
     }
 
-    public  Account getAccountByToken(String token){
-        Account acc = null;
+    public AccountInfo getAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
+        AccountInfo inf = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT *\n" +
+                        "FROM [dbo].[AccountInformations]\n" +
+                        "WHERE [account_id] = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, accId);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String birthday = rs.getString("birthday");
+                    int sex = rs.getInt("sex");
+                    String phone = rs.getString("phone");
+                    String address = rs.getString("address");
+                    String cccd = rs.getString("identity_card_number");
+                    inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return inf;
+    }
+
+    public Account getAccountByToken(String token) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
 
         try {
             cn = DatabaseConnector.makeConnection();
@@ -63,7 +168,7 @@ public class AccountDao {
                 pst.setString(1, token);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-//                    acc = getAccount(rs);
+                    acc = getAccount(rs);
                 }
             }
         } catch (Exception e) {
@@ -86,89 +191,5 @@ public class AccountDao {
         }
         return acc;
     }
-
-    public boolean updateTokenByUserName(String token, String email){
-        return false;
-    }
-
-
-    private static final String GET_INFO_FOR_CONTRACT =
-            "SELECT ac.account_id, ai.fullname, ai.birthday, ai.phone, ai.identity_card_number, ai.address  \n" +
-                    "FROM accountinformations AS ai\n" +
-                    "JOIN accounts AS ac ON ai.account_id = ac.account_id\n" +
-                    "WHERE ac.email = ?";
-
-    public UserInformation getInfoByMailForContact(String email){
-        UserInformation info = null;
-        Connection cn = null;
-        PreparedStatement pst = null;
-
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                pst = cn.prepareStatement(GET_INFO_FOR_CONTRACT);
-                pst.setString(1, email);
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    info = UserInformation.builder().account_id(rs.getInt("account_id"))
-                            .fullname(rs.getString("fullname"))
-                            .address(rs.getString("address"))
-                            .cccd(rs.getString("identity_card_number"))
-                            .phone(rs.getString("phone"))
-                            .birthday(rs.getDate("birthday").toString())
-                            .build();
-                } else {
-                    System.out.println("LAY THONG TIN THAT BAI O getInfoByMailForContact trong AccountDao");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cn != null && pst != null) {
-                try {
-                    pst.close();
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return info;
-    }
-
-    private static final String UPDATE_TOKEN_BY_EMAIL =
-            "Update accounts " +
-                    "Set token = ? " +
-                    "Where email = ?";
-
-    public boolean updateTokenByEmail(String token, String email ){
-        boolean result = false;
-        Connection cn = null;
-        PreparedStatement pst = null;
-
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                pst = cn.prepareStatement(UPDATE_TOKEN_BY_EMAIL);
-                pst.setString(1, token);
-                pst.setString(2, email);
-                result = pst.executeUpdate() > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cn != null && pst != null) {
-                try {
-                    pst.close();
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return result;
-    }
-
-
 
 }

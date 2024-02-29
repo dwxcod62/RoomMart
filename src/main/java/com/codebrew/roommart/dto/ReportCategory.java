@@ -1,6 +1,7 @@
 package com.codebrew.roommart.dto;
 
 import lombok.*;
+
 @Builder
 @Data
 @AllArgsConstructor
@@ -9,6 +10,6 @@ import lombok.*;
 @Setter
 @ToString
 public class ReportCategory {
-    int cateID;
-    String cateTitle;
+     int cateID;
+     String cateTitle;
 }

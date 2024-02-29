@@ -1,7 +1,7 @@
 package com.codebrew.roommart.servlets.SystemServlet;
 
-import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
+import com.codebrew.roommart.utils.Decorations;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -10,46 +10,49 @@ import java.io.IOException;
 
 @WebServlet(name = "DashboardServlet", value = "/DashboardServlet")
 public class DashboardServlet extends HttpServlet {
-
-    private static String url = "login";
+    private static String url = "login-page";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        try {
-            HttpSession session = request.getSession();
-            Account acc = (Account) session.getAttribute("USER");
-
-            if (acc != null) {
-                switch (acc.getRole()) {
-                    case 0: //  Admin
-                        url = "thieu.jsp";
-                        break;
-                    case 1: //  Owner
-                        url = "owner-dashboard";
-                        break;
-                    case 2: //  Staff
-                        url = "thieu.jsp";
-                        break;
-                    case 3: //  Renter
-                        SystemDao dao = new SystemDao();
-                        boolean st = dao.isRenterRentingRoom(acc.getAccId());
-                        session.setAttribute("st",st);
-                        if (st){
-                            url = "Renter-HomePage";
-                        } else {
-                            url = "home";
-                        }
-                }
+        Decorations.measureExecutionTime(() -> {
+            try {
+                dashboard(request, response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-
-        } catch ( Exception e){
-            e.printStackTrace();
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
-        }
+            return null;
+        }, "DashboardServlet.doGet");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response );
     }
+
+    private void dashboard(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        try {
+            HttpSession session = req.getSession(true);
+            Account account = (Account) session.getAttribute("USER");
+
+            if (account != null) {
+                switch (account.getRole()) {
+                    case 0:
+                        url = "ahihi";
+                        break;
+                    case 1:
+                        url = "ahihi";
+                        break;
+                    case 2:
+                        url = "ahihi";
+                        break;
+                }
+            }
+
+            session.setAttribute("CURRENT_PAGE", "dashboard");
+        } catch (Exception e) {
+            log("Error at DashboardServlet: " + e.toString());
+        } finally {
+            req.getRequestDispatcher(url).forward(req, res);
+        }
+    }
+
 }

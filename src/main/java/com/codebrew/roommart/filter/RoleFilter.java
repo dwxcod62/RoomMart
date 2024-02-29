@@ -2,7 +2,6 @@
 package com.codebrew.roommart.filter;
 
 import com.codebrew.roommart.dao.AccountDao;
-import com.codebrew.roommart.dao.SystemDao;
 import com.codebrew.roommart.dto.Account;
 import java.io.IOException;
 
@@ -20,37 +19,38 @@ public class RoleFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
 
-        Account acc = null;
-        String token = null;
-        String url = null;
+       HttpServletRequest httpRequest = (HttpServletRequest) request;
+       HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
+       Cookie[] c = httpRequest.getCookies();
+       String token = null;
+       String url = null;
 
-        HttpSession session = httpRequest.getSession(true);
-        Cookie[] c = httpRequest.getCookies();
 
-        String uri = httpRequest.getRequestURI();
-        int lastIndex = uri.lastIndexOf("/");
-        String resource = uri.substring(lastIndex + 1);
+       String uri = httpRequest.getRequestURI();
+       int lastIndex = uri.lastIndexOf("/");
+       String resource = uri.substring(lastIndex+1);
 
-        if ((session.getAttribute("USER") != null || c != null) &&
-                ("success".equals(resource) || "login".equals(resource) || "log".equals(resource) || resource.isEmpty())) {
+       HttpSession session = httpRequest.getSession(true);
 
-            for (Cookie cookie : c) {
-                if (cookie.getName().equals("selector")) {
-                    token = cookie.getValue();
-                }
-            }
+       Account acc = null;
+       if ((c != null || session.getAttribute("USER") != null) && (resource.isEmpty() || "success".equals(resource) || "login".equals(resource) || "loginPage".equals(resource))) {
+           for (Cookie cookie : c) {
+               if (cookie.getName().equals("selector")) {
+                   token = cookie.getValue();
+               }
+           }
 
-            acc = ( token != null ) ? new SystemDao().getAccountByToken(token) : (Account) session.getAttribute("USER");
-            if (acc != null) {
-                url = "dashboard";
-                httpResponse.sendRedirect(url);
-            } else
-                chain.doFilter(request, response);
-        } else
-            chain.doFilter(request, response);
+           acc = (token != null) ? new AccountDao().getAccountByToken(token) : (Account) session.getAttribute("USER");
+           if(acc != null) {
+               int role = acc.getRole();
+               url = "dashboard";
+               httpResponse.sendRedirect(url);
+           }
+           else chain.doFilter(request, response);
+       }
+       else
+           chain.doFilter(request, response);
     }
 
     @Override

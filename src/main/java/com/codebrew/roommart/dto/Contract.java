@@ -20,4 +20,6 @@ public class Contract {
     int renterId;
     int status;
     String cancelDate;
+    String renter_sign;
+    String owner_sign;
 }

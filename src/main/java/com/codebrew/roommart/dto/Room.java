@@ -3,7 +3,6 @@ package com.codebrew.roommart.dto;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Builder
 @Data
@@ -24,7 +23,4 @@ public class Room {
     String QRCode;
     Date expiredTimeCode;
     RoomInformation roomInformation;
-    List<String> imgUrl;
-    String hostelName;
 }
-

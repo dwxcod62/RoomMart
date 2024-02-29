@@ -1,6 +1,7 @@
 package com.codebrew.roommart.dto;
 
 import lombok.*;
+
 @Builder
 @Data
 @AllArgsConstructor

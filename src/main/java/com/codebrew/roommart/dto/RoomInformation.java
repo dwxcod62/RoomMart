@@ -16,4 +16,3 @@ public class RoomInformation {
     String district;
     String city;
 }
-

@@ -1,23 +1,30 @@
 package com.codebrew.roommart.dto;
 
-import java.sql.Date;
-import java.util.List;
 import lombok.*;
 
+import java.util.List;
 
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Account {
     private int accId;
-    private String email;
+    private String username;
     private String password;
     private String token;
     private String createDate;
+    private String expiredDate;
     private int status;
     private int role;
-    private UserInformation accountInfo;
+    private int roomId;
+    private String otp;
+    private String expiredTimeOTP;
+    private String requestRecoverPasswordCode;
+    private String expiredTimeRecoverPassword;
+    private AccountInfo accountInfo;
+    private List<RoommateInfo> roommateInfo;
 }
-
