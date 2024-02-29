@@ -514,6 +514,110 @@ public class RoomDao {
         }
         return isSuccess;
     }
+//DatabaseConnector
+public List<String>getListImgByRoomId(int rid){
+    System.out.println("getListImgByRoomId");
+    Connection cn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    List<String> imgs = new ArrayList<>();
+    try {
+        cn = DatabaseConnector.makeConnection();
+        if (cn != null) {
+
+            // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+            //room_id	property_id	room_number	room_area	attic	room_status
+            String sql = "SELECT url_img\n" +
+                    "FROM imgURL\n" +
+                    "where room_id = "+rid;
+
+            pst = cn.prepareStatement(sql);
+
+            rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    imgs.add(rs.getString("imgurl"));
+                }
+            }else {imgs=null;}
+        }
+    } catch (Exception e) {
+        System.out.println("getListImgByRoomId error");
+        e.printStackTrace();
+    } finally {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (pst != null) {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (cn != null) {
+            try {
+                cn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    return imgs;
+}
+    public Room getRoomById(int roomId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfor = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(
+                        "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic], R.[hostel_id], R.[room_status]\n" +
+                                "FROM [dbo].[Rooms] AS R\n" +
+                                "WHERE R.[room_id]= ?");
+                pst.setInt(1, roomId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int roomID = rs.getInt("room_id");
+                    int hostelId = rs.getInt("hostel_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    int hasAttic = rs.getInt("has_Attic");
+                    int roomStatus = rs.getInt("room_status");
+                    roomInfor = Room
+                            .builder()
+                            .roomId(roomID)
+                            .hostelId(hostelId)
+                            .roomNumber(roomNumber)
+                            .roomArea(roomArea)
+                            .capacity(capacity)
+                            .hasAttic(hasAttic)
+                            .roomStatus(roomStatus)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfor;
+    }
+
 }
 
 
