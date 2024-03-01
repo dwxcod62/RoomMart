@@ -58,10 +58,9 @@ public class ContractDao {
             "FROM Contracts\n" +
             "WHERE room_id IN (SELECT room_id FROM Contracts WHERE renter_id = ?)";
     private static final String
-            GET_INFO_CONTRACT = "SELECT cd.start_date, cd.end_date, cd.deposit, cd.cost_per_month\n" +
-            "FROM contract_main cm\n" +
-            "JOIN contract_details cd ON cm.contract_details_id = cd.contract_details_id\n" +
-            "WHERE cm.renter_id = ?";
+            GET_INFO_CONTRACT = "SELECT start_date, expiration, deposit, price\n" +
+            "FROM Contracts\n" +
+            "WHERE renter_id = ?";
 
     public Hostel getHostelByContract(int renterId){
         Connection cn = null;
@@ -368,5 +367,109 @@ public class ContractDao {
             }
         }
         return count;
+    }
+    public Information getContractByRenterId(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Information accountInfor = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_RENTER_BY_CONTRACT);
+                pst.setInt(1, renterId);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    String fullName = rs.getString("renter_full_name");
+                    String phone = rs.getString("renter_phone");
+                    String cccd = rs.getString("renter_identify_card");
+                    String bod = rs.getDate("renter_birthday").toString();
+
+                    accountInfor = Information.builder()
+                            .fullname(fullName)
+                            .phone(phone)
+                            .cccd(cccd)
+                            .birthday(bod)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return accountInfor;
+    }
+    public Contract getInfoContract(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contractInfor = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_INFO_CONTRACT);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+            }  if (rs != null && rs.next()) {
+                String start_date = rs.getDate("start_date").toString();
+                String expiration = rs.getDate("expiration").toString();
+                int deposit = rs.getInt("deposit");
+                int price = rs.getInt("price");
+
+                contractInfor = Contract.builder()
+                        .startDate(start_date)
+                        .expiration(expiration)
+                        .deposit(deposit)
+                        .price(price)
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return contractInfor;
     }
 }
