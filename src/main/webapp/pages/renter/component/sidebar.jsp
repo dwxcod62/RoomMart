@@ -13,25 +13,25 @@
         <div class="card-body">
             <ul class="lists">
                 <li class="list">
-                    <a href="Renter-HomePage" class="nav-link">
+                    <a href="RenterHome" class="nav-link">
                         <i class="bx bx-home-alt icon"></i>
                         <span class="link">Thông tin phòng</span>
                     </a>
                 </li>
                 <li class="list">
-                    <a href="RoommatePage" class="nav-link">
+                    <a href="RenterRoommate" class="nav-link">
                         <i class="bx bx-group icon"></i>
                         <span class="link">Xem thành viên</span>
                     </a>
                 </li>
                 <li class="list">
-                    <a href="ContractPage" class="nav-link">
+                    <a href="RenterContract" class="nav-link">
                         <i class="bx bx-copy-alt icon"></i>
                         <span class="link">Hợp đồng</span>
                     </a>
                 </li>
                 <li class="list">
-                    <a href="InvoiceList" class="nav-link">
+                    <a href="RenterBill" class="nav-link">
                         <i class="bx bx-wallet-alt icon"></i>
                         <span class="link">Hóa đơn</span>
                     </a>
