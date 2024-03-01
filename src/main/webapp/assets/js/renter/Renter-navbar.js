@@ -19,7 +19,7 @@ function showUserMenu() {
 
     // Tính toán vị trí cho popup
     var topPos = iconRect.bottom + 15; // Cách icon 15px
-    var leftPos = iconRect.left - (menuRect.width / 2) + (iconRect.width / 2) - 60; // Di chuyển về bên trái một chút
+    var leftPos = iconRect.left - (menuRect.width / 2) + (iconRect.width / 2) - 59; // Di chuyển về bên trái một chút
 
     // Đặt vị trí cho popup
     userMenu.style.top = topPos + 'px';
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Số ký tự tối đa bạn muốn hiển thị trước khi cắt
-    var maxLength = 20;
+    var maxLength = 22;
 
     // Kiểm tra và cắt chuỗi nếu cần
     shortenAndAddTooltip(emailElement, maxLength);

@@ -12,13 +12,11 @@ import java.util.List;
 
 public class ContractDao {
     private static final String
-            GET_RENTER_BY_CONTRACT = "SELECT renter_full_name, renter_phone, renter_identify_card, renter_birthday\n" +
-            "FROM contract_details\n" +
-            "WHERE contract_details_id IN ( " +
-            "    SELECT contract_details_id " +
-            "    FROM contract_main " +
-            "    WHERE renter_id = ? " +
-            ")";
+            GET_RENTER_BY_CONTRACT = "SELECT ai.fullname, ai.birthday, ai.phone, ai.identity_card_number\n" +
+            "FROM Contracts c\n" +
+            "JOIN Accounts a ON c.renter_id = a.account_id\n" +
+            "JOIN AccountInformations ai ON a.account_id = ai.account_id\n" +
+            "WHERE c.renter_id = ?";
     private static final String
             GET_OWNER_BY_CONTRACT = "SELECT ai.fullname, ai.phone, ai.identity_card_number, ai.birthday\n" +
             "FROM Contracts c\n" +
@@ -381,10 +379,10 @@ public class ContractDao {
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    String fullName = rs.getString("renter_full_name");
-                    String phone = rs.getString("renter_phone");
-                    String cccd = rs.getString("renter_identify_card");
-                    String bod = rs.getDate("renter_birthday").toString();
+                    String fullName = rs.getString("fullname");
+                    String phone = rs.getString("phone");
+                    String cccd = rs.getString("identity_card_number");
+                    String bod = rs.getDate("birthday").toString();
 
                     accountInfor = Information.builder()
                             .fullname(fullName)

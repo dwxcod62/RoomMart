@@ -37,12 +37,12 @@ public class GetContractServlet extends HttpServlet {
             ContractDao contractDAO = new ContractDao();
 
             //Get Renter
-//            Information renterInfo = infoDao.getContractByRenterId(accId);
-//            if (renterInfo != null) {
-//                request.setAttribute("RENTER_INFO", renterInfo);
-//                url = SUCCESS;
-//            }
-//            request.setAttribute("uri", request.getRequestURI());
+            Information renterInfo = contractDAO.getContractByRenterId(accId);
+            if (renterInfo != null) {
+                request.setAttribute("RENTER_INFO", renterInfo);
+                url = SUCCESS;
+            }
+            request.setAttribute("uri", request.getRequestURI());
 
             //Get HostelOwner
             Information ownerInfo = contractDAO.getOwnerByContract(accId);
