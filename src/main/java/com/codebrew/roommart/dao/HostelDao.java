@@ -1,13 +1,17 @@
 package com.codebrew.roommart.dao;
 
+import com.codebrew.roommart.dto.Hostel;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class HostelDao {
+
+    private static final String GET_ALL_HOSTEL = "select * from hostels";
     public ArrayList<Integer> getListRenterIdByHostelId(int hostelId){
         Connection cn = null;
         PreparedStatement pst = null;
@@ -45,5 +49,48 @@ public class HostelDao {
 
         }
         return accIdList;
+    }
+    public Hostel getHostelByRenterId(int renterId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_ALL_HOSTEL);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    hostel = Hostel.builder()
+                            .hostelName(name)
+                            .address(address)
+                            .ward(ward)
+                            .hostelOwnerAccountID(hostelOwnerAccountID)
+                            .district(district)
+                            .city(city)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return hostel;
     }
 }
