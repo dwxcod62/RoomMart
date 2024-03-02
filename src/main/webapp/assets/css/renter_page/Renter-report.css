@@ -325,6 +325,7 @@ body {
   background-color: var(--primary-color);
   transition: all 0.2s ease;
 }
+
 .tabs .tabs-item {
   font-size: 1.8rem;
   font-weight: 500;
@@ -334,28 +335,38 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-bottom: 4px solid #ffffff;
 }
+
 .tabs .tabs-item:hover {
+  background-color: rgba(53, 105, 194, 0.05);
+  border-bottom: 4px solid lightslategray;
+}
+
+.active-tab {
   color: var(--primary-color);
   background-color: rgba(53, 105, 194, 0.05);
   border-bottom: 4px solid var(--primary-color);
 }
-.tabs .tabs-item.active {
-  color: var(--primary-color);
-}
-.tabs .tabs-item.active .tabs-icon {
-  color: var(--primary-color);
-}
+
+/*.tabs .tabs-item.active {*/
+/*  color: var(--primary-color);*/
+/*}*/
+
+/*.tabs .tabs-item.active .tabs-icon {*/
+/*  color: var(--primary-color);*/
+/*}*/
+
 .tabs .tabs-icon {
   margin-right: 10px;
   font-size: 24px;
 }
+
 .content__body {
   padding: 16px 16px;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
+
 .dataTables_filter label,
 .dataTables_length label{
   width: 300px;
@@ -390,6 +401,9 @@ body {
   margin-top: 10px;
 }
 
+.send_report {
+  display: none;
+}
 
 
 

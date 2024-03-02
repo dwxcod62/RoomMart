@@ -31,114 +31,155 @@
 
 <body>
 <div>
-    <!-- navbar -->
-    <%@include file="component/navbar.jsp" %>
-    <div class="row main-body">
-        <%@include file="component/sidebar.jsp" %>
-        <div class="content">
-            <div class="col-10">
-                <!-- Tab menu -->
-                <div class="tabs">
-                    <div class="tabs-item active">
-                        <i class="tabs-icon fa-solid fa-check-to-slot"></i> Báo cáo đã gửi
-                    </div>
-                    <div class="tabs-item active">
-                        <i class="tabs-icon fa-solid fa-envelope-open-text"></i> Gửi báo cáo
-                    </div>
-                    <div class="line"></div>
+<!-- navbar -->
+<%@include file="component/navbar.jsp" %>
+<div class="row main-body">
+    <%@include file="component/sidebar.jsp" %>
+    <div class="content">
+        <div class="col-10">
+            <!-- Tab menu -->
+            <div class="tabs">
+                <div class="tabs-item active-tab" onclick="showSentReports()">
+                    <i class="tabs-icon fa-solid fa-check-to-slot"></i> Báo cáo đã gửi
                 </div>
-                    <div id="list-notifications-container" class="content__body mb-5">
-                        <table id="notification-table" class="content__table table table-bordered table-striped dataTable no-footer"
-                               aria-describedby="notification-table_info">
-                            <thead class="content__thead">
-                            <tr>
-                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                                    colspan="1" aria-label="Mã: activate to sort column ascending" style="width: 104.292px;">Mã
-                                </th>
-                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                                    colspan="1" aria-label="Tiêu đề: activate to sort column ascending"
-                                    style="width: 180.615px;">Tiêu đề</th>
-                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                                    colspan="1" aria-label="Ngày gửi: activate to sort column ascending"
-                                    style="width: 203.542px;">Ngày gửi</th>
-                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                                    colspan="1" aria-label="Khu trọ: activate to sort column ascending"
-                                    style="width: 175.552px;">Khu trọ</th>
-                            </tr>
-                            </thead>
-                            <tbody class="content__tbody">
-                            <tr>
-                                <td>1</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>aka</td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            <tr>
-                                <td>11</td>
-                                <td>Tiêu đề 11</td>
-                                <td>Ngày gửi 11</td>
-                                <td>Khu trọ 11</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <div class="tabs-item" onclick="showSendReportForm()">
+                    <i class="tabs-icon fa-solid fa-envelope-open-text"></i> Gửi báo cáo
                 </div>
+                <div class="line"></div>
+            </div>
+            <div id="list-notifications-container" class="content__body view_report">
+                <table id="notification-table" class="content__table table table-bordered table-striped dataTable no-footer"
+                       aria-describedby="notification-table_info">
+                    <thead class="content__thead">
+                    <tr>
+                        <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                            colspan="1" aria-label="Mã: activate to sort column ascending" style="width: 104.292px;">Mã
+                        </th>
+                        <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                            colspan="1" aria-label="Tiêu đề: activate to sort column ascending"
+                            style="width: 180.615px;">Tiêu đề</th>
+                        <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                            colspan="1" aria-label="Ngày gửi: activate to sort column ascending"
+                            style="width: 203.542px;">Ngày gửi</th>
+                        <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                            colspan="1" aria-label="Khu trọ: activate to sort column ascending"
+                            style="width: 175.552px;">Khu trọ</th>
+                    </tr>
+                    </thead>
+                    <tbody class="content__tbody">
+                    <tr>
+                        <td>1</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>aka</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Tiêu đề 11</td>
+                        <td>Ngày gửi 11</td>
+                        <td>Khu trọ 11</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content__body send_report">
+                <form id="add-notification-form" action="add-notification" method="post" class="custom-form">
+                    <div class="form-header">
+                        <h1 class="form-title">Gửi thông báo mới</h1>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="noti-title" class="form-label">Tiêu đề: <span>*</span></label>
+                                <input type="text" id="noti-title" name="noti-title" placeholder="Nhập tiêu đề"
+                                       class="form-control">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="noti-hostel-id" class="form-label">Khu trọ:
+                                    <span>*</span></label>
+                                <select name="noti-hostel-id" id="noti-hostel-id" class="form-control">
+                                    <option value="">Chọn khu trọ nhận thông báo</option>
+                                    <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">
+                                        <option value="${hostel.hostelID}">${hostel.hostelName}</option>
+                                    </c:forEach>
+                                </select>
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="noti-content" class="form-label">Nội dung:
+                                <span>*</span></label>
+                            <textarea name="noti-content" id="noti-content" class="form-control textarea"></textarea>
+                            <span class="form-message mt-4 mb-0"></span>
+                        </div>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="form-action d-flex justify-content-end">
+                        <button class="form-submit">Gửi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
     <%@include file="component/footer.jsp" %>
     <script src="./assets/js/renter/Renter-navbar.js"></script>
 
@@ -167,6 +208,21 @@
                 "pageLength": 10 // Đặt số lượng hàng trên mỗi trang là 10
             });
         });
+
+        function showSentReports() {
+            document.getElementById('list-notifications-container').style.display = 'block';
+            document.querySelector('.send_report').style.display = 'none';
+            document.querySelector('.tabs-item.active-tab')?.classList.remove('active-tab'); // Sử dụng "?." để xử lý trường hợp không có class "active-tab"
+            document.querySelector('.tabs-item:nth-child(1)').classList.add('active-tab');
+        }
+
+        function showSendReportForm() {
+            document.getElementById('list-notifications-container').style.display = 'none';
+            document.querySelector('.send_report').style.display = 'block';
+            document.querySelector('.tabs-item.active-tab')?.classList.remove('active-tab'); // Sử dụng "?." để xử lý trường hợp không có class "active-tab"
+            document.querySelector('.tabs-item:nth-child(2)').classList.add('active-tab');
+        }
+
     </script>
 </body>
 </html>
