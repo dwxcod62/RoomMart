@@ -1,6 +1,7 @@
 package com.codebrew.roommart.servlets.RenterServlet;
 
 import com.codebrew.roommart.dao.ReportDao;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Report;
 import com.codebrew.roommart.dto.ReportCategory;
 import com.codebrew.roommart.utils.Decorations;
@@ -29,6 +30,9 @@ public class GetReportServlet extends HttpServlet {
     }
 
     protected void Load_Renter_Report(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("USER");
+
         String url = ERROR;
         List<ReportCategory> reportCategories = new ArrayList<>();
         List<Report> reports = new ArrayList<>();
@@ -36,16 +40,19 @@ public class GetReportServlet extends HttpServlet {
             ReportDao reportDAO = new ReportDao();
             reports = reportDAO.getReportByRenterId(account.getAccId());
             if(reports.size()>0) {
-                req.setAttribute("REPORT_LIST", reports);
+                request.setAttribute("REPORT_LIST", reports);
+                System.out.println(reports);
                 url = SUCCESS;
-                if (req.getParameter("id") != null) {
-                    req.setAttribute("id", req.getParameter("id"));
-                    url = "Report-detail";
-                }
+//                if (request.getParameter("id") != null) {
+//                    request.setAttribute("id", request.getParameter("id"));
+//                    url = "renter-Report";
+//                }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            request.getRequestDispatcher(url).forward(request,response);
         }
     }
 }

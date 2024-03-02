@@ -348,14 +348,6 @@ body {
   border-bottom: 4px solid var(--primary-color);
 }
 
-/*.tabs .tabs-item.active {*/
-/*  color: var(--primary-color);*/
-/*}*/
-
-/*.tabs .tabs-item.active .tabs-icon {*/
-/*  color: var(--primary-color);*/
-/*}*/
-
 .tabs .tabs-icon {
   margin-right: 10px;
   font-size: 24px;
@@ -404,6 +396,7 @@ body {
 .send_report {
   display: none;
 }
+
 
 
 

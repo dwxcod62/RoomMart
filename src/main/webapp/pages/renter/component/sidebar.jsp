@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li class="list">
-                    <a href="ReportView" class="nav-link">
+                    <a href="RenterReport" class="nav-link">
                         <i class="bx bx-comment-dots icon"></i>
                         <span class="link">Báo cáo</span>
                     </a>

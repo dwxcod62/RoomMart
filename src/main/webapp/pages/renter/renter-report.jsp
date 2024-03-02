@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -53,86 +54,43 @@
                     <thead class="content__thead">
                     <tr>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                            colspan="1" aria-label="Mã: activate to sort column ascending" style="width: 104.292px;">Mã
+                            colspan="1" aria-label="STT: activate to sort column ascending" style="width: 60px;">STT
                         </th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                             colspan="1" aria-label="Tiêu đề: activate to sort column ascending"
-                            style="width: 180.615px;">Tiêu đề</th>
+                            style="width: 399.32px;">Tiêu đề</th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                             colspan="1" aria-label="Ngày gửi: activate to sort column ascending"
-                            style="width: 203.542px;">Ngày gửi</th>
+                            style="width: 110px;">Ngày gửi</th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                            colspan="1" aria-label="Khu trọ: activate to sort column ascending"
-                            style="width: 175.552px;">Khu trọ</th>
+                            colspan="1" aria-label="Trạng thái: activate to sort column ascending"
+                            style="width: 150px;">Trạng thái</th>
                     </tr>
                     </thead>
                     <tbody class="content__tbody">
-                    <tr>
-                        <td>1</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>aka</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>Tiêu đề 11</td>
-                        <td>Ngày gửi 11</td>
-                        <td>Khu trọ 11</td>
-                    </tr>
+                    <c:set var="index" value="0" />
+                    <c:forEach var="rp" items="${REPORT_LIST}">
+                        <c:set var="index" value="${index + 1}" />
+                        <tr style="text-align: center">
+                            <td>${index}</td>
+                            <td>${rp.content}</td>
+                            <td>
+                                <fmt:parseDate var="sendDate" value="${rp.sendDate}" pattern="yy-MM-dd"/>
+                                <fmt:formatDate value="${sendDate}" pattern="dd/MM/yy"/>
+                            </td>
+                            <td>
+                                <c:if test="${rp.status == 0}">
+                                    <p style="color: #b12ce0">Chưa tiếp nhận</p>
+                                </c:if>
+                                <c:if test="${rp.status == 1}">
+                                    <p style="color: red">Đang xử lí</p>
+                                </c:if>
+                                <c:if test="${rp.status == 2}">
+                                    <p style="color: green">Đã phản hồi</p>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -143,32 +101,35 @@
                     </div>
                     <div class="spacer"></div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="noti-title" class="form-label">Tiêu đề: <span>*</span></label>
                                 <input type="text" id="noti-title" name="noti-title" placeholder="Nhập tiêu đề"
-                                       class="form-control">
+                                       class="form-control" style="font-size: 15px">
                                 <span class="form-message"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+<%--                        <div class="col-md-6">--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="noti-hostel-id" class="form-label">Khu trọ:--%>
+<%--                                    <span>*</span></label>--%>
+<%--                                <select name="noti-hostel-id" id="noti-hostel-id" class="form-control">--%>
+<%--                                    <option value="">Chọn khu trọ nhận thông báo</option>--%>
+<%--                                    <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">--%>
+<%--                                        <option value="${hostel.hostelID}">${hostel.hostelName}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </select>--%>
+<%--                                <span class="form-message"></span>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+                        <div class="col-12">
                             <div class="form-group">
-                                <label for="noti-hostel-id" class="form-label">Khu trọ:
+                                <label for="noti-content" class="form-label">Nội dung:
                                     <span>*</span></label>
-                                <select name="noti-hostel-id" id="noti-hostel-id" class="form-control">
-                                    <option value="">Chọn khu trọ nhận thông báo</option>
-                                    <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">
-                                        <option value="${hostel.hostelID}">${hostel.hostelName}</option>
-                                    </c:forEach>
-                                </select>
-                                <span class="form-message"></span>
+                                <textarea name="noti-content" id="noti-content"
+                                          class="form-control textarea" style="font-size: 15px"></textarea>
+                                <span class="form-message mt-4 mb-0"></span>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="noti-content" class="form-label">Nội dung:
-                                <span>*</span></label>
-                            <textarea name="noti-content" id="noti-content" class="form-control textarea"></textarea>
-                            <span class="form-message mt-4 mb-0"></span>
                         </div>
                     </div>
                     <div class="spacer"></div>
