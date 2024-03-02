@@ -808,7 +808,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-//                System.out.println(sql);
+                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 

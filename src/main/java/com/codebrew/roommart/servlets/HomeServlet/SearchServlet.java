@@ -21,6 +21,14 @@ public class SearchServlet extends HttpServlet {
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
         String inputText = request.getParameter("key").trim();
+        int minPrice = 0;
+        int maxPrice = 0;
+        try{
+            minPrice = Integer.parseInt(request.getParameter("input-min"));
+            maxPrice= Integer.parseInt(request.getParameter("input-max"));
+        }catch (Exception e){
+            System.out.println("input min - max parse error");
+        }
 
         request.setAttribute("citySelected", city);
 
@@ -38,7 +46,7 @@ public class SearchServlet extends HttpServlet {
         List<Room> rooms = new ArrayList<>();
 
         System.out.println("get input text: " + inputText);
-        rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,0,0);
+        rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,minPrice,maxPrice);
         int total = rd.getTotalRoomsByCondition(city,district,ward,inputText);
         request.setAttribute("total", Math.ceil((double) total / 12));
         request.setAttribute("page", page);

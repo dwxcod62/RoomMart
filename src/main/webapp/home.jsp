@@ -345,16 +345,16 @@
            <div class="price-input">
                <div class="field">
                    <span>Min</span>
-                   <input type="number" class="input-min" value="1000000" />
+                   <input type="number" id="input-min" name="input-min" class="input-min" value="1000000" />
                </div>
                <div class="separator">-</div>
                <div class="field">
                    <span>Max</span>
-                   <input type="number" class="input-max" value="4000000" />
+                   <input type="number" id="input-max" name="input-max" class="input-max" value="5000000" />
                </div>
            </div>
            <div class="slider">
-               <div class="progress"></div>
+               <div class="progress" style="left: 0%;right: 0%;"></div>
            </div>
            <div class="range-input">
                <input
@@ -362,7 +362,7 @@
                        class="range-min"
                        min="0"
                        max="5000000"
-                       value="1000000"
+                       value="0"
                        step="100000"
                />
                <input
@@ -370,7 +370,7 @@
                        class="range-max"
                        min="0"
                        max="5000000"
-                       value="4000000"
+                       value="5000000"
                        step="100000"
                />
            </div>
@@ -447,19 +447,17 @@
                                                             </h3>
                                                         </div>
                                                         <div class="re__card-config">
-                                                            <span class="re__card-config-price">${r.capacity} Người</span>
+                                                            <span class="re__card-config-price">${r.price >= 1000000 ? r.price/1000000 : r.price} ${r.price >= 1000000 ? "Triệu":""} VNĐ</span>
 
                                                             <span class="re__card-config-area">
                                                         <span class="re__card-config-dot">·</span>
                                                     </span>
 
-                                                            <span class="re__card-config-price"> ${r.roomArea}m<sup>2</sup></span>
+                                                            <span class="re__card-config-price"> ${r.roomArea}m2</span>
 
-                                                            <span class="re__card-config-area">
-                                                        <span class="re__card-config-dot">·</span>
-                                                    </span>
 
-                                                            <span class="re__card-config-price">Gác xếp: ${r.hasAttic==1?'<i class="fa-solid fa-check"></i>':'<i class="fa-solid fa-xmark"></i>'}</span>
+
+
 
                                                             <div class="re__clear"></div>
                                                             <div class="re__clear"></div>
@@ -556,7 +554,7 @@
 <script src="./assets/js/sendWebsocket.js"></script>
 <script>
 
-    sendToWebSocket("hostel_owner", "hostel_renter", null, 22, null," chat chat chat chat chat chat chat chat chat chat");
+    sendToWebSocket("hostel_owner", "hostel_renter", null, 4, null," chat chat chat chat chat chat chat chat chat chat");
 
 </script>
 
@@ -656,6 +654,7 @@
 
 </script>
 <script>
+
     const rangeInput = document.querySelectorAll(".range-input input"),
         priceInput = document.querySelectorAll(".price-input input"),
         range = document.querySelector(".slider .progress");
