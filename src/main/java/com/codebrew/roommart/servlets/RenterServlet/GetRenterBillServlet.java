@@ -35,12 +35,13 @@ public class GetRenterBillServlet extends HttpServlet {
             int accID = account.getAccId();
 
             BillDao billDAO = new BillDao();
-//            List<Bill> billList = billDAO.getBllListByRenterID(accID);
-//            request.setAttribute("uri", request.getRequestURI());
-//            if (billList.size() > 0){
-//                request.setAttribute("BILL_LIST", billList);
-//                url = SUCCESS;
-//            }
+            List<Bill> billList = billDAO.getBllListByRenterID(accID);
+            request.setAttribute("uri", request.getRequestURI());
+            if (billList.size() > 0){
+                request.setAttribute("BILL_LIST", billList);
+                System.out.println(billList);
+                url = SUCCESS;
+            }
 
         }catch (Exception e){
             log("Error at GetRenterBillServlet: " + e.toString());

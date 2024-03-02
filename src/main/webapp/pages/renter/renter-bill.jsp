@@ -48,17 +48,17 @@
                     </thead>
                     <tbody>
 
-                    <c:forEach var="iL" items="${INVOICE_LIST}">
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${iL.createdDate}" var="createdDate"/>
+                    <c:forEach var="bL" items="${BILL_LIST}">
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${bL.createdDate}" var="createdDate"/>
                         <tr>
-                            <td style="height: 22px;"><a href="InvoiceList?invoiceID=${iL.invoiceID}"> #${iL.invoiceID} </a></td>
+                            <td style="height: 22px;"><a href="RenterBill?billID=${bL.billID}"> #${bL.billID} </a></td>
                             <td style="height: 22px;"><fmt:formatDate value="${createdDate}" type="Date"
                                                                       pattern="dd-MM-yyyy"/></td>
                             <td style="height: 22px;"><fmt:setLocale value="vi_VN"/>
-                                <fmt:formatNumber value="${iL.totalMoney}" type="currency" currencySymbol="VNĐ"/></td>
+                                <fmt:formatNumber value="${bL.totalMoney}" type="currency" currencySymbol="VNĐ"/></td>
                             <td style="height: 22px;"><a>
                                 <c:choose>
-                                    <c:when test="${iL.status}">
+                                    <c:when test="${bL.status eq 1}">
                                         <p style="color: green">Đã thanh toán</p>
                                     </c:when>
                                     <c:otherwise>
@@ -80,6 +80,7 @@
 <div id="push-noti"></div>
 
 <script src="./assets/js/renter/Renter-navbar.js"></script>
+<%--<script src="./assets/js/renter/Renter-view-list-invoice.js"></script>--%>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -90,7 +91,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="./assets/js/renter/Renter-view-list-invoice.js"></script>
+
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
