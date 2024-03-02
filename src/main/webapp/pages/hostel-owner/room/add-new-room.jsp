@@ -472,7 +472,8 @@
 
     console.log("hostelid:"+hostelId);
     var roomNumber = document.getElementById("room-name");
-    if (document.getElementById("room-quantity").value == '1'){ roomNumber.onblur = function(){
+    if (document.getElementById("room-quantity").value == '1'){
+        roomNumber.onblur = function(){
         console.log("Người dùng đã thoát khỏi trường nhập liệu");
         console.log("room enter: " + roomNumber.value);
         $.ajax({

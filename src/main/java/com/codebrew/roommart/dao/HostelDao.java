@@ -8,10 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HostelDao {
 
-    private static final String GET_ALL_HOSTEL = "select * from hostels";
+    private static final String GET_ALL_HOSTEL = "select * from Hostels";
     public ArrayList<Integer> getListRenterIdByHostelId(int hostelId){
         Connection cn = null;
         PreparedStatement pst = null;
@@ -50,11 +51,11 @@ public class HostelDao {
         }
         return accIdList;
     }
-    public Hostel getHostelByRenterId(int renterId) throws SQLException {
+    public List<Hostel> getAllHostel() throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        Hostel hostel = null;
+        List<Hostel> hostel = new ArrayList<>();
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
@@ -62,20 +63,14 @@ public class HostelDao {
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
+                    int hostelId = rs.getInt("hostel_id");
                     String name = rs.getString("name");
                     String address = rs.getString("address");
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
                     int hostelOwnerAccountID = rs.getInt("owner_account_id");
-                    hostel = Hostel.builder()
-                            .hostelName(name)
-                            .address(address)
-                            .ward(ward)
-                            .hostelOwnerAccountID(hostelOwnerAccountID)
-                            .district(district)
-                            .city(city)
-                            .build();
+                    hostel.add(new Hostel(hostelId, hostelOwnerAccountID, name, address, ward, district, city));
                 }
             }
         } catch (Exception e) {

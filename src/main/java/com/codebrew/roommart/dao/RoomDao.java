@@ -706,7 +706,7 @@ public List<String>getListImgByRoomId(int rid){
         return room;
     }
 
-    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size,int lowPrice,int highPrice) {
+    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size,int lowPrice,int highPrice,int area,int hostelID) {
         System.out.println("get list condition method, CITY get: " +city);
         System.out.println("get by condition input text: " + inputText);
         Connection cn = null;
@@ -804,6 +804,12 @@ public List<String>getListImgByRoomId(int rid){
                 }
                 if (highPrice>0){
                     sql += " AND rooms.price <= " + highPrice;
+                }
+                if (area>0){
+                    sql += " AND rooms.room_area = " + area;
+                }
+                if (hostelID>0){
+                    sql += " AND rooms.hostel_id = " + hostelID;
                 }
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
@@ -1340,6 +1346,63 @@ public List<String>getListImgByRoomId(int rid){
             }
         }
         return count;
+    }
+
+    public List<Integer> getRoomArea() {
+        System.out.println("getRoomArea");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Integer> room_area = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                //room_id	property_id	room_number	room_area	attic	room_status
+                String sql = "select distinct room_area from Rooms";
+
+                pst = cn.prepareStatement(sql);
+
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        room_area.add(rs.getInt("room_area"));
+                    }
+                }else {room_area=null;}
+
+
+
+
+            }
+        } catch (Exception e) {
+            System.out.println("error room_area");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return room_area;
     }
 
 }

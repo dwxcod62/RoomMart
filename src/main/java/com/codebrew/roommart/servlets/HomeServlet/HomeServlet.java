@@ -1,7 +1,9 @@
 package com.codebrew.roommart.servlets.HomeServlet;
 
+import com.codebrew.roommart.dao.HostelDao;
 import com.codebrew.roommart.dao.RoomDao;
 import com.codebrew.roommart.dto.HandlerStatus;
+import com.codebrew.roommart.dto.Hostel;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.utils.EncodeUtils;
 
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,15 @@ public class HomeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         System.out.println("HomeServlet============================================");
         RoomDao rd = new RoomDao();
+        HostelDao htd = new HostelDao();
+        try {
+            List<Hostel> listHostel = htd.getAllHostel();
+            request.setAttribute("listHostel",listHostel);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        List<Integer> listRoomArea = rd.getRoomArea();
+        request.setAttribute("listRoomArea",listRoomArea);
         HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         String city = (request.getParameter("city") == "" || request.getParameter("city") == null) ? "all" : request.getParameter("city");
@@ -46,7 +58,7 @@ public class HomeServlet extends HttpServlet {
         System.out.println(city +" city : " + district + " district : " + ward+" ward");
         int total = rd.getTotalRoomsByCondition(city,district,ward,inputText);
         System.out.println("-> get total in condition: " + total);
-        List<Room> rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,0,0);
+        List<Room> rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,0,0,0,0);
 
         boolean isSuccess = false;
         if (!rooms.isEmpty()){

@@ -138,8 +138,12 @@
 
                                 <div class="search-filter" >
 
-                                    <select  name="city" class="select-text">
-                                        <option style="color:#f0f0f0" value="all" selected>Diện tích</option>
+                                    <select  name="area" class="select-text">
+
+                                        <option style="color:black" value="0" selected>Diện tích</option>
+                                        <c:forEach var="area" items="${listRoomArea}">
+                                            <option style="color:black" value="${area}">${area}</option>
+                                        </c:forEach>
                                     </select>
 
                                 </div>
@@ -162,9 +166,12 @@
 
                                 <div class="search-filter">
 
-                                    <select  name="ward" class="select-text" >
+                                    <select  name="hostelID" class="select-text" >
 <%--                                        for each--%>
-                                        <option style="color:#f0f0f0" value="all" selected>Nội Thất</option>
+    <option style="color:black" value="0" selected>Khu trọ</option>
+    <c:forEach var="hostel" items="${listHostel}">
+        <option style="color:black" value="${hostel.hostelID}">${hostel.hostelName}</option>
+    </c:forEach>
                                     </select>
 
 
