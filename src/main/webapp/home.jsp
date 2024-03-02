@@ -27,32 +27,140 @@
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!-- Link Bootstrap !important -->
+
+
+    <!-- Bootstrap 5.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Vendor CSS Files -->
+    <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="./assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="./assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="./assets/vendor/aos/aos.css" rel="stylesheet">
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
+    <!-- AOS JS -->
+    <link rel="stylesheet" href="./assets/js/aos_js/dist/aos.css">
+    <script src="./assets/js/aos_js/dist/aos.js"></script>
+
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
-
-
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
 
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
+<style>
 
+
+    ::selection {
+        color: #fff;
+        background: #17a2b8;
+    }
+    .wrapper {
+        width: 400px;
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px 25px 40px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+    header h2 {
+        font-size: 24px;
+        font-weight: 600;
+    }
+    header p {
+        margin-top: 5px;
+        font-size: 16px;
+    }
+    .price-input {
+        width: 100%;
+        display: flex;
+        margin: 30px 0 35px;
+    }
+    .price-input .field {
+        display: flex;
+        width: 100%;
+        height: 45px;
+        align-items: center;
+    }
+    .field input {
+        width: 100%;
+        height: 100%;
+        outline: none;
+        font-size: 19px;
+        margin-left: 12px;
+        border-radius: 5px;
+        text-align: center;
+        border: 1px solid #999;
+        -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .price-input .separator {
+        width: 130px;
+        display: flex;
+        font-size: 19px;
+        align-items: center;
+        justify-content: center;
+    }
+    .slider {
+        height: 5px;
+        position: relative;
+        background: #ddd;
+        border-radius: 5px;
+    }
+    .slider .progress {
+        height: 100%;
+        left: 25%;
+        right: 25%;
+        position: absolute;
+        border-radius: 5px;
+        background: #17a2b8;
+    }
+    .range-input {
+        position: relative;
+    }
+    .range-input input {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        top: -5px;
+        background: none;
+        pointer-events: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        height: 17px;
+        width: 17px;
+        border-radius: 50%;
+        background: #17a2b8;
+        pointer-events: auto;
+        -webkit-appearance: none;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+    input[type="range"]::-moz-range-thumb {
+        height: 17px;
+        width: 17px;
+        border: none;
+        border-radius: 50%;
+        background: #17a2b8;
+        pointer-events: auto;
+        -moz-appearance: none;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+</style>
 <body class="re__body re__body-home over-flow-hidden">
 
 
 
-<%--<div style="display: none" id="loading-overlay">--%>
-<%--    <div class="dot"></div>--%>
-<%--    <div class="dot"></div>--%>
-<%--    <div class="dot"></div>--%>
-<%--</div>--%>
 <div id="preloader">
     <div class="dots">
         <div></div>
@@ -63,92 +171,85 @@
 
 
 
+<div class="home-navbar">
+    <div class="container navbar-pc">
+        <div class="row">
+            <div class="col-3">
+                <!-- Logo -->
+                <div class="home-navbar__logo">
+                    <a href="#top" class="home-navbar__logo-link">
+                        <img class="home-navbar__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
+                    </a>
+                </div>
+            </div>
+            <div class="col-9">
+                <!-- Actions -->
+                <div class="home-navbar__actions">
+                    <div id="" class="home-navbar__links">
+                        <div class="home-navbar__actions-group">
+                            <a href="#hostel-owner"
+                               class="home-navbar__actions-link home-navbar__actions-link--owner">
+                                Chủ trọ
+                            </a>
+                        </div>
 
+                        <div class="home-navbar__actions-group">
+                            <a href="#renter"
+                               class="home-navbar__actions-link home-navbar__actions-link--renter">
+                                Người thuê
+                            </a>
+                        </div>
+
+                        <div class="home-navbar__actions-group">
+                            <a href="#about" class="home-navbar__actions-link home-navbar__actions-link--renter">
+                                Về chúng tôi
+                            </a>
+                        </div>
+
+                        <div class="home-navbar__actions-group">
+                            <a href="loginPage"
+                               class="home-navbar__actions-link home-navbar__actions-link--login">
+                                Đăng nhập
+                            </a>
+                        </div>
+
+                        <div class="home-navbar__actions-group">
+                            <button class="home-navbar__actions-link home-navbar__actions-link--register">
+                                Đăng ký
+                                <div class="register-modal">
+                                    <a href="registerPage" class="register-owner">Chủ trọ</a>
+                                    <a href="renter-register-page" class="register-renter">Người thuê</a>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="home-navbar__mobile-btn" class="home-navbar__mobile-btn">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Menu mobile -->
+    <div id="navbar-mobile" class="container navbar-mobile">
+        <div class="navbar-mobile-group">
+            <div class="navbar-mobile-group-header">Đăng ký</div>
+            <a href="registerPage" class="navbar-mobile-link navbar-mobile-link--owner">Chủ trọ</a>
+            <a href="#" class="navbar-mobile-link navbar-mobile-link--renter">Người thuê</a>
+        </div>
+        <div class="navbar-mobile-group">
+            <a href="loginPage" class="navbar-mobile-link navbar-mobile-link--login">Đăng nhập</a>
+        </div>
+    </div>
+</div>
 
 <div class="form-content">
 
     <div class="re__bg-header">
-        <%--        <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">--%>
-        <%--            <div class="re__container-sm">--%>
-        <%--                <div class="re__nav" id="naga">--%>
-
-
-
-
-
-
-
-        <%--                </div>--%>
-        <%--                <div class="re__bg-pushmenu"></div>--%>
-        <%--            </div>--%>
-        <%--            <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">--%>
-
-        <%--                <div class="re__control-menu">--%>
-        <%--                    <c:if test = "${sessionScope.USER != null}">--%>
-        <%--                        <!-- Navbar -->--%>
-        <%--                        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
-        <%--                    </c:if>--%>
-        <%--                    <c:if test = "${sessionScope.USER == null}">--%>
-        <%--                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">--%>
-        <%--                            <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>--%>
-        <%--                            <span class="re__line"></span>--%>
-        <%--                            <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>--%>
-        <%--                        </div>--%>
-        <%--                    </c:if>--%>
-
-
-        <%--                </div>--%>
-        <%--                <!-- icon -->--%>
-        <%--                <div class="re__drop-menu">--%>
-        <%--                    <div class="re__left-menu">--%>
-        <%--                        <h1>--%>
-        <%--                            <a href="home" >--%>
-        <%--                                <img style="align-content: center; height: 60px; object-fit: contain ;" src="./assets/images/logos/logo.png" error-image-src="./assets/images/logos/logo.png" alt="Roomart" title="Roomart">--%>
-        <%--                            </a>--%>
-        <%--                        </h1>--%>
-        <%--                    </div>--%>
-
-        <%--                    <div class="re__right-menu">--%>
-        <%--                        <!--Header menu-->--%>
-        <%--                        <div class="re__home-header-menu">--%>
-        <%--                            <div class="re__home-header-menu">--%>
-        <%--                                <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">--%>
-
-
-
-        <%--                                    <li class="lv0 ">--%>
-        <%--                                        <a href="home">--%>
-
-        <%--                                            <span class="text">Home</span>--%>
-        <%--                                        </a><div class="re__arrrow"></div>--%>
-
-        <%--                                    </li>--%>
-        <%--                                    <li class="lv0 ">--%>
-        <%--                                        <a href="https://github.com/dwxcod62/RoomMart">--%>
-
-        <%--                                            <span class="text">About us</span>--%>
-        <%--                                        </a><div class="re__arrrow"></div>--%>
-
-        <%--                                    </li>--%>
-        <%--                                    <li class="lv0 ">--%>
-        <%--                                        <a href="https://blogs.mtdv.me/blog/posts/very-mysterious">--%>
-
-        <%--                                            <span class="text">More</span>--%>
-        <%--                                        </a><div class="re__arrrow"></div>--%>
-
-        <%--                                    </li>--%>
-        <%--                                </ul>--%>
-        <%--                            </div>--%>
-        <%--                        </div>--%>
-        <%--                    </div>--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
-        <%--            --%>
-        <%--            --%>
-        <%--        </header>--%>
-
         <!-- Navbar -->
-<%--        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
+
+        <!-- End Navbar -->
+<%--        <%@include file="./pages/hostel-owner/components/navbar.jsp"%>--%>
     </div>
 </div>
 <div class="re__main">
@@ -188,8 +289,8 @@
 
                                 <div class="search-filter" >
 
-                                    <select id="city" name="city" class="select-text" style="color: #0a0d13">
-                                        <option value="all" selected>Chọn tỉnh thành</option>
+                                    <select id="city" name="city" class="select-text">
+                                        <option style="color:#f0f0f0" value="all" selected>Chọn tỉnh thành</option>
                                     </select>
 
                                 </div>
@@ -197,20 +298,97 @@
                                 <div class="search-filter">
 
 
-                                    <select id="district" name="district" class="select-text" style="color: #0a0d13">
-                                        <option value="all" selected>Chọn quận huyện</option>
+                                    <select id="district" name="district" class="select-text" >
+                                        <option style="color:#f0f0f0" value="all" selected>Chọn quận huyện</option>
                                     </select>
 
                                 </div>
 
                                 <div class="search-filter">
 
-                                    <select id="ward" name="ward" class="select-text" style="color: #0a0d13">
-                                        <option value="all" selected>Chọn phường xã</option>
+                                    <select id="ward" name="ward" class="select-text" >
+                                        <option style="color:#f0f0f0" value="all" selected>Chọn phường xã</option>
                                     </select>
 
 
                                 </div>
+
+
+
+                            </div>
+                            <div class="home-filter home-filter-1">
+
+                                <div class="search-filter" >
+
+                                    <select  name="city" class="select-text">
+                                        <option style="color:#f0f0f0" value="all" selected>Diện tích</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="search-filter dropdown">
+<%--select-text--%>
+<%--dropdown-menu--%>
+   <div class="select-text select-custom js__listing-search-select-button js__listing-search-select-tooltip dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+    <span class="select-text-content js__listing-search-select-button-current-text" style="font-size: inherit">Mức Giá</span>
+<%--        <div class="dropdown-menu re__listing-search-select-dropdown " aria-labelledby="dropdownMenuButton">--%>
+<%--            <a class="dropdown-item " href="#">Action</a>--%>
+<%--            <a class="dropdown-item" href="#">Another action</a>--%>
+<%--            <a class="dropdown-item" href="#">Something else here</a>--%>
+<%--        </div>--%>
+       <div class="wrapper dropdown-menu">
+           <header>
+               <h2>Mức Giá</h2>
+               <p>Kéo hoặc nhập mức giá mong muốn</p>
+           </header>
+           <div class="price-input">
+               <div class="field">
+                   <span>Min</span>
+                   <input type="number" class="input-min" value="1000000" />
+               </div>
+               <div class="separator">-</div>
+               <div class="field">
+                   <span>Max</span>
+                   <input type="number" class="input-max" value="4000000" />
+               </div>
+           </div>
+           <div class="slider">
+               <div class="progress"></div>
+           </div>
+           <div class="range-input">
+               <input
+                       type="range"
+                       class="range-min"
+                       min="0"
+                       max="5000000"
+                       value="1000000"
+                       step="100000"
+               />
+               <input
+                       type="range"
+                       class="range-max"
+                       min="0"
+                       max="5000000"
+                       value="4000000"
+                       step="100000"
+               />
+           </div>
+       </div>
+
+   </div>
+                                </div>
+
+                                <div class="search-filter">
+
+                                    <select  name="ward" class="select-text" >
+<%--                                        for each--%>
+                                        <option style="color:#f0f0f0" value="all" selected>Nội Thất</option>
+                                    </select>
+
+
+                                </div>
+
 
 
                             </div>
@@ -220,7 +398,7 @@
 
 
             </div>
-            <div class="re__home__head__banner-container re__banner-container re__banner-container-no-style js__gam__home__head__banner-container" style="height: 260px;">
+            <div class="re__home__head__banner-container re__banner-container re__banner-container-no-style js__gam__home__head__banner-container" style="height: 260px;margin-top: 5%">
 
 
             </div>
@@ -294,7 +472,7 @@
                                                         <div class="re__card-contact">
                                                             <div class="re__card-published-info">
                                 <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                        ${r.roomStatus==0?"Có thể thuê":r.roomStatus==2?"Đã Thuê":"Đang duyệt"}
+                                        ${r.roomStatus==1?"Có thể thuê":r.roomStatus==0?"Đã Thuê":"Đang duyệt"}
                                 </span>
 
                                                             </div>
@@ -348,7 +526,7 @@
 
 
 <!-- food section -->
-
+<jsp:include page="pages/hostel-owner/components/footer.jsp"></jsp:include>
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
@@ -417,6 +595,7 @@
             var opt = document.createElement('option');
             opt.value = x.Name;
             opt.text = x.Name;
+            opt.style.color = 'black';
             opt.setAttribute('data-id', x.Id);
             citis.options.add(opt);
         }
@@ -430,6 +609,8 @@
                     var opt = document.createElement('option');
                     opt.value = k.Name;
                     opt.text = k.Name;
+                    opt.style.color = 'black';
+
                     opt.setAttribute('data-id', k.Id);
                     districts.options.add(opt);
                 }
@@ -445,6 +626,8 @@
                     var opt = document.createElement('option');
                     opt.value = w.Name;
                     opt.text = w.Name;
+                    opt.style.color = 'black';
+
                     opt.setAttribute('data-id', w.Id);
                     wards.options.add(opt);
                 }
@@ -470,6 +653,50 @@
 
 
 
+
+</script>
+<script>
+    const rangeInput = document.querySelectorAll(".range-input input"),
+        priceInput = document.querySelectorAll(".price-input input"),
+        range = document.querySelector(".slider .progress");
+    let priceGap = 1000;
+
+    priceInput.forEach((input) => {
+        input.addEventListener("input", (e) => {
+            let minPrice = parseInt(priceInput[0].value),
+                maxPrice = parseInt(priceInput[1].value);
+
+            if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+                if (e.target.className === "input-min") {
+                    rangeInput[0].value = minPrice;
+                    range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                } else {
+                    rangeInput[1].value = maxPrice;
+                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                }
+            }
+        });
+    });
+
+    rangeInput.forEach((input) => {
+        input.addEventListener("input", (e) => {
+            let minVal = parseInt(rangeInput[0].value),
+                maxVal = parseInt(rangeInput[1].value);
+
+            if (maxVal - minVal < priceGap) {
+                if (e.target.className === "range-min") {
+                    rangeInput[0].value = maxVal - priceGap;
+                } else {
+                    rangeInput[1].value = minVal + priceGap;
+                }
+            } else {
+                priceInput[0].value = minVal;
+                priceInput[1].value = maxVal;
+                range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+            }
+        });
+    });
 
 </script>
 <!--Script-->
