@@ -20,10 +20,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-
     <%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
-
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -39,124 +37,16 @@
     <link href="./assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="./assets/vendor/aos/aos.css" rel="stylesheet">
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/core_style/core.css">
-
-    <!-- AOS JS -->
-    <link rel="stylesheet" href="./assets/js/aos_js/dist/aos.css">
-    <script src="./assets/js/aos_js/dist/aos.js"></script>
-
-    <!-- Link your own CSS here -->
+    <%-- link local css   --%>
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
 
-    <!-- CSS Push Notification -->
-    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
-<style>
 
-
-    ::selection {
-        color: #fff;
-        background: #17a2b8;
-    }
-    .wrapper {
-        width: 400px;
-        background: #fff;
-        border-radius: 10px;
-        padding: 20px 25px 40px;
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-    }
-    header h2 {
-        font-size: 24px;
-        font-weight: 600;
-    }
-    header p {
-        margin-top: 5px;
-        font-size: 16px;
-    }
-    .price-input {
-        width: 100%;
-        display: flex;
-        margin: 30px 0 35px;
-    }
-    .price-input .field {
-        display: flex;
-        width: 100%;
-        height: 45px;
-        align-items: center;
-    }
-    .field input {
-        width: 100%;
-        height: 100%;
-        outline: none;
-        font-size: 19px;
-        margin-left: 12px;
-        border-radius: 5px;
-        text-align: center;
-        border: 1px solid #999;
-        -moz-appearance: textfield;
-    }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-    .price-input .separator {
-        width: 130px;
-        display: flex;
-        font-size: 19px;
-        align-items: center;
-        justify-content: center;
-    }
-    .slider {
-        height: 5px;
-        position: relative;
-        background: #ddd;
-        border-radius: 5px;
-    }
-    .slider .progress {
-        height: 100%;
-        left: 25%;
-        right: 25%;
-        position: absolute;
-        border-radius: 5px;
-        background: #17a2b8;
-    }
-    .range-input {
-        position: relative;
-    }
-    .range-input input {
-        position: absolute;
-        width: 100%;
-        height: 5px;
-        top: -5px;
-        background: none;
-        pointer-events: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-        height: 17px;
-        width: 17px;
-        border-radius: 50%;
-        background: #17a2b8;
-        pointer-events: auto;
-        -webkit-appearance: none;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    }
-    input[type="range"]::-moz-range-thumb {
-        height: 17px;
-        width: 17px;
-        border: none;
-        border-radius: 50%;
-        background: #17a2b8;
-        pointer-events: auto;
-        -moz-appearance: none;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    }
-
-</style>
 <body class="re__body re__body-home over-flow-hidden">
 
 
@@ -171,85 +61,13 @@
 
 
 
-<div class="home-navbar">
-    <div class="container navbar-pc">
-        <div class="row">
-            <div class="col-3">
-                <!-- Logo -->
-                <div class="home-navbar__logo">
-                    <a href="#top" class="home-navbar__logo-link">
-                        <img class="home-navbar__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
-                    </a>
-                </div>
-            </div>
-            <div class="col-9">
-                <!-- Actions -->
-                <div class="home-navbar__actions">
-                    <div id="" class="home-navbar__links">
-                        <div class="home-navbar__actions-group">
-                            <a href="#hostel-owner"
-                               class="home-navbar__actions-link home-navbar__actions-link--owner">
-                                Chủ trọ
-                            </a>
-                        </div>
-
-                        <div class="home-navbar__actions-group">
-                            <a href="#renter"
-                               class="home-navbar__actions-link home-navbar__actions-link--renter">
-                                Người thuê
-                            </a>
-                        </div>
-
-                        <div class="home-navbar__actions-group">
-                            <a href="#about" class="home-navbar__actions-link home-navbar__actions-link--renter">
-                                Về chúng tôi
-                            </a>
-                        </div>
-
-                        <div class="home-navbar__actions-group">
-                            <a href="loginPage"
-                               class="home-navbar__actions-link home-navbar__actions-link--login">
-                                Đăng nhập
-                            </a>
-                        </div>
-
-                        <div class="home-navbar__actions-group">
-                            <button class="home-navbar__actions-link home-navbar__actions-link--register">
-                                Đăng ký
-                                <div class="register-modal">
-                                    <a href="registerPage" class="register-owner">Chủ trọ</a>
-                                    <a href="renter-register-page" class="register-renter">Người thuê</a>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="home-navbar__mobile-btn" class="home-navbar__mobile-btn">
-                        <i class="fa-solid fa-bars"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Menu mobile -->
-    <div id="navbar-mobile" class="container navbar-mobile">
-        <div class="navbar-mobile-group">
-            <div class="navbar-mobile-group-header">Đăng ký</div>
-            <a href="registerPage" class="navbar-mobile-link navbar-mobile-link--owner">Chủ trọ</a>
-            <a href="#" class="navbar-mobile-link navbar-mobile-link--renter">Người thuê</a>
-        </div>
-        <div class="navbar-mobile-group">
-            <a href="loginPage" class="navbar-mobile-link navbar-mobile-link--login">Đăng nhập</a>
-        </div>
-    </div>
-</div>
-
 <div class="form-content">
 
     <div class="re__bg-header">
         <!-- Navbar -->
 
         <!-- End Navbar -->
-<%--        <%@include file="./pages/hostel-owner/components/navbar.jsp"%>--%>
+        <%@include file="./pages/hostel-owner/components/navbar.jsp"%>
     </div>
 </div>
 <div class="re__main">
@@ -337,44 +155,7 @@
 <%--            <a class="dropdown-item" href="#">Another action</a>--%>
 <%--            <a class="dropdown-item" href="#">Something else here</a>--%>
 <%--        </div>--%>
-       <div class="wrapper dropdown-menu">
-           <header>
-               <h2>Mức Giá</h2>
-               <p>Kéo hoặc nhập mức giá mong muốn</p>
-           </header>
-           <div class="price-input">
-               <div class="field">
-                   <span>Min</span>
-                   <input type="number" id="input-min" name="input-min" class="input-min" value="1000000" />
-               </div>
-               <div class="separator">-</div>
-               <div class="field">
-                   <span>Max</span>
-                   <input type="number" id="input-max" name="input-max" class="input-max" value="5000000" />
-               </div>
-           </div>
-           <div class="slider">
-               <div class="progress" style="left: 0%;right: 0%;"></div>
-           </div>
-           <div class="range-input">
-               <input
-                       type="range"
-                       class="range-min"
-                       min="0"
-                       max="5000000"
-                       value="0"
-                       step="100000"
-               />
-               <input
-                       type="range"
-                       class="range-max"
-                       min="0"
-                       max="5000000"
-                       value="5000000"
-                       step="100000"
-               />
-           </div>
-       </div>
+      <jsp:include page="pages/home/drop-down-price.jsp"></jsp:include>
 
    </div>
                                 </div>
@@ -544,6 +325,8 @@
 <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
 <script src="./assets/js/handle-main-navbar.js"></script>
+<!-- Simple Datatable JS -->
+<script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
@@ -653,51 +436,7 @@
 
 
 </script>
-<script>
 
-    const rangeInput = document.querySelectorAll(".range-input input"),
-        priceInput = document.querySelectorAll(".price-input input"),
-        range = document.querySelector(".slider .progress");
-    let priceGap = 1000;
-
-    priceInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minPrice = parseInt(priceInput[0].value),
-                maxPrice = parseInt(priceInput[1].value);
-
-            if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
-                if (e.target.className === "input-min") {
-                    rangeInput[0].value = minPrice;
-                    range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
-                } else {
-                    rangeInput[1].value = maxPrice;
-                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
-                }
-            }
-        });
-    });
-
-    rangeInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minVal = parseInt(rangeInput[0].value),
-                maxVal = parseInt(rangeInput[1].value);
-
-            if (maxVal - minVal < priceGap) {
-                if (e.target.className === "range-min") {
-                    rangeInput[0].value = maxVal - priceGap;
-                } else {
-                    rangeInput[1].value = minVal + priceGap;
-                }
-            } else {
-                priceInput[0].value = minVal;
-                priceInput[1].value = maxVal;
-                range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
-                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-            }
-        });
-    });
-
-</script>
 <!--Script-->
 </body>
 </html>
