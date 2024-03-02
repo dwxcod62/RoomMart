@@ -30,88 +30,143 @@
 </head>
 
 <body>
+<div>
     <!-- navbar -->
     <%@include file="component/navbar.jsp" %>
-    <div>
-        <div class="row main-body" style="padding: 0;margin: 0;">
-            <%@include file="component/sidebar.jsp" %>
-            <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content">
-                <div class="col-xxl-9">
-                    <div class="col-12 col-md-8 col-lg-8 col-xl-7 col-xxl-8">
-                        <!-- Tab menu -->
-                        <div class="tabs">
-                            <div class="tabs-item active">
-                                <i class="tabs-icon fa-solid fa-check-to-slot"></i> Báo cáo đã gửi
-                            </div>
-                            <div class="tabs-item active">
-                                <i class="tabs-icon fa-solid fa-envelope-open-text"></i> Gửi báo cáo
-                            </div>
-                            <div class="line"></div>
-                        </div>
-
-<%--                        <div class="content__item active">--%>
-                            <!-- filter bar -->
-<%--                            <div class="filter__wrapper">--%>
-<%--                                <table>--%>
-<%--                                    <tr>--%>
-<%--                                        <td></td>--%>
-<%--                                        <td>Khu trọ</td>--%>
-<%--                                    </tr>--%>
-<%--                                    <tr>--%>
-<%--                                        <td><i class="fa-solid fa-sliders"></i> Lọc</td>--%>
-<%--                                        <form id="filter-form">--%>
-<%--                                            <td>--%>
-<%--                                                <select name="hostelId" id="filter__hostel-select">--%>
-<%--                                                    <option value="">Tất cả</option>--%>
-<%--                                                    <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">--%>
-<%--                                                        <option value="${hostel.hostelID}">${hostel.hostelName}</option>--%>
-<%--                                                    </c:forEach>--%>
-<%--                                                </select>--%>
-<%--                                            </td>--%>
-<%--                                        </form>--%>
-<%--                                    </tr>--%>
-<%--                                </table>--%>
-<%--                        </div>--%>
-                            <!-- Notification list container -->
-                            <div id="list-notifications-container" class="content__body mb-5">
-                                <table id="notification-table" class="content__table table table-bordered table-striped">
-                                    <thead class="content__thead">
-                                    <th class="text-center">Mã</th>
-                                    <th class="text-center">Tiêu đề</th>
-                                    <th class="text-center">Ngày gửi</th>
-                                    <th class="text-center">Khu trọ</th>
-                                    </thead>
-                                    <tbody class="content__tbody">
-<%--                                    <c:forEach var="notification" items="${requestScope.NOTIFICATION_LIST}">--%>
-                                        <tr>
-                                            <td class="text-center">
-<%--                                                <a href="ReviewNotificationServlet?action=view&notification_id=${notification.notification_id}">#NF${notification.notification_id}</a>--%>
-                                            </td>
-                                            <td class="text-center">
-<%--                                                <a href="ReviewNotificationServlet?action=view&notification_id=${notification.notification_id}">${notification.title}</a>--%>
-                                            </td>
-                                            <td class="text-center">
-<%--                                                <fmt:parseDate var="ParseDate" value="${notification.createDate}" pattern="yyyy-MM-dd" />--%>
-<%--                                                <fmt:formatDate pattern = "dd/MM/yyyy" value="${ParseDate}" />--%>
-                                            </td>
-                                            <td class="text-center">
-<%--                                                <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">--%>
-<%--                                                    <c:if test="${hostel.hostelID eq notification.hostel_id}">--%>
-<%--                                                        ${hostel.hostelName}--%>
-<%--                                                    </c:if>--%>
-<%--                                                </c:forEach>--%>
-                                            </td>
-                                        </tr>
-<%--                                    </c:forEach>--%>
-                                    </tbody>
-                                </table>
-                        </div>
+    <div class="row main-body">
+        <%@include file="component/sidebar.jsp" %>
+        <div class="content">
+            <div class="col-10">
+                <!-- Tab menu -->
+                <div class="tabs">
+                    <div class="tabs-item active">
+                        <i class="tabs-icon fa-solid fa-check-to-slot"></i> Báo cáo đã gửi
                     </div>
+                    <div class="tabs-item active">
+                        <i class="tabs-icon fa-solid fa-envelope-open-text"></i> Gửi báo cáo
+                    </div>
+                    <div class="line"></div>
+                </div>
+                    <div id="list-notifications-container" class="content__body mb-5">
+                        <table id="notification-table" class="content__table table table-bordered table-striped dataTable no-footer"
+                               aria-describedby="notification-table_info">
+                            <thead class="content__thead">
+                            <tr>
+                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                                    colspan="1" aria-label="Mã: activate to sort column ascending" style="width: 104.292px;">Mã
+                                </th>
+                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                                    colspan="1" aria-label="Tiêu đề: activate to sort column ascending"
+                                    style="width: 180.615px;">Tiêu đề</th>
+                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                                    colspan="1" aria-label="Ngày gửi: activate to sort column ascending"
+                                    style="width: 203.542px;">Ngày gửi</th>
+                                <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
+                                    colspan="1" aria-label="Khu trọ: activate to sort column ascending"
+                                    style="width: 175.552px;">Khu trọ</th>
+                            </tr>
+                            </thead>
+                            <tbody class="content__tbody">
+                            <tr>
+                                <td>1</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>aka</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Tiêu đề 11</td>
+                                <td>Ngày gửi 11</td>
+                                <td>Khu trọ 11</td>
+                            </tr>
+                            </tbody>
+                        </table>
                 </div>
             </div>
         </div>
     </div>
     <%@include file="component/footer.jsp" %>
     <script src="./assets/js/renter/Renter-navbar.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#notification-table').DataTable({
+                "language": {
+                    "search": "Tìm kiếm:", // Đổi từ "Search" thành "Tìm kiếm"
+                    "lengthMenu": "Hiển thị _MENU_ mục",
+                    "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục",
+                    "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục",
+                    "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
+                    "paginate": {
+                        "first": "Đầu",
+                        "last": "Cuối",
+                        "next": "Tiếp",
+                        "previous": "Trước"
+                    }
+                },
+                "pageLength": 10 // Đặt số lượng hàng trên mỗi trang là 10
+            });
+        });
+    </script>
 </body>
 </html>
