@@ -39,7 +39,6 @@ public class GetRenterBillServlet extends HttpServlet {
             request.setAttribute("uri", request.getRequestURI());
             if (billList.size() > 0){
                 request.setAttribute("BILL_LIST", billList);
-                System.out.println(billList);
                 url = SUCCESS;
             }
 

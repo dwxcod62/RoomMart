@@ -80,7 +80,7 @@
 <div id="push-noti"></div>
 
 <script src="./assets/js/renter/Renter-navbar.js"></script>
-<%--<script src="./assets/js/renter/Renter-view-list-invoice.js"></script>--%>
+<script src="./assets/js/renter/Renter-view-list-invoice.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

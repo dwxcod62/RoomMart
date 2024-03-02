@@ -43,6 +43,8 @@ nav .user-menu {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: none;
+  width: 300px;
+  height: 250px;
 }
 
 nav .user-menu.active {
@@ -276,7 +278,9 @@ footer {
 }
 
 body {
+  font-size: 17px;
   overflow-x: hidden;
+  min-height: calc(100vh - 80px);
 }
 
 .dashboard {
@@ -287,136 +291,66 @@ body {
   display: none;
 }
 
+.main-body {
+  padding: 0;
+  margin: 0;
+}
+
 .content {
   width: 80%;
-  margin: 0;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
+  display: grid;
+  row-gap: 20px;
+  padding: 40px 40px 30px 40px;
 }
-.content .hidden_notification {
-  display: none;
-}
-.content .display_notification {
-  position: absolute;
-  display: inline-block;
-  font-size: 18px;
-  width: fit-content;
-  padding: 20px 15px;
-  border-radius: 4px;
-  background-color: #141619;
-  color: #f6f5f9;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
-  transform: translateY(30px);
-  opacity: 0;
-  visibility: hidden;
-  animation: fade 4s linear forwards;
-  right: 5px;
-  top: 5px;
-}
-.content .progress {
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
-  width: 0;
-  height: 3px;
-  background-image: linear-gradient(to right, #529bdb, #3250bf);
-  border-radius: 4px;
-  animation: progress 3s 0.25s linear forwards;
-}
-@keyframes fade {
-  5% {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(0px);
-  }
-  90% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  95% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-}
-@keyframes progress {
-  to {
-    width: calc(100% - 10px);
-  }
-}
-.content .report {
-  width: 75%;
-  margin: 40px auto;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 20px;
-  height: fit-content;
-  cursor: pointer;
-}
-.content .report .notification-success {
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-  color: green;
-  line-height: 24px;
-  margin: 5px 0px;
-}
-.content .report h2 {
-  width: 100%;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 28px;
-}
-.content .report div {
-  width: 100%;
-}
-.content .report div #select {
-  width: 70%;
-  border-radius: 5px;
-  font-size: 16px;
-  padding: 10px 20px;
-  margin-bottom: 4px;
-}
-.content .report #select:focus {
-  border-color: #6a5af9;
-}
-.content .report .form-input {
-  margin-top: 15px;
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 30px;
+  margin-bottom: 30px;
   position: relative;
-  line-height: 20px;
-  font-size: 20px;
-}
-.content .report .form-input span {
-  margin-left: 10px;
-  color: red;
-  font-size: 18px;
-}
-.content .report div #Submit {
-  width: 100px;
-  height: 30px;
-  border: none;
-  background-color: #1900ff;
-  color: #FFFFFF;
-  border-radius: 5px;
-  font-size: 18px;
-  line-height: 100%;
 }
 
-@media screen and (max-width: 1024px) {
-  .content {
-    width: 100%;
-    padding: 0;
-    min-height: calc(100vh - 80px);
-  }
-  .dashboard {
-    display: none;
-  }
-  .dropdown {
-    display: block;
-    padding: 0;
-    width: fit-content;
-    height: fit-content;
-  }
+.tabs .line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 4px;
+  border-radius: 15px;
+  background-color: var(--primary-color);
+  transition: all 0.2s ease;
 }
-
-/*# sourceMappingURL=Renter-report.css.map */
+.tabs .tabs-item {
+  font-size: 1.8rem;
+  font-weight: 500;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 4px solid #ffffff;
+}
+.tabs .tabs-item:hover {
+  color: var(--primary-color);
+  background-color: rgba(53, 105, 194, 0.05);
+  border-bottom: 4px solid var(--primary-color);
+}
+.tabs .tabs-item.active {
+  color: var(--primary-color);
+}
+.tabs .tabs-item.active .tabs-icon {
+  color: var(--primary-color);
+}
+.tabs .tabs-icon {
+  margin-right: 10px;
+  font-size: 24px;
+}
+.content__body {
+  padding: 16px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
