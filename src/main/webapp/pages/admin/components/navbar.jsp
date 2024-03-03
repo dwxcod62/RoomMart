@@ -53,7 +53,7 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                                 <a href="" class="action__view-profile-link">
                                     <div class="action__image">
-                                        <img src="../../assets/images/avatars/male.pnj" alt="">
+                                        <img src="../../assets/images/avatars/male.png" alt="">
                                     </div>
                                     <div class="action__content">
                                         <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>
