@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "HomeServlet", value = "/HomeServlet")
@@ -27,6 +28,7 @@ public class HomeServlet extends HttpServlet {
         System.out.println("HomeServlet============================================");
         RoomDao rd = new RoomDao();
         HostelDao htd = new HostelDao();
+
         try {
             List<Hostel> listHostel = htd.getAllHostel();
             request.setAttribute("listHostel",listHostel);
@@ -58,7 +60,7 @@ public class HomeServlet extends HttpServlet {
         System.out.println(city +" city : " + district + " district : " + ward+" ward");
         int total = rd.getTotalRoomsByCondition(city,district,ward,inputText);
         System.out.println("-> get total in condition: " + total);
-        List<Room> rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,0,0,0,0);
+        List<Room> rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,0,0,0,0,"");
 
         boolean isSuccess = false;
         if (!rooms.isEmpty()){

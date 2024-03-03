@@ -18,10 +18,15 @@ public class RoomDao {
     private static final String ADD_IMGs = "INSERT INTO imgURL (room_id,url_img) \n" +
             "VALUES (?, ?)";
     private static final String
-            GET_CONTRACT_BY_ROOM_ID = "SELECT cd.end_date\n" +
-            "FROM contract_details cd\n" +
-            "JOIN contract_main cm ON cd.contract_details_id = cm.contract_details_id\n" +
-            "WHERE cm.room_id = ?;\n";
+            GET_CONTRACT_BY_ROOM_ID = "SELECT expiration\n" +
+            "FROM contracts\n" +
+
+            "WHERE room_id = ?;\n";
+    private static final String
+                GET_START_DATE_ROOM_ID = "SELECT start_date\n" +
+            "FROM contracts\n" +
+
+            "WHERE room_id = ?;\n";
     //--------------------------------Method-------------------------------------
     public List<Room> getListRoomsByHostelId(int hostelID) {
         Connection cn = null;
@@ -706,7 +711,7 @@ public List<String>getListImgByRoomId(int rid){
         return room;
     }
 
-    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size,int lowPrice,int highPrice,int area,int hostelID) {
+    public List<Room> getListRoomsByCondition(String city, String district, String ward, String inputText,int page, int page_Size,int lowPrice,int highPrice,int area,int hostelID,String expiration) {
         System.out.println("get list condition method, CITY get: " +city);
         System.out.println("get by condition input text: " + inputText);
         Connection cn = null;
@@ -729,7 +734,7 @@ public List<String>getListImgByRoomId(int rid){
                         "    hostels.name, \n" +
                         "    address,\n" +
                         "    city,\n" +
-                        "    ward, price,\n" +
+                        "    ward, rooms.price,\n" +
                         "    district\n"+" ORDER BY \n" +
 
                         "    rooms.room_id ASC\n";
@@ -753,6 +758,8 @@ public List<String>getListImgByRoomId(int rid){
                         "    rooms \n" +
                         "JOIN \n" +
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
+                        "left JOIN \n" +
+                        "    contracts ON rooms.room_id = contracts.room_id \n" +
                         "JOIN \n" +
                         "    imgURL ON rooms.room_id = imgURL.room_id \n  where 1=1 ";
 
@@ -798,6 +805,9 @@ public List<String>getListImgByRoomId(int rid){
 
 
 
+                }
+                if (!expiration.isEmpty()){
+                    sql += " AND Contracts.expiration < " + "'"+expiration+"'"+"or Contracts.start_date > "+ "'"+expiration+"'"+"  or Contracts.expiration is null";
                 }
                 if (lowPrice>0){
                     sql += " AND rooms.price >= " + lowPrice;
@@ -945,7 +955,7 @@ public List<String>getListImgByRoomId(int rid){
 
         return isExist;
     }
-    public Date get_end_date_by_RoomId(int rid) {
+    public static Date get_end_date_by_RoomId(int rid) {
         System.out.println("-> get_end_date_by_RoomId ");
         Connection cn = null;
         PreparedStatement pst = null;
@@ -961,11 +971,58 @@ public List<String>getListImgByRoomId(int rid){
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    endDate = rs.getDate("end_date");
+                    endDate = rs.getDate("expiration");
                 }
             }
         } catch (Exception e) {
             System.out.println("get_end_date_by_RoomId error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return endDate;
+    }
+    public static Date get_start_date_by_RoomId(int rid) {
+        System.out.println("-> get_end_date_by_RoomId ");
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        Date endDate = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_START_DATE_ROOM_ID);
+//                System.out.println(GET_CONTRACT_BY_ROOM_ID);
+                pst.setInt(1, rid);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    endDate = rs.getDate("start_date");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("get_start_date_by_RoomId error");
             e.printStackTrace();
         } finally {
             if (rs != null) {

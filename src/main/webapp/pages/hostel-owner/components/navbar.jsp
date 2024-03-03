@@ -38,21 +38,21 @@
                                                 <li class="lv0 ">
                                                     <a href="home">
 
-                                                        <span class="text">Home</span>
+                                                        <span class="text">Trang chủ</span>
                                                     </a><div class="re__arrrow"></div>
 
                                                 </li>
                                                 <li class="lv0 ">
                                                     <a href="https://github.com/dwxcod62/RoomMart">
 
-                                                        <span class="text">About us</span>
+                                                        <span class="text">Về chúng tôi</span>
                                                     </a><div class="re__arrrow"></div>
 
                                                 </li>
                                                 <li class="lv0 ">
                                                     <a href="https://blogs.mtdv.me/blog/posts/very-mysterious">
 
-                                                        <span class="text">More</span>
+                                                        <span class="text">Chi tiết</span>
                                                     </a><div class="re__arrrow"></div>
 
                                                 </li>
