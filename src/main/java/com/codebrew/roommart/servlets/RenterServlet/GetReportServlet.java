@@ -1,5 +1,6 @@
 package com.codebrew.roommart.servlets.RenterServlet;
 
+import com.codebrew.roommart.dao.ReportCategoryDao;
 import com.codebrew.roommart.dao.ReportDao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Report;
@@ -34,21 +35,16 @@ public class GetReportServlet extends HttpServlet {
         Account account = (Account) session.getAttribute("USER");
 
         String url = ERROR;
-        List<ReportCategory> reportCategories = new ArrayList<>();
         List<Report> reports = new ArrayList<>();
         try {
             ReportDao reportDAO = new ReportDao();
             reports = reportDAO.getReportByRenterId(account.getAccId());
             if(reports.size()>0) {
                 request.setAttribute("REPORT_LIST", reports);
-                System.out.println(reports);
                 url = SUCCESS;
-//                if (request.getParameter("id") != null) {
-//                    request.setAttribute("id", request.getParameter("id"));
-//                    url = "renter-Report";
-//                }
             }
-
+            List<ReportCategory> reportCategories = new ReportCategoryDao().getReportCategory();
+            request.setAttribute("REPORT_CATE", reportCategories);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

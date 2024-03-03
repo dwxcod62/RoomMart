@@ -57,8 +57,8 @@
                             colspan="1" aria-label="STT: activate to sort column ascending" style="width: 60px;">STT
                         </th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                            colspan="1" aria-label="Tiêu đề: activate to sort column ascending"
-                            style="width: 399.32px;" data-orderable="false">Tiêu đề</th>
+                            colspan="1" aria-label="Nội dung: activate to sort column ascending"
+                            style="width: 399.32px;" data-orderable="false">Nội dung</th>
                         <th class="text-center sorting" aria-controls="notification-table" rowspan="1" colspan="1"
                             aria-label="Ngày gửi: activate to sort column ascending" style="width: 110px;"
                             data-orderable="false">Ngày gửi</th>
@@ -73,7 +73,7 @@
                         <c:set var="index" value="${index + 1}" />
                         <tr style="text-align: center">
                             <td>${index}</td>
-                            <td>${rp.content}</td>
+                            <td style="text-align: left">${rp.content}</td>
                             <td>
                                 <fmt:parseDate var="sendDate" value="${rp.sendDate}" pattern="yy-MM-dd"/>
                                 <fmt:formatDate value="${sendDate}" pattern="dd-MM-yy"/>
@@ -103,18 +103,10 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-input">
-                                <label for="report-title" class="form-label">Tiêu đề: <span>*</span></label>
-                                <input type="text" id="report-title" name="form-input" placeholder="Nhập tiêu đề"
-                                       class="form-control" style="font-size: 15px">
-                                <span class="form-message"></span>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-input">
                                 <label for="category" class="form-label">Loại đơn:
                                     <span>*</span>
                                 </label>
-                                <select name="category" id="category" class="form-control">
+                                <select name="cateID" id="category" class="form-control">
                                     <option value="" selected disabled hidden>Chọn loại đơn</option>
                                     <%-- Thêm các option ở đây --%>
                                     <c:forEach var="cate" items="${requestScope.REPORT_CATE}">
@@ -145,6 +137,7 @@
 </div>
     <%@include file="component/footer.jsp" %>
     <script src="./assets/js/renter/Renter-navbar.js"></script>
+    <script src="./assets/js/renter/Renter-report.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -155,7 +148,7 @@
         $(document).ready(function () {
             $('#notification-table').DataTable({
                 "language": {
-                    "search": "Tìm kiếm:", // Đổi từ "Search" thành "Tìm kiếm"
+                    "search": "Tìm kiếm:",
                     "lengthMenu": "Hiển thị _MENU_ mục",
                     "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục",
                     "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục",
@@ -167,24 +160,31 @@
                         "previous": "Trước"
                     }
                 },
-                "pageLength": 10 // Đặt số lượng hàng trên mỗi trang là 10
+                "pageLength": 10
+            });
+
+            $('#add-report-form').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'AddReportServlet', // URL xử lý gửi báo cáo
+                    data: formData,
+                    success: function (response) {
+                        alert("Báo cáo đã được gửi thành công!"); // Hiển thị cửa sổ thông báo
+                        // Xóa nội dung form sau khi gửi thành công
+                        $('#category').val('');
+                        $('#report-content').val('');
+                        // Chuyển hướng người dùng trở lại trang "RenterReport"
+                        window.location.href = 'RenterReport';
+                    },
+                    error: function () {
+                        alert('Đã có lỗi xảy ra! Gửi báo cáo thất bại!');
+                    }
+                });
             });
         });
-
-        function showSentReports() {
-            document.getElementById('list-notifications-container').style.display = 'block';
-            document.querySelector('.send_report').style.display = 'none';
-            document.querySelector('.tabs-item.active-tab')?.classList.remove('active-tab'); // Sử dụng "?." để xử lý trường hợp không có class "active-tab"
-            document.querySelector('.tabs-item:nth-child(1)').classList.add('active-tab');
-        }
-
-        function showSendReportForm() {
-            document.getElementById('list-notifications-container').style.display = 'none';
-            document.querySelector('.send_report').style.display = 'block';
-            document.querySelector('.tabs-item.active-tab')?.classList.remove('active-tab'); // Sử dụng "?." để xử lý trường hợp không có class "active-tab"
-            document.querySelector('.tabs-item:nth-child(2)').classList.add('active-tab');
-        }
-
     </script>
 </body>
 </html>
