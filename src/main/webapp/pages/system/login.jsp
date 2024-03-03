@@ -10,10 +10,8 @@
     <title>Room Mart - Đăng Nhập </title>
 
     <!-- Bootstrap 5.0 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
@@ -38,7 +36,7 @@
             <div class="row">
                 <div class="col-3">
                     <div class="main-nav__logo">
-                        <a href="HomePage" class="main-nav__logo-link">
+                        <a href="home-page" class="main-nav__logo-link">
                             <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -56,7 +54,7 @@
         <div class="row">
             <!-- Turn back -->
             <div class="col-12">
-                <a href="HomePage" class="turn-back__link">
+                <a href="home-page" class="turn-back__link">
                     <i class="turn-back__link-icon fa-solid fa-caret-left"></i>
                     Quay về trang chủ
                 </a>
@@ -103,7 +101,7 @@
                             </div>
                             <button class="form-submit">Đăng nhập</button>
                             <div class="spacer"></div>
-                            <div class="form-other-link">Chưa có tài khoản? <a href="registerPage">Đăng ký ngay!</a>
+                            <div class="form-other-link">Chưa có tài khoản? <a href="register-page">Đăng ký ngay!</a>
                             </div>
                         </form>
                     </div>
