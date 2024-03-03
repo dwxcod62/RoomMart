@@ -1,4 +1,6 @@
 <%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
+<%@ page import="com.codebrew.roommart.dao.RoomDao" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -138,7 +140,7 @@
 
                                 <div class="search-filter" >
 
-                                    <select  name="area" class="select-text">
+                                    <select title="Chọn diện tích phòng mong muốn"  name="area" class="select-text">
 
                                         <option style="color:black" value="0" selected>Diện tích</option>
                                         <c:forEach var="area" items="${listRoomArea}">
@@ -151,9 +153,9 @@
                                 <div class="search-filter dropdown">
 <%--select-text--%>
 <%--dropdown-menu--%>
-   <div class="select-text select-custom js__listing-search-select-button js__listing-search-select-tooltip dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <div title="Chọn mức giá phòng mong muốn" class="select-text select-custom js__listing-search-select-button js__listing-search-select-tooltip dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-    <span class="select-text-content js__listing-search-select-button-current-text" style="font-size: inherit">Mức Giá</span>
+    <span  class="select-text-content js__listing-search-select-button-current-text" style="font-size: inherit">Mức Giá</span>
 <%--        <div class="dropdown-menu re__listing-search-select-dropdown " aria-labelledby="dropdownMenuButton">--%>
 <%--            <a class="dropdown-item " href="#">Action</a>--%>
 <%--            <a class="dropdown-item" href="#">Another action</a>--%>
@@ -165,14 +167,14 @@
                                 </div>
 
                                 <div class="search-filter">
-
-                                    <select  name="hostelID" class="select-text" >
-<%--                                        for each--%>
-    <option style="color:black" value="0" selected>Khu trọ</option>
-    <c:forEach var="hostel" items="${listHostel}">
-        <option style="color:black" value="${hostel.hostelID}">${hostel.hostelName}</option>
-    </c:forEach>
-                                    </select>
+                                    <input title="Chọn ngày muốn thuê phòng" name="expiration" class="select-text" type="date" style="font-size: inherit; color: #f0f0f0">
+<%--                                    <select  name="hostelID" class="select-text" >--%>
+<%--&lt;%&ndash;                                        for each&ndash;%&gt;--%>
+<%--    <option style="color:black" value="0" selected>Khu trọ</option>--%>
+<%--    <c:forEach var="hostel" items="${listHostel}">--%>
+<%--        <option style="color:black" value="${hostel.hostelID}">${hostel.hostelName}</option>--%>
+<%--    </c:forEach>--%>
+<%--                                    </select>--%>
 
 
                                 </div>
@@ -257,9 +259,31 @@
                                                         <div class="re__clearfix"></div>
                                                         <div class="re__card-contact">
                                                             <div class="re__card-published-info">
-                                <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                        ${r.roomStatus==1?"Có thể thuê":r.roomStatus==0?"Đã Thuê":"Đang duyệt"}
-                                </span>
+                                                                <c:set var="endDate" value="${RoomDao.get_end_date_by_RoomId(r.roomId).toString()}"></c:set>
+                                                                <c:set var="startDate" value="${RoomDao.get_start_date_by_RoomId(r.roomId).toString()}"></c:set>
+                                                                <c:set var="formattedEndDate" value="${endDate.substring(8, 10)}/${endDate.substring(5, 7)}/${endDate.substring(0, 4)}" />
+                                                                <c:set var="formattedStartDate" value="${startDate.substring(8, 10)}/${startDate.substring(5, 7)}/${startDate.substring(0, 4)}" />
+                                                                <c:if test="${r.roomStatus==1}">
+                                                                    <span style="color: green" class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
+                                                                        Có thể thuê
+                                                                    </span>
+                                                                </c:if>
+                                                                <c:if test="${r.roomStatus==0}">
+                                                                    <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
+                                                                        Đã Thuê
+                                                                        <br>
+                                                                       Từ ${formattedStartDate} đến ${formattedEndDate}
+                                                                    </span>
+
+                                                                </c:if>
+                                                                <c:if test="${r.roomStatus==-1}">
+                                                                    <span style="color:orange;" class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
+                                                                        Đang duyệt
+                                                                        <br>
+                                                                        Thuê từ ${formattedStartDate} đến ${formattedEndDate}
+                                                                    </span>
+                                                                </c:if>
+
 
                                                             </div>
 

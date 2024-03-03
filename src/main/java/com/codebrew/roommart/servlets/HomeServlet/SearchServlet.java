@@ -11,7 +11,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "SearchServlet", value = "/SearchServlet")
@@ -21,12 +23,28 @@ public class SearchServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String city = request.getParameter("city") == "" ? "all" : request.getParameter("city");
         //hostelID , area
-        int hostelID = request.getParameter("hostelID") == "" ? 0 : Integer.parseInt(request.getParameter("hostelID"));
+//        int hostelID = request.getParameter("hostelID") == "" ? 0 : Integer.parseInt(request.getParameter("hostelID"));
         int area = request.getParameter("area") == "" ? 0 : Integer.parseInt(request.getParameter("area"));
 
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");
         String inputText = request.getParameter("key").trim();
+//        String expiration = request.getParameter("expiration") == Date.now ? "all" : request.getParameter("expiration");
+        String expiration = request.getParameter("expiration");
+        System.out.println(LocalDate.now());
+        LocalDate currentDate = LocalDate.now();
+        if (expiration.isEmpty()){
+            expiration = "";
+        }else {
+            LocalDate expirationDate = LocalDate.parse(expiration);
+            if (expirationDate.isBefore(currentDate)){
+                System.out.println("is before");
+                String dateNow = currentDate.toString();
+                expiration = dateNow;
+            }
+        }
+
+        System.out.println(expiration);
         int minPrice = 0;
         int maxPrice = 0;
         try{
@@ -60,7 +78,7 @@ public class SearchServlet extends HttpServlet {
         List<Integer> listRoomArea = rd.getRoomArea();
         request.setAttribute("listRoomArea",listRoomArea);
         System.out.println("get input text: " + inputText);
-        rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,minPrice,maxPrice,area,hostelID);
+        rooms = rd.getListRoomsByCondition(city,district,ward, inputText,page,12,minPrice,maxPrice,area,0,expiration);
         int total = rd.getTotalRoomsByCondition(city,district,ward,inputText);
         request.setAttribute("total", Math.ceil((double) total / 12));
         request.setAttribute("page", page);
