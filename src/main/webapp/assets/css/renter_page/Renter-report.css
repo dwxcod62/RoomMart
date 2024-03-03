@@ -366,6 +366,7 @@ body {
   font-size: 16px;
   display: flex;
 }
+
 .dataTables_length select {
   width: 68px;
   height: 30px;
@@ -396,6 +397,41 @@ body {
 .send_report {
   display: none;
 }
+
+.form-control {
+  transition: border 0.1s ease;
+}
+
+.form-control:focus {
+  border: 2px solid #696cff;
+  caret-color: #696cff;
+}
+
+.form-control.textarea {
+  min-height: 200px;
+  padding: 16px;
+}
+
+.form-action .form-submit {
+  padding: 12px 60px;
+  background-color: #696cff;
+  transition: background-color 0.2s ease;
+}
+
+.form-action .form-submit:hover {
+  background-color: #484bee;
+}
+
+#category {
+  width: 70%;
+  height: 40px;
+  font-size: 15px;
+}
+
+#category option {
+  height: 30px; /* Đặt độ cao cho từng tùy chọn */
+}
+
 
 
 

@@ -58,13 +58,13 @@
                         </th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                             colspan="1" aria-label="Tiêu đề: activate to sort column ascending"
-                            style="width: 399.32px;">Tiêu đề</th>
-                        <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                            colspan="1" aria-label="Ngày gửi: activate to sort column ascending"
-                            style="width: 110px;">Ngày gửi</th>
+                            style="width: 399.32px;" data-orderable="false">Tiêu đề</th>
+                        <th class="text-center sorting" aria-controls="notification-table" rowspan="1" colspan="1"
+                            aria-label="Ngày gửi: activate to sort column ascending" style="width: 110px;"
+                            data-orderable="false">Ngày gửi</th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                             colspan="1" aria-label="Trạng thái: activate to sort column ascending"
-                            style="width: 150px;">Trạng thái</th>
+                            style="width: 150px;"  data-orderable="false">Trạng thái</th>
                     </tr>
                     </thead>
                     <tbody class="content__tbody">
@@ -76,7 +76,7 @@
                             <td>${rp.content}</td>
                             <td>
                                 <fmt:parseDate var="sendDate" value="${rp.sendDate}" pattern="yy-MM-dd"/>
-                                <fmt:formatDate value="${sendDate}" pattern="dd/MM/yy"/>
+                                <fmt:formatDate value="${sendDate}" pattern="dd-MM-yy"/>
                             </td>
                             <td>
                                 <c:if test="${rp.status == 0}">
@@ -95,38 +95,40 @@
                 </table>
             </div>
             <div class="content__body send_report">
-                <form id="add-notification-form" action="add-notification" method="post" class="custom-form">
+                <form id="add-report-form" action="RenterSendReport" method="post" class="custom-form">
                     <div class="form-header">
-                        <h1 class="form-title">Gửi thông báo mới</h1>
+                        <h1 class="form-title">Gửi báo cáo</h1>
                     </div>
                     <div class="spacer"></div>
                     <div class="row">
                         <div class="col-6">
-                            <div class="form-group">
-                                <label for="noti-title" class="form-label">Tiêu đề: <span>*</span></label>
-                                <input type="text" id="noti-title" name="noti-title" placeholder="Nhập tiêu đề"
+                            <div class="form-input">
+                                <label for="report-title" class="form-label">Tiêu đề: <span>*</span></label>
+                                <input type="text" id="report-title" name="form-input" placeholder="Nhập tiêu đề"
                                        class="form-control" style="font-size: 15px">
                                 <span class="form-message"></span>
                             </div>
                         </div>
-<%--                        <div class="col-md-6">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="noti-hostel-id" class="form-label">Khu trọ:--%>
-<%--                                    <span>*</span></label>--%>
-<%--                                <select name="noti-hostel-id" id="noti-hostel-id" class="form-control">--%>
-<%--                                    <option value="">Chọn khu trọ nhận thông báo</option>--%>
-<%--                                    <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">--%>
-<%--                                        <option value="${hostel.hostelID}">${hostel.hostelName}</option>--%>
-<%--                                    </c:forEach>--%>
-<%--                                </select>--%>
-<%--                                <span class="form-message"></span>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
+                        <div class="col-6">
+                            <div class="form-input">
+                                <label for="category" class="form-label">Loại đơn:
+                                    <span>*</span>
+                                </label>
+                                <select name="category" id="category" class="form-control">
+                                    <option value="" selected disabled hidden>Chọn loại đơn</option>
+                                    <%-- Thêm các option ở đây --%>
+                                    <c:forEach var="cate" items="${requestScope.REPORT_CATE}">
+                                        <option value="${cate.cateID}">${cate.cateTitle}</option>
+                                    </c:forEach>
+                                </select>
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
                         <div class="col-12">
-                            <div class="form-group">
-                                <label for="noti-content" class="form-label">Nội dung:
+                            <div class="form-input">
+                                <label for="report-content" class="form-label">Nội dung:
                                     <span>*</span></label>
-                                <textarea name="noti-content" id="noti-content"
+                                <textarea name="form-input" id="report-content"
                                           class="form-control textarea" style="font-size: 15px"></textarea>
                                 <span class="form-message mt-4 mb-0"></span>
                             </div>
@@ -143,7 +145,6 @@
 </div>
     <%@include file="component/footer.jsp" %>
     <script src="./assets/js/renter/Renter-navbar.js"></script>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
