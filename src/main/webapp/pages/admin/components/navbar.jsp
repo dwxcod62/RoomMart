@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ACER
-  Date: 3/2/2024
-  Time: 10:02 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="main-nav bg-white">
@@ -13,7 +6,7 @@
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
                     <a href="dashboard" class="main-nav__logo-link">
-                        <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
+                        <img class="main-nav__logo-img" src="../../assets/images/logos/logo.png" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -46,7 +39,7 @@
                             <span class="infor__role">Quản trị viên</span>
                         </div>
                         <div class="profile__avatar">
-                            <img class="avatar__img" src="./assets/images/avatars/user-avatar.jpg"
+                            <img class="avatar__img" src="../../assets/images/avatars/male.png"
                                  alt="User avatar image">
                         </div>
                     </div>
@@ -58,16 +51,16 @@
 
             <!-- Profile dropdown -->
             <div id="nav-profile-dropdown" class="profile__actions">
-<%--                                <a href="" class="action__view-profile-link">--%>
-<%--                                    <div class="action__image">--%>
-<%--                                        <img src="./assets/images/avatars/user-avatar.jpg" alt="">--%>
-<%--                                    </div>--%>
-<%--                                    <div class="action__content">--%>
-<%--                                        <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>--%>
-<%--                                        <span class="subtitle">Xem trang cá nhân của bạn</span>--%>
-<%--                                    </div>--%>
-<%--                                </a>--%>
-<%--                                <div class="spacer"></div>--%>
+                                <a href="" class="action__view-profile-link">
+                                    <div class="action__image">
+                                        <img src="../../assets/images/avatars/male.pnj" alt="">
+                                    </div>
+                                    <div class="action__content">
+                                        <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>
+                                        <span class="subtitle">Xem trang cá nhân của bạn</span>
+                                    </div>
+                                </a>
+                                <div class="spacer"></div>
                 <a href="logout" class="action__logout">
                     <div class="action__image">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>

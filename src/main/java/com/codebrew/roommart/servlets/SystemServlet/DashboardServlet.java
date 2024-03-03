@@ -36,7 +36,7 @@ public class DashboardServlet extends HttpServlet {
             if (account != null) {
                 switch (account.getRole()) {
                     case 0:
-                        url = "ahihi";
+                        url = "AdminDashboard";
                         break;
                     case 1:
                         url = "ahihi";
