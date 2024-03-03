@@ -16,10 +16,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
+    <link rel="stylesheet" href="../../assets/sys-css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="../../assets/css/admin_page/admin-dashboard/style.css">
+    <link rel="stylesheet" href="../../assets/sys-css/admin_page/admin-dashboard/style.css">
 
 </head>
 
@@ -54,7 +54,7 @@
                     <img src="../../assets/images/avatars/male.png" alt="User avatar" class="welcome-image">
                     <div class="welcome-content">
                         <div class="welcome-title">Chào mừng, <span>${sessionScope.USER.accountInfo.information.fullname}</span></div>
-                        <p class="welcome-paragraph">Quản trị hệ thống thật là dễ :3</p>
+                        <p class="welcome-paragraph">Quản trị hệ thống thật là vui <3</p>
                     </div>
                 </div>
 
@@ -199,8 +199,6 @@
                                         và phát triển các giải pháp cho doanh nghiệp. Chúng tôi tự tin có thể
                                         mang đến cho bạn một bộ phần mềm quản lý nhà trọ hoàn toàn giống như
                                         chúng tôi đã quảng cáo.
-
-
                                     </p>
                                 </div>
                             </div>

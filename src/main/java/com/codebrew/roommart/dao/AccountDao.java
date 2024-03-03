@@ -10,7 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AccountDao {
@@ -197,4 +199,137 @@ public class AccountDao {
         return acc;
     }
 
+    // Admin: Dashboard
+    public Account getAccountById(int id) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Account acc = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT *\n" +
+                        "FROM [dbo].[Accounts]\n" +
+                        "WHERE [account_id] = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return acc;
+    }
+    public List<Account> GetAccountsByRole(int role) {
+        Account acc;
+        ArrayList<Account> list = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT * \n" +
+                        "FROM [dbo].[Accounts] \n" +
+                        "WHERE Role = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, role);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                    list.add(acc);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return list;
+    }
+
+
+    public int GetAccountsByRoleInRecentMonth(int role) {
+        LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+        int currentYear = currentDate.getYear();
+        int ngayDauThang = 1;
+        int ngayCuoiThang = currentDate.lengthOfMonth(); // Lấy ngày cuối cùng của tháng
+
+        String startDate = currentYear + "-" + currentMonth + "-" + ngayDauThang;
+        String endDate = currentYear + "-" + currentMonth + "-" + ngayCuoiThang;
+
+        int count = 0;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT COUNT(*) FROM [dbo].[Accounts] WHERE role = ? and create_date between ? and ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, role);
+                pst.setString(2, startDate);
+                pst.setString(3, endDate);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (cn != null) cn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return count;
+    }
+
 }
+
