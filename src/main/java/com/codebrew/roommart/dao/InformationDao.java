@@ -68,5 +68,54 @@ public class InformationDao {
         return accountInfor;
     }
 
+    public Information getAccountInformationById(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Information inf = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_RENTER_INFO_BY_ID);
+                pst.setInt(1, renterId);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String birthday = rs.getString("birthday");
+                    int sex = rs.getInt("sex");
+                    String phone = rs.getString("phone");
+                    String address = rs.getString("address");
+                    String cccd = rs.getString("identity_card_number");
 
+                    inf = Information.builder()
+                            .fullname(fullname)
+                            .email(email)
+                            .birthday(birthday)
+                            .sex(sex)
+                            .phone(phone)
+                            .address(address)
+                            .cccd(cccd)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return inf;
+    }
 }

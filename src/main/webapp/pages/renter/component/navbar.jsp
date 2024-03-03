@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="user-menu-items">
-            <a href="ProfileRenter" class="user-menu-item">
+            <a href="RenterProfile" class="user-menu-item">
                 <i class="bx bx-id-card icon"></i>
                 <span class="link">Thông tin cá nhân</span>
             </a>
