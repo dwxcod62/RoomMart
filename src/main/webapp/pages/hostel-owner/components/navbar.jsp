@@ -6,6 +6,11 @@
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
+<link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+<link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
+<link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+<link rel="stylesheet" href="./assets/css/core_style/core.css">
+<link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
 <link
         href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
         rel="stylesheet"  type='text/css'>
@@ -307,3 +312,14 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById("nav-profile-btn").addEventListener("click", function() {
+        var dropdown = document.getElementById("nav-profile-dropdown");
+        if (dropdown.style.display === "none") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    });
+
+</script>
