@@ -371,11 +371,11 @@ fetchChat.on("child_added", function (snapshot) {
 
     // append the message on the page
 
-if(messages.role==='3'){
+if(messages.role==='2'){
     console.log("messrole: "+messages.role)
     document.getElementById("messages").innerHTML += message2;}
 else {
-    console.log("messrole else"+messages.role)
+    console.log("messrole else: "+messages.role)
     document.getElementById("messages").innerHTML += message3;
 }
 

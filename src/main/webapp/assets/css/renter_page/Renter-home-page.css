@@ -296,7 +296,7 @@ body {
 
 .content {
   width: 80%;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   display: grid;
   row-gap: 20px;
   padding: 40px 40px 30px 40px;

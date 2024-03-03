@@ -17,4 +17,5 @@ public class Information {
     String phone;
     String address;
     String cccd;
+    int account_id;
 }
