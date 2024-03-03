@@ -296,7 +296,7 @@ body {
 }
 
 .content {
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   width: 80%;
   margin: 0px;
   padding: 0px;
