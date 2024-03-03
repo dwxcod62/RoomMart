@@ -6,14 +6,20 @@ import com.codebrew.roommart.dto.Information;
 import com.codebrew.roommart.dto.RoommateInfo;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDao {
+
+    private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role) \n" +
+            "VALUES (?, ?, GETDATE(), ?, ?)";
+    private static final String ADD_ACCOUNT_INFORMATION = "INSERT INTO AccountInformations (account_id, fullname, email, identity_card_number) \n" +
+            "VALUES (?, ?, ?, ?)";
+
+    private static final String ADD_OTP_AND_EXPIRED = "UPDATE accounts " +
+            "SET otp = ? , expired_time_otp = DATEADD(HOUR, ?, GETDATE()) " +
+            "WHERE account_id = ?;";
 
     private Account getAccount(ResultSet rs) {
         Account acc = null;
@@ -220,6 +226,261 @@ public class AccountDao {
             }
         }
         return result;
+    }
+
+    public boolean isExistUsername(String username) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("SELECT username FROM [dbo].[Accounts] Where username = ?");
+                pst.setString(1, username);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    check = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public boolean addOtpAndExpiredTime(String otp, int hour, int account_id){
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(ADD_OTP_AND_EXPIRED);
+
+                pst.setString(1, otp);
+                pst.setInt(2, hour);
+                pst.setInt(3, account_id);
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+
+    }
+
+    public boolean addAnAccount(Account account, String otp) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                pst = cn.prepareStatement(ADD_AN_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
+
+                pst.setString(1, account.getUsername());
+                pst.setString(2, account.getPassword());
+                pst.setInt(3, account.getStatus());
+                pst.setInt(4, account.getRole());
+
+                if (pst.executeUpdate() > 0) {
+                    int accountId = -1;
+                    rs = pst.getGeneratedKeys();
+
+                    if (rs.next()) {
+                        accountId = rs.getInt(1);
+                    }
+
+                    pst = cn.prepareStatement(ADD_ACCOUNT_INFORMATION);
+                    pst.setInt(1, accountId);
+                    pst.setString(2, account.getAccountInfo().getInformation().getFullname());
+                    pst.setString(3, account.getAccountInfo().getInformation().getEmail());
+                    pst.setString(4, account.getAccountInfo().getInformation().getCccd());
+
+
+                    if (pst.executeUpdate() > 0) {
+                        pst = cn.prepareStatement(ADD_OTP_AND_EXPIRED);
+
+                        pst.setString(1, otp);
+                        pst.setInt(2, 1);
+                        pst.setInt(3, accountId);
+
+                        if (pst.executeUpdate() > 0) {
+                            check = true;
+                            cn.commit();
+                        } else {
+                            cn.rollback();
+                        }
+                        cn.setAutoCommit(true);
+
+                    } else {
+                        cn.rollback();
+                    }
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public int checkAccountByOTP(String email, String otp) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+
+        int accountId = -1;
+
+        try {
+
+            conn = DatabaseConnector.makeConnection();
+
+            if (conn != null) {
+                String sql = "SELECT A.[account_id]\n" +
+                        "FROM [dbo].[Accounts] AS A JOIN [dbo].[AccountInformations] AS AI ON A.[account_id] = AI.[account_id]\n" +
+                        "WHERE AI.[email] = ? AND A.[otp] = ? AND GETDATE() < A.[expired_time_otp]";
+                psm = conn.prepareStatement(sql);
+                psm.setString(1, email);
+                psm.setString(2, otp);
+                rs = psm.executeQuery();
+
+                if (rs != null && rs.next()) {
+                    accountId = rs.getInt("account_id");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) { rs.close(); }
+            if (psm != null) { psm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return accountId;
+    }
+
+    public Account getAccountById(int id) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Account acc = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT *\n" +
+                        "FROM [dbo].[Accounts]\n" +
+                        "WHERE [account_id] = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return acc;
     }
 
 }

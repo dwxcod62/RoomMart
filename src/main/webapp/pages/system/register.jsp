@@ -9,11 +9,9 @@
 
     <title>Room Mart - Đăng ký </title>
 
-    <!-- Bootstrap 5.0 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
+    <!-- Bootstrap 5.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
@@ -67,12 +65,11 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-xs-11 col-sm-11 col-md-8 col-lg-6 col-xl-5 col-xxl-5 m-auto">
-                            <form action="handle-register" method="POST" id="register-form" class="custom-form register-form">
+                            <form action="register" method="POST" id="register-form" class="custom-form register-form">
                                 <div class="form-header">
                                     <h3 class="form-title">Tạo tài khoản mới</h3>
                                     <div class="form-subtitle">Nhanh chóng và dễ dàng</div>
                                 </div>
-                                <input type="hidden" name="registertype" value="owner">
                                 <div class="spacer"></div>
                                 <div class="form-group">
                                     <label for="fullname" class="form-label">Tên đầy đủ <span>*</span></label>
@@ -144,12 +141,11 @@
         <!-- Toast element -->
         <div id="toast">&nbsp;</div>
 
-        <!-- Script -->
+        <!-- Script Bootstrap -->
         <script src="./assets/js/bootstrap/bootstrap.bundle.min.js"></script>
         <script src="./assets/js/valid-form.js" charset="UTF-8"></script>
         <script type="module" src="./assets/js/system/register-handle.js" charset="UTF-8"></script>
         <script src="./assets/js/toast-alert.js"></script>
-
         <script>
             <c:choose>
             <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
