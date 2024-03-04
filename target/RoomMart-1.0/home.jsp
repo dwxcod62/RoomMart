@@ -1,4 +1,6 @@
 <%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
+<%@ page import="com.codebrew.roommart.dao.RoomDao" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -21,26 +23,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
+
     <%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
-
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!-- Link Bootstrap !important -->
+
+
+    <!-- Bootstrap 5.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/core_style/core.css">
+    <!-- Vendor CSS Files -->
+    <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="./assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="./assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="./assets/vendor/aos/aos.css" rel="stylesheet">
 
-    <!-- Link your own CSS here -->
+    <%-- link local css   --%>
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
 
-
-
-    <!-- CSS Push Notification -->
-    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
 
@@ -48,11 +55,6 @@
 
 
 
-<%--<div style="display: none" id="loading-overlay">--%>
-<%--    <div class="dot"></div>--%>
-<%--    <div class="dot"></div>--%>
-<%--    <div class="dot"></div>--%>
-<%--</div>--%>
 <div id="preloader">
     <div class="dots">
         <div></div>
@@ -63,22 +65,12 @@
 
 
 
-
-
 <div class="form-content">
 
     <div class="re__bg-header">
+
         <%--        <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">--%>
-        <%--            <div class="re__container-sm">--%>
-        <%--                <div class="re__nav" id="naga">--%>
-
-
-
-
-
-
-
-        <%--                </div>--%>
+              </div>--%>
         <%--                <div class="re__bg-pushmenu"></div>--%>
         <%--            </div>--%>
         <%--            <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">--%>
@@ -149,6 +141,7 @@
 
         <!-- Navbar -->
 <%--        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
+
     </div>
 </div>
 <div class="re__main">
@@ -188,8 +181,8 @@
 
                                 <div class="search-filter" >
 
-                                    <select id="city" name="city" class="select-text" style="color: #0a0d13">
-                                        <option value="all" selected>Chọn tỉnh thành</option>
+                                    <select id="city" name="city" class="select-text">
+                                        <option style="color:#f0f0f0" value="all" selected>Chọn tỉnh thành</option>
                                     </select>
 
                                 </div>
@@ -197,20 +190,67 @@
                                 <div class="search-filter">
 
 
-                                    <select id="district" name="district" class="select-text" style="color: #0a0d13">
-                                        <option value="all" selected>Chọn quận huyện</option>
+                                    <select id="district" name="district" class="select-text" >
+                                        <option style="color:#f0f0f0" value="all" selected>Chọn quận huyện</option>
                                     </select>
 
                                 </div>
 
                                 <div class="search-filter">
 
-                                    <select id="ward" name="ward" class="select-text" style="color: #0a0d13">
-                                        <option value="all" selected>Chọn phường xã</option>
+                                    <select id="ward" name="ward" class="select-text" >
+                                        <option style="color:#f0f0f0" value="all" selected>Chọn phường xã</option>
                                     </select>
 
 
                                 </div>
+
+
+
+                            </div>
+                            <div class="home-filter home-filter-1">
+
+                                <div class="search-filter" >
+
+                                    <select title="Chọn diện tích phòng mong muốn"  name="area" class="select-text">
+
+                                        <option style="color:black" value="0" selected>Diện tích</option>
+                                        <c:forEach var="area" items="${listRoomArea}">
+                                            <option style="color:black" value="${area}">${area}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                </div>
+
+                                <div class="search-filter dropdown">
+<%--select-text--%>
+<%--dropdown-menu--%>
+   <div title="Chọn mức giá phòng mong muốn" class="select-text select-custom js__listing-search-select-button js__listing-search-select-tooltip dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+    <span  class="select-text-content js__listing-search-select-button-current-text" style="font-size: inherit">Mức Giá</span>
+<%--        <div class="dropdown-menu re__listing-search-select-dropdown " aria-labelledby="dropdownMenuButton">--%>
+<%--            <a class="dropdown-item " href="#">Action</a>--%>
+<%--            <a class="dropdown-item" href="#">Another action</a>--%>
+<%--            <a class="dropdown-item" href="#">Something else here</a>--%>
+<%--        </div>--%>
+      <jsp:include page="pages/home/drop-down-price.jsp"></jsp:include>
+
+   </div>
+                                </div>
+
+                                <div class="search-filter">
+                                    <input title="Chọn ngày muốn thuê phòng" name="expiration" class="select-text" type="date" style="font-size: inherit; color: #f0f0f0">
+<%--                                    <select  name="hostelID" class="select-text" >--%>
+<%--&lt;%&ndash;                                        for each&ndash;%&gt;--%>
+<%--    <option style="color:black" value="0" selected>Khu trọ</option>--%>
+<%--    <c:forEach var="hostel" items="${listHostel}">--%>
+<%--        <option style="color:black" value="${hostel.hostelID}">${hostel.hostelName}</option>--%>
+<%--    </c:forEach>--%>
+<%--                                    </select>--%>
+
+
+                                </div>
+
 
 
                             </div>
@@ -220,7 +260,7 @@
 
 
             </div>
-            <div class="re__home__head__banner-container re__banner-container re__banner-container-no-style js__gam__home__head__banner-container" style="height: 260px;">
+            <div class="re__home__head__banner-container re__banner-container re__banner-container-no-style js__gam__home__head__banner-container" style="height: 260px;margin-top: 5%">
 
 
             </div>
@@ -268,20 +308,17 @@
                                                                     ${r.roomId} - ${hostelName} - ${r.roomNumber}
                                                             </h3>
                                                         </div>
-                                                        <div class="re__card-config">
-                                                            <span class="re__card-config-price">${r.capacity} Người</span>
 
                                                             <span class="re__card-config-area">
                                                         <span class="re__card-config-dot">·</span>
                                                     </span>
 
-                                                            <span class="re__card-config-price"> ${r.roomArea}m<sup>2</sup></span>
 
-                                                            <span class="re__card-config-area">
-                                                        <span class="re__card-config-dot">·</span>
-                                                    </span>
+                                                            <span class="re__card-config-price"> ${r.roomArea}m2</span>
 
-                                                            <span class="re__card-config-price">Gác xếp: ${r.hasAttic==1?'<i class="fa-solid fa-check"></i>':'<i class="fa-solid fa-xmark"></i>'}</span>
+
+
+
 
                                                             <div class="re__clear"></div>
                                                             <div class="re__clear"></div>
@@ -293,9 +330,31 @@
                                                         <div class="re__clearfix"></div>
                                                         <div class="re__card-contact">
                                                             <div class="re__card-published-info">
-                                <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                        ${r.roomStatus==0?"Có thể thuê":r.roomStatus==2?"Đã Thuê":"Đang duyệt"}
-                                </span>
+                                                                <c:set var="endDate" value="${RoomDao.get_end_date_by_RoomId(r.roomId).toString()}"></c:set>
+                                                                <c:set var="startDate" value="${RoomDao.get_start_date_by_RoomId(r.roomId).toString()}"></c:set>
+                                                                <c:set var="formattedEndDate" value="${endDate.substring(8, 10)}/${endDate.substring(5, 7)}/${endDate.substring(0, 4)}" />
+                                                                <c:set var="formattedStartDate" value="${startDate.substring(8, 10)}/${startDate.substring(5, 7)}/${startDate.substring(0, 4)}" />
+                                                                <c:if test="${r.roomStatus==1}">
+                                                                    <span style="color: green" class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
+                                                                        Có thể thuê
+                                                                    </span>
+                                                                </c:if>
+                                                                <c:if test="${r.roomStatus==0}">
+                                                                    <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
+                                                                        Đã Thuê
+                                                                        <br>
+                                                                       Từ ${formattedStartDate} đến ${formattedEndDate}
+                                                                    </span>
+
+                                                                </c:if>
+                                                                <c:if test="${r.roomStatus==-1}">
+                                                                    <span style="color:orange;" class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
+                                                                        Đang duyệt
+                                                                        <br>
+                                                                        Thuê từ ${formattedStartDate} đến ${formattedEndDate}
+                                                                    </span>
+                                                                </c:if>
+
 
                                                             </div>
 
@@ -368,6 +427,8 @@
 <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
 <script src="./assets/js/handle-main-navbar.js"></script>
+<!-- Simple Datatable JS -->
+<script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
@@ -378,7 +439,7 @@
 <script src="./assets/js/sendWebsocket.js"></script>
 <script>
 
-    sendToWebSocket("hostel_owner", "hostel_renter", null, 22, null," chat chat chat chat chat chat chat chat chat chat");
+    sendToWebSocket("hostel_owner", "hostel_renter", null, 4, null," chat chat chat chat chat chat chat chat chat chat");
 
 </script>
 
@@ -417,6 +478,7 @@
             var opt = document.createElement('option');
             opt.value = x.Name;
             opt.text = x.Name;
+            opt.style.color = 'black';
             opt.setAttribute('data-id', x.Id);
             citis.options.add(opt);
         }
@@ -430,6 +492,8 @@
                     var opt = document.createElement('option');
                     opt.value = k.Name;
                     opt.text = k.Name;
+                    opt.style.color = 'black';
+
                     opt.setAttribute('data-id', k.Id);
                     districts.options.add(opt);
                 }
@@ -445,6 +509,8 @@
                     var opt = document.createElement('option');
                     opt.value = w.Name;
                     opt.text = w.Name;
+                    opt.style.color = 'black';
+
                     opt.setAttribute('data-id', w.Id);
                     wards.options.add(opt);
                 }
@@ -470,6 +536,9 @@
 
 
 
+
+</script>
+<script>
 
 </script>
 <!--Script-->

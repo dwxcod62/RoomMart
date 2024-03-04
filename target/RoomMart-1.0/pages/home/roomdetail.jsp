@@ -1,6 +1,7 @@
 
 <%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
-<%@ page import="com.codebrew.roommart.utils.EncodeUtils" %>
+<%@ page import="com.codebrew.roommart.dao.RoomDao" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -23,15 +24,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
 
-    <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
-
-    <!-- CSS Push Notification -->
-    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -58,6 +52,8 @@
 
 
 
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
 
@@ -76,8 +72,7 @@
 <div class="form-content">
 
 
-    <!-- Navbar -->
-<%--    <%@include file="../owner/components/navbar.jsp"%>--%>
+
 </div>
 
 
@@ -148,9 +143,7 @@
 
                         <div class="re__pr-short-info js__pr-short-info">
                             <div class="re__pr-short-info-item js__pr-short-info-item">
-                                <span class="title">Mức giá</span>
-                                <span class="value">Contact</span>
-                            </div>
+             </div>
                             <div class="re__pr-short-info-item js__pr-short-info-item">
                                 <span class="title">Diện tích</span>
                                 <span class="value"> ${room.roomArea} m&#xB2;</span>
@@ -159,19 +152,29 @@
                                 <span class="title">Phòng ngủ</span>
                                 <span class="value">${room.capacity} PN</span>
                             </div>
+
                             <div class="re__pr-short-info-item js__pr-short-info-item">
                                 <span class="title">Tình Trạng</span>
 
                                 <c:choose>
                                     <c:when test="${room.roomStatus==0}">
-                                        <span class="value" style="color: lawngreen">Có thể thuê</span>
+                                         <span style="color: lightgrey" class="value">
+                                            Đã Thuê
+                                        <br>
+                                        (${formattedStartDate} - ${formattedEndDate})
+                                        </span>
+
                                     </c:when>
-                                    <c:when test="${room.roomStatus==2}">
-                                        <span class="value"> Đã được thuê đến hết ${requestScope.endDate}</span>
+                                    <c:when test="${room.roomStatus==-1}">
+                                        <span style="color: yellow" class="value">
+                                             Đang duyệt
+                                              <br>
+                                             Thuê từ ${formattedStartDate} đến ${formattedEndDate}
+                                        </span>
 
                                     </c:when>
                                     <c:when test="${room.roomStatus==1}">
-                                        <span class="value" style="color: yellow">Đang thuê</span>
+                                        <span class="value" style="color: lawngreen">Có thể thuê</span>
                                     </c:when>
                                 </c:choose>
 
@@ -254,19 +257,13 @@
                                         <span class="re__pr-specs-content-item-value">${room.roomArea} m&#xB2;</span>
                                     </div>
                                     <div class="re__pr-specs-content-item">
-                                        <span class="re__pr-specs-content-item-icon"><i class="bi bi-cash"></i></span>
-                                        <span class="re__pr-specs-content-item-title">Mức giá</span>
-                                        <span class="re__pr-specs-content-item-value">Liên hệ</span>
+
                                     </div>
                                     <div class="re__pr-specs-content-item">
-                                        <span class="re__pr-specs-content-item-icon"><i class="bi bi-border-all"></i></span>
-                                        <span class="re__pr-specs-content-item-title">Số phòng ngủ</span>
-                                        <span class="re__pr-specs-content-item-value">${room.capacity} phòng</span>
+
                                     </div>
                                     <div class="re__pr-specs-content-item">
-                                        <span class="re__pr-specs-content-item-icon"><i class="bi bi-chevron-up"></i></span>
-                                        <span class="re__pr-specs-content-item-title">Gác xếp</span>
-                                        <span class="re__pr-specs-content-item-value">${r.hasAttic==1?'<i class="fa-solid fa-check" style="font-family:FontAwesome !important;"></i>':'<i class="fa-solid fa-xmark" style="font-family:FontAwesome !important;"></i>'}</span>
+
                                     </div>
                                     <div class="re__pr-specs-content-item">
                                         <span class="re__pr-specs-content-item-icon"><i class="bi bi-tv"></i></span>
@@ -318,7 +315,7 @@
                                                             </h3>
                                                         </div>
                                                         <div class="re__card-config">
-                                                            <span class="re__card-config-price">Price</span>
+
                                                             <span class="re__card-config-area"><span class="re__card-config-dot">·</span>${r.roomArea} m²</span>
                                                             <div class="re__clear"></div>
                                                         </div>
@@ -417,7 +414,7 @@
                         <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                         <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                        <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i> Chat with owner</button>
+
                     </form>
 
                 </div>
@@ -426,7 +423,7 @@
 
             </div>
         </div>
-<%--        <%@include file="../owner/components/footer.jsp"%>--%>
+
         <!-- Push notification element -->
         <div id="push-noti"></div>
         <!-- end product-detail-->

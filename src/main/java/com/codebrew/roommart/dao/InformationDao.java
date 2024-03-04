@@ -2,6 +2,8 @@ package com.codebrew.roommart.dao;
 
 import com.codebrew.roommart.dto.Information;
 import com.codebrew.roommart.utils.DatabaseConnector;
+import com.codebrew.roommart.utils.OwnerUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -112,6 +114,36 @@ public class InformationDao {
             }
         }
         return accountInfor;
+    }
+
+    public Information getAccountInformationById(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Information inf = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_RENTER_INFO_BY_ID);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String birthday = rs.getString("birthday");
+                    int sex = rs.getInt("sex");
+                    String phone = rs.getString("phone");
+                    String address = rs.getString("address");
+                    String cccd = rs.getString("identity_card_number");
+                    inf = new Information(fullname, email, birthday, sex, phone, address, cccd);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return inf;
     }
 
 }

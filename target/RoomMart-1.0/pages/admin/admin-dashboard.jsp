@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+
     <!-- Title -->
     <title>Tổng quan</title>
 
@@ -51,7 +51,7 @@
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Welcome -->
                 <div class="content-welcome mt-5">
-                    <img src="./assets/images/avatars/male.png" alt="User avatar" class="welcome-image">
+
                     <div class="welcome-content">
                         <div class="welcome-title">Chào mừng, <span>${sessionScope.USER.accountInfo.information.fullname}</span></div>
                         <p class="welcome-paragraph">Quản trị hệ thống thật là vui <3</p>
@@ -169,12 +169,12 @@
                                 <div class="card-body">
                                     <div class="text-center">
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+
                                              src="./assets/images/logos/logo.png" alt="...">
                                     </div>
                                     <p>
                                         Mục đích của sản phẩm phần mềm là
-                                        <a target="_blank" rel="nofollow" href="https://luci.vn/ung-dung-quan-ly-nha-tro-giai-phap-quan-ly-toi-uu">
-                                            tối ưu hóa quy trình
+                            tối ưu hóa quy trình
                                         </a>
                                         cho thuê trọ và thuê nhà, giúp đơn giản hóa và tự động hóa các hoạt động liên quan.
                                         Bằng cách này, người dùng có thể dễ dàng tìm kiếm, đặt phòng và thanh toán trực tuyến
@@ -196,11 +196,17 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="mb-0">
+
+                                        RoomMart tự hào là doanh nghiệp hàng đầu trong tư vấn, nghiên cứu
+                                        và phát triển các giải pháp cho doanh nghiệp. Chúng tôi tự tin có thể
+                                        mang đến cho bạn một bộ phần mềm quản lý nhà trọ hoàn toàn giống như
+
                                         Phương pháp tiếp cận phát triển của dự án RoomArt bao gồm các bước:
                                         Phân tích yêu cầu, lập kế hoạch phát triển, thiết kế và phát triển,
                                         kiểm thử và đánh giá, triển khai và hỗ trợ. Điều này giúp tối ưu hóa
                                         quy trình cho thuê trọ và thuê nhà, cải thiện trải nghiệm người dùng,
                                         và tăng cường tính cạnh tranh của RoomMart trên thị trường.
+
                                     </p>
                                 </div>
                             </div>
