@@ -54,6 +54,8 @@ public class UpdateProfileServlet extends HttpServlet {
                 session.setAttribute("USER", acc);
                 url = SUCCESS;
                 request.setAttribute("MES", "Cập nhật thành công!");
+
+                response.sendRedirect("RenterProfile");
             } else {
                 request.setAttribute("MES", "Cập nhật thất bại!");
                 session.setAttribute("Error", "Somethings Wrong!");
