@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-view-list-invoice.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-bill.css">
 
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
@@ -105,6 +105,11 @@
     window.onbeforeunload = function(){
         receiveWebsocket.disconnectWebSocket();
     };
+</script>
+
+<script>
+    var currentPage = window.location.pathname.split("/").pop().split(".")[0];
+    document.getElementById(currentPage).classList.add("active");
 </script>
 
 </body>

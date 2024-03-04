@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -35,26 +37,29 @@
                         <thead class="content__thead">
                         <tr>
                             <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
-                                colspan="1" aria-label="STT: activate to sort column ascending" style="width: 60px;">STT
+                                colspan="1" aria-label="STT: activate to sort column ascending" style="width: 70px;">STT
                             </th>
                             <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                                 colspan="1" aria-label="Nội dung: activate to sort column ascending"
                                 data-orderable="false">Nội dung</th>
                             <th class="text-center sorting" aria-controls="notification-table" rowspan="1" colspan="1"
-                                aria-label="Ngày gửi: activate to sort column ascending" style="width: 110px;"
+                                aria-label="Ngày gửi: activate to sort column ascending" style="width: 120px;"
                                 data-orderable="false">Ngày gửi</th>
                         </tr>
                         </thead>
                         <tbody class="content__tbody">
                         <c:set var="index" value="0" />
-                        <c:forEach var="rp" items="${REPORT_LIST}">
+                        <c:forEach var="nt" items="${NOTIFY}">
                             <c:set var="index" value="${index + 1}" />
                             <tr style="text-align: center">
                                 <td>${index}</td>
-                                <td style="text-align: left">${rp.content}</td>
+                                <td style="text-align: left; padding-left: 1.5rem">
+                                    <h3>${nt.title}</h3>
+                                    <h4 style="font-weight: 400; font-size: 1.6rem">${nt.content}</h4>
+                                </td>
                                 <td>
-<%--                                    <fmt:parseDate var="sendDate" value="${rp.sendDate}" pattern="yy-MM-dd"/>--%>
-<%--                                    <fmt:formatDate value="${sendDate}" pattern="dd-MM-yy"/>--%>
+                                    <fmt:parseDate var="createDate" value="${nt.createDate}" pattern="yy-MM-dd"/>
+                                    <fmt:formatDate value="${createDate}" pattern="dd-MM-yy"/>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -92,6 +97,9 @@
             "pageLength": 10
         });
     });
+
+    var currentPage = window.location.pathname.split("/").pop().split(".")[0];
+    document.getElementById(currentPage).classList.add("active");
 </script>
 </body>
 </html>
