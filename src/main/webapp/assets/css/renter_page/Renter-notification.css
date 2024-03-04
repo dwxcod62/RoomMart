@@ -7,7 +7,7 @@ nav {
 }
 
 nav .navbar {
-  padding: 25px 100px;
+  padding: 10px 100px;
 }
 
 nav .navbar .navbar-logo img {
@@ -43,6 +43,8 @@ nav .user-menu {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: none;
+  width: 300px;
+  height: 250px;
 }
 
 nav .user-menu.active {
@@ -276,7 +278,9 @@ footer {
 }
 
 body {
+  font-size: 17px;
   overflow-x: hidden;
+  min-height: calc(100vh - 80px);
 }
 
 .dashboard {
@@ -287,70 +291,50 @@ body {
   display: none;
 }
 
+.main-body {
+  padding: 0;
+  margin: 0;
+}
+
 .content {
   width: 80%;
-  margin: 0;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  row-gap: 20px;
+  padding: 20px 40px 30px 40px;
 }
 
-.notification {
-  margin: 40px auto;
-  width: 90%;
-}
-.notification h1 {
-  font-size: 30px;
-  margin-bottom: 20px;
-  color: blue;
-  text-align: center;
-}
-.notification table {
-  font-size: 20px;
-  width: 100%;
-  margin: auto;
-}
-.notification table tr {
-  display: grid;
-  grid-template-columns: 1fr 2fr 8fr 2fr;
-}
-.notification table tr th {
-  text-align: left;
-  padding-left: 5px;
-}
-.notification table tr td {
-  text-align: left;
-  padding-left: 5px;
-}
-.notification .dataTables_length {
-  font-size: 20px;
-}
-.notification .dataTables_filter {
-  font-size: 20px;
-}
-.notification .dataTables_info {
-  font-size: 20px;
-}
-.notification .dataTables_paginate {
-  font-size: 20px;
-}
-.notification .dataTables_paginate .paginate_button {
-  font-size: 18px;
+.content__body {
+  padding: 16px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.08) 0px 1px 2px;
 }
 
-@media screen and (max-width: 1024px) and (min-width: 740px) {
-  .content {
-    width: 100%;
-    padding: 0;
-    min-height: calc(100vh - 80px);
-  }
-  .main-body .dashboard {
-    display: none;
-  }
-  .dropdown {
-    display: block;
-    padding: 0;
-    width: fit-content;
-    height: fit-content;
-  }
+.dataTables_filter label,
+.dataTables_length label{
+  width: 300px;
+  height: 50px;
+  font-size: 16px;
+  display: flex;
 }
 
-/*# sourceMappingURL=Renter-notification.css.map */
+.dataTables_length select {
+  width: 68px;
+  height: 30px;
+  font-size: 15px;
+  margin: 0 10px;
+}
+
+.dataTables_filter input{
+  width: 200px;
+  height: 31px;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+#notification-table_info{
+  margin-top: 10px;
+  font-size: 15px;
+}
