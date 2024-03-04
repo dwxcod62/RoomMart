@@ -27,9 +27,12 @@ public class AdminDashboard extends HttpServlet {
         AccountDao accountDao = new AccountDao();
         HttpSession session = request.getSession();
         try {
-            //Get list account of owner with role id is 1
+            //Get list account of owner and renter with role id is 1 / 2
             List<Account> totalAccountOwner = accountDao.GetAccountsByRole(1);
             request.setAttribute("totalAccountOwner", totalAccountOwner.size() == 0 ? 0 : totalAccountOwner.size());
+
+            List<Account> totalAccountRenter = accountDao.GetAccountsByRole(2);
+            request.setAttribute("totalAccountRenter", totalAccountRenter.size() == 0 ? 0 : totalAccountRenter.size());
 
             //Get current month and year
             LocalDate currentdate = LocalDate.now();
@@ -38,9 +41,12 @@ public class AdminDashboard extends HttpServlet {
             String DateNow = currentMonth + "/" + currentYear;
             request.setAttribute("DateNow", DateNow);
 
-            //Get list account owner in recent month
+            //Get list account owner in recent month of owner and renter
             int totalNewAccountInRecentMonth = accountDao.GetAccountsByRoleInRecentMonth(1);
             request.setAttribute("totalNewAccountInRecentMonth", totalNewAccountInRecentMonth == 0 ? 0 : totalNewAccountInRecentMonth);
+
+            int totalNewAccountInRecentMonthRenter = accountDao.GetAccountsByRoleInRecentMonth(2);
+            request.setAttribute("totalNewAccountInRecentMonthRenter", totalNewAccountInRecentMonthRenter == 0 ? 0 : totalNewAccountInRecentMonthRenter);
 
             //Get list propose is waitting and accept
             List<Propose> proposeList = new ProposeDao().getAllPropose();

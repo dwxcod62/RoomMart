@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
     <!-- Title -->
     <title>Tổng quan</title>
 
@@ -16,10 +16,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/sys-css/core_style/core.css">
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="../../assets/sys-css/admin_page/admin-dashboard/style.css">
+    <link rel="stylesheet" href="./assets/css/admin_page/admin-dashboard/style.css">
 
 </head>
 
@@ -51,7 +51,7 @@
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Welcome -->
                 <div class="content-welcome mt-5">
-                    <img src="../../assets/images/avatars/male.png" alt="User avatar" class="welcome-image">
+                    <img src="./assets/images/avatars/male.png" alt="User avatar" class="welcome-image">
                     <div class="welcome-content">
                         <div class="welcome-title">Chào mừng, <span>${sessionScope.USER.accountInfo.information.fullname}</span></div>
                         <p class="welcome-paragraph">Quản trị hệ thống thật là vui <3</p>
@@ -72,7 +72,8 @@
                                                 Tổng tài khoản
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                ${requestScope.totalAccountOwner}
+                                                ${requestScope.totalAccountOwner} / ${requestScope.totalAccountRenter}
+
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -93,7 +94,7 @@
                                                 Đăng ký mới (${requestScope.DateNow})
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                ${requestScope.totalNewAccountInRecentMonth}
+                                                ${requestScope.totalNewAccountInRecentMonth} / ${requestScope.totalNewAccountInRecentMonthRenter}
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -168,11 +169,11 @@
                                 <div class="card-body">
                                     <div class="text-center">
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                             src="../../assets/images/logos/logo.png" alt="...">
+                                             src="./assets/images/logos/logo.png" alt="...">
                                     </div>
                                     <p>
                                         Mục đích của sản phẩm phần mềm là
-                                        <a target="_blank" rel="nofollow" href="https://www.google.com/">
+                                        <a target="_blank" rel="nofollow" href="https://luci.vn/ung-dung-quan-ly-nha-tro-giai-phap-quan-ly-toi-uu">
                                             tối ưu hóa quy trình
                                         </a>
                                         cho thuê trọ và thuê nhà, giúp đơn giản hóa và tự động hóa các hoạt động liên quan.
@@ -181,7 +182,7 @@
                                         trải nghiệm người dùng và tăng cường tính cạnh tranh cho các nhà cung cấp dịch vụ
                                         trọ và cho thuê nhà trên thị trường.
                                     </p>
-                                    <a target="_blank" rel="nofollow" href="https://www.google.com/">
+                                    <a target="_blank" rel="nofollow" href="https://www.baymgmtgroup.com/blog/tenants-who-work-from-home/">
                                         Đọc thêm &rarr;
                                     </a>
                                 </div>
@@ -190,15 +191,16 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-4">
                                     <h6 class="m-0 font-weight-bold text-primary">
-                                        Phương pháp tiếp cận phát triển
+                                        Phương pháp tiếp và cận phát triển
                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <p class="mb-0">
-                                        RoomMart tự hào là doanh nghiệp hàng đầu trong tư vấn, nghiên cứu
-                                        và phát triển các giải pháp cho doanh nghiệp. Chúng tôi tự tin có thể
-                                        mang đến cho bạn một bộ phần mềm quản lý nhà trọ hoàn toàn giống như
-                                        chúng tôi đã quảng cáo.
+                                        Phương pháp tiếp cận phát triển của dự án RoomArt bao gồm các bước:
+                                        Phân tích yêu cầu, lập kế hoạch phát triển, thiết kế và phát triển,
+                                        kiểm thử và đánh giá, triển khai và hỗ trợ. Điều này giúp tối ưu hóa
+                                        quy trình cho thuê trọ và thuê nhà, cải thiện trải nghiệm người dùng,
+                                        và tăng cường tính cạnh tranh của RoomMart trên thị trường.
                                     </p>
                                 </div>
                             </div>
@@ -214,15 +216,15 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">Tiến độ dự án <span
-                                            class="float-right">98%</span></h4>
+                                            class="float-right">90%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 98%"
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 90%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">Kiểm thử <span class="float-right">90%</span>
+                                    <h4 class="small font-weight-bold">Kiểm thử <span class="float-right">80%</span>
                                     </h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 90%"
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"
                                              aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">Database <span class="float-right">99%</span>
@@ -262,12 +264,12 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <!-- JQuery -->
-<script src="../../assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
-<script src="../../assets/js/handle-main-navbar.js"></script>
+<script src="./assets/js/handle-main-navbar.js"></script>
 
 <!-- Loader -->
-<script src="../../assets/js/loading-handler.js"></script>
+<script src="./assets/js/loading-handler.js"></script>
 </body>
 
 </html>

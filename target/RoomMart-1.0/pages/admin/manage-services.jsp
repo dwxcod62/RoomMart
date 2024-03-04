@@ -18,10 +18,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/sys-css/core_style/core.css">
+    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="../../assets/sys-css/admin_page/manage-services/style.css">
+    <link rel="stylesheet" href="../../assets/css/admin_page/manage-services/style.css">
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
@@ -241,44 +241,44 @@
     // Valid form
     <c:forEach var="service" items="${requestScope.servicesList}">
     <c:choose>
-        <c:when test="${service.serviceID eq 1 ||
-                        service.serviceID eq 2 ||
-                        service.serviceID eq 3 ||
-                        service.serviceID eq 4 ||
-                        service.serviceID eq 5 ||
-                        service.serviceID eq 6 ||
-                        service.serviceID eq 7}">
-        </c:when>
-        <c:otherwise>
-            Validator({
-                form: "#update-service-form-${service.serviceID}",
-                formGroupSelector: ".form-group",
-                errorSelector: ".form-message",
-                rules: [
-                    Validator.isRequired("#update-service-name-${service.serviceID}", "Vui lòng nhập tên của dịch vụ")
-                ],
-            });
-        </c:otherwise>
+    <c:when test="${service.serviceID eq 1 ||
+                    service.serviceID eq 2 ||
+                    service.serviceID eq 3 ||
+                    service.serviceID eq 4 ||
+                    service.serviceID eq 5 ||
+                    service.serviceID eq 6 ||
+                    service.serviceID eq 7}">
+    </c:when>
+    <c:otherwise>
+    Validator({
+        form: "#update-service-form-${service.serviceID}",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+            Validator.isRequired("#update-service-name-${service.serviceID}", "Vui lòng nhập tên của dịch vụ")
+        ],
+    });
+    </c:otherwise>
     </c:choose>
     </c:forEach>
 
     <c:choose>
-        <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
-            toast({
-                title: 'Thành công',
-                message: '${requestScope.RESPONSE_MSG.content}',
-                type: 'success',
-                duration: 5000
-            });
-        </c:when>
-        <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
-            toast({
-                title: 'Lỗi',
-                message: '${requestScope.RESPONSE_MSG.content}',
-                type: 'error',
-                duration: 5000
-            });
-        </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
+    toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'success',
+        duration: 5000
+    });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
+    toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'error',
+        duration: 5000
+    });
+    </c:when>
     </c:choose>
 
     $('#service__table').DataTable({

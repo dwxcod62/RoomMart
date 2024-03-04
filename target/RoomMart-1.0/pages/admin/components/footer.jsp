@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="copyright-wrapper d-flex justify-content-center">
-                    <div class="copyright-content">© 2024 RoomMart. All rights reserved.</div>
+                    <div class="copyright-content">© RoomMart 2024. All rights reserved </div>
                 </div>
             </div>
         </div>

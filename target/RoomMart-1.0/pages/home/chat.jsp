@@ -51,15 +51,15 @@
                 <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(requestScope.roomId)}" />
                 <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(requestScope.hostelId)}" />
 
-<%--                <a id="link-room-detail" class="nav-link position-relative p-0 py-xl-3" href="roomDetail?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Back" >--%>
-<%--                    <i class="icon-lg fe-chevron-left"></i>--%>
+                <%--                <a id="link-room-detail" class="nav-link position-relative p-0 py-xl-3" href="roomDetail?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Back" >--%>
+                <%--                    <i class="icon-lg fe-chevron-left"></i>--%>
 
-<%--                </a>--%>
+                <%--                </a>--%>
                 <a id="link-room-detail" class="nav-link position-relative p-0 py-xl-3" href="javascript:history.back()" title="Back" >
                     <i class="icon-lg fe-chevron-left"></i>
 
                 </a>
-<%--                <a href="javascript:history.back()" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Go Back</a>--%>
+                <%--                <a href="javascript:history.back()" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Go Back</a>--%>
             </li>
             <!-- Chats -->
             <li class="nav-item mt-xl-9">
@@ -171,7 +171,7 @@
                                         </div>
 
                                         <h5>${requestScope.infor.fullname}</h5>
-<%--                                        <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML.</p>--%>
+                                        <%--                                        <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML.</p>--%>
                                     </div>
                                 </div>
                             </div>

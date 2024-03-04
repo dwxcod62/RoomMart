@@ -28,12 +28,11 @@
 </head>
 
 <body>
-    <%   Account account = (Account) session.getAttribute("USER");%>
+<%  Account account = (Account) session.getAttribute("USER");   %>
+
+<%@include file="component/navbar.jsp" %>
 <div>
-
-
     <div class="row main-body" style="padding: 0;margin: 0;">
-        <%@include file="component/navbar.jsp" %>
         <%@include file="component/sidebar.jsp" %>
         <div class="content">
             <h1 class="title">Tổng Quan Thông Tin Về Phòng Trọ</h1>
@@ -94,7 +93,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -102,8 +100,8 @@
     <%@include file="component/footer.jsp" %>
 
     <!-- Push notification element -->
-    <div id="push-noti"></div>
-
+    <%--    <div id="push-noti"></div>--%>
+    <script src="./assets/js/renter/Renter-navbar.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -116,17 +114,19 @@
             crossorigin="anonymous"></script>
     <!-- Push notification -->
     <script src="./assets/js/push-notification-alert.js"></script>
-    <!-- Web socket -->
-    <script src="./assets/js/receiveWebsocket.js"></script>
 
-    <script type="text/javascript">
-        // Receive
-        receiveWebsocket(alertPushNoti);
-        // Close when leave
-        window.onbeforeunload = function () {
-            receiveWebsocket.disconnectWebSocket();
-        };
-    </script>
+    <!-- Web socket -->
+    <%--    <script src="./assets/js/receiveWebsocket.js"></script>--%>
+
+    <%--    <script type="text/javascript">--%>
+    <%--        // Receive--%>
+    <%--        receiveWebsocket(alertPushNoti);--%>
+    <%--        // Close when leave--%>
+    <%--        window.onbeforeunload = function () {--%>
+    <%--            receiveWebsocket.disconnectWebSocket();--%>
+    <%--        };--%>
+    <%--    </script>--%>
+
 </div>
 </body>
 

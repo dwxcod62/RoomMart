@@ -8,7 +8,7 @@
 <html lang="vi">
 <head>
 
-        <!-- Basic -->
+    <!-- Basic -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +16,12 @@
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
 
 
-        <title> ROOMMART </title>
+    <title> ROOMMART </title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
-<%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
+    <%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
 
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
@@ -68,9 +68,9 @@
 <div class="form-content">
 
     <div class="re__bg-header">
-<%--        <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">--%>
-<%--            <div class="re__container-sm">--%>
-<%--                <div class="re__nav" id="naga">--%>
+        <%--        <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">--%>
+        <%--            <div class="re__container-sm">--%>
+        <%--                <div class="re__nav" id="naga">--%>
 
 
 
@@ -78,81 +78,81 @@
 
 
 
-<%--                </div>--%>
-<%--                <div class="re__bg-pushmenu"></div>--%>
-<%--            </div>--%>
-<%--            <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">--%>
+        <%--                </div>--%>
+        <%--                <div class="re__bg-pushmenu"></div>--%>
+        <%--            </div>--%>
+        <%--            <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">--%>
 
-<%--                <div class="re__control-menu">--%>
-<%--                    <c:if test = "${sessionScope.USER != null}">--%>
-<%--                        <!-- Navbar -->--%>
-<%--                        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
-<%--                    </c:if>--%>
-<%--                    <c:if test = "${sessionScope.USER == null}">--%>
-<%--                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">--%>
-<%--                            <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>--%>
-<%--                            <span class="re__line"></span>--%>
-<%--                            <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>--%>
-<%--                        </div>--%>
-<%--                    </c:if>--%>
-
-
-<%--                </div>--%>
-<%--                <!-- icon -->--%>
-<%--                <div class="re__drop-menu">--%>
-<%--                    <div class="re__left-menu">--%>
-<%--                        <h1>--%>
-<%--                            <a href="home" >--%>
-<%--                                <img style="align-content: center; height: 60px; object-fit: contain ;" src="./assets/images/logos/logo.png" error-image-src="./assets/images/logos/logo.png" alt="Roomart" title="Roomart">--%>
-<%--                            </a>--%>
-<%--                        </h1>--%>
-<%--                    </div>--%>
-
-<%--                    <div class="re__right-menu">--%>
-<%--                        <!--Header menu-->--%>
-<%--                        <div class="re__home-header-menu">--%>
-<%--                            <div class="re__home-header-menu">--%>
-<%--                                <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">--%>
+        <%--                <div class="re__control-menu">--%>
+        <%--                    <c:if test = "${sessionScope.USER != null}">--%>
+        <%--                        <!-- Navbar -->--%>
+        <%--                        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
+        <%--                    </c:if>--%>
+        <%--                    <c:if test = "${sessionScope.USER == null}">--%>
+        <%--                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">--%>
+        <%--                            <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>--%>
+        <%--                            <span class="re__line"></span>--%>
+        <%--                            <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>--%>
+        <%--                        </div>--%>
+        <%--                    </c:if>--%>
 
 
+        <%--                </div>--%>
+        <%--                <!-- icon -->--%>
+        <%--                <div class="re__drop-menu">--%>
+        <%--                    <div class="re__left-menu">--%>
+        <%--                        <h1>--%>
+        <%--                            <a href="home" >--%>
+        <%--                                <img style="align-content: center; height: 60px; object-fit: contain ;" src="./assets/images/logos/logo.png" error-image-src="./assets/images/logos/logo.png" alt="Roomart" title="Roomart">--%>
+        <%--                            </a>--%>
+        <%--                        </h1>--%>
+        <%--                    </div>--%>
 
-<%--                                    <li class="lv0 ">--%>
-<%--                                        <a href="home">--%>
+        <%--                    <div class="re__right-menu">--%>
+        <%--                        <!--Header menu-->--%>
+        <%--                        <div class="re__home-header-menu">--%>
+        <%--                            <div class="re__home-header-menu">--%>
+        <%--                                <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">--%>
 
-<%--                                            <span class="text">Home</span>--%>
-<%--                                        </a><div class="re__arrrow"></div>--%>
 
-<%--                                    </li>--%>
-<%--                                    <li class="lv0 ">--%>
-<%--                                        <a href="https://github.com/dwxcod62/RoomMart">--%>
 
-<%--                                            <span class="text">About us</span>--%>
-<%--                                        </a><div class="re__arrrow"></div>--%>
+        <%--                                    <li class="lv0 ">--%>
+        <%--                                        <a href="home">--%>
 
-<%--                                    </li>--%>
-<%--                                    <li class="lv0 ">--%>
-<%--                                        <a href="https://blogs.mtdv.me/blog/posts/very-mysterious">--%>
+        <%--                                            <span class="text">Home</span>--%>
+        <%--                                        </a><div class="re__arrrow"></div>--%>
 
-<%--                                            <span class="text">More</span>--%>
-<%--                                        </a><div class="re__arrrow"></div>--%>
+        <%--                                    </li>--%>
+        <%--                                    <li class="lv0 ">--%>
+        <%--                                        <a href="https://github.com/dwxcod62/RoomMart">--%>
 
-<%--                                    </li>--%>
-<%--                                </ul>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            --%>
-<%--            --%>
-<%--        </header>--%>
+        <%--                                            <span class="text">About us</span>--%>
+        <%--                                        </a><div class="re__arrrow"></div>--%>
 
-    <!-- Navbar -->
-    <%@include file="./pages/owner/components/navbar.jsp"%>
+        <%--                                    </li>--%>
+        <%--                                    <li class="lv0 ">--%>
+        <%--                                        <a href="https://blogs.mtdv.me/blog/posts/very-mysterious">--%>
+
+        <%--                                            <span class="text">More</span>--%>
+        <%--                                        </a><div class="re__arrrow"></div>--%>
+
+        <%--                                    </li>--%>
+        <%--                                </ul>--%>
+        <%--                            </div>--%>
+        <%--                        </div>--%>
+        <%--                    </div>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--            --%>
+        <%--            --%>
+        <%--        </header>--%>
+
+        <!-- Navbar -->
+<%--        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
     </div>
 </div>
 <div class="re__main">
-<div class="re__home">
+    <div class="re__home">
         <!-- ok -->
         <div class="re__content-block re__home__head-block">
             <div class="re__home-search-box">
@@ -231,7 +231,7 @@
             <div class="re__content-container">
 
 
-                <h2 class="re__content-container-label">For you </h2>
+                <h2 class="re__content-container-label">Phòng dành cho bạn</h2>
 
 
                 <div id="interestedProductsBinnovaContent" class="re__product-container">
@@ -240,78 +240,78 @@
                     <div class="home-product product-4-you">
                         <div class="js__interested-product re__interested-product-cards">
                             <c:if test="${not empty requestScope.rooms}">
-                            <c:forEach items="${requestScope.rooms}" var="r">
-                                <c:set var="address" value="${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}" />
-                                <c:set var="hostelName" value="${r.roomInformation.hostelName}" />
+                                <c:forEach items="${requestScope.rooms}" var="r">
+                                    <c:set var="address" value="${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}" />
+                                    <c:set var="hostelName" value="${r.roomInformation.hostelName}" />
 
-                                <div class="re__product-item re__interested-product-card js__product-item" style="display: block">
+                                    <div class="re__product-item re__interested-product-card js__product-item" style="display: block">
 
-                                    <div class="js__card js__card-compact-web
+                                        <div class="js__card js__card-compact-web
      pr-container re__card-compact re__vip-normal">
 
-                                        <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
-                                        <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(r.hostelId)}" />
-                                        <a class="js__product-link-for-product-id" href="roomDetail?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Roommart" previewlistener="true">
-                                            <div class="re__card-image">
-                                                <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
+                                            <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
+                                            <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(r.hostelId)}" />
+                                            <a class="js__product-link-for-product-id" href="roomDetailH?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Roommart" previewlistener="true">
+                                                <div class="re__card-image">
+                                                    <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
 
-                                                <div class="re__card-image-feature">
-                                                    <i class="bi bi-image"></i>
-                                                    <span>${not empty r.hostelId ? r.hostelId : 0}</span>
+                                                    <div class="re__card-image-feature">
+                                                        <i class="bi bi-image"></i>
+                                                        <span>${not empty r.hostelId ? r.hostelId : 0}</span>
+                                                    </div>
+
                                                 </div>
+                                                <div class="re__card-info">
+                                                    <div class="re__card-info-content">
+                                                        <div class="re__card-title">
+                                                            <h3 class="js__card-title">
+                                                                    ${r.roomId} - ${hostelName} - ${r.roomNumber}
+                                                            </h3>
+                                                        </div>
+                                                        <div class="re__card-config">
+                                                            <span class="re__card-config-price">${r.capacity} Người</span>
 
-                                            </div>
-                                            <div class="re__card-info">
-                                                <div class="re__card-info-content">
-                                                    <div class="re__card-title">
-                                                        <h3 class="js__card-title">
-                                                                ${r.roomId} - ${hostelName} - ${r.roomNumber}
-                                                        </h3>
-                                                    </div>
-                                                    <div class="re__card-config">
-                                                        <span class="re__card-config-price">${r.capacity} Người</span>
-
-                                                        <span class="re__card-config-area">
+                                                            <span class="re__card-config-area">
                                                         <span class="re__card-config-dot">·</span>
                                                     </span>
 
-                                                        <span class="re__card-config-price"> ${r.roomArea}m<sup>2</sup></span>
+                                                            <span class="re__card-config-price"> ${r.roomArea}m<sup>2</sup></span>
 
-                                                        <span class="re__card-config-area">
+                                                            <span class="re__card-config-area">
                                                         <span class="re__card-config-dot">·</span>
                                                     </span>
 
-                                                        <span class="re__card-config-price">Gác xếp: ${r.hasAttic==1?'<i class="fa-solid fa-check"></i>':'<i class="fa-solid fa-xmark"></i>'}</span>
+                                                            <span class="re__card-config-price">Gác xếp: ${r.hasAttic==1?'<i class="fa-solid fa-check"></i>':'<i class="fa-solid fa-xmark"></i>'}</span>
 
-                                                        <div class="re__clear"></div>
-                                                        <div class="re__clear"></div>
-                                                    </div>
-                                                    <div class="re__card-location">
-                                                        <i class="bi bi-house-fill"></i>
-                                                        <span>${address}</span>
-                                                    </div>
-                                                    <div class="re__clearfix"></div>
-                                                    <div class="re__card-contact">
-                                                        <div class="re__card-published-info">
+                                                            <div class="re__clear"></div>
+                                                            <div class="re__clear"></div>
+                                                        </div>
+                                                        <div class="re__card-location">
+                                                            <i class="bi bi-house-fill"></i>
+                                                            <span>${address}</span>
+                                                        </div>
+                                                        <div class="re__clearfix"></div>
+                                                        <div class="re__card-contact">
+                                                            <div class="re__card-published-info">
                                 <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
                                         ${r.roomStatus==0?"Có thể thuê":r.roomStatus==2?"Đã Thuê":"Đang duyệt"}
                                 </span>
 
-                                                        </div>
+                                                            </div>
 
-                                                        <div class="re__clear-both"></div>
+                                                            <div class="re__clear-both"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="re__clearfix"></div>
-                                        </a>
+                                                <div class="re__clearfix"></div>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            </c:forEach>
+                                </c:forEach>
 
                             </c:if>
                             <c:if test="${empty requestScope.rooms}">
-                            <h2>Không tìm thấy phòng phù hợp</h2>
+                                <h2>Không tìm thấy phòng phù hợp</h2>
                             </c:if>
 
                         </div>
@@ -326,28 +326,28 @@
 
         </div>
 
-    <%--                                pagination--%>
-    <div class="pagination justify-content-center" style="display: flex;text-align: center;margin-top: 20px;margin-bottom: 20px;">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <c:forEach begin="1" end="${requestScope.total}" step="1" var="i">
+        <%--                                pagination--%>
+        <div class="pagination justify-content-center" style="display: flex;text-align: center;margin-top: 20px;margin-bottom: 20px;">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <c:forEach begin="1" end="${requestScope.total}" step="1" var="i">
 
-                    <li class="page-item <c:if test="${i == requestScope.page}"> active </c:if> "  >
-                        <a class="page-link" href="home?page=${i}&key=${requestScope.key}&city=${requestScope.citySelected}&dístrict=${requestScope.districtSelected}&ward=${requestScope.wardSelected}">
-                                ${i}
-                        </a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </nav>
-    </div>
-    <%--                                end pagination--%>
+                        <li class="page-item <c:if test="${i == requestScope.page}"> active </c:if> "  >
+                            <a class="page-link" href="home?page=${i}&key=${requestScope.key}&city=${requestScope.citySelected}&dístrict=${requestScope.districtSelected}&ward=${requestScope.wardSelected}">
+                                    ${i}
+                            </a>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </nav>
+        </div>
+        <%--                                end pagination--%>
     </div>
 </div>
 
 
 
-    <!-- food section -->
+<!-- food section -->
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
