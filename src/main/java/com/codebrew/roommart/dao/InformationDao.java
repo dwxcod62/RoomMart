@@ -70,7 +70,8 @@ public class InformationDao {
                     "WHERE account_id = ?";
     private static final String UPDATE_PROFILE =
             "UPDATE AccountInformations\n" +
-                    "SET fullname = ?\n" +
+                    "SET fullname = ?, email = ?, birthday = ?, phone = ?, " +
+                    "address = ?, identity_card_number = ?, sex = ?\n" +
                     "WHERE account_id = ?";
     //-------------------------------------Method-----------------------------------------
     public Information getHostelOwnerInfoByHostelId(int hostelId) throws SQLException {
@@ -160,7 +161,7 @@ public class InformationDao {
         return inf;
     }
 
-    public boolean updateProfileByAccId(Information accountInfos,int accId) throws SQLException {
+    public boolean updateProfileByAccId(Information infor,int accId) throws SQLException {
         boolean checkUpdate = false;
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -170,14 +171,14 @@ public class InformationDao {
                 cn.setAutoCommit(false);
 
                 ptm = cn.prepareStatement(UPDATE_PROFILE);
-                ptm.setString(1, accountInfos.getFullname());
-//                ptm.setString(2, accountInfos.getEmail());
-//                ptm.setString(3, accountInfos.getBirthday());
-//                ptm.setString(4, accountInfos.getPhone());
-//                ptm.setString(5, accountInfos.getAddress());
-//                ptm.setString(6, accountInfos.getCccd());
-//                ptm.setInt(7, accountInfos.getSex());
-                ptm.setInt(2, accId);
+                ptm.setString(1, infor.getFullname());
+                ptm.setString(2, infor.getEmail());
+                ptm.setString(3, infor.getBirthday());
+                ptm.setString(4, infor.getPhone());
+                ptm.setString(5, infor.getAddress());
+                ptm.setString(6, infor.getCccd());
+                ptm.setInt(7, infor.getSex());
+                ptm.setInt(8, accId);
 
                 checkUpdate = ptm.executeUpdate() > 0;
 

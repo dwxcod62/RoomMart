@@ -31,7 +31,7 @@
             </div>
             <div class="info">
                 <h4 class="name heading m-b-0">
-                     ${sessionScope.USER.accountInfo.information.fullname}
+                    ${sessionScope.USER.accountInfo.information.fullname}
                 </h4> <!-- User name -->
                 <div class="email small">${sessionScope.USER.getAccountInfo().getInformation().getEmail()}</div>
             </div>
