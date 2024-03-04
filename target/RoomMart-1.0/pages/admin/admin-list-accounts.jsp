@@ -18,10 +18,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/sys-css/core_style/core.css">
+    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="../../assets/sys-css/admin_page/admin-list-accounts/style.css">
+    <link rel="stylesheet" href="../../assets/css/admin_page/admin-list-accounts/style.css">
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
