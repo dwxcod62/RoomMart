@@ -68,6 +68,10 @@ public class InformationDao {
             "SELECT *\n" +
                     "FROM AccountInformations\n" +
                     "WHERE account_id = ?";
+    private static final String UPDATE_PROFILE =
+            "UPDATE AccountInformations\n" +
+                    "SET fullname = ?\n" +
+                    "WHERE account_id = ?";
     //-------------------------------------Method-----------------------------------------
     public Information getHostelOwnerInfoByHostelId(int hostelId) throws SQLException {
         Connection cn = null;
@@ -120,7 +124,9 @@ public class InformationDao {
         Connection cn = null;
         PreparedStatement pst = null;
         Information inf = null;
+
         ResultSet rs = null;
+
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
@@ -146,4 +152,77 @@ public class InformationDao {
         return inf;
     }
 
+
+                    inf = Information.builder()
+                            .fullname(fullname)
+                            .email(email)
+                            .birthday(birthday)
+                            .sex(sex)
+                            .phone(phone)
+                            .address(address)
+                            .cccd(cccd)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return inf;
+    }
+
+    public boolean updateProfileByAccId(Information accountInfos,int accId) throws SQLException {
+        boolean checkUpdate = false;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                ptm = cn.prepareStatement(UPDATE_PROFILE);
+                ptm.setString(1, accountInfos.getFullname());
+//                ptm.setString(2, accountInfos.getEmail());
+//                ptm.setString(3, accountInfos.getBirthday());
+//                ptm.setString(4, accountInfos.getPhone());
+//                ptm.setString(5, accountInfos.getAddress());
+//                ptm.setString(6, accountInfos.getCccd());
+//                ptm.setInt(7, accountInfos.getSex());
+                ptm.setInt(2, accId);
+
+                checkUpdate = ptm.executeUpdate() > 0;
+
+                if (!checkUpdate) {
+                    cn.rollback();
+                } else {
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return checkUpdate;
+    }
 }

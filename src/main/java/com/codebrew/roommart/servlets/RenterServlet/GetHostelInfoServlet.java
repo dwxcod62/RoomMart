@@ -13,8 +13,8 @@ import java.util.List;
 
 @WebServlet(name = "GetHostelInfoServlet", value = "/GetHostelInfoServlet")
 public class GetHostelInfoServlet extends HttpServlet {
-    public static final String ERROR = "/pages/renter/renter-room-info.jsp";
-    public static final String SUCCESS = "/pages/renter/renter-room-info.jsp";
+    public static final String ERROR = "renter-Home";
+    public static final String SUCCESS = "renter-Home";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Decorations.measureExecutionTime(() -> {
@@ -45,7 +45,6 @@ public class GetHostelInfoServlet extends HttpServlet {
             Hostel hostel = (Hostel) session.getAttribute("HOSTEL");
             if (hostel == null) {
                 hostel = contractDAO.getHostelByContract(renterId);
-                System.out.println(hostel);
                 session.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }

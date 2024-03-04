@@ -42,7 +42,8 @@ public class DashboardServlet extends HttpServlet {
                         url = "owner-dashboard";
                         break;
                     case 2:
-                        url = "home";
+                        url = "RenterHome";
+
                         break;
                 }
             }
