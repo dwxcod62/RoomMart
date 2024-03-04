@@ -1,9 +1,6 @@
 package com.codebrew.roommart.dto.OwnerDTO;
 
-import com.codebrew.roommart.dto.AccountInfo;
-import com.codebrew.roommart.dto.Report;
-import com.codebrew.roommart.dto.ReportCategory;
-import com.codebrew.roommart.dto.Room;
+import com.codebrew.roommart.dto.*;
 import lombok.*;
 
 @Builder
@@ -16,7 +13,7 @@ import lombok.*;
 public class ReportDetail {
     private Report report;
     private ReportCategory category;
-    private AccountInfo renterInformation;
+    private Information renterInformation;
     private Room room;
     private Hostel hostel;
 }
