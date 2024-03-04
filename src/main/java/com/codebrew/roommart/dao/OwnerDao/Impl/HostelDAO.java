@@ -106,6 +106,75 @@ public class HostelDAO implements IHostelDAO {
     }
 
     @Override
+    public ArrayList<Integer> getListRenterIdByHostelId(int hostelId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Integer> accIdList = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("SELECT A.[account_id] AS account_id\n" +
+                        "FROM [dbo].[Accounts] AS A JOIN [dbo].[Rooms] AS R ON A.[room_id] = R.[room_id]\n" +
+                        "WHERE R.[hostel_id] = ? AND A.[status] = 1");
+                pst.setInt(1, hostelId);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int accId = rs.getInt("account_id");
+                    accIdList.add(accId);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (cn != null) {
+                    cn.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        return accIdList;
+    }
+
+    @Override
+    public boolean checkOwnerHostel(int accId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT [owner_account_id]\n" +
+                        "FROM [dbo].[Hostels]\n" +
+                        "WHERE [owner_account_id] = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, accId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    result = true;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return result;
+    }
+
+    @Override
     public List<Hostel> getHostelByOwnerId(int hostelOwnerAccountID) {
         List<Hostel> listHostels = new ArrayList<>();
         Connection cn = null;

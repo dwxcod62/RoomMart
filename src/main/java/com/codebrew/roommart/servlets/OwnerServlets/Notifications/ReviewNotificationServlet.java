@@ -2,7 +2,7 @@ package com.codebrew.roommart.servlets.OwnerServlets.Notifications;
 
 import com.codebrew.roommart.dao.NotificationDao;
 import com.codebrew.roommart.dto.Notification;
-import com.codebrew.roommart.dto.OwnerDTO.HandlerStatus;
+import com.codebrew.roommart.dto.HandlerStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

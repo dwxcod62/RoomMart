@@ -1,7 +1,7 @@
 package com.codebrew.roommart.servlets.OwnerServlets.Hostel;
 
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
-import com.codebrew.roommart.dto.OwnerDTO.HandlerStatus;
+import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 
 import javax.servlet.ServletException;
