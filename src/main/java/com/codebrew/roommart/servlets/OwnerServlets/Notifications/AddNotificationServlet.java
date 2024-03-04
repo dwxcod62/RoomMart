@@ -5,6 +5,7 @@ import com.codebrew.roommart.dao.OwnerDao.Impl.AccountDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.HandlerStatus;
+import com.codebrew.roommart.dto.Notification;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,8 +15,8 @@ import java.util.ArrayList;
 
 @WebServlet(name = "AddNotificationServlet", value = "/AddNotificationServlet")
 public class AddNotificationServlet extends HttpServlet {
-    private final String SUCCESS = "owner-review-notification";
-    private final String FAIL = "notification-page";
+    private final String SUCCESS = "/pages/owner/notification/notification-detail.jsp";
+    private final String FAIL = "/pages/owner/notification/notification-list.jsp";
     private final String ERROR = "error-page";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,18 +46,20 @@ public class AddNotificationServlet extends HttpServlet {
                         int notiId = new NotificationDao().creatNotification(ownerId, hostelId, title, content);
 
                         if (notiId > 0) {
-                            request.setAttribute("NOTIFICATION_ID", notiId);
+                            Notification notification = new NotificationDao().getNotificationById(notiId);
+                            request.setAttribute("NOTIFICATION", notification);
+//                            request.setAttribute("NOTIFICATION_ID", notiId);
                             request.setAttribute("HOSTEL_ID", hostelId);
 
-                            ArrayList<String> accMailList = new ArrayList<>();
-                            String mail = null;
-                            ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
-                            for (int id : renterList) {
-                                mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
-                                if (mail != null) {
-                                    accMailList.add(mail);
-                                }
-                            }
+//                            ArrayList<String> accMailList = new ArrayList<>();
+//                            String mail = null;
+//                            ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
+//                            for (int id : renterList) {
+//                                mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
+//                                if (mail != null) {
+//                                    accMailList.add(mail);
+//                                }
+//                            }
 
 //                            if (accMailList != null && accMailList.size() > 0) {
 //                                String domain = "http://localhost:8080/HappyHostel/RenterNotificationPage";
@@ -84,9 +87,9 @@ public class AddNotificationServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at AddNotificationServlet: " + e);
         } finally {
+            System.out.println(url);
             if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
             else request.getRequestDispatcher(url).forward(request, response);
-
         }
     }
 }

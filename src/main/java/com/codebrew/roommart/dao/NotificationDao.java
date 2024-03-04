@@ -103,7 +103,7 @@ public class NotificationDao {
                 String INSERT_NOTIFICATION = "INSERT INTO [dbo].[Notifications] VALUES(?, ?, ?, ?, GETDATE())";
 
                 // Add into Accounts table
-                pst = cn.prepareStatement(INSERT_NOTIFICATION, Statement.RETURN_GENERATED_KEYS);
+                pst = cn.prepareStatement(INSERT_NOTIFICATION, Statement.RETURN_GENERATED_KEYS); //nhận lại các khóa được tạo tự động
                 // Return key Identity of data just inserted
                 pst.setInt(1, ownerId);
                 pst.setInt(2, hostelId);
@@ -111,12 +111,10 @@ public class NotificationDao {
                 pst.setString(4,content);
 
                 if (pst.executeUpdate() > 0) {
-
                     rs = pst.getGeneratedKeys();
                     if (rs.next()) {
-                        notiId = rs.getInt(1);
+                        notiId = rs.getInt(1); //  được thiết lập bằng ID được sinh tự động
                     }
-
                 } else {
                     cn.rollback();
                 }
