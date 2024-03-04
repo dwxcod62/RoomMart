@@ -72,8 +72,7 @@
 <div class="form-content">
 
 
-    <!-- Navbar -->
-    <%@include file="../../pages/hostel-owner/components/navbar.jsp"%>
+
 </div>
 
 
@@ -144,9 +143,7 @@
 
                         <div class="re__pr-short-info js__pr-short-info">
                             <div class="re__pr-short-info-item js__pr-short-info-item">
-                                <span class="title">Mức giá</span>
-                                <span class="value">${room.price >= 1000000 ? room.price/1000000 : room.price} ${room.price >= 1000000 ? "Triệu":""} VNĐ</span>
-                            </div>
+             </div>
                             <div class="re__pr-short-info-item js__pr-short-info-item">
                                 <span class="title">Diện tích</span>
                                 <span class="value"> ${room.roomArea} m&#xB2;</span>
@@ -155,10 +152,7 @@
                                 <span class="title">Phòng ngủ</span>
                                 <span class="value">${room.capacity} PN</span>
                             </div>
-                            <c:set var="endDate" value="${RoomDao.get_end_date_by_RoomId(room.roomId).toString()}"></c:set>
-                            <c:set var="startDate" value="${RoomDao.get_start_date_by_RoomId(room.roomId).toString()}"></c:set>
-                            <c:set var="formattedEndDate" value="${endDate.substring(8, 10)}/${endDate.substring(5, 7)}/${endDate.substring(0, 4)}" />
-                            <c:set var="formattedStartDate" value="${startDate.substring(8, 10)}/${startDate.substring(5, 7)}/${startDate.substring(0, 4)}" />
+
                             <div class="re__pr-short-info-item js__pr-short-info-item">
                                 <span class="title">Tình Trạng</span>
 
@@ -263,19 +257,13 @@
                                         <span class="re__pr-specs-content-item-value">${room.roomArea} m&#xB2;</span>
                                     </div>
                                     <div class="re__pr-specs-content-item">
-                                        <span class="re__pr-specs-content-item-icon"><i class="bi bi-cash"></i></span>
-                                        <span class="re__pr-specs-content-item-title">Mức giá</span>
-                                        <span class="re__pr-specs-content-item-value">${room.price >= 1000000 ? room.price/1000000 : room.price} ${room.price >= 1000000 ? "Triệu":""} VNĐ</span>
+
                                     </div>
                                     <div class="re__pr-specs-content-item">
-                                        <span class="re__pr-specs-content-item-icon"><i class="bi bi-border-all"></i></span>
-                                        <span class="re__pr-specs-content-item-title">Số phòng ngủ</span>
-                                        <span class="re__pr-specs-content-item-value">${room.roomArea} phòng</span>
+
                                     </div>
                                     <div class="re__pr-specs-content-item">
-                                        <span class="re__pr-specs-content-item-icon"><i class="bi bi-chevron-up"></i></span>
-                                        <span class="re__pr-specs-content-item-title">Gác xếp</span>
-                                        <span class="re__pr-specs-content-item-value">${room.hasAttic==1?'<i class="fa-solid fa-check" style="font-family:FontAwesome !important;"></i>':'<i class="fa-solid fa-xmark" style="font-family:FontAwesome !important;"></i>'}</span>
+
                                     </div>
                                     <div class="re__pr-specs-content-item">
                                         <span class="re__pr-specs-content-item-icon"><i class="bi bi-tv"></i></span>
@@ -327,7 +315,7 @@
                                                             </h3>
                                                         </div>
                                                         <div class="re__card-config">
-                                                            <span class="re__card-config-price">${r.price >= 1000000 ? r.price/1000000 : r.price} ${r.price >= 1000000 ? "Triệu":""} VNĐ</span>
+
                                                             <span class="re__card-config-area"><span class="re__card-config-dot">·</span>${r.roomArea} m²</span>
                                                             <div class="re__clear"></div>
                                                         </div>
@@ -426,7 +414,7 @@
                         <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                         <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                        <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i>Nhắn tin với chủ phòng</button>
+
                     </form>
 
                 </div>
@@ -435,7 +423,7 @@
 
             </div>
         </div>
-        <%@include file="../../pages/hostel-owner/components/footer.jsp"%>
+
         <!-- Push notification element -->
         <div id="push-noti"></div>
         <!-- end product-detail-->
@@ -454,7 +442,6 @@
 
     </div>
 </c:if>
-
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

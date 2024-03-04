@@ -22,6 +22,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
+
+
     <%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
     <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
@@ -66,10 +68,80 @@
 <div class="form-content">
 
     <div class="re__bg-header">
-        <!-- Navbar -->
 
-        <!-- End Navbar -->
-        <%@include file="./pages/hostel-owner/components/navbar.jsp"%>
+        <%--        <header class="re__full-menu re__header re__hover-menu re__tablet-menu  js__menu-bar">--%>
+              </div>--%>
+        <%--                <div class="re__bg-pushmenu"></div>--%>
+        <%--            </div>--%>
+        <%--            <div class="re__menu-bar re__pushmenu re__pushmenu-right floating--right">--%>
+
+        <%--                <div class="re__control-menu">--%>
+        <%--                    <c:if test = "${sessionScope.USER != null}">--%>
+        <%--                        <!-- Navbar -->--%>
+        <%--                        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
+        <%--                    </c:if>--%>
+        <%--                    <c:if test = "${sessionScope.USER == null}">--%>
+        <%--                        <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">--%>
+        <%--                            <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>--%>
+        <%--                            <span class="re__line"></span>--%>
+        <%--                            <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>--%>
+        <%--                        </div>--%>
+        <%--                    </c:if>--%>
+
+
+        <%--                </div>--%>
+        <%--                <!-- icon -->--%>
+        <%--                <div class="re__drop-menu">--%>
+        <%--                    <div class="re__left-menu">--%>
+        <%--                        <h1>--%>
+        <%--                            <a href="home" >--%>
+        <%--                                <img style="align-content: center; height: 60px; object-fit: contain ;" src="./assets/images/logos/logo.png" error-image-src="./assets/images/logos/logo.png" alt="Roomart" title="Roomart">--%>
+        <%--                            </a>--%>
+        <%--                        </h1>--%>
+        <%--                    </div>--%>
+
+        <%--                    <div class="re__right-menu">--%>
+        <%--                        <!--Header menu-->--%>
+        <%--                        <div class="re__home-header-menu">--%>
+        <%--                            <div class="re__home-header-menu">--%>
+        <%--                                <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">--%>
+
+
+
+        <%--                                    <li class="lv0 ">--%>
+        <%--                                        <a href="home">--%>
+
+        <%--                                            <span class="text">Home</span>--%>
+        <%--                                        </a><div class="re__arrrow"></div>--%>
+
+        <%--                                    </li>--%>
+        <%--                                    <li class="lv0 ">--%>
+        <%--                                        <a href="https://github.com/dwxcod62/RoomMart">--%>
+
+        <%--                                            <span class="text">About us</span>--%>
+        <%--                                        </a><div class="re__arrrow"></div>--%>
+
+        <%--                                    </li>--%>
+        <%--                                    <li class="lv0 ">--%>
+        <%--                                        <a href="https://blogs.mtdv.me/blog/posts/very-mysterious">--%>
+
+        <%--                                            <span class="text">More</span>--%>
+        <%--                                        </a><div class="re__arrrow"></div>--%>
+
+        <%--                                    </li>--%>
+        <%--                                </ul>--%>
+        <%--                            </div>--%>
+        <%--                        </div>--%>
+        <%--                    </div>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--            --%>
+        <%--            --%>
+        <%--        </header>--%>
+
+        <!-- Navbar -->
+<%--        <%@include file="./pages/owner/components/navbar.jsp"%>--%>
+
     </div>
 </div>
 <div class="re__main">
@@ -236,12 +308,11 @@
                                                                     ${r.roomId} - ${hostelName} - ${r.roomNumber}
                                                             </h3>
                                                         </div>
-                                                        <div class="re__card-config">
-                                                            <span class="re__card-config-price">${r.price >= 1000000 ? r.price/1000000 : r.price} ${r.price >= 1000000 ? "Triệu":""} VNĐ</span>
 
                                                             <span class="re__card-config-area">
                                                         <span class="re__card-config-dot">·</span>
                                                     </span>
+
 
                                                             <span class="re__card-config-price"> ${r.roomArea}m2</span>
 
@@ -336,7 +407,7 @@
 
 
 <!-- food section -->
-<jsp:include page="pages/hostel-owner/components/footer.jsp"></jsp:include>
+
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
