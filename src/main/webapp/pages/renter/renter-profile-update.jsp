@@ -37,24 +37,37 @@
                         <form action="RenterProfileUpdate" method="post" style="padding: 0 40px">
                             <div class="form-group">
                                 <label for="fullname">Họ và tên:</label>
-                                <input type="text" id="fullname" name="fullname" class="form-control"
-                                         required>
-                            </div>
-                            <div class="form-group">
-                                <label for="birthday">Ngày sinh:</label>
-                                <input type="date" id="birthday" name="birthday" class="form-control" required>
+                                <input type="text" id="fullname" name="new-name" class="form-control"
+                                         value="${sessionScope.USER.accountInfo.information.fullname}" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" class="form-control" required>
+                                <input type="email" id="email" name="email" class="form-control"
+                                       value="${sessionScope.USER.accountInfo.information.email}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Ngày sinh:</label>
+                                <input type="date" id="birthday" name="birthday" class="form-control"
+                                       value="${sessionScope.USER.accountInfo.information.birthday}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sex" class="form-label">Giới tính:</label>
+                                <div class="input-group">
+                                    <select id="sex" name="sex" class="form-select" required>
+                                        <option value="0" ${sessionScope.USER.accountInfo.information.sex == 0 ? 'selected' : ''}>Nam</option>
+                                        <option value="1" ${sessionScope.USER.accountInfo.information.sex == 1 ? 'selected' : ''}>Nữ</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Số điện thoại:</label>
-                                <input type="tel" id="phone" name="phone" class="form-control">
+                                <input type="tel" id="phone" name="phone" class="form-control"
+                                       value="${sessionScope.USER.accountInfo.information.phone}">
                             </div>
                             <div class="form-group">
                                 <label for="cccd">Căn cước công dân:</label>
-                                <input type="text" id="cccd" name="cccd" class="form-control">
+                                <input type="text" id="cccd" name="cccd" class="form-control"
+                                       value="${sessionScope.USER.accountInfo.information.cccd}">
                             </div>
                             <button type="submit" class="btn btn-primary btn_save">Lưu</button>
                         </form>
