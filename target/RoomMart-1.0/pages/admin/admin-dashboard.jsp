@@ -7,8 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="../../assets/images/favicon/favicon1.png" type="image/x-icon" />
-
+    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
     <!-- Title -->
     <title>Tổng quan</title>
 
@@ -52,10 +51,10 @@
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Welcome -->
                 <div class="content-welcome mt-5">
-                    <img src="../../assets/images/avatars/male.jpg" alt="User avatar" class="welcome-image">
+                    <img src="../../assets/images/avatars/male.png" alt="User avatar" class="welcome-image">
                     <div class="welcome-content">
                         <div class="welcome-title">Chào mừng, <span>${sessionScope.USER.accountInfo.information.fullname}</span></div>
-                        <p class="welcome-paragraph">Admin RoomMart</p>
+                        <p class="welcome-paragraph">Quản trị hệ thống thật là vui <3</p>
                     </div>
                 </div>
 
@@ -163,22 +162,24 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-4">
                                     <h6 class="m-0 font-weight-bold text-primary">
-                                        Minh họa
+                                        Mục đích
                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                             src="../../assets/images/banners/illustration-2.svg" alt="...">
+                                             src="../../assets/images/logos/logo.png" alt="...">
                                     </div>
                                     <p>
-                                        Ngày càng có nhiều nền
+                                        Mục đích của sản phẩm phần mềm là
                                         <a target="_blank" rel="nofollow" href="https://www.google.com/">
-                                            khoa học thế giới thứ ba
+                                            tối ưu hóa quy trình
                                         </a>
-                                        và những người được đào tạo về công nghệ học đang hướng
-                                        đến các quốc gia thịnh vượng hơn với mức lương cao hơn
-                                        và điều kiện làm việc tốt hơn.
+                                        cho thuê trọ và thuê nhà, giúp đơn giản hóa và tự động hóa các hoạt động liên quan.
+                                        Bằng cách này, người dùng có thể dễ dàng tìm kiếm, đặt phòng và thanh toán trực tuyến
+                                        một cách thuận tiện và nhanh chóng. Đồng thời, sản phẩm cũng nhằm mục đích cải thiện
+                                        trải nghiệm người dùng và tăng cường tính cạnh tranh cho các nhà cung cấp dịch vụ
+                                        trọ và cho thuê nhà trên thị trường.
                                     </p>
                                     <a target="_blank" rel="nofollow" href="https://www.google.com/">
                                         Đọc thêm &rarr;
@@ -194,11 +195,10 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="mb-0">
-                                        RoomMart tự hào là doanh nghiệp hàng đầu trong tư vấn, nghiên cứu và phát
-                                        triển các giải
-                                        pháp cho doanh nghiệp. Chúng tôi tự tin có thể mang đến cho bạn một bộ phần
-                                        mềm quản lý nhà
-                                        trọ hoàn toàn giống như chúng tôi đã quảng cáo.
+                                        RoomMart tự hào là doanh nghiệp hàng đầu trong tư vấn, nghiên cứu
+                                        và phát triển các giải pháp cho doanh nghiệp. Chúng tôi tự tin có thể
+                                        mang đến cho bạn một bộ phần mềm quản lý nhà trọ hoàn toàn giống như
+                                        chúng tôi đã quảng cáo.
                                     </p>
                                 </div>
                             </div>

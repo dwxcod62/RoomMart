@@ -66,7 +66,7 @@ public class RoomDetailServlet extends HttpServlet {
         InformationDao ud = new InformationDao();
         boolean isSuccess = false;
         InfrastructureDao infraDao = new InfrastructureDao();
-        ServiceInfoDao serviceIDao = new ServiceInfoDao();
+        ServiceInfoDAO serviceIDao = new ServiceInfoDAO();
 
         Room r = rd.getRoomInformationByRoomId(rid);
         Information owner_hostel_info = null;

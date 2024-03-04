@@ -1,5 +1,6 @@
-<%@ page import="com.codebrew.roommart.dto.Roommate" %>
+<%@ page import="com.codebrew.roommart.dto.RoommateInfo" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -28,17 +29,17 @@
 <body>
 <div>
         <%
-        ArrayList<Roommate> listRoommateInfor = (ArrayList<Roommate>) request.getAttribute("listRoommateInfor");
-//    Account account = (Account)session.getAttribute("USER");
+        ArrayList<RoommateInfo> listRoommateInfor = (ArrayList<RoommateInfo>) request.getAttribute("listRoommateInfor");
+        Account account = (Account)session.getAttribute("USER");
   %>
     <!-- navbar -->
 
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
+        <%@include file="component/navbar.jsp" %>
         <%@include file="component/sidebar.jsp" %>
 
         <div class="content">
-            <%@include file="component/navbar.jsp" %>
             <c:if test="${listRoommateInfor.size() == 0}">
                 <h1 style="color: red; font-size: 26px; text-align: center; margin-top: 20px">Chưa Có Thành Viên</h1>
             </c:if>
@@ -140,6 +141,7 @@
     <!-- Push notification element -->
     <div id="push-noti"></div>
 
+    <script src="./assets/js/renter/Renter-navbar.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -17,4 +17,10 @@ public class HostelService {
     private int servicePrice;
     private String validDate;
     private int status;
+
+    public HostelService(int hostelID, int serviceID, int servicePrice) {
+        this.hostelID = hostelID;
+        this.serviceID = serviceID;
+        this.servicePrice = servicePrice;
+    }
 }

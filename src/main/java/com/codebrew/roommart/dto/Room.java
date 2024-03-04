@@ -26,4 +26,5 @@ public class Room {
     RoomInformation roomInformation;
     List<String> imgUrl;
     int price;
+    String hostelName;
 }

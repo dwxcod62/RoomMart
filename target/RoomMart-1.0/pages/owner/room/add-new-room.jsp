@@ -39,31 +39,31 @@
         cursor: default; /* Không hiển thị icon chuột */
     }
     #loading-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8); /* Một lớp mờ */
-    z-index: 9999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
-}
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8); /* Một lớp mờ */
+        z-index: 9999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
+    }
 
-#loading-overlay img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+    #loading-overlay img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/core_style/core.css">
+<!-- Core CSS -->
+<link rel="stylesheet" href="./assets/css/core_style/core.css">
 
-    <!-- Link your CSS here -->
-    <link rel="stylesheet" href="./assets/css/hostel_owner_style/add-new-room-style/style.css">
+<!-- Link your CSS here -->
+<link rel="stylesheet" href="./assets/css/hostel_owner_style/add-new-room-style/style.css">
 
-    <!-- CSS Push Nnotification -->
-    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+<!-- CSS Push Nnotification -->
+<link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
 
@@ -111,14 +111,14 @@
                         <!-- Warning -->
                         <c:if test="${requestScope.rid eq null}">
 
-                        <div class="form-warning">
-                            <p><span>*</span> Để tạo cùng lúc nhiều phòng, hãy thay đổi số lượng
-                                phòng cần tạo,
-                                mặc định để 1 là tạo 1 phòng!</p>
-                            <p><span>*</span> Khi tạo nhiều phòng cùng lúc, tên phòng,ảnh phòng sẽ được tạo ngẫu nhiên,
-                                bạn có thể đổi tên phòng, ảnh phòng sau này!</p>
-                        </div>
-                          
+                            <div class="form-warning">
+                                <p><span>*</span> Để tạo cùng lúc nhiều phòng, hãy thay đổi số lượng
+                                    phòng cần tạo,
+                                    mặc định để 1 là tạo 1 phòng!</p>
+                                <p><span>*</span> Khi tạo nhiều phòng cùng lúc, tên phòng,ảnh phòng sẽ được tạo ngẫu nhiên,
+                                    bạn có thể đổi tên phòng, ảnh phòng sau này!</p>
+                            </div>
+
                         </c:if>
                         <c:if test="${requestScope.rid != null}">
                             <div class="form-warning">
@@ -129,13 +129,13 @@
                         <div class="spacer"></div>
                         <!-- Input -->
                         <c:if test="${requestScope.rid eq null}">
-                        <div class="form-group">
-                            <div class="form-wrapper">
-                                <label for="room-quantity" class="form-label">Số lượng: <span>*</span></label>
-                                <input id="room-quantity" name="room-quantity" type="number" value="1" class="form-control">
+                            <div class="form-group">
+                                <div class="form-wrapper">
+                                    <label for="room-quantity" class="form-label">Số lượng: <span>*</span></label>
+                                    <input id="room-quantity" name="room-quantity" type="number" value="1" class="form-control">
+                                </div>
+                                <span class="form-message"></span>
                             </div>
-                            <span class="form-message"></span>
-                        </div>
                         </c:if>
                         <div class="form-group">
                             <div class="form-wrapper">
@@ -186,8 +186,8 @@
                                         name="room-floor">
 
                                     <c:if test="${requestScope.rid eq null}">
-                                    <option value="1" selected>Có</option>
-                                    <option value="0">Không</option>
+                                        <option value="1" selected>Có</option>
+                                        <option value="0">Không</option>
                                     </c:if>
                                     <c:if test="${requestScope.r.hasAttic == 1}">
                                         <option value="1" selected>Có</option>
@@ -207,67 +207,67 @@
 
                         <c:if test="${requestScope.rid eq null}">
 
-                        <div class="infrastructure-group">
-                            <div class="form-header">
-                                <div class="form-title infrastructure-title">Cơ sở vật chất</div>
-                            </div>
-                            <div class="form-group infrastructure-fill">
-                                <div class="infrastructure-wrapper">
-                                    <label for="room-toilet" class="form-label fill-label">Nhà vệ
-                                        sinh:</label>
-                                    <input id="room-toilet" name="room-toilet" value="1" type="number"
-                                           class="form-control fill-input">
-                                    <span class="fill-unit">cái</span>
-                                    <select name="room-toilet-status" class="fill-status">
-                                        <option value="1" selected>Sử dụng tốt</option>
-                                        <option value="0">Hư hỏng</option>
-                                    </select>
+                            <div class="infrastructure-group">
+                                <div class="form-header">
+                                    <div class="form-title infrastructure-title">Cơ sở vật chất</div>
                                 </div>
-                                <span class="form-message"></span>
-                            </div>
-                            <div class="form-group infrastructure-fill">
-                                <div class="infrastructure-wrapper">
-                                    <label for="room-window" class="form-label fill-label">Cửa
-                                        sổ:</label>
-                                    <input id="room-window" name="room-window" value="1" type="number"
-                                           class="form-control fill-input">
-                                    <span class="fill-unit">cái</span>
-                                    <select name="room-window-status" class="fill-status">
-                                        <option value="1" selected>Sử dụng tốt</option>
-                                        <option value="0">Hư hỏng</option>
-                                    </select>
+                                <div class="form-group infrastructure-fill">
+                                    <div class="infrastructure-wrapper">
+                                        <label for="room-toilet" class="form-label fill-label">Nhà vệ
+                                            sinh:</label>
+                                        <input id="room-toilet" name="room-toilet" value="1" type="number"
+                                               class="form-control fill-input">
+                                        <span class="fill-unit">cái</span>
+                                        <select name="room-toilet-status" class="fill-status">
+                                            <option value="1" selected>Sử dụng tốt</option>
+                                            <option value="0">Hư hỏng</option>
+                                        </select>
+                                    </div>
+                                    <span class="form-message"></span>
                                 </div>
-                                <span class="form-message"></span>
-                            </div>
-                            <div class="form-group infrastructure-fill">
-                                <div class="infrastructure-wrapper">
-                                    <label for="room-door" class="form-label fill-label">Cửa ra
-                                        vào</label>
-                                    <input id="room-door" name="room-door" value="1" type="number"
-                                           class="form-control fill-input">
-                                    <span class="fill-unit">cái</span>
-                                    <select name="room-door-status" class="fill-status">
-                                        <option value="1" selected>Sử dụng tốt</option>
-                                        <option value="0">Hư hỏng</option>
-                                    </select>
+                                <div class="form-group infrastructure-fill">
+                                    <div class="infrastructure-wrapper">
+                                        <label for="room-window" class="form-label fill-label">Cửa
+                                            sổ:</label>
+                                        <input id="room-window" name="room-window" value="1" type="number"
+                                               class="form-control fill-input">
+                                        <span class="fill-unit">cái</span>
+                                        <select name="room-window-status" class="fill-status">
+                                            <option value="1" selected>Sử dụng tốt</option>
+                                            <option value="0">Hư hỏng</option>
+                                        </select>
+                                    </div>
+                                    <span class="form-message"></span>
                                 </div>
-                                <span class="form-message"></span>
-                            </div>
-                            <div class="form-group infrastructure-fill">
-                                <div class="infrastructure-wrapper">
-                                    <label for="room-air-conditioner" class="form-label fill-label">Máy
-                                        lạnh</label>
-                                    <input id="room-air-conditioner" name="room-air-conditioner" value="1"
-                                           type="number" class="form-control fill-input">
-                                    <span class="fill-unit">cái</span>
-                                    <select name="room-air-conditioner-status" class="fill-status">
-                                        <option value="1" selected>Sử dụng tốt</option>
-                                        <option value="0">Hư hỏng</option>
-                                    </select>
+                                <div class="form-group infrastructure-fill">
+                                    <div class="infrastructure-wrapper">
+                                        <label for="room-door" class="form-label fill-label">Cửa ra
+                                            vào</label>
+                                        <input id="room-door" name="room-door" value="1" type="number"
+                                               class="form-control fill-input">
+                                        <span class="fill-unit">cái</span>
+                                        <select name="room-door-status" class="fill-status">
+                                            <option value="1" selected>Sử dụng tốt</option>
+                                            <option value="0">Hư hỏng</option>
+                                        </select>
+                                    </div>
+                                    <span class="form-message"></span>
                                 </div>
-                                <span class="form-message"></span>
+                                <div class="form-group infrastructure-fill">
+                                    <div class="infrastructure-wrapper">
+                                        <label for="room-air-conditioner" class="form-label fill-label">Máy
+                                            lạnh</label>
+                                        <input id="room-air-conditioner" name="room-air-conditioner" value="1"
+                                               type="number" class="form-control fill-input">
+                                        <span class="fill-unit">cái</span>
+                                        <select name="room-air-conditioner-status" class="fill-status">
+                                            <option value="1" selected>Sử dụng tốt</option>
+                                            <option value="0">Hư hỏng</option>
+                                        </select>
+                                    </div>
+                                    <span class="form-message"></span>
+                                </div>
                             </div>
-                        </div>
 
                         </c:if>
 
@@ -283,7 +283,7 @@
                                 <input type="hidden" name="RoomID" value="${requestScope.r.roomId}">
 
                             </c:if>
-<%--                            change hostelID ben Servlet--%>
+                            <%--                            change hostelID ben Servlet--%>
                             <button id="submitBTN" class="form-submit">${requestScope.rid eq null?"Tạo phòng":"Cập nhật"}</button>
 
                         </div>
@@ -341,54 +341,54 @@
     }
 
 
-if (${requestScope.rid eq null}){
-    Validator({
-        form: '#add-hostel-form',
-        formGroupSelector: '.form-group',
-        errorSelector: '.form-message',
-        rules: [
+    if (${requestScope.rid eq null}){
+        Validator({
+            form: '#add-hostel-form',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules: [
 
-            Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
+                Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
 
-            Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
-            Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
-            Validator.isInteger('#room-quantity', 'Số lượng phòng phải là số nguyên'),
-            Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
-            Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
-            Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
-            Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
-            Validator.isInteger('#room-capacity', 'Số lượng người phải là số nguyên'),
-            Validator.maxNumber('#room-area', 1000, 'Vui lòng nhập giá trị dưới 1000'),
-            Validator.minNumber('#room-area', 1, 'Vui lòng nhập giá trị tối thiểu là 1'),
-            Validator.minNumber('#room-toilet', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
-            Validator.isInteger('#room-toilet', 'Số lượng phải là số nguyên'),
-            Validator.minNumber('#room-window', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
-            Validator.isInteger('#room-window', 'Số lượng phải là số nguyên'),
-            Validator.minNumber('#room-door', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
-            Validator.isInteger('#room-door', 'Số lượng phải là số nguyên'),
-            Validator.minNumber('#room-air-conditioner', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
-            Validator.isInteger('#room-air-conditioner', 'Số lượng phải là số nguyên'),
-        ]
-    });
+                Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
+                Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
+                Validator.isInteger('#room-quantity', 'Số lượng phòng phải là số nguyên'),
+                Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
+                Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
+                Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
+                Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
+                Validator.isInteger('#room-capacity', 'Số lượng người phải là số nguyên'),
+                Validator.maxNumber('#room-area', 1000, 'Vui lòng nhập giá trị dưới 1000'),
+                Validator.minNumber('#room-area', 1, 'Vui lòng nhập giá trị tối thiểu là 1'),
+                Validator.minNumber('#room-toilet', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+                Validator.isInteger('#room-toilet', 'Số lượng phải là số nguyên'),
+                Validator.minNumber('#room-window', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+                Validator.isInteger('#room-window', 'Số lượng phải là số nguyên'),
+                Validator.minNumber('#room-door', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+                Validator.isInteger('#room-door', 'Số lượng phải là số nguyên'),
+                Validator.minNumber('#room-air-conditioner', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+                Validator.isInteger('#room-air-conditioner', 'Số lượng phải là số nguyên'),
+            ]
+        });
 
-    const inputName = document.querySelector('#room-name');
-    const fileImg = document.querySelector('#room-img');
-    const errorElement = getParent(inputName, ".form-group").querySelector('.form-message');
-    document.querySelector('#room-quantity').addEventListener('change', (e) => {
-    if (e.target.value != '1') {
-        document.getElementById("submitBTN").removeAttribute("disabled");
-        inputName.setAttribute("disabled", "true");
-        inputName.value = "0";
-        fileImg.setAttribute("disabled", "true");
-        fileImg.setAttribute("required","true");
-        errorElement.innerHTML = "";
-    } else {
-        inputName.removeAttribute("disabled");
-        inputName.value = "";
-        fileImg.removeAttribute("disabled");
+        const inputName = document.querySelector('#room-name');
+        const fileImg = document.querySelector('#room-img');
+        const errorElement = getParent(inputName, ".form-group").querySelector('.form-message');
+        document.querySelector('#room-quantity').addEventListener('change', (e) => {
+            if (e.target.value != '1') {
+                document.getElementById("submitBTN").removeAttribute("disabled");
+                inputName.setAttribute("disabled", "true");
+                inputName.value = "0";
+                fileImg.setAttribute("disabled", "true");
+                fileImg.setAttribute("required","true");
+                errorElement.innerHTML = "";
+            } else {
+                inputName.removeAttribute("disabled");
+                inputName.value = "";
+                fileImg.removeAttribute("disabled");
+            }
+        })
     }
-})
-}
 
 </script>
 
@@ -472,7 +472,8 @@ if (${requestScope.rid eq null}){
 
     console.log("hostelid:"+hostelId);
     var roomNumber = document.getElementById("room-name");
-    if (document.getElementById("room-quantity").value == '1'){ roomNumber.onblur = function(){
+    if (document.getElementById("room-quantity").value == '1'){
+        roomNumber.onblur = function(){
         console.log("Người dùng đã thoát khỏi trường nhập liệu");
         console.log("room enter: " + roomNumber.value);
         $.ajax({

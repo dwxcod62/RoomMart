@@ -6,6 +6,11 @@
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
+<link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+<link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
+<link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+<link rel="stylesheet" href="./assets/css/core_style/core.css">
+<link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
 <link
         href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
         rel="stylesheet"  type='text/css'>
@@ -27,39 +32,39 @@
 
                         <c:choose>
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'home'}">
-                                                    <div class="re__right-menu">
-                                                        <!--Header menu-->
-                                                        <div class="re__home-header-menu">
-                                                            <div class="re__home-header-menu">
-                                                                <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">
+                                <div class="re__right-menu">
+                                    <!--Header menu-->
+                                    <div class="re__home-header-menu">
+                                        <div class="re__home-header-menu">
+                                            <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">
 
 
 
-                                                                    <li class="lv0 ">
-                                                                        <a href="home">
+                                                <li class="lv0 ">
+                                                    <a href="home">
 
-                                                                            <span class="text">Home</span>
-                                                                        </a><div class="re__arrrow"></div>
+                                                        <span class="text">Trang chủ</span>
+                                                    </a><div class="re__arrrow"></div>
 
-                                                                    </li>
-                                                                    <li class="lv0 ">
-                                                                        <a href="https://github.com/dwxcod62/RoomMart">
+                                                </li>
+                                                <li class="lv0 ">
+                                                    <a href="https://github.com/dwxcod62/RoomMart">
 
-                                                                            <span class="text">About us</span>
-                                                                        </a><div class="re__arrrow"></div>
+                                                        <span class="text">Về chúng tôi</span>
+                                                    </a><div class="re__arrrow"></div>
 
-                                                                    </li>
-                                                                    <li class="lv0 ">
-                                                                        <a href="https://blogs.mtdv.me/blog/posts/very-mysterious">
+                                                </li>
+                                                <li class="lv0 ">
+                                                    <a href="https://blogs.mtdv.me/blog/posts/very-mysterious">
 
-                                                                            <span class="text">More</span>
-                                                                        </a><div class="re__arrrow"></div>
+                                                        <span class="text">Chi tiết</span>
+                                                    </a><div class="re__arrrow"></div>
 
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </c:when>
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'home-room'}">
                                 Chi tiết phòng
@@ -97,13 +102,24 @@
                 <div class="main-nav__action">
 
 
-                                            <c:if test = "${sessionScope.USER == null}">
-                                                <div id="divUserStt" data-notification-library-url="https://static.batdongsan.com.vn/assets/bds-notification.js">
-                                                    <a href="login" class="re__btn re__btn-se-ghost--md">Login</a>
-                                                    <span class="re__line"></span>
-                                                    <a href="register" class="re__btn  re__btn-se-ghost--md" rel="nofollow" >Register</a>
-                                                </div>
-                                            </c:if>
+                    <c:if test = "${sessionScope.USER == null}">
+                        <div class="home-navbar__actions-group">
+                            <a href="login-page"
+                               class="home-navbar__actions-link home-navbar__actions-link--login">
+                                Đăng nhập
+                            </a>
+                        </div>
+
+                        <div class="home-navbar__actions-group">
+                            <button class="home-navbar__actions-link home-navbar__actions-link--register">
+                                Đăng ký
+                                <div class="register-modal">
+                                    <a href="registerPage" class="register-owner">Chủ trọ</a>
+                                    <a href="renter-register-page" class="register-renter">Người thuê</a>
+                                </div>
+                            </button>
+                        </div>
+                    </c:if>
                     <c:if test = "${sessionScope.USER != null}">
                         <div id="nav-notification-btn" class="notification">
                             <i class="notification__icon fa-solid fa-bell"></i>
@@ -113,19 +129,19 @@
                         </div>
                         <div id="nav-profile-btn" class="profile">
                             <div class="profile__infor">
-                                <h3 class="infor__name">${sessionScope.USER.accountInfo.fullname}</h3>
+                                <h3 class="infor__name">${sessionScope.USER.accountInfo.information.fullname}</h3>
                                 <span class="infor__role">
 
                                 <c:choose>
                                     <c:when test="${sessionScope.USER.role == 0}">Admin</c:when>
                                     <c:when test="${sessionScope.USER.role == 1}">Chủ phòng trọ</c:when>
-                                    <c:when test="${sessionScope.USER.role eq 2}">Nhân Viên</c:when>
-                                    <c:when test="${sessionScope.USER.role eq 3}">Người Thuê Phòng</c:when>
+
+                                    <c:when test="${sessionScope.USER.role eq 2}">Người Thuê Phòng</c:when>
                                 </c:choose>
                             </span>
                             </div>
                             <div class="profile__avatar">
-                                <img class="avatar__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex ? "male" : "female"}.png"
+                                <img class="avatar__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex==1 ? "male" : "female"}.png"
                                      alt="User avatar">
                             </div>
                         </div>
@@ -226,10 +242,10 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                 <a href="profile" class="action__view-profile-link">
                     <div class="action__image">
-                        <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.sex ? "male" : "female"}.png" alt="User avatar">
+                        <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex ==1? "male" : "female"}.png" alt="User avatar">
                     </div>
                     <div class="action__content">
-                        <div class="title">${sessionScope.USER.accountInfo.fullname}</div>
+                        <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>
                         <span class="subtitle">Xem trang cá nhân của bạn</span>
                     </div>
                 </a>
@@ -262,7 +278,7 @@
                 </a>
                 <div class="spacer"></div>
 
-                <c:if test="${sessionScope.USER.role eq 1 || sessionScope.USER.role eq 2}">
+                <c:if test="${sessionScope.USER.role eq 1}">
                     <a href="Renter-HomePage" class="action__view-profile-link">
                         <div class="action__image">
                             <i class="fa-solid fa-people-roof fa-xl"></i>
@@ -296,3 +312,14 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById("nav-profile-btn").addEventListener("click", function() {
+        var dropdown = document.getElementById("nav-profile-dropdown");
+        if (dropdown.style.display === "none") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    });
+
+</script>

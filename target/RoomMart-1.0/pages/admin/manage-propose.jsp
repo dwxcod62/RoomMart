@@ -19,10 +19,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/sys-css/core_style/core.css">
+    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="../../assets/sys-css/admin_page/manage-proposes/style.css">
+    <link rel="stylesheet" href="./../assets/css/admin_page/manage-proposes/style.css">
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
@@ -123,39 +123,39 @@
                                                     data-bs-target="#propose-approve__modal-${propose.id}">Phê duyệt</button>
                                             <!-- Modal -->
                                             <div class="modal fade" id="propose-approve__modal-${propose.id}" tabindex="-1"
-                                             aria-labelledby="propose-approve__modal-label-${propose.id}" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="propose-approve__modal-label-${propose.id}">
-                                                            Phê duyệt đề xuất/ý kiến
-                                                        </h5>
-                                                        <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <form id="propose-approve-form-${propose.id}" action="handle-propose" method="POST">
-                                                        <input type="hidden" name="proposeId" value="${propose.id}" />
-                                                        <input type="hidden" name="changeStatus" value="1" />
-                                                        <div class="modal-body mt-5 mb-5">
-                                                            <div class="form-group">
-                                                                <label for="propose-approve-textarea-${propose.id}" class="form-label">Lý do: <span>*</span></label>
-                                                                <textarea id="propose-approve-textarea-${propose.id}" name="proposeReply" class="form-control" placeholder="Nhập lý do"></textarea>
-                                                                <div class="form-message mb-0 mt-4"></div>
+                                                 aria-labelledby="propose-approve__modal-label-${propose.id}" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="propose-approve__modal-label-${propose.id}">
+                                                                Phê duyệt đề xuất/ý kiến
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form id="propose-approve-form-${propose.id}" action="handle-propose" method="POST">
+                                                            <input type="hidden" name="proposeId" value="${propose.id}" />
+                                                            <input type="hidden" name="changeStatus" value="1" />
+                                                            <div class="modal-body mt-5 mb-5">
+                                                                <div class="form-group">
+                                                                    <label for="propose-approve-textarea-${propose.id}" class="form-label">Lý do: <span>*</span></label>
+                                                                    <textarea id="propose-approve-textarea-${propose.id}" name="proposeReply" class="form-control" placeholder="Nhập lý do"></textarea>
+                                                                    <div class="form-message mb-0 mt-4"></div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-secondary fs-4"
-                                                                    data-bs-dismiss="modal">
-                                                                Đóng
-                                                            </button>
-                                                            <button type="submit" class="btn btn-success fs-4">
-                                                                Phê duyệt
-                                                            </button>
-                                                        </div>
-                                                    </form>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-secondary fs-4"
+                                                                        data-bs-dismiss="modal">
+                                                                    Đóng
+                                                                </button>
+                                                                <button type="submit" class="btn btn-success fs-4">
+                                                                    Phê duyệt
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                             <!-- Reject Section -->
                                             <button class="btn btn-danger fs-4 w-100 mt-3" data-bs-toggle="modal"
                                                     data-bs-target="#propose-reject__modal-${propose.id}">Từ chối</button>
@@ -234,55 +234,55 @@
 <script>
     // Initial CKEditor
     <c:forEach var="propose" items="${requestScope.proposeList}">
-        <c:if test="${propose.status eq 0}">
-        // Initial CKEditor
-        ClassicEditor.create(document.querySelector('#propose-approve-textarea-${propose.id}'), {
-            toolbar: {
-                items: [
-                    'heading', '|',
-                    'fontfamily', 'fontsize', '|',
-                    'alignment', '|',
-                    'fontColor', 'fontBackgroundColor', '|',
-                    'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-                    'link', '|',
-                    'bulletedList', 'numberedList', 'todoList', '|',
-                    'code', 'codeBlock', 'blockQuote', '|',
-                    'undo', 'redo'
-                ],
-                shouldNotGroupWhenFull: true
-            }
-        })
+    <c:if test="${propose.status eq 0}">
+    // Initial CKEditor
+    ClassicEditor.create(document.querySelector('#propose-approve-textarea-${propose.id}'), {
+        toolbar: {
+            items: [
+                'heading', '|',
+                'fontfamily', 'fontsize', '|',
+                'alignment', '|',
+                'fontColor', 'fontBackgroundColor', '|',
+                'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                'link', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'code', 'codeBlock', 'blockQuote', '|',
+                'undo', 'redo'
+            ],
+            shouldNotGroupWhenFull: true
+        }
+    })
         .catch( error => {
             console.error(error);
         });
 
-        // Valid form
-        Validator({
-            form: "#propose-approve-form-${propose.id}",
-            formGroupSelector: ".form-group",
-            errorSelector: ".form-message",
-            rules: [
-                Validator.isRequired("#propose-approve-textarea-${propose.id}", "Vui lòng nhập lý do phê duyệt!")
-            ],
-        });
+    // Valid form
+    Validator({
+        form: "#propose-approve-form-${propose.id}",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+            Validator.isRequired("#propose-approve-textarea-${propose.id}", "Vui lòng nhập lý do phê duyệt!")
+        ],
+    });
 
-        // Initial CKEditor
-        ClassicEditor.create(document.querySelector('#propose-reject-textarea-${propose.id}'), {
-            toolbar: {
-                items: [
-                    'heading', '|',
-                    'fontfamily', 'fontsize', '|',
-                    'alignment', '|',
-                    'fontColor', 'fontBackgroundColor', '|',
-                    'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-                    'link', '|',
-                    'bulletedList', 'numberedList', 'todoList', '|',
-                    'code', 'codeBlock', 'blockQuote', '|',
-                    'undo', 'redo'
-                ],
-                shouldNotGroupWhenFull: true
-            }
-        })
+    // Initial CKEditor
+    ClassicEditor.create(document.querySelector('#propose-reject-textarea-${propose.id}'), {
+        toolbar: {
+            items: [
+                'heading', '|',
+                'fontfamily', 'fontsize', '|',
+                'alignment', '|',
+                'fontColor', 'fontBackgroundColor', '|',
+                'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                'link', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'code', 'codeBlock', 'blockQuote', '|',
+                'undo', 'redo'
+            ],
+            shouldNotGroupWhenFull: true
+        }
+    })
         .catch( error => {
             console.error(error);
         });
@@ -296,7 +296,7 @@
             Validator.isRequired("#propose-reject-textarea-${propose.id}", "Vui lòng nhập lý do phê duyệt!")
         ],
     });
-        </c:if>
+    </c:if>
     </c:forEach>
 
     <c:choose>
