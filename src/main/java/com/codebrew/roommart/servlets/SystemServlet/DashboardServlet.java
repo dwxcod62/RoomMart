@@ -43,7 +43,6 @@ public class DashboardServlet extends HttpServlet {
                         break;
                     case 2:
                         url = "RenterHome";
-
                         break;
                 }
             }
