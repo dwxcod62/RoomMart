@@ -563,4 +563,8 @@
 <!-- Scripts -->
 
 </body>
+<div id="chatContainer">
+    <!-- Include chat.jsp content here -->
+    <jsp:include page="chat.jsp" />
+</div>
 </html>

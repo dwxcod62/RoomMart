@@ -69,7 +69,7 @@
         <!-- Navbar -->
 
         <!-- End Navbar -->
-        <%@include file="./pages/hostel-owner/components/navbar.jsp"%>
+        <%@include file="pages/home/components/navbar.jsp"%>
     </div>
 </div>
 <div class="re__main">
@@ -336,8 +336,9 @@
 
 
 <!-- food section -->
-<jsp:include page="pages/hostel-owner/components/footer.jsp"></jsp:include>
+<jsp:include page="pages/home/components/footer.jsp"></jsp:include>
 <!-- Push notification element -->
+<jsp:include page="./pages/home/components/boxchat.jsp" />
 <div id="push-noti"></div>
 
 <!-- end food section -->
