@@ -244,7 +244,7 @@ public class AccountDao {
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
-            cn = DBUtils.makeConnection();
+            cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(IS_EXIST_USERNAME);
                 pst.setString(1, username);
@@ -261,53 +261,6 @@ public class AccountDao {
                     rs.close();
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return check;
-    }
-
-    public Account getAccountById(int id) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Account acc = null;
-        try {
-            cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT *\n" +
-                        "FROM [dbo].[Accounts]\n" +
-                        "WHERE [account_id] = ?";
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, id);
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    acc = getAccount(rs);
-
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
             }
             if (pst != null) {
@@ -380,9 +333,10 @@ public class AccountDao {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
+
         try {
             cn = DatabaseConnector.makeConnection();
-            if (cn != null) {
+            if (cn != null){
                 cn.setAutoCommit(false);
 
                 pst = cn.prepareStatement(ADD_AN_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
@@ -406,7 +360,6 @@ public class AccountDao {
                     pst.setString(3, account.getAccountInfo().getInformation().getEmail());
                     pst.setString(4, account.getAccountInfo().getInformation().getCccd());
 
-
                     if (pst.executeUpdate() > 0) {
                         pst = cn.prepareStatement(ADD_OTP_AND_EXPIRED);
 
@@ -421,20 +374,17 @@ public class AccountDao {
                             cn.rollback();
                         }
                         cn.setAutoCommit(true);
-
-                    } else {
-                        cn.rollback();
                     }
-                    cn.setAutoCommit(true);
                 } else {
                     cn.rollback();
                     cn.setAutoCommit(true);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
+
             }
+        } catch (Exception e){
+
         }
-        return acc;
+        return check;
     }
     
     public List<Account> GetAccountsByRole(int role) {
@@ -461,13 +411,6 @@ public class AccountDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -484,7 +427,7 @@ public class AccountDao {
                 }
             }
         }
-        return check;
+        return list;
     }
 
     public int checkAccountByOTP(String email, String otp) throws SQLException {
