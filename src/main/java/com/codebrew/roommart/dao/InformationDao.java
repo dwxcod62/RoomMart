@@ -2,6 +2,7 @@ package com.codebrew.roommart.dao;
 
 import com.codebrew.roommart.dto.Information;
 import com.codebrew.roommart.utils.DatabaseConnector;
+import com.codebrew.roommart.utils.OwnerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +10,55 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InformationDao {
-    //------------------------------------SQL QUERY--------------------------------------
+
+    private static final String IS_EXIST_EMAIL =
+            "SELECT A.email FROM AccountInformations A JOIN Accounts B ON A.account_id = B.account_id \n" +
+                    "WHERE A.email = ? AND (B.status = -1 OR B.status = 1 OR B.status = 0)";
+
+
+    public boolean isExistEmail(String email) {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(IS_EXIST_EMAIL);
+                psm.setString(1, email);
+                rs = psm.executeQuery();
+                if (rs != null && rs.next()) {
+                    check = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                if (psm != null) {
+                    psm.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return check;
+    }
+    
     private static final String GET_HOSTEL_OWNER_INFO_BY_HOSTEL_ID =
             "SELECT DISTINCT AccountInformations.fullname, AccountInformations.birthday," +
                     "AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
@@ -25,7 +74,6 @@ public class InformationDao {
                     "WHERE account_id = ?";
     //-------------------------------------Method-----------------------------------------
     public Information getHostelOwnerInfoByHostelId(int hostelId) throws SQLException {
-        System.out.println("getHostelOwnerInfoByHostelId");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -76,12 +124,15 @@ public class InformationDao {
         Connection cn = null;
         PreparedStatement pst = null;
         Information inf = null;
+
+        ResultSet rs = null;
+
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(GET_RENTER_INFO_BY_ID);
                 pst.setInt(1, renterId);
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
@@ -90,6 +141,17 @@ public class InformationDao {
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
+                    inf = new Information(fullname, email, birthday, sex, phone, address, cccd);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return inf;
+    }
+
 
                     inf = Information.builder()
                             .fullname(fullname)

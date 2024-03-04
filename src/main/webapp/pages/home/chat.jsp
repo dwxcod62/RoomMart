@@ -454,7 +454,7 @@
                                 </div>
                             </div>
                             <h5>${requestScope.infor2.fullname}</h5>
-                            <p class="text-muted">${requestScope.infor2.sex==true?"male":"female"}</p>
+                            <p class="text-muted">${requestScope.infor2.sex==1?"male":"female"}</p>
                         </div>
 
                         <ul class="list-group list-group-flush mb-8">
@@ -538,11 +538,6 @@
     const accId = "${sessionScope.USER.accId !=null ? sessionScope.USER.accId: "null"}";
 
 
-
-
-
-
-
     console.log("accId" + accId);
     console.log("userid : "+renterId);
     console.log("ownerid : "+ownerId);
@@ -563,7 +558,7 @@
 <script src="assets/js/chat/chat.js"></script>
 <script src="assets/js/sendWebsocket.js"></script>
 
-<script src="assets/js/loading-handler.js"></script>
+<script src="./assets/js/loading-handler.js"></script>
 
 <!-- Scripts -->
 

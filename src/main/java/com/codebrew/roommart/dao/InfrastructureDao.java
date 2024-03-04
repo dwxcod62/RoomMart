@@ -21,8 +21,8 @@ public class InfrastructureDao {
             if (cn != null) {
                 String sql =
                         "SELECT IR.id_infrastructure, IR.quantity, IR.status, I.infrastructure_name\n" +
-                                "FROM public.InfrastructuresRoom IR\n" +
-                                "JOIN public.InfrastructureItem I ON IR.id_infrastructure_item = I.id_infrastructure_item\n" +
+                                "FROM InfrastructuresRoom IR\n" +
+                                "JOIN InfrastructureItem I ON IR.id_infrastructure_item = I.id_infrastructure_item\n" +
                                 "WHERE IR.room_id = ?";
 //                System.out.println(sql);
                 pst = cn.prepareStatement(sql);

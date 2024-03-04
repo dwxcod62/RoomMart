@@ -17,4 +17,13 @@ public class Hostel {
     private String ward;
     private String district;
     private String city;
+
+    public Hostel(int hostelOwnerAccountID, String hostelName, String address, String ward, String district, String city) {
+        this.hostelOwnerAccountID = hostelOwnerAccountID;
+        this.hostelName = hostelName;
+        this.address = address;
+        this.ward = ward;
+        this.district = district;
+        this.city = city;
+    }
 }

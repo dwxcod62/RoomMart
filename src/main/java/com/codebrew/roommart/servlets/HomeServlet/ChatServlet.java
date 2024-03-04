@@ -58,7 +58,7 @@ public class ChatServlet extends HttpServlet {
             System.out.println("renterid (session): "+renterId_raw);
             System.out.println("role: "+role);
 
-            request.setAttribute("infor",ui);
+            request.setAttribute("infor",ui.getInformation());
 
 
             session.setAttribute("ownerId",ownerId);
@@ -89,6 +89,7 @@ public class ChatServlet extends HttpServlet {
 //        int renterId = acc.getAccId();
         int renterId = acc.getAccId();
         int role = acc.getRole();
+        System.out.println("role servlet:" + role);
         String hostelId_raw = request.getParameter("hostelId");
         String roomId_raw = request.getParameter("roomId");
 
@@ -99,15 +100,16 @@ public class ChatServlet extends HttpServlet {
 
             int ownerId = hod.getOwnerIdByHostelId(hostelId);
             AccountInfo owner_ui = uid.getAccountInformationById(ownerId);
-            request.setAttribute("infor2",owner_ui.getInformation());
+            Information owner_infor = owner_ui.getInformation();
+            request.setAttribute("infor2",owner_infor);
             System.out.println("ownerid (session): "+ownerId);
             System.out.println("renterid (session): "+renterId);
             System.out.println("hostelid :"+hostelId);
 
 
 
-
-            request.setAttribute("infor",ui.getInformation());
+            Information acc_infor = ui.getInformation();
+            request.setAttribute("infor",acc_infor);
             request.setAttribute("hostelId",hostelId);
             request.setAttribute("roomId",roomId);
             session.setAttribute("role",role);
