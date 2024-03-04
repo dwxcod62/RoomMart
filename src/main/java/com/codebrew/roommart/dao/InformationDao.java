@@ -141,18 +141,6 @@ public class InformationDao {
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
-                    inf = new Information(fullname, email, birthday, sex, phone, address, cccd);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            OwnerUtils.closeSQL(cn, pst, rs);
-        }
-        return inf;
-    }
-
-
                     inf = Information.builder()
                             .fullname(fullname)
                             .email(email)
@@ -167,20 +155,7 @@ public class InformationDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            OwnerUtils.closeSQL(cn, pst, rs);
         }
         return inf;
     }

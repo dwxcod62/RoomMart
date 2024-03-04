@@ -2,7 +2,7 @@ package com.codebrew.roommart.servlets.RenterServlet;
 
 import com.codebrew.roommart.dao.BillDao;
 import com.codebrew.roommart.dto.Account;
-import com.codebrew.roommart.dto.Bill;
+import com.codebrew.roommart.dto.OwnerDTO.Bill;
 import com.codebrew.roommart.utils.Decorations;
 
 import javax.servlet.*;

@@ -1,6 +1,6 @@
 package com.codebrew.roommart.dao;
 
-import com.codebrew.roommart.dto.Bill;
+import com.codebrew.roommart.dto.OwnerDTO.Bill;
 import com.codebrew.roommart.dto.Payment;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
