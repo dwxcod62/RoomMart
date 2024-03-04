@@ -64,7 +64,7 @@
                                 Danh sách khu trọ</div>
                         </div>
                         <div class="content-actions">
-                            <a href="add-hostel" class="add-hostel-btn">
+                            <a href="add-new-hostel" class="add-hostel-btn">
                                 Thêm khu trọ mới
                             </a>
                         </div>
