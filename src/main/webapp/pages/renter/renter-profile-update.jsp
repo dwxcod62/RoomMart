@@ -34,7 +34,7 @@
                         <div class="infoHeader">
                             <h2>Chỉnh sửa thông tin</h2>
                         </div>
-                        <form action="RenterProfileUpdate" method="post" style="padding: 0 40px">
+                        <form action="RenterProfileUpdate" method="post" style="padding: 0 40px" id="updateForm">
                             <div class="form-group">
                                 <label for="fullname">Họ và tên:</label>
                                 <input type="text" id="fullname" name="new-name" class="form-control"
@@ -48,12 +48,12 @@
                             <div class="form-group">
                                 <label for="birthday">Ngày sinh:</label>
                                 <input type="date" id="birthday" name="new-birthday" class="form-control"
-                                       value="${sessionScope.USER.accountInfo.information.birthday}" required>
+                                       value="${sessionScope.USER.accountInfo.information.birthday}">
                             </div>
                             <div class="form-group">
                                 <label for="sex" class="form-label">Giới tính:</label>
                                 <div class="input-group">
-                                    <select id="sex" name="new-sex" class="form-select" required>
+                                    <select id="sex" name="new-sex" class="form-select">
                                         <option value="0" ${sessionScope.USER.accountInfo.information.sex == 0 ? 'selected' : ''}>Nam</option>
                                         <option value="1" ${sessionScope.USER.accountInfo.information.sex == 1 ? 'selected' : ''}>Nữ</option>
                                     </select>
@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <label for="phone">Số điện thoại:</label>
                                 <input type="tel" id="phone" name="new-phone" class="form-control"
-                                       value="${sessionScope.USER.accountInfo.information.phone}">
+                                       value="${sessionScope.USER.accountInfo.information.phone}" required>
                             </div>
                             <div class="form-group">
                                 <label for="cccd">Căn cước công dân:</label>
@@ -82,14 +82,20 @@
 
 <script>
     function confirmUpdate() {
+        // Kiểm tra giá trị của các ô input
+        var fullname = document.getElementById("fullname").value;
+        var phone = document.getElementById("phone").value;
+
+        if (fullname === "" || phone === "") {
+            alert("Vui lòng điền đầy đủ thông tin.");
+            return false;
+        }
+
         if (confirm("Bạn có muốn lưu thông tin mới không?")) {
-            // If user confirms, submit the form
             document.getElementById("updateForm").submit();
         } else {
-            // If user cancels, do nothing
         }
     }
-
 </script>
 </body>
 </html>

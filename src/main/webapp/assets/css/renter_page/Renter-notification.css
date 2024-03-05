@@ -161,31 +161,7 @@ footer {
   width: 20%;
   min-height: calc(100vh - 80px);
   background-color: #fff;
-  padding: 0;
-}
-
-.dashboard .infor-top {
-  text-align: center;
-  margin: 20px 0px 10px 0px;
-}
-
-.dashboard .infor-top img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin: 10px 0px 10px 0px;
-}
-
-.dashboard .infor-top h3 {
-  font-size: 19px;
-  color: #000000;
-  font-weight: 300;
-  font-family: serif;
-}
-
-.dashboard .infor-top p {
-  color: #000000;
-  font-size: 18px;
+  padding-top: 20px;
 }
 
 .dashboard .card {
