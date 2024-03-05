@@ -38,18 +38,23 @@ public class ConfirmContractServlet extends HttpServlet {
 
     private void confirm_contract_renter(HttpServletRequest req, HttpServletResponse res) throws Exception{
         HttpSession session = req.getSession();
-
+        String url = "error";
         try {
             String data = req.getParameter("data");
             String decode_data = EncodeUtils.decodeString(data);
+            RoomDao roomDao = new RoomDao();
 
             Account acc = (Account) session.getAttribute("USER");
             if ( acc != null ){
                 if (Objects.equals(acc.getAccountInfo().getInformation().getEmail(), decode_data)){
+                    int room_status = roomDao.getRoomStatusByContractAndEmail(decode_data);
+                    if ( room_status < 2 && room_status == -1){
+//                        xu ly o day
+                    } else {
 
-
-
-
+                    }
+                } else {
+                    url = "denied";
                 }
             } else {
 

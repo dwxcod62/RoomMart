@@ -1518,6 +1518,39 @@ public List<String>getListImgByRoomId(int rid){
         return st;
     }
 
+    public int getRoomStatusByContractAndEmail(String email) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        int status = 2;
+        try {
+
+            conn = DatabaseConnector.makeConnection();
+
+            if (conn != null) {
+                String sql = "select r.room_status from [Rooms] r\n" +
+                        "join [Contracts] c on r.room_id = c.room_id\n" +
+                        "join [Accounts] a on a.account_id = c.renter_id\n" +
+                        "join [AccountInformations] ai on ai.account_id = a.account_id\n" +
+                        "where ai.email = ?";
+
+                psm = conn.prepareStatement(sql);
+                psm.setString(1, email);
+                rs = psm.executeQuery();
+                if (rs != null && rs.next()) {
+                    status = rs.getInt("room_status");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) { rs.close(); }
+            if (psm != null) { psm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return status;
+    }
 }
 
 
