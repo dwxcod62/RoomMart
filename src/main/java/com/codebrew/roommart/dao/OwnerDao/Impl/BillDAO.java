@@ -212,4 +212,88 @@ public class BillDAO implements IBillDAO {
         }
         return bill;
     }
+
+    @Override
+    public ArrayList<Bill> GetListBillByHostelYearQuater(String hostelName, String year, String quatertmp) {
+        year = year == null ? "2022" : year;
+        String startDate;
+        String endDate;
+        int quater = 0;
+        if (quatertmp.equals("quater_1"))
+            quater = 1;
+        if (quatertmp.equals("quater_2"))
+            quater = 2;
+        if (quatertmp.equals("quater_3"))
+            quater = 3;
+        if (quatertmp.equals("quater_4"))
+            quater = 4;
+
+        if (quater == 1){
+            startDate = year + "/01/01";
+            endDate = year + "/03/31";
+        } else if (quater == 2) {
+            startDate = year + "/04/01";
+            endDate = year + "/06/30";
+        } else if (quater == 3) {
+            startDate = year + "/07/01";
+            endDate = year + "/9/30";
+        }else if (quater == 4){
+            startDate = year + "/10/01";
+            endDate = year + "/12/31";
+        }else{
+            startDate = year + "/01/01";
+            endDate = year + "/12/31";
+        }
+        Bill bill = null;
+        ArrayList<Bill> listBill = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            cn = DatabaseConnector.makeConnection();
+            String Get_List_Bill_By_Quarter_And_Hostel = "select A.bill_id, A.bill_title, A.created_date, A.expired_payment_date , A.payment_date,A.payment_id, A.room_id, A.status, A.total_money\n" +
+                    "from [dbo].[Bill] A join [dbo].[Rooms] B on A.room_id = B.room_id join  [dbo].[Hostels] C on B.hostel_id = C.hostel_id\n" +
+                    "where C.name = ? and A.created_date between ? and ?";
+            ptm = cn.prepareStatement(Get_List_Bill_By_Quarter_And_Hostel);
+            ptm.setString(1, hostelName);
+            ptm.setString(2, startDate);
+            ptm.setString(3, endDate);
+            rs = ptm.executeQuery();
+            while (rs != null && rs.next()) {
+                int billID = rs.getInt("bill_id");
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+                listBill.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, ptm, rs);
+        }
+        return listBill;
+    }
 }

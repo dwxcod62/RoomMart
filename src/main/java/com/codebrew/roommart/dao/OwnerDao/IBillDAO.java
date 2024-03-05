@@ -12,4 +12,5 @@ public interface IBillDAO {
     public ArrayList<Bill> GetListBillByHostel(String hostelName);
 
     public Bill getBillByID(int billID);
+    public ArrayList<Bill> GetListBillByHostelYearQuater(String hostelName,  String year, String quatertmp);
 }
