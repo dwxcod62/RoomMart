@@ -403,4 +403,26 @@ public class HostelDAO implements IHostelDAO {
         }
         return checkUpdate;
     }
+
+    @Override
+    public boolean deleteHostelById(int hostelId) {
+        boolean checkDelete = false;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                ptm = cn.prepareStatement("delete from hostels where hostel_id = ?");
+
+                ptm.setInt(1, hostelId);
+                checkDelete = ptm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, ptm, null);
+        }
+        return checkDelete;
+    }
 }

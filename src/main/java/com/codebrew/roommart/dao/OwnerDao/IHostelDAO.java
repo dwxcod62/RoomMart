@@ -22,6 +22,8 @@ public interface IHostelDAO {
 
     public boolean updateHostel(Hostel hostel, int hostelID);
 
+    boolean deleteHostelById(int hostelId);
+
     public boolean checkOwnerHostel(int accId);
 
     public ArrayList<Integer> getListRenterIdByHostelId(int hostelId);
