@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.OwnerServlets;
+package com.codebrew.roommart.servlets.OwnerServlets.Room;
 
 
 import com.cloudinary.Cloudinary;
@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "AddNewRoomServlet", value = "/AddNewRoomServlet")
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 10,  // Kích thước tệp tối thiểu trước khi lưu vào bộ nhớ tạm thời, đơn vị byte
-        maxFileSize = 1024 * 300,       // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
-        maxRequestSize = 1024 * 1024    // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
+        fileSizeThreshold = 1024 * 3*1024,  // Kích thước tệp tối thiểu trước khi lưu vào bộ nhớ tạm thời, đơn vị byte
+        maxFileSize = 1024 * 1024*10,       // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
+        maxRequestSize = 1024 * 1024*20    // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
 )
 public class AddNewRoomServlet extends HttpServlet {
     @Override
@@ -126,7 +126,7 @@ public class AddNewRoomServlet extends HttpServlet {
             if (quantityRoom > 1) {
                 String tempImg = "https://res.cloudinary.com/dqp6vdayn/image/upload/v1707647165/What-is-a-404-error-code_lu1xgy.png";
                 for (int i = 0; i < quantityRoom; i++) {
-                    boolean isSuccess = roomDao.addNewManyRooms(hostelId, capacity, roomArea, attic, 0,
+                    boolean isSuccess = roomDao.addNewManyRooms(hostelId, capacity, roomArea, attic, 1,
                             tempImg,restrooms, restroomStatus,
                             windows, windowsStatus,
                             roomDoors, roomDoorsStatus,
@@ -152,7 +152,7 @@ public class AddNewRoomServlet extends HttpServlet {
 //                        windows, windowsStatus,
 //                        roomDoors, roomDoorsStatus,
 //                        airConditions, airConditionsStatus);
-                boolean isSuccess = roomDao.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 0,roomFiles
+                boolean isSuccess = roomDao.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 1,roomFiles
                         , restrooms, restroomStatus,
                         windows, windowsStatus,
                         roomDoors, roomDoorsStatus,
