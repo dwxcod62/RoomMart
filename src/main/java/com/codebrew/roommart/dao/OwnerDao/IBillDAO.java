@@ -10,4 +10,6 @@ public interface IBillDAO {
     public BillDetail getBillDetail(int billID);
     public String getPaymentName(int paymentID);
     public ArrayList<Bill> GetListBillByHostel(String hostelName);
+
+    public Bill getBillByID(int billID);
 }

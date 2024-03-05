@@ -41,7 +41,7 @@ public class ShowListHostelServlet extends HttpServlet {
         request.setAttribute("LIST_HOSTEL", listHostel);
         session.setAttribute("CURRENT_PAGE", "hostel");
 
-        request.getRequestDispatcher("pages/owner/hostel/hostel-list.jsp").forward(request, response);
+        request.getRequestDispatcher("hostel-page").forward(request, response);
     }
 
     @Override
