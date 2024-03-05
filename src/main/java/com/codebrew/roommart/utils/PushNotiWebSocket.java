@@ -33,6 +33,7 @@ public class PushNotiWebSocket {
         String sender = map.get("sender").toString();
         String receiver = map.get("receiver").toString();
         String hostelReceiverId = map.get("hostel_receiver_id").toString();
+        System.out.println("hostel_receiver_id: "+hostelReceiverId);
         String accountReceiverId = map.get("account_receiver_id").toString();
         String message = map.get("message").toString();
         String chat = map.get("chat").toString();
@@ -53,6 +54,7 @@ public class PushNotiWebSocket {
                     //người nhận là hostel
                     case "hostel":
                         ArrayList<Integer> renterList = new HostelDao().getListRenterIdByHostelId(Integer.parseInt(hostelReceiverId));
+                        System.out.println(renterList);
                         for (Session session : users) {
                             Account account = (Account) session.getUserProperties().get("user");
                             for (int idList : renterList) {
