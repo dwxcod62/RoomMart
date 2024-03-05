@@ -285,7 +285,81 @@ public class AccountDao {
         }
         return list;
     }
+    // Get all account:
 
+    public List<Account> GetAccountsBy2Role(int role1, int role2) {
+        Account acc;
+        ArrayList<Account> list = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT * \n" +
+                        "FROM [dbo].[Accounts] \n" +
+                        "WHERE Role IN (?, ?)"; // Sử dụng IN để lấy các role là role1 hoặc role2
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, role1); // Thiết lập tham số cho role1
+                pst.setInt(2, role2); // Thiết lập tham số cho role2
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                    list.add(acc);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return list;
+    }
+    // Update status
+    public boolean updateAccountStatus(int id, int status) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
+        boolean result = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "Update [dbo].[Accounts]\n" +
+                        "Set status = ?\n" +
+                        "Where account_id = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, status);
+                pst.setInt(2, id);
+                int i = pst.executeUpdate();
+                if(i > 0) result = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
 
     public int GetAccountsByRoleInRecentMonth(int role) {
         LocalDate currentDate = LocalDate.now();
