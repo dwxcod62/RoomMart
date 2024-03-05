@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-12 col-md-8 col-xl-7 col-xxl-5 m-auto">
                             <div class="content-body">
-                                <form action="UpdateHostelServlet" method="post" class="custom-form form-update-hostel"
+                                <form action="update-hostel" method="post" class="custom-form form-update-hostel"
                                     id="form-update-hostel">
                                     <!-- Title -->
                                     <div class="form-header">
@@ -84,7 +84,7 @@
                                                     <span>*</span></label>
                                                 <select name="hostel-province" id="hostel-province"
                                                     class="form-control form-select">
-                                                    <option value="${requestScope.HOSTEL.city}">${requestScope.HOSTEL.city.split("-")[1]}</option>
+                                                    <option value="all" selected>Chọn tỉnh thành</option>
                                                 </select>
                                                 <span class="form-message"></span>
                                             </div>
@@ -95,7 +95,7 @@
                                                     <span>*</span></label>
                                                 <select name="hostel-district" id="hostel-district"
                                                     class="form-control form-select">
-                                                    <option value="${requestScope.HOSTEL.district}">${requestScope.HOSTEL.district.split("-")[1]}</option>
+                                                    <option value="all" selected>Chọn quận huyện</option>
                                                 </select>
                                                 <span class="form-message"></span>
                                             </div>
@@ -106,7 +106,7 @@
                                                     <span>*</span></label>
                                                 <select name="hostel-ward" id="hostel-ward"
                                                     class="form-control form-select">
-                                                    <option value="${requestScope.HOSTEL.ward}">${requestScope.HOSTEL.ward.split("-")[1]}</option>
+                                                    <option value="all" selected>Chọn phường xã</option>
                                                 </select>
                                                 <span class="form-message"></span>
                                             </div>
@@ -142,9 +142,11 @@
     <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
     <!-- Link your script here -->
     <script src="./assets/js/handle-main-navbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
     <!-- Axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./assets/js/owner/update-hostel/handle-address.js"></script>
+<%--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--%>
+<%--    <script src="./assets/js/owner/update-hostel/handle-address.js"></script>--%>
     <script src="./assets/js/valid-form.js"></script>
     <!-- Push notification -->
     <script src="./assets/js/push-notification-alert.js"></script>
@@ -177,6 +179,62 @@
         window.onbeforeunload = function(){
             receiveWebsocket.disconnectWebSocket();
         };
+    </script>
+    <script>
+
+        var citis = document.getElementById("hostel-province");
+        var districts = document.getElementById("hostel-district");
+        var wards = document.getElementById("hostel-ward");
+        var Parameter = {
+            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+            method: "GET",
+            responseType: "application/json",
+        };
+        var promise = axios(Parameter);
+        promise.then(function (result) {
+            renderCity(result.data);
+        });
+
+        function renderCity(data) {
+            for (const x of data) {
+                var opt = document.createElement('option');
+                opt.value = x.Name;
+                opt.text = x.Name;
+                opt.setAttribute('data-id', x.Id);
+                citis.options.add(opt);
+            }
+            citis.onchange = function () {
+                districts.length = 1;
+                wards.length = 1;
+                if(this.options[this.selectedIndex].dataset.id != ""){
+                    const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+
+                    for (const k of result[0].Districts) {
+                        var opt = document.createElement('option');
+                        opt.value = k.Name;
+                        opt.text = k.Name;
+                        opt.setAttribute('data-id', k.Id);
+                        districts.options.add(opt);
+                    }
+                }
+            };
+            districts.onchange = function () {
+                wards.length = 1;
+                const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+                if (this.options[this.selectedIndex].dataset.id != "") {
+                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                    for (const w of dataWards) {
+                        var opt = document.createElement('option');
+                        opt.value = w.Name;
+                        opt.text = w.Name;
+                        opt.setAttribute('data-id', w.Id);
+                        wards.options.add(opt);
+                    }
+                }
+            };
+        }
+
     </script>
 
 </body>

@@ -4,10 +4,8 @@ import com.codebrew.roommart.dto.Information;
 import com.codebrew.roommart.utils.DatabaseConnector;
 import com.codebrew.roommart.utils.OwnerUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class InformationDao {
 
@@ -200,4 +198,42 @@ public class InformationDao {
         }
         return checkUpdate;
     }
+
+    public boolean updateOwnerProfileByAccId(Information accountInfos,int accId) throws SQLException {
+        boolean checkUpdate = false;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                ptm = cn.prepareStatement("UPDATE AccountInformations SET fullname = ?, email = ?, birthday = ?, phone = ?, address = ?, identity_card_number = ?, sex = ? WHERE account_id = ?");
+                ptm.setString(1, accountInfos.getFullname());
+                ptm.setString(2, accountInfos.getEmail());
+                ptm.setString(3, accountInfos.getBirthday());
+                ptm.setString(4, accountInfos.getPhone());
+                ptm.setString(5, accountInfos.getAddress());
+                ptm.setString(6, accountInfos.getCccd());
+                ptm.setInt(7, accountInfos.getSex());
+                ptm.setInt(8, accId);
+
+                checkUpdate = ptm.executeUpdate() > 0;
+
+                if (!checkUpdate) {
+                    cn.rollback();
+                } else {
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, ptm, null);
+        }
+        return checkUpdate;
+    }
 }
+
+

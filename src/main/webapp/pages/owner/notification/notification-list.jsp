@@ -141,7 +141,7 @@
                 <!-- Content item - Send notification -->
                 <div class="content__item active">
                     <div class="col-12 col-xl-9 m-auto mb-5 content__body">
-                        <form id="add-notification-form" action="add-notification" method="post" class="custom-form">
+                        <form id="add-notification-form" action="AddNotificationServlet" method="post" class="custom-form">
                             <div class="form-header">
                                 <h1 class="form-title">Gửi thông báo mới</h1>
                             </div>

@@ -3,6 +3,7 @@ package com.codebrew.roommart.servlets.OwnerServlets.Hostel;
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dao.ServiceInfoDAO;
 import com.codebrew.roommart.dto.Account;
+import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 import com.codebrew.roommart.dto.Services;
 
@@ -41,6 +42,10 @@ public class AddNewHostelServlet extends HttpServlet {
             String hostelWard = req.getParameter("hostel-ward");
 
             new HostelDAO().addNewHostel(new Hostel(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince));
+//            req.setAttribute("HOSTEL_ID", hostelId);
+            req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                    .status(true)
+                    .content("Tạo khu trọ thành công!").build());
         } catch (Exception e) {
             log("Error at AddHostel: " + e.toString());
         } finally {
