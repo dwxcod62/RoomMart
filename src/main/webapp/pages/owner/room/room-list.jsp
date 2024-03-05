@@ -99,13 +99,13 @@
                                     <a href="ownerRoomDetail?roomID=${roomList.roomId}&hostelID=${roomList.hostelId}"
                                        class="content__tbody-room-link">${roomList.roomNumber}</a>
                                 </td>
-                                <c:if test="${roomList.roomStatus eq 0}">
+                                <c:if test="${roomList.roomStatus eq 1}">
                                     <td class="content__tbody-status yes">Sẵn sàng cho thuê</td>
                                 </c:if>
-                                <c:if test="${roomList.roomStatus eq 2}">
+                                <c:if test="${roomList.roomStatus eq 0}">
                                     <td class="content__tbody-status no">Đã cho thuê</td>
                                 </c:if>
-                                <c:if test="${roomList.roomStatus eq 1}">
+                                <c:if test="${roomList.roomStatus eq -1}">
                                     <td class="content__tbody-status wait">Đang tiến hành làm hợp đồng</td>
                                 </c:if>
                             </tr>

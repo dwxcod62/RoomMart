@@ -39,6 +39,8 @@
 </style>
 <div class="room-header">
     <h2 class="room-name">Phòng ${sessionScope.room.roomNumber}</h2>
+
+    <%--     --%>
     <div class="room-actions">
         <c:if test="${sessionScope.room.roomStatus == 1}">
             <!-- Start update room information button -->
@@ -234,7 +236,7 @@
         <c:choose>
             <c:when test="${sessionScope.room.roomStatus eq 1}">
                 <!-- Start create account button -->
-                <a href="create-room-account-page" class="action-create-account-link">Tạo tài khoản</a>
+                <a href="create-contract-page" class="action-create-account-link">Tạo hợp đồng</a>
                 <!-- End create account button -->
             </c:when>
             <c:when test="${sessionScope.room.roomStatus eq 0}">

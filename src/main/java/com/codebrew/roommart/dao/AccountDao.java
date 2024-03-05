@@ -18,12 +18,12 @@ public class AccountDao {
     private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";
     private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role) \n" +
             "VALUES (?, ?, GETDATE(), ?, ?)";
-    private static final String ADD_ACCOUNT_INFORMATION = "INSERT INTO AccountInformations (account_id, fullname, email, identity_card_number) \n" +
-            "VALUES (?, ?, ?, ?)";
+    private static final String ADD_ACCOUNT_INFORMATION = "INSERT INTO AccountInformations (account_id, fullname, email, identity_card_number, birthday, sex, phone, address) \n" +
+            "VALUES (?, ?, ?, ?, ?, 1, ?, ?)";
 
     private static final String ADD_OTP_AND_EXPIRED = "UPDATE accounts " +
             "SET otp = ? , expired_time_otp = DATEADD(HOUR, ?, GETDATE()) " +
-            "WHERE account_id = ?;";
+            "WHERE username = ?;";
 
     private Account getAccount(ResultSet rs) {
         Account acc = null;
@@ -281,6 +281,7 @@ public class AccountDao {
         return check;
     }
 
+
     public boolean addOtpAndExpiredTime(String otp, int hour, int account_id){
         boolean check = false;
         Connection cn = null;
@@ -328,7 +329,7 @@ public class AccountDao {
 
     }
 
-    public boolean addAnAccount(Account account, String otp) {
+    public boolean addAnAccount(Account account) {
         boolean check = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -337,7 +338,6 @@ public class AccountDao {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null){
-                cn.setAutoCommit(false);
 
                 pst = cn.prepareStatement(ADD_AN_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
 
@@ -353,40 +353,57 @@ public class AccountDao {
                     if (rs.next()) {
                         accountId = rs.getInt(1);
                     }
-
                     pst = cn.prepareStatement(ADD_ACCOUNT_INFORMATION);
                     pst.setInt(1, accountId);
                     pst.setString(2, account.getAccountInfo().getInformation().getFullname());
                     pst.setString(3, account.getAccountInfo().getInformation().getEmail());
                     pst.setString(4, account.getAccountInfo().getInformation().getCccd());
 
+                    Date date = Date.valueOf(account.getAccountInfo().getInformation().getBirthday());
+
+                    pst.setDate(5, date);
+                    pst.setString(6, account.getAccountInfo().getInformation().getPhone());
+                    pst.setString(7, account.getAccountInfo().getInformation().getAddress());
+
+
                     if (pst.executeUpdate() > 0) {
-                        pst = cn.prepareStatement(ADD_OTP_AND_EXPIRED);
-
-                        pst.setString(1, otp);
-                        pst.setInt(2, 1);
-                        pst.setInt(3, accountId);
-
-                        if (pst.executeUpdate() > 0) {
-                            check = true;
-                            cn.commit();
-                        } else {
-                            cn.rollback();
-                        }
-                        cn.setAutoCommit(true);
+                        check = true;
                     }
-                } else {
-                    cn.rollback();
-                    cn.setAutoCommit(true);
-                }
 
+                }
             }
         } catch (Exception e){
 
         }
         return check;
     }
-    
+
+    public boolean addOTPToAccount(String username, String otp) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null){
+
+                pst = cn.prepareStatement(ADD_OTP_AND_EXPIRED);
+
+                pst.setString(1, otp);
+                pst.setInt(2, 1);
+                pst.setString(3, username);
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                }
+            }
+        } catch (Exception e){
+
+        }
+        return check;
+    }
+
     public List<Account> GetAccountsByRole(int role) {
         Account acc;
         ArrayList<Account> list = new ArrayList<>();
@@ -554,6 +571,134 @@ public class AccountDao {
             }
         }
         return count;
+
+    }
+
+    public int getStatusOfAccount(String email) {
+        int status = -2;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT a.[status] \n" +
+                        "FROM [Accounts] a \n" +
+                        "JOIN [AccountInformations] ai ON a.account_id = ai.account_id \n" +
+                        "WHERE ai.email = ?;";
+                pst = cn.prepareStatement(sql);
+                pst.setString(1, email);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    status = rs.getInt("status");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (cn != null) cn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return status;
+
+    }
+
+    public boolean updateAccountStatusByEmail(String email, int st){
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                String sql = "UPDATE [Accounts]\n" +
+                        "SET status = ?\n" +
+                        "FROM [Accounts] a\n" +
+                        "JOIN AccountInformations ai ON a.account_id = ai.account_id \n" +
+                        "WHERE ai.email = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, st);
+                pst.setString(2, email);
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public static Integer getRoomOfRenter(String email) {
+        Integer status = 0;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "select a.room_id from [Accounts] a\n" +
+                        "join [AccountInformations] ai on a.account_id = ai.account_id\n" +
+                        "where email = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setString(1, email);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    status = rs.getInt("room_id");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (cn != null) cn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return status;
 
     }
 
