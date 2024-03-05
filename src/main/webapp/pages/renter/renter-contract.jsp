@@ -67,10 +67,10 @@
                             </c:if>
                         </h5><br>
                         <h5>
-                            <strong>CCCD: </strong>${RENTER_INFO.cccd eq null ? "Không có thông tin!" : RENTER_INFO.cccd}
+                            <strong>CCCD: </strong>${RENTER_INFO.cccd eq "" ? "Không có thông tin!" : RENTER_INFO.cccd}
                         </h5><br>
                         <h5>
-                            <strong>SĐT: </strong>${RENTER_INFO.phone eq null ? "Không có thông tin!" : RENTER_INFO.phone}
+                            <strong>SĐT: </strong>${RENTER_INFO.phone eq "" ? "Không có thông tin!" : RENTER_INFO.phone}
                         </h5><br>
                     </div>
                 </div>

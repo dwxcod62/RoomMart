@@ -135,17 +135,20 @@ nav .navbar .navbar-icons .user-icon {
 
 .box-setting {
   width: 280px;
-  height: 30vh;
+  height: 0;
   border-radius: 10px;
   transition: 0.5s;
   position: absolute;
   overflow-y: scroll;
-  padding: 0px;
   left: -170px;
   margin-top: 5px;
   background-color: white;
   cursor: context-menu;
   box-shadow: rgba(0, 0, 0, 0.18) 0px 1px 3px, rgba(0, 0, 0, 0.18) 0px 1px 2px;
+}
+
+.user-icon:hover>.box-setting {
+  height: 38vh;
 }
 
 .box-setting .user-info{
@@ -158,7 +161,7 @@ nav .navbar .navbar-icons .user-icon {
 .box-setting .user-info .avatar {
   width: fit-content;
   height: fit-content;
-  padding: 15px;
+  padding: 18px 15px;
 }
 
 .box-setting .user-info .avatar img {
@@ -177,27 +180,26 @@ nav .navbar .navbar-icons .user-icon {
 }
 
 .box-setting .user-menu-items {
-  padding: 10px 15px;
-
+  padding: 5px 15px;
 }
 
 .box-setting .user-menu-item {
   display: flex;
   align-items: center;
-  padding: 14px 12px;
+  padding: 10px 10px;
   border-radius: 8px;
   text-decoration: none;
   color: var(--second-color);
   transition: background-color 0.3s ease;
 }
 
-.box-setting .user-menu-item .icon {
+.box-setting .user-menu-items .box-setting_icon {
   margin-right: 14px;
-  font-size: 14px;
+  font-size: 20px;
 }
 
-.box-setting .user-menu-item .link {
-  font-size: 14px;
+.box-setting .user-menu-item .box-setting_link {
+  font-size: 16px;
   font-weight: 500;
 }
 

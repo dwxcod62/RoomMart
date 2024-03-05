@@ -49,60 +49,33 @@
                             <img class="photo" src="./assets/images/logos/logo.png" alt="">
                         </div>
                         <div class="info">
-                            <h4 class="name heading m-b-0">
+                            <h3 class="name heading m-b-0">
                                 ${sessionScope.USER.accountInfo.information.fullname}
-                            </h4> <!-- User name -->
-                            <h5 class="email small">
+                            </h3> <!-- User name -->
+                            <h4 class="email small">
                                 ${sessionScope.USER.getAccountInfo().getInformation().getEmail()}
-                            </h5>
+                            </h4>
                         </div>
                     </div>
 
                     <div class="user-menu-items">
                         <a href="RenterProfile" class="user-menu-item">
-                            <i class="bx bx-id-card icon"></i>
-                            <span class="link">Thông tin cá nhân</span>
+                            <i class="bx bx-id-card box-setting_icon"></i>
+                            <span class="box-setting_link">Thông tin cá nhân</span>
+                        </a>
+                        <a href="renter-Change-Pass" class="user-menu-item">
+                            <i class="bx bx-cog box-setting_icon"></i>
+                            <span class="box-setting_link">Đổi mật khẩu</span>
                         </a>
                         <a href="logout" class="user-menu-item">
-                            <i class="bx bx-exit icon"></i>
-                            <span class="link">Đăng xuất</span>
+                            <i class="bx bx-exit box-setting_icon"></i>
+                            <span class="box-setting_link">Đăng xuất</span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-<%--    <!-- User menu popup -->--%>
-<%--    <div id="userMenu" class="user-menu">--%>
-<%--        <div class="arrow-up"></div>--%>
-<%--        <a href="" class="close" onclick="hideUserMenu(event)">--%>
-<%--            <i class='bx bx-x bx-lg' style="color: rgba(0, 0, 0, 0.8);"></i>--%>
-<%--        </a>--%>
-<%--        <div class="user-info d-flex align-items-center">--%>
-<%--            <div class="avatar">--%>
-<%--                <div class="alternate">--%>
-<%--                </div>--%>
-<%--                <img class="photo" src="./assets/images/logos/logo.png" alt="">--%>
-<%--            </div>--%>
-<%--            <div class="info">--%>
-<%--                <h4 class="name heading m-b-0">--%>
-<%--                    ${sessionScope.USER.accountInfo.information.fullname}--%>
-<%--                </h4> <!-- User name -->--%>
-<%--                <div class="email small">${sessionScope.USER.getAccountInfo().getInformation().getEmail()}</div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="user-menu-items">--%>
-<%--            <a href="RenterProfile" class="user-menu-item">--%>
-<%--                <i class="bx bx-id-card icon"></i>--%>
-<%--                <span class="link">Thông tin cá nhân</span>--%>
-<%--            </a>--%>
-<%--            <a href="logout" class="user-menu-item">--%>
-<%--                <i class="bx bx-exit icon"></i>--%>
-<%--                <span class="link">Đăng xuất</span>--%>
-<%--            </a>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
     <%--<div class="dropdown">--%>
     <%--    <button class="nut_dropdown"><i class="fa-solid fa-bars"></i></button>--%>
