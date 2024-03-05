@@ -375,11 +375,15 @@
 
 <script type="text/javascript">
     // Receive
+    receiveBoxChatWebsocket(showBoxChat);
+
     receiveWebsocket(alertPushNoti);
+
 
     // Close when leave
     window.onbeforeunload = function () {
         receiveWebsocket.disconnectWebSocket();
+        receiveBoxChatWebsocket.disconnectWebSocket();
     };
 </script>
 
