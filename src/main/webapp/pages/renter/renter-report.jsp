@@ -128,7 +128,7 @@
                     </div>
                     <div class="spacer"></div>
                     <div class="form-action d-flex justify-content-end">
-                        <button class="form-submit">Gửi</button>
+                        <button onclick="sendReport()" class="form-submit">Gửi</button>
                     </div>
                 </form>
             </div>
@@ -138,6 +138,20 @@
     <%@include file="component/footer.jsp" %>
     <script src="./assets/js/renter/Renter-navbar.js"></script>
     <script src="./assets/js/renter/Renter-report.js"></script>
+    <script src="./assets/js/sendWebsocket.js"></script>
+    <script>
+        const hostelId = "${sessionScope.HOSTEL !=null ? sessionScope.HOSTEL.hostelID: "null"}";
+        console.log("hostelId: "+hostelId);
+        //hostelOwnerAccountID
+        const hostelOwnerAccountID = "${sessionScope.HOSTEL !=null ? sessionScope.HOSTEL.hostelOwnerAccountID: "null"}";
+        console.log("hostelOwnerAccountID send report: "+hostelOwnerAccountID);
+
+        function sendReport(){
+            sendToWebSocket("hostel_renter", "hostel_owner", null, hostelOwnerAccountID, null,"Có Báo cáo mới !");
+
+        }
+
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -186,5 +200,6 @@
             });
         });
     </script>
+
 </body>
 </html>

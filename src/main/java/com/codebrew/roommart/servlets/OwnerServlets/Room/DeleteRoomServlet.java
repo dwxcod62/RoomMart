@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.OwnerServlets;
+package com.codebrew.roommart.servlets.OwnerServlets.Room;
 
 
 
@@ -19,10 +19,10 @@ public class DeleteRoomServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int roomID = Integer.parseInt(request.getParameter("rid"));
+        int roomID = Integer.parseInt(request.getParameter("roomID"));
         System.out.println("delete room");
         HttpSession session = request.getSession();
-        int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
+        int hostelID = ((com.codebrew.roommart.dto.OwnerDTO.Hostel) session.getAttribute("hostel")).getHostelID();
         String url = "detailHostel?hostelID="+hostelID;
         RoomDao roomDao = new RoomDao();
         try {

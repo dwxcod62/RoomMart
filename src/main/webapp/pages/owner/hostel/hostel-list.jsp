@@ -29,6 +29,8 @@
 
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
@@ -108,16 +110,53 @@
                                                     </a>
                                                     <a href="update-hostel?hostelID=${hostels.hostelID}"
                                                        class="hostel-table__body-btn-edit"><i
-                                                            class="fa-solid fa-pen-to-square"></i></a>
+                                                            class="fa-solid fa-pen-to-square"></i>
+                                                    </a>
+
+
+                                                    <a href="#" onclick="openModal('${hostels.hostelID}')" class="hostel-table__body-btn-edit">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f10020"
+                                                             stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                        </svg>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
+                                        <!-- Modal Delete -->
+                                        <div class="modal fade" id="exampleModal${hostels.hostelID}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Hostel</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Bạn có chắn chắn muốn xóa hay không?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <!-- Form phải được đặt trong modal-body hoặc modal-footer -->
+                                                        <form action="delete-hostel" method="GET">
+                                                            <input type="hidden" name="hostelID" value="${hostels.hostelID}">
+                                                            <button type="submit" class="btn btn-danger">Yes</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+
                     <div class="row mb-5">
                         <div class="upload-file-section col-12 col-md-8 col-lg-7 col-xl-6">
                             <div class="upload-wrapper">
@@ -192,6 +231,12 @@
     <script src="./assets/js/push-notification-alert.js"></script>
     <!-- Web socket -->
     <script src="./assets/js/receiveWebsocket.js"></script>
+    <script>
+        function openModal(hostelID) {
+            var modalId = "#exampleModal" + hostelID;
+            $(modalId).modal('show');
+        }
+    </script>
     <script>
         $(document).ready(function () {
             // Initial datatable

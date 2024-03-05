@@ -25,7 +25,7 @@ public class ContractDao {
             "WHERE c.renter_id = ?";
 
     private static final String
-            GET_HOSTEL_BY_CONTRACT = "SELECT h.name, h.address, h.ward, h.district, h.city " +
+            GET_HOSTEL_BY_CONTRACT = "SELECT h.hostel_id, h.owner_account_id, h.name, h.address, h.ward, h.district, h.city " +
             "FROM Contracts c " +
             "JOIN rooms r ON c.room_id = r.room_id " +
             "JOIN hostels h ON r.hostel_id = h.hostel_id " +
@@ -76,6 +76,8 @@ public class ContractDao {
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
             }  if (rs != null && rs.next()) {
+                int hostel_id = rs.getInt("hostel_id");
+                int ownerid = rs.getInt("owner_account_id");
                 String hostelName = rs.getString("name");
                 String address = rs.getString("address");
                 String ward = rs.getString("ward");
@@ -88,6 +90,8 @@ public class ContractDao {
                         .ward(ward)
                         .district(district)
                         .city(city)
+                        .hostelID(hostel_id)
+                        .hostelOwnerAccountID(ownerid)
                         .build();
             }
         } catch (Exception e) {

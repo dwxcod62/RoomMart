@@ -26,6 +26,7 @@
     <!-- CSS Push Nnotification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-create-account-style/style.css">
 
 </head>
 
@@ -244,7 +245,7 @@
     params.hostel_receiver_id = null;
     params.account_receiver_id = "${requestScope.RENTER_ID}";
     params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
-    sendToWebSocket(params);
+    sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
     </c:if>
 
     // Receive

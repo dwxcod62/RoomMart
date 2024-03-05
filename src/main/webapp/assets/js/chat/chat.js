@@ -11,7 +11,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
-console.log(db);
+// console.log(db);
 const chatForm = document.getElementById("messages");
 const chatInput = document.getElementById("chat-id-1-form");
 const chatHeader = document.getElementById("chatHeader");
@@ -132,8 +132,9 @@ function sendMessage(e) {
         sendToWebSocket("hostel_renter", "hostel_owner", null, ownerId, null,message,null,null);
     }
     if (accId==ownerId){
+        console.log("Send open box chat to renter");
+        sendToWebSocket2("hostel_owner", "hostel_renter", null, renterId, null,null,null,null,renterName,"2",renterId,ownerId);
         console.log("Send notify to renter");
-
         sendToWebSocket( "hostel_owner","hostel_renter", null, renterId, null,message,roomID,hostelID);
     }
 
