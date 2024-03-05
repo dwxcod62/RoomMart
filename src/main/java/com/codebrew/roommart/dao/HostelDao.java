@@ -67,12 +67,14 @@ public class HostelDao {
         PreparedStatement pst = null;
         ResultSet rs = null;
         ArrayList<Integer> accIdList = new ArrayList<>();
+        String sql = "SELECT A.[account_id] AS account_id\n" +
+                "FROM [dbo].[Accounts] AS A JOIN [dbo].[Rooms] AS R ON A.[room_id] = R.[room_id]\n" +
+                "WHERE R.[hostel_id] = ? AND A.[status] = 1";
+//        System.out.println(sql);
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement("SELECT A.[account_id] AS account_id\n" +
-                        "FROM [dbo].[Accounts] AS A JOIN [dbo].[Rooms] AS R ON A.[room_id] = R.[room_id]\n" +
-                        "WHERE R.[hostel_id] = ? AND A.[status] = 1");
+                pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelId);
                 rs = pst.executeQuery();
                 while (rs != null && rs.next()) {
