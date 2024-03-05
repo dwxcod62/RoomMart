@@ -16,7 +16,7 @@ import java.util.List;
 public class CreateContractServlet extends HttpServlet {
 
     private final String ERROR = "error";
-    private final String FAIL = "CreateContractPage";
+    private final String FAIL = "create-contract-page";
     private final String SUCCESS = "ConfirmContract";
 
     @Override
@@ -71,42 +71,55 @@ public class CreateContractServlet extends HttpServlet {
                             int roomWater = Integer.parseInt(req.getParameter("room-water"));
 
                             if (informationDao.isExistEmail(email)) {
-                                url = SUCCESS;
+                                if (  ( (int) AccountDao.getRoomOfRenter(email)) == 0){
+                                    url = SUCCESS;
 
-                                Information _renter_info = new InformationDao().getAccountInformationByEmail(email);
-                                _renter_info.setPhone(new StringUtils().maskCccd(_renter_info.getPhone()));
-                                _renter_info.setCccd(new StringUtils().maskCccd(_renter_info.getCccd()));
+                                    Information _renter_info = new InformationDao().getAccountInformationByEmail(email);
+                                    _renter_info.setPhone(new StringUtils().maskCccd(_renter_info.getPhone()));
+                                    _renter_info.setCccd(new StringUtils().maskCccd(_renter_info.getCccd()));
 
-                                Hostel _hostel = new HostelDao().getHostelById(hostelID);
-                                session.setAttribute("CONTRACT_HOSTEL", _hostel);
+                                    Hostel _hostel = new HostelDao().getHostelById(hostelID);
+                                    session.setAttribute("CONTRACT_HOSTEL", _hostel);
 
-                                Room _room = new RoomDAO().getRoomById(roomID);
-                                session.setAttribute("CONTRACT_ROOM", _room);
+                                    Room _room = new RoomDAO().getRoomById(roomID);
+                                    session.setAttribute("CONTRACT_ROOM", _room);
 
-                                Contract _contract = new Contract().builder()
-                                                    .startDate(startDate)
-                                                    .room_id(roomID)
-                                                    .hostelOwnerId(hostelID)
-                                                    .renterId(_renter_info.getAccount_id())
-                                                    .status(1)
-                                                    .price(Integer.parseInt(price))
-                                                    .deposit(Integer.parseInt(deposit))
-                                                    .build();
+                                    Contract _contract = new Contract().builder()
+                                            .startDate(startDate)
+                                            .room_id(roomID)
+                                            .hostelOwnerId(owner.getAccId())
+                                            .renterId(_renter_info.getAccount_id())
+                                            .status(1)
+                                            .expiration(endDate)
+                                            .price(Integer.parseInt(price))
+                                            .deposit(Integer.parseInt(deposit))
+                                            .build();
 
-                                List<Infrastructures> _list_Infrastructures = new InfrastructureDao().getRoomInfrastructures(roomID);
-                                List<ServiceInfo> _list_Services = new ServiceInfoDAO().getServicesOfHostel(hostelID);
+                                    List<Infrastructures> _list_Infrastructures = new InfrastructureDao().getRoomInfrastructures(roomID);
+                                    List<ServiceInfo> _list_Services = new ServiceInfoDAO().getServicesOfHostel(hostelID);
 
-                                session.setAttribute("CONTRACT_ROOM_INFRASTRUCTURE_LIST", _list_Infrastructures);
-                                session.setAttribute("CONTRACT_SERVICES_LIST", _list_Services);
-                                session.setAttribute("CONTRACT_OWNER", owner.getAccountInfo());
-                                session.setAttribute("CONTRACT_RENTER", _renter_info);
-                                session.setAttribute("CONTRACT", _contract);
+                                    session.setAttribute("CONTRACT_ROOM_INFRASTRUCTURE_LIST", _list_Infrastructures);
+                                    session.setAttribute("CONTRACT_SERVICES_LIST", _list_Services);
+                                    session.setAttribute("CONTRACT_OWNER", owner.getAccountInfo());
+                                    session.setAttribute("CONTRACT_RENTER", _renter_info);
+                                    session.setAttribute("CONTRACT", _contract);
+                                } else {
+                                    handlerStatus = HandlerStatus.builder().
+                                            status(false).
+                                            content("Email đã được tạo hợp đồng! Vui lòng chọn email khác!").build();
 
+                                    req.setAttribute("price", price);
+                                    req.setAttribute("deposit", deposit);
+                                    req.setAttribute("startDate", startDate);
+                                    req.setAttribute("endDate", endDate);
+                                    req.setAttribute("roomElectric", roomElectric);
+                                    req.setAttribute("roomWater", roomWater);
+                                    req.setAttribute("errorType", "username");
+                                }
                             } else {
                                 handlerStatus = HandlerStatus.builder().
                                         status(false).
-                                        content("Email không tồn tại hoặc đã được tạo hợp đồng! Vui lòng chọn email khác!").build();
-
+                                        content("Email không tồn tại ! Vui lòng chọn email khác!").build();
                                 req.setAttribute("email", email);
                                 req.setAttribute("price", price);
                                 req.setAttribute("deposit", deposit);

@@ -1466,6 +1466,55 @@ public List<String>getListImgByRoomId(int rid){
         return room_area;
     }
 
+    public boolean updateRoomStatus(int room_id,int status){
+        boolean st = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "update [Rooms]\n" +
+                        "set room_status = ?\n" +
+                        "where room_id = ?";
+                pst = cn.prepareStatement(sql);
+
+                pst.setInt(1, status);
+                pst.setInt(2, room_id);
+
+                if (pst.executeUpdate() > 0) {
+                    st = true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("checkRoomExist error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return st;
+    }
+
 }
 
 

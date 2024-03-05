@@ -31,13 +31,13 @@ public class ContractDAO implements IContractDAO {
                     contract = Contract.builder()
                             .contract_id(rs.getInt("contract_id"))
                             .deposit(rs.getInt("deposit"))
-                            .expiration(rs.getDate("end_date").toString())
-                            .hostelOwnerId(rs.getInt("owner_id"))
-                            .price(rs.getInt("cost_per_month"))
+                            .expiration(rs.getDate("expiration").toString())
+                            .hostelOwnerId(rs.getInt("hostel_owner_id"))
+                            .price(rs.getInt("price"))
                             .renterId(rs.getInt("renter_id"))
                             .room_id(rs.getInt("room_id"))
                             .startDate(rs.getDate("start_date").toString())
-                            .status(rs.getInt("c_status"))
+                            .status(rs.getInt("status"))
                             .build();
                 }
             }

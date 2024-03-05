@@ -203,7 +203,7 @@
                     </div>
                 </div>
                 <div class="content__spacer"></div>
-                <form action="handle-confirm-contract" method="post" id="content__form" class="content__form">
+                <form action="confirm-contract" method="post" id="content__form" class="content__form">
                     <div class="form-group">
                         <div class="d-flex">
                             <input type="checkbox" id="content__form-confirm" class="content__form-confirm"

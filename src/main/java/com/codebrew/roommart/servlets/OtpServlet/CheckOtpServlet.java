@@ -14,11 +14,10 @@ import java.io.IOException;
 @WebServlet(name = "CheckOtpServlet", value = "/CheckOtpServlet")
 public class CheckOtpServlet extends HttpServlet {
 
-    private final String FAIL = "verify-renter-page";
-    private final String ERROR = "error-page";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
     @Override
@@ -34,36 +33,44 @@ public class CheckOtpServlet extends HttpServlet {
     }
 
     private void check_otp_get(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
     }
 
     private void check_otp(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String FAIL = "otp";
+        String ERROR = "error-page";
+
         String url = ERROR;
         String otp = request.getParameter("otp");
 
         HandlerStatus handlerStatus = null;
         try {
             String userEmail = request.getParameter("email");
+            AccountDao dao = new AccountDao();
             if (otp != null && !otp.isBlank() && userEmail != null) {
-                int accID = new AccountDao().checkAccountByOTP(userEmail, otp);
+                int accID = dao.checkAccountByOTP(userEmail, otp);
                 if (accID > 0) {
+
+                    dao.updateAccountStatusByEmail(userEmail, 1);
+
                     HttpSession session = request.getSession(false);
                     Account acc = new AccountDao().getAccountById(accID);
                     session.setAttribute("USER", acc);
                     url = "dashboard";
+                    response.sendRedirect(url);
                 } else {
                     url = FAIL;
                     handlerStatus = HandlerStatus.builder().status(false).content("Mã OTP không hợp lệ! Vui lòng kiểm tra lại email hoặc nhấn nút gửi lại để nhận mã mới!").build();
                     request.setAttribute("RESPONSE_MSG", handlerStatus);
                     request.setAttribute("EMAIL_REGISTER", userEmail);
+                    request.getRequestDispatcher(url).forward(request, response);
                 }
+            } else {
+                System.out.println("a");
             }
 
         } catch (Exception e) {
             log("Error at CheckOTPServlet: " + e.toString());
-        } finally {
-            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
-            else request.getRequestDispatcher(url).forward(request, response);
         }
     }
-
 }
