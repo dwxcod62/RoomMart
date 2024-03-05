@@ -94,8 +94,8 @@
                                         <tr>
                                             <td>${count}</td>
                                             <td>${hostels.hostelName}</td>
-                                            <td>${hostels.address}, ${hostels.ward.split('-')[1]},
-                                                    ${hostels.district.split('-')[1]}, ${hostels.city.split('-')[1]}
+                                            <td>${hostels.address}, ${hostels.ward},
+                                                    ${hostels.district}, ${hostels.city}
                                             </td>
                                             <td>
                                                 ${requestScope.LIST_TOTAL_ROOM.get(hostels.hostelID)}

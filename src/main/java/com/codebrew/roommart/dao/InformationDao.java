@@ -68,6 +68,11 @@ public class InformationDao {
             "SELECT *\n" +
                     "FROM AccountInformations\n" +
                     "WHERE account_id = ?";
+
+    private static final String GET_RENTER_INFO_BY_EMAIL =
+            "SELECT *\n" +
+                    "FROM AccountInformations\n" +
+                    "WHERE email = ?";
     private static final String UPDATE_PROFILE =
             "UPDATE AccountInformations\n" +
                     "SET fullname = ?\n" +
@@ -199,5 +204,44 @@ public class InformationDao {
             }
         }
         return checkUpdate;
+    }
+
+    public Information getAccountInformationByEmail(String email) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Information inf = null;
+
+        ResultSet rs = null;
+
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_RENTER_INFO_BY_EMAIL);
+                pst.setString(1, email);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    String fullname = rs.getString("fullname");
+                    String birthday = rs.getString("birthday");
+                    int sex = rs.getInt("sex");
+                    String phone = rs.getString("phone");
+                    String address = rs.getString("address");
+                    String cccd = rs.getString("identity_card_number");
+                    inf = Information.builder()
+                            .fullname(fullname)
+                            .email(email)
+                            .birthday(birthday)
+                            .sex(sex)
+                            .phone(phone)
+                            .address(address)
+                            .cccd(cccd)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return inf;
     }
 }

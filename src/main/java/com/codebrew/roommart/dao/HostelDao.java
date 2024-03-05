@@ -138,5 +138,41 @@ public class HostelDao {
         return hostel;
     }
 
+    public Hostel getHostelById(int hostelId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select * from [dbo].[Hostels] where hostel_id = ?");
+                pst.setInt(1, hostelId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = new Hostel(hostelId, hostelOwnerAccountID, name, address, ward, district, city);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return hostel;
+    }
 
 }

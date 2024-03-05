@@ -1,20 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ page import="com.codebrew.roommart.dao.SystemDao" %>--%>
-<%--<%@ page import="com.codebrew.roommart.dto.Account" %>--%>
-
-<link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
-<link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
-<link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
-<link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
-<link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
-<link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
-<link rel="stylesheet" href="./assets/css/core_style/core.css">
-<link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
-<link
-        href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-        rel="stylesheet"  type='text/css'>
-
 <div class="main-nav bg-white">
     <div class="container">
         <div class="row main-nav-body">
