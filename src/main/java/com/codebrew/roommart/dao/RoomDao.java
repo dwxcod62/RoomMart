@@ -416,8 +416,8 @@ public class RoomDao {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 cn.setAutoCommit(false);
-                if (!imgUrls.isEmpty()){
-                    System.out.println("step 1 - get url img to delete from cloudinary");
+                if (imgUrls!= null){
+                    System.out.println("step 1 - get list url img from db and delete from cloudinary");
                     String sql ="SELECT url_img\n" +
                             "FROM imgURL\n" +
                             "WHERE room_id = ?;";
@@ -454,7 +454,7 @@ public class RoomDao {
                         }
                     }
 
-                    System.out.println("step 2 - delete imgurl from database");
+                    System.out.println("step 2 - delete imgURL from database");
                     String sqlDeleteImg = "DELETE FROM imgURL WHERE room_id = ?";
 
                     pst = cn.prepareStatement(sqlDeleteImg);
@@ -482,7 +482,7 @@ public class RoomDao {
                 if (pst.executeUpdate() == 0) {
                     cn.rollback();
                 } else {
-                    if (!imgUrls.isEmpty()){
+                    if (imgUrls != null){
                         System.out.println("-> add imgs to db");
 
                         pst = cn.prepareStatement(ADD_IMGs);
@@ -899,18 +899,21 @@ public List<String>getListImgByRoomId(int rid){
         return rooms;
     }
 
-    public boolean checkRoomExist(int roomNumber,int hostelID){
+    public boolean checkRoomExist(int roomNumber,int hostelID,int updateRoomNumber){
         boolean isExist = false;
         System.out.println("-> checkRoomExist ");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         int count = 0;
+        String sql="";
 
 
-        String sql = "SELECT COUNT(*) AS count_roomber\n" +
-                "FROM rooms\n" +
-                "WHERE room_number = ? and hostel_id=?;";
+    sql = "SELECT COUNT(*) AS count_roomber\n" +
+            "FROM rooms\n" +
+            "WHERE room_number = ? and hostel_id=? and room_number <> ?;";
+
+
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
@@ -918,7 +921,7 @@ public List<String>getListImgByRoomId(int rid){
 //                System.out.println(sql);
                 pst.setInt(1, roomNumber);
                 pst.setInt(2, hostelID);
-
+                pst.setInt(3, updateRoomNumber);
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {

@@ -80,7 +80,7 @@
                             Thêm dịch vụ
                         </button>
                         <!-- Add room button -->
-                        <a href="addRoom?hostelID=${hostelInformation.hostelID}" class="hostel-actions__btn hostel-actions__btn-room">
+                        <a href="AddNewRoom?hostelID=${hostelInformation.hostelID}" class="hostel-actions__btn hostel-actions__btn-room">
                             Thêm phòng
                         </a>
                     </div>
@@ -446,7 +446,7 @@
     params.hostel_receiver_id = "${requestScope.HOSTEL_ID}";
     params.account_receiver_id = null;
     params.messages = "Chủ trọ đã gửi một thông báo mới. Vui lòng kiểm tra!";
-    sendToWebSocket(params);
+    sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
     </c:if>
 
     // Receive
