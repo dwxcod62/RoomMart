@@ -109,7 +109,7 @@ public class BillDao {
         ResultSet rs = null;
         String billTitle = null;
         try {
-            cn = DBUtils.makeConnection();
+            cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 String sql = "SELECT TOP 1 bill_title\n" +
                         "FROM Bill\n" +
@@ -215,7 +215,7 @@ public class BillDao {
         ResultSet rs = null;
         boolean check = false;
         try {
-            cn = DBUtils.makeConnection();
+            cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 cn.setAutoCommit(false);
 
@@ -311,7 +311,7 @@ public class BillDao {
         ResultSet rs = null;
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            cn = DBUtils.makeConnection();
+            cn = DatabaseConnector.makeConnection();
             ptm = cn.prepareStatement(GET_RENTER_BILL_BY_ID);
             ptm.setInt(1, billID);
             rs = ptm.executeQuery();
