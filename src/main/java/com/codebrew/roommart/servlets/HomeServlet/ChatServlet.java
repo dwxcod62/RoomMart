@@ -98,6 +98,7 @@ public class ChatServlet extends HttpServlet {
             int hostelId = Integer.parseInt(hostelId_raw);
             int roomId = Integer.parseInt(roomId_raw);
 
+
             int ownerId = hod.getOwnerIdByHostelId(hostelId);
             AccountInfo owner_ui = uid.getAccountInformationById(ownerId);
             Information owner_infor = owner_ui.getInformation();
