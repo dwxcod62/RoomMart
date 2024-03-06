@@ -7,7 +7,7 @@
         </a>
     </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "account" ? "active" : ""}">
-        <a href="list-owner-account" class="group-option__link">
+        <a href="AdminListAcc" class="group-option__link">
             <i class="group-option__icon fa-solid fa-user-gear"></i>
             <div class="group-option__label">Quản lý tài khoản</div>
         </a>

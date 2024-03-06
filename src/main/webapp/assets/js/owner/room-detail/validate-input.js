@@ -1,31 +1,31 @@
 // Update room infor
-Validator({
-    form: "#update-room-infor-form",
-    formGroupSelector: ".form-group",
-    errorSelector: ".form-message",
-    rules: [
-        Validator.isRequired("#update-room-infor__room-number"),
-        Validator.isInteger("#update-room-infor__room-number"),
-        Validator.minNumber(
-            "#update-room-infor__room-number",
-            1,
-            `Vui lòng nhập số phòng tối thiểu là ${1}`
-        ),
-        Validator.isRequired("#update-room-infor__room-capacity"),
-        Validator.isInteger("#update-room-infor__room-capacity"),
-        Validator.minNumber(
-            "#update-room-infor__room-capacity",
-            1,
-            `Vui lòng nhập số lượng tối thiểu là ${1}`
-        ),
-        Validator.isRequired("#update-room-infor__room-area"),
-        Validator.minNumber(
-            "#update-room-infor__room-area",
-            1,
-            `Vui lòng nhập diện tích tối thiểu là ${1}`
-        ),
-    ],
-});
+// Validator({
+//     form: "#update-room-infor-form",
+//     formGroupSelector: ".form-group",
+//     errorSelector: ".form-message",
+//     rules: [
+//         Validator.isRequired("#update-room-infor__room-number"),
+//         Validator.isInteger("#update-room-infor__room-number"),
+//         Validator.minNumber(
+//             "#update-room-infor__room-number",
+//             1,
+//             `Vui lòng nhập số phòng tối thiểu là ${1}`
+//         ),
+//         Validator.isRequired("#update-room-infor__room-capacity"),
+//         Validator.isInteger("#update-room-infor__room-capacity"),
+//         Validator.minNumber(
+//             "#update-room-infor__room-capacity",
+//             1,
+//             `Vui lòng nhập số lượng tối thiểu là ${1}`
+//         ),
+//         Validator.isRequired("#update-room-infor__room-area"),
+//         Validator.minNumber(
+//             "#update-room-infor__room-area",
+//             1,
+//             `Vui lòng nhập diện tích tối thiểu là ${1}`
+//         ),
+//     ],
+// });
 
 // Update consume
 Validator({

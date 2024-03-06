@@ -56,7 +56,9 @@ public class GetRoomDetailServlet extends HttpServlet {
 
                     com.codebrew.roommart.dto.OwnerDTO.Hostel hostel = new HostelDAO().getHostelById(hostelID);
 
-                    session.setAttribute("hostel", hostel);
+                        session.setAttribute("hostel", hostel);
+                        request.setAttribute("hid",hostelID);
+
 
                     Contract contract = new ContractDAO().getContract(roomId);
                     request.setAttribute("contractRoom", contract);

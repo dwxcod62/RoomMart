@@ -27,6 +27,7 @@
     <!-- CSS Push Nnotification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-create-account-style/style.css">
 
 </head>
 
@@ -171,7 +172,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Hủy bỏ
                                                 </button>
-                                                <form action="end-rental-contract" method="POST">
+                                                <form action="delete-contract" method="POST">
                                                     <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
                                                     <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}" />
                                                     <button type="submit" class="btn btn-danger">Đồng ý</button>
@@ -245,7 +246,7 @@
     params.hostel_receiver_id = null;
     params.account_receiver_id = "${requestScope.RENTER_ID}";
     params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
-    sendToWebSocket(params);
+    sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
     </c:if>
 
     // Receive

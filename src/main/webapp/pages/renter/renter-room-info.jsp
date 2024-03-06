@@ -100,7 +100,7 @@
     <%@include file="component/footer.jsp" %>
 
     <!-- Push notification element -->
-    <%--    <div id="push-noti"></div>--%>
+        <div id="push-noti"></div>
     <script src="./assets/js/renter/Renter-navbar.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -116,16 +116,16 @@
     <script src="./assets/js/push-notification-alert.js"></script>
 
     <!-- Web socket -->
-    <%--    <script src="./assets/js/receiveWebsocket.js"></script>--%>
+        <script src="./assets/js/receiveWebsocket.js"></script>
 
-    <%--    <script type="text/javascript">--%>
-    <%--        // Receive--%>
-    <%--        receiveWebsocket(alertPushNoti);--%>
-    <%--        // Close when leave--%>
-    <%--        window.onbeforeunload = function () {--%>
-    <%--            receiveWebsocket.disconnectWebSocket();--%>
-    <%--        };--%>
-    <%--    </script>--%>
+        <script type="text/javascript">
+            // Receive
+            receiveWebsocket(alertPushNoti);
+            // Close when leave
+            window.onbeforeunload = function () {
+                receiveWebsocket.disconnectWebSocket();
+            };
+        </script>
 
 </div>
 </body>

@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "RegisterServlet", value = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 
-    private static final String url = "register-page";
+    private static  String url = "register-page";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,6 +41,10 @@ public class RegisterServlet extends HttpServlet {
         AccountDao accDao = new AccountDao();
         try {
             String fullname = req.getParameter("fullname");
+            String phone = req.getParameter("phone");
+            String birthday = req.getParameter("birthday");
+            String role = req.getParameter("role");
+            String address = req.getParameter("address");
             String username = req.getParameter("username");
             String email = req.getParameter("email").toLowerCase().trim();
             String password = new EncodeUtils().hashMd5(req.getParameter("password"));
@@ -49,28 +53,28 @@ public class RegisterServlet extends HttpServlet {
 
             if (!accDao.isExistUsername(username)) {
                 if (!new InformationDao().isExistEmail(email)) {
-
-
                     Information information = Information.builder()
+                            .address(address)
+                            .birthday(birthday)
+                            .phone(phone)
                             .fullname(fullname)
                             .email(email)
                             .cccd(cccd).build();
-
                     AccountInfo accountInfo = new AccountInfo(information);
-
                     Account registerAccount = Account.builder()
                             .accId(0)
                             .username(username)
                             .password(password)
                             .status(0)
-                            .role(2)
+                            .role(role.equals("owner") ? 1 : 2)
                             .accountInfo(accountInfo).build();
 
                     String otp = RandomUtils.randomOTP(5);
 
-                    boolean check = accDao.addAnAccount(registerAccount, otp);
+                    boolean check = accDao.addAnAccount(registerAccount) && accDao.addOTPToAccount(username, otp);
 
                     if (check) {
+                        url = "otp";
                         String data = "email=" + email + "&otp=" + otp;
                         String encode_data = EncodeUtils.encodeString(data);
 

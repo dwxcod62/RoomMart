@@ -143,7 +143,7 @@
                     <div class="col-12 col-xl-9 m-auto mb-5 content__body">
                         <form id="add-notification-form" action="AddNotificationServlet" method="post" class="custom-form">
                             <div class="form-header">
-                                <h1 class="form-title">Gửi thông báo mới</h1>
+                                <h1 class="form-title">Gửi thông báo mới ${sessionScope.HOSTEL}</h1>
                             </div>
                             <div class="spacer"></div>
                             <div class="row">
@@ -159,12 +159,13 @@
                                     <div class="form-group">
                                         <label for="noti-hostel-id" class="form-label">Khu trọ:
                                             <span>*</span></label>
-                                        <select name="noti-hostel-id" id="noti-hostel-id" class="form-control">
-                                            <option value="">Chọn khu trọ nhận thông báo</option>
+                                        <select ONCHANGE="changeSelect()" name="noti-hostel-id" id="noti-hostel-id" class="form-control">
+                                            <option value="adu">Chọn khu trọ nhận thông báo</option>
                                             <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">
                                                 <option value="${hostel.hostelID}">${hostel.hostelName}</option>
                                             </c:forEach>
                                         </select>
+                                        <input value="" hidden id="valueSelected">
                                         <span class="form-message"></span>
                                     </div>
                                 </div>
@@ -177,7 +178,7 @@
                             </div>
                             <div class="spacer"></div>
                             <div class="form-action d-flex justify-content-end">
-                                <button class="form-submit">Gửi</button>
+                                <button type="button" onclick="sendReport()" class="form-submit" >Gửi</button>
                             </div>
                         </form>
                     </div>
@@ -343,7 +344,31 @@
         receiveWebsocket.disconnectWebSocket();
     };
 </script>
+<script src="./assets/js/sendWebsocket.js"></script>
 
+<script>
+
+   function changeSelect(){
+      const  hostelId = document.getElementById("noti-hostel-id").options[document.getElementById("noti-hostel-id").selectedIndex].value;
+       console.log("hostelId reiceiver 1 : "+hostelId);
+       const str = hostelId.toString();
+       sendToWebSocket("hostel_owner", "hostel", str, null, "Có thông báo mới",null);
+
+       document.getElementById("valueSelected").value = hostelId;
+       console.log("input hidden: "+document.getElementById("valueSelected").value);
+   }
+
+    function sendReport(){
+        const  hostelId = document.getElementById("valueSelected").value;
+        console.log("hostelId reiceiver: "+hostelId);
+
+            sendToWebSocket("hostel_owner", "hostel", hostelId, null, "Có thông báo mới từ chủ trọ",null);
+        setTimeout(function() {
+            document.getElementById("add-notification-form").submit();
+        }, 1500); // 3000 milliseconds = 3 seconds
+    }
+
+</script>
 <!-- Preload -->
 <script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
 </body>

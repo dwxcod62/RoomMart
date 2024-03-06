@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.OwnerServlets;
+package com.codebrew.roommart.servlets.OwnerServlets.Room;
 
 
 import com.cloudinary.Cloudinary;
@@ -13,8 +13,11 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,9 +30,9 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "UpdateRoomServlet", value = "/UpdateRoomServlet")
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 10,  // Kích thước tệp tối thiểu trước khi lưu vào bộ nhớ tạm thời, đơn vị byte
-        maxFileSize = 1024 * 300,       // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
-        maxRequestSize = 1024 * 1024    // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
+        fileSizeThreshold = 1024 * 3*1024,  // Kích thước tệp tối thiểu trước khi lưu vào bộ nhớ tạm thời, đơn vị byte
+        maxFileSize = 1024 * 1024*10,       // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
+        maxRequestSize = 1024 * 1024*10    // Kích thước tệp tối đa cho một yêu cầu, đơn vị byte
 )
 public class UpdateRoomServlet extends HttpServlet {
     @Override
@@ -51,13 +54,26 @@ public class UpdateRoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        Part roomNumberPart = request.getPart("room-name");
+        Part capacityPart = request.getPart("room-capacity");
+        Part roomAreaPart = request.getPart("room-area");
+        Part atticPart = request.getPart("room-attic");
+
+
+        int roomNumber = Integer.parseInt(getPartValue(roomNumberPart));
+        System.out.println("roomNumber: "+roomNumber);
+        int capacity = Integer.parseInt(getPartValue(capacityPart));
+        double roomArea = Double.parseDouble(getPartValue(roomAreaPart));
+        int attic = Integer.parseInt(getPartValue(atticPart));
+
+
         int roomID = Integer.parseInt(request.getParameter("roomID"));
-        int roomNumber = Integer.parseInt(request.getParameter("room-name"));
-        int capacity = Integer.parseInt(request.getParameter("room-capacity"));
-        double roomArea = Double.parseDouble(request.getParameter("room-area"));
-        int attic = Integer.parseInt(request.getParameter("room-floor"));
+
+
+
+
         HttpSession session = request.getSession();
-        int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
+        int hostelID = ((com.codebrew.roommart.dto.OwnerDTO.Hostel) session.getAttribute("hostel")).getHostelID();
 
 //        request.setAttribute("hostelID",hostelID);
 //        request.setAttribute("roomID",roomID);
@@ -84,7 +100,7 @@ public class UpdateRoomServlet extends HttpServlet {
 //            Collection<Part> parts = request.getParts().stream()
 //                    .filter(part -> "fileImage".equals(part.getName()) && part.getSize() > 0)
 //                    .collect(Collectors.toList());
-        if (fileParts != null){
+        if (!fileParts.isEmpty()){
             for (Part part : fileParts) {
                 String fileName = getFileName(part);
                 if (fileName != null && !fileName.isEmpty()) {
@@ -129,5 +145,19 @@ public class UpdateRoomServlet extends HttpServlet {
             }
         }
         return null;
+    }
+    private String getPartValue(Part part) throws IOException {
+        if (part == null) {
+            return null;
+        }
+        // Đọc dữ liệu từ phần multipart và trả về dạng chuỗi
+        StringBuilder value = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(part.getInputStream(), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                value.append(line);
+            }
+        }
+        return value.toString();
     }
 }

@@ -17,6 +17,9 @@ public class ProposeDao {
     private static final String GET_ALL_PROPOSES =
             "SELECT id, content, send_date, reply, reply_date, status, send_account_id,\n" +
                     "reply_account_id FROM Propose ORDER BY send_date DESC";
+    private static final String UPDATE_PROPOSE =
+            "UPDATE Propose SET reply = ?, reply_date = GETDATE(), \n" +
+                    "status = ?, reply_account_id = ? WHERE id = ?";
     public List<Propose> getAllPropose() {
         Connection conn = null;
         PreparedStatement pst = null;
@@ -70,4 +73,48 @@ public class ProposeDao {
         }
         return proposeList;
     }
+
+    // Admin Manage Propose _ Handle
+
+    public boolean updatePropose(int proposeId, String replyContent, int status, int replyAccountId) {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                conn.setAutoCommit(false);
+                pst = conn.prepareStatement(UPDATE_PROPOSE);
+                pst.setString(1, replyContent);
+                pst.setInt(2, status);
+                pst.setInt(3, replyAccountId);
+                pst.setInt(4, proposeId);
+                check = pst.executeUpdate() > 0;
+                if (!check) {
+                    conn.rollback();
+                }
+                conn.setAutoCommit(true);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return check;
+    }
+
+
 }

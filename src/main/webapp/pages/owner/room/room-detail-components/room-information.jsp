@@ -6,7 +6,7 @@
         <div class="infor-group">Khu trọ trực thuộc:
             <span>${sessionScope.hostel.hostelName}</span></div>
         <div class="infor-group">Địa chỉ:
-            <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+            <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward}, ${sessionScope.hostel.district}, ${sessionScope.hostel.city}</span>
         </div>
         <div class="infor-group">Diện tích:
             <span>${sessionScope.room.roomArea} m2</span></div>
