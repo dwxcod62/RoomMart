@@ -83,6 +83,18 @@
                                            class="form-control">
                                     <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "username" && requestScope.RESPONSE_MSG ne null ? requestScope.RESPONSE_MSG.content : ""}</span>
                                 </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Số điện thoại<span>*</span></label>
+                                    <input id="phone" name="phone" type="number" value="${requestScope.phone}" placeholder="Nhập số điện thoại"
+                                           class="form-control">
+                                    <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "phone" && requestScope.RESPONSE_MSG ne null ? requestScope.RESPONSE_MSG.content : ""}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthday" class="form-label">Ngày sinh <span>*</span></label>
+                                    <input id="birthday" name="birthday" type="date" value="${requestScope.birthday}" placeholder="Chọn ngày sinh của bạn"
+                                           class="form-control">
+                                    <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "birthday" && requestScope.RESPONSE_MSG ne null ? requestScope.RESPONSE_MSG.content : ""}</span>
+                                </div>
                                 <div class="row">
                                     <div class="form-group col-6">
                                         <label for="password" class="form-label">Mật khẩu <span>*</span></label>
@@ -109,6 +121,23 @@
                                            class="form-control">
                                     <span class="form-message"></span>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Bạn muốn là <span>*</span></label>
+                                    <select name="role" class="form-control">
+                                        <option style="" value="ren">Người thuê</option>
+                                        <option style="" value="owner">Người cho thuê</option>
+                                    </select>
+                                    <span class="form-message "></span>
+                                </div>
+
+                                <div class="form-group addr-input">
+                                    <label for="address" class="form-label">Địa chỉ thường trú <span>*</span></label>
+                                    <input id="address" name="address" value="${requestScope.cccd}" type="text" placeholder="Nhập Địa chỉ thường trú"
+                                           class="form-control">
+                                    <span class="form-message"></span>
+                                </div>
+
                                 <div class="register-policy">
                                     Bằng cách nhấp vào Đăng ký, bạn đồng ý với
                                     <a href="">Điều khoản</a>,
@@ -146,6 +175,21 @@
         <script src="./assets/js/valid-form.js" charset="UTF-8"></script>
         <script type="module" src="./assets/js/system/register-handle.js" charset="UTF-8"></script>
         <script src="./assets/js/toast-alert.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('.addr-input').hide();
+
+                $('select.form-control').change(function(){
+                    var selectedOption = $(this).val();
+                    if(selectedOption === 'owner') {
+                        $('.addr-input').show();
+                    } else {
+                        $('.addr-input').hide();
+                    }
+                });
+            });
+        </script>
         <script>
             <c:choose>
             <c:when test="${requestScope.RESPONSE_MSG.status eq true}">

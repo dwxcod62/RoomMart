@@ -103,7 +103,7 @@
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-6 m-auto">
                     <!-- Form body -->
-                    <form action="${requestScope.rid eq null ? 'ownerAddRoom' : 'updateRoom'}" method="post" enctype="multipart/form-data" class="custom-form add-room-form" id="add-hostel-form">
+                    <form action="${requestScope.rid eq null ? 'AddNewRoom' : 'updateRoom'}" method="post" enctype="multipart/form-data" class="custom-form add-room-form" id="add-hostel-form">
                         <!-- Title -->
                         <div class="form-header">
                             <div class="form-title main-title">${requestScope.rid eq null ? "Thêm phòng mới" : "Cập nhật phòng"}</div>
@@ -140,7 +140,7 @@
                         <div class="form-group">
                             <div class="form-wrapper">
                                 <label for="room-img" class="form-label">Room Images: <span>*</span></label>
-                                <input id="room-img" type="file" name="fileImage" multiple class="form-control">
+                                <input id="room-img" type="file" name="fileImage" accept=".png, .jpg" multiple class="form-control" onchange="validateFiles(this)">
 
                             </div>
                             <span class="form-message"></span>
@@ -407,7 +407,7 @@
 
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="btn btn-secondary">Quay về khu trọ</a>
+                        <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="btn btn-secondary">Quay về khu trọ</a>
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm tiếp</button>
                     </div>
                 </div>
@@ -479,11 +479,11 @@
         $.ajax({
             url: "check-room-exist",
             type: "GET",
-            data: { roomNum: roomNumber.value, hostelID: hostelId },
+            data: { roomNum: roomNumber.value, hostelID: hostelId, updateRoomNumber:0 },
             success: function (response) {
                 console.log("repsonse: "+response)
                 if (response === "true") {
-                    submitBtn.setAttribute("disabled", "true");;
+                    submitBtn.setAttribute("disabled", "true");
                     fm.innerText = "Phòng đã tồn tại";
                 } else {
 
@@ -500,6 +500,45 @@
 
 
 
+</script>
+<script>
+    function validateFiles(input) {
+        console.log("validateFiles")
+        const files = input.files;
+        const allowedExtensions = /(\.png|\.jpg)$/i;
+        const maxSize = 2097152; // 10 MB
+        var totalSize = 0;
+        var submitBtn = document.getElementById("submitBTN");
+        console.log(submitBtn.innerText);
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            if (!allowedExtensions.exec(file.name)) {
+                alert('Chỉ chấp nhận ảnh .png và .jpg.');
+                input.value = '';
+                return false;
+            }
+
+            if (file.size > maxSize) {
+                alert('Kích thước file tối đa là 2 MB.');
+                input.value = '';
+                return false;
+            }
+        }
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+                totalSize += file.size
+            console.log(i+": "+file.size);
+        }
+        console.log(totalSize)
+        console.log(maxSize)
+        if (totalSize > 2097152) {
+            alert('Tổng Kích thước tất cả file tối đa là 2 MB.');
+            input.value = '';
+            return false;
+        }
+    }
 </script>
 </body>
 

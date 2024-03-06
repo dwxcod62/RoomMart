@@ -67,12 +67,14 @@ public class HostelDao {
         PreparedStatement pst = null;
         ResultSet rs = null;
         ArrayList<Integer> accIdList = new ArrayList<>();
+        String sql = "SELECT A.[account_id] AS account_id\n" +
+                "FROM [dbo].[Accounts] AS A JOIN [dbo].[Rooms] AS R ON A.[room_id] = R.[room_id]\n" +
+                "WHERE R.[hostel_id] = ? AND A.[status] = 1";
+//        System.out.println(sql);
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement("SELECT A.[account_id] AS account_id\n" +
-                        "FROM [dbo].[Accounts] AS A JOIN [dbo].[Rooms] AS R ON A.[room_id] = R.[room_id]\n" +
-                        "WHERE R.[hostel_id] = ? AND A.[status] = 1");
+                pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelId);
                 rs = pst.executeQuery();
                 while (rs != null && rs.next()) {
@@ -138,5 +140,71 @@ public class HostelDao {
         return hostel;
     }
 
+    public Hostel getHostelById(int hostelId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select * from [dbo].[Hostels] where hostel_id = ?");
+                pst.setInt(1, hostelId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = new Hostel(hostelId, hostelOwnerAccountID, name, address, ward, district, city);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return hostel;
+    }
 
+    public int getHostelByRoomId(int room_id) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int hostel_id = -1;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select hostel_id from [Rooms] where room_id = ?");
+                pst.setInt(1, room_id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    hostel_id = rs.getInt("hostel_id");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return hostel_id;
+    }
 }

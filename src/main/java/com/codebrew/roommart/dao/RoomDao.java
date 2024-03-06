@@ -416,8 +416,8 @@ public class RoomDao {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 cn.setAutoCommit(false);
-                if (!imgUrls.isEmpty()){
-                    System.out.println("step 1 - get url img to delete from cloudinary");
+                if (imgUrls!= null){
+                    System.out.println("step 1 - get list url img from db and delete from cloudinary");
                     String sql ="SELECT url_img\n" +
                             "FROM imgURL\n" +
                             "WHERE room_id = ?;";
@@ -454,7 +454,7 @@ public class RoomDao {
                         }
                     }
 
-                    System.out.println("step 2 - delete imgurl from database");
+                    System.out.println("step 2 - delete imgURL from database");
                     String sqlDeleteImg = "DELETE FROM imgURL WHERE room_id = ?";
 
                     pst = cn.prepareStatement(sqlDeleteImg);
@@ -482,7 +482,7 @@ public class RoomDao {
                 if (pst.executeUpdate() == 0) {
                     cn.rollback();
                 } else {
-                    if (!imgUrls.isEmpty()){
+                    if (imgUrls != null){
                         System.out.println("-> add imgs to db");
 
                         pst = cn.prepareStatement(ADD_IMGs);
@@ -827,7 +827,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-//                System.out.println(sql);
+                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -899,18 +899,21 @@ public List<String>getListImgByRoomId(int rid){
         return rooms;
     }
 
-    public boolean checkRoomExist(int roomNumber,int hostelID){
+    public boolean checkRoomExist(int roomNumber,int hostelID,int updateRoomNumber){
         boolean isExist = false;
         System.out.println("-> checkRoomExist ");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         int count = 0;
+        String sql="";
 
 
-        String sql = "SELECT COUNT(*) AS count_roomber\n" +
-                "FROM rooms\n" +
-                "WHERE room_number = ? and hostel_id=?;";
+    sql = "SELECT COUNT(*) AS count_roomber\n" +
+            "FROM rooms\n" +
+            "WHERE room_number = ? and hostel_id=? and room_number <> ?;";
+
+
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
@@ -918,7 +921,7 @@ public List<String>getListImgByRoomId(int rid){
 //                System.out.println(sql);
                 pst.setInt(1, roomNumber);
                 pst.setInt(2, hostelID);
-
+                pst.setInt(3, updateRoomNumber);
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
@@ -1464,6 +1467,90 @@ public List<String>getListImgByRoomId(int rid){
             }
         }
         return room_area;
+    }
+
+
+    public boolean updateRoomStatus(int room_id,int status){
+        boolean st = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "update [Rooms]\n" +
+                        "set room_status = ?\n" +
+                        "where room_id = ?";
+                pst = cn.prepareStatement(sql);
+
+                pst.setInt(1, status);
+                pst.setInt(2, room_id);
+
+                if (pst.executeUpdate() > 0) {
+                    st = true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("checkRoomExist error");
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return st;
+    }
+
+    public int getRoomStatusByContractAndEmail(String email) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        int status = 2;
+        try {
+
+            conn = DatabaseConnector.makeConnection();
+
+            if (conn != null) {
+                String sql = "select r.room_status from [Rooms] r\n" +
+                        "join [Contracts] c on r.room_id = c.room_id\n" +
+                        "join [Accounts] a on a.account_id = c.renter_id\n" +
+                        "join [AccountInformations] ai on ai.account_id = a.account_id\n" +
+                        "where ai.email = ?";
+
+                psm = conn.prepareStatement(sql);
+                psm.setString(1, email);
+                rs = psm.executeQuery();
+                if (rs != null && rs.next()) {
+                    status = rs.getInt("room_status");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) { rs.close(); }
+            if (psm != null) { psm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return status;
     }
 }
 

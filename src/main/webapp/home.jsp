@@ -41,11 +41,11 @@
 
     <%-- link local css   --%>
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
-    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
-    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
-
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
 
 </head>
 
@@ -69,10 +69,10 @@
         <!-- Navbar -->
 
         <!-- End Navbar -->
-        <%@include file="./pages/hostel-owner/components/navbar.jsp"%>
+        <%@include file="pages/home/components/navbar.jsp"%>
     </div>
 </div>
-<div class="re__main">
+<div class="re__main" style="min-height: 100vh;">
     <div class="re__home">
         <!-- ok -->
         <div class="re__content-block re__home__head-block">
@@ -336,8 +336,9 @@
 
 
 <!-- food section -->
-<jsp:include page="pages/hostel-owner/components/footer.jsp"></jsp:include>
+<jsp:include page="pages/home/components/footer.jsp"></jsp:include>
 <!-- Push notification element -->
+<jsp:include page="./pages/home/components/boxchat.jsp" />
 <div id="push-noti"></div>
 
 <!-- end food section -->
@@ -374,11 +375,15 @@
 
 <script type="text/javascript">
     // Receive
+    receiveBoxChatWebsocket(showBoxChat);
+
     receiveWebsocket(alertPushNoti);
+
 
     // Close when leave
     window.onbeforeunload = function () {
         receiveWebsocket.disconnectWebSocket();
+        receiveBoxChatWebsocket.disconnectWebSocket();
     };
 </script>
 

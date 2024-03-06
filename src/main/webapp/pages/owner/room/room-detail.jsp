@@ -13,6 +13,7 @@
     <!-- Title -->
     <title>Chi tiết phòng</title>
 
+
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -26,6 +27,7 @@
     <!-- CSS Push Nnotification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-create-account-style/style.css">
 
 </head>
 
@@ -170,7 +172,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Hủy bỏ
                                                 </button>
-                                                <form action="end-rental-contract" method="POST">
+                                                <form action="delete-contract" method="POST">
                                                     <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
                                                     <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}" />
                                                     <button type="submit" class="btn btn-danger">Đồng ý</button>
@@ -214,6 +216,8 @@
 <script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 
+<script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
 <script>
     <c:choose>
     <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
@@ -244,7 +248,7 @@
     params.hostel_receiver_id = null;
     params.account_receiver_id = "${requestScope.RENTER_ID}";
     params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
-    sendToWebSocket(params);
+    sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
     </c:if>
 
     // Receive

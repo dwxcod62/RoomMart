@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class NotificationDao {
                     "JOIN Contracts c ON r.room_id = c.room_id\n" +
                     "JOIN Accounts a ON a.account_id = c.renter_id\n" +
                     "WHERE a.account_id = ?";
+
     public List<Notification> getNotificationByOwnerId(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -136,5 +138,45 @@ public class NotificationDao {
             }
         }
         return noti;
+
+
+    public int creatNotification(int ownerId, int hostelId, String title, String content){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int notiId = -1;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                // Stop auto commit for rollback if transaction insert data have any problem
+                cn.setAutoCommit(false);
+
+                String INSERT_NOTIFICATION = "INSERT INTO [dbo].[Notifications] VALUES(?, ?, ?, ?, GETDATE())";
+
+                // Add into Accounts table
+                pst = cn.prepareStatement(INSERT_NOTIFICATION, Statement.RETURN_GENERATED_KEYS); //nhận lại các khóa được tạo tự động
+                // Return key Identity of data just inserted
+                pst.setInt(1, ownerId);
+                pst.setInt(2, hostelId);
+                pst.setString(3, title);
+                pst.setString(4,content);
+
+                if (pst.executeUpdate() > 0) {
+                    rs = pst.getGeneratedKeys();
+                    if (rs.next()) {
+                        notiId = rs.getInt(1); //  được thiết lập bằng ID được sinh tự động
+                    }
+                } else {
+                    cn.rollback();
+                }
+                cn.setAutoCommit(true);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return notiId;
+
     }
 }

@@ -25,7 +25,7 @@ public class ContractDao {
             "WHERE c.renter_id = ?";
 
     private static final String
-            GET_HOSTEL_BY_CONTRACT = "SELECT h.name, h.address, h.ward, h.district, h.city " +
+            GET_HOSTEL_BY_CONTRACT = "SELECT h.hostel_id, h.owner_account_id, h.name, h.address, h.ward, h.district, h.city " +
             "FROM Contracts c " +
             "JOIN rooms r ON c.room_id = r.room_id " +
             "JOIN hostels h ON r.hostel_id = h.hostel_id " +
@@ -60,6 +60,15 @@ public class ContractDao {
             "FROM Contracts\n" +
             "WHERE renter_id = ?";
 
+    private static final String
+            GET_CONTRACT_BY_RENTER_ID = "SELECT *\n" +
+            "FROM Contracts\n" +
+            "WHERE renter_id = ?";
+
+    private static final String ADD_AN_CONTRACT_OWNER =
+            "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status], [renter_sign])\n" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
     public Hostel getHostelByContract(int renterId){
         Connection cn = null;
         PreparedStatement pst = null;
@@ -72,6 +81,8 @@ public class ContractDao {
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
             }  if (rs != null && rs.next()) {
+                int hostel_id = rs.getInt("hostel_id");
+                int ownerid = rs.getInt("owner_account_id");
                 String hostelName = rs.getString("name");
                 String address = rs.getString("address");
                 String ward = rs.getString("ward");
@@ -84,6 +95,8 @@ public class ContractDao {
                         .ward(ward)
                         .district(district)
                         .city(city)
+                        .hostelID(hostel_id)
+                        .hostelOwnerAccountID(ownerid)
                         .build();
             }
         } catch (Exception e) {
@@ -470,4 +483,224 @@ public class ContractDao {
         }
         return contractInfor;
     }
+
+    public boolean addContractOwner(Contract contract) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                pst = cn.prepareStatement(ADD_AN_CONTRACT_OWNER);
+
+                pst.setInt(1, contract.getRoom_id());
+                pst.setDouble(2, contract.getPrice());
+                pst.setString(3, contract.getStartDate());
+                pst.setString(4, contract.getExpiration());
+                pst.setDouble(5, contract.getDeposit());
+                pst.setInt(6, contract.getHostelOwnerId());
+                pst.setInt(7, contract.getRenterId());
+                pst.setInt(8, contract.getStatus());
+                pst.setString(9, contract.getOwner_sign());
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public boolean checkAccountInContract(Contract contract) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                pst = cn.prepareStatement(ADD_AN_CONTRACT_OWNER);
+
+                pst.setInt(1, contract.getRoom_id());
+                pst.setDouble(2, contract.getPrice());
+                pst.setString(3, contract.getStartDate());
+                pst.setString(4, contract.getExpiration());
+                pst.setDouble(5, contract.getDeposit());
+                pst.setInt(6, contract.getHostelOwnerId());
+                pst.setInt(7, contract.getRenterId());
+                pst.setInt(8, contract.getStatus());
+                pst.setString(9, contract.getOwner_sign());
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public Contract getContractByUserId(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_CONTRACT_BY_RENTER_ID);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+            }  if (rs != null && rs.next()) {
+                contract = Contract.builder()
+                        .contract_id(rs.getInt("contract_id"))
+                        .room_id(rs.getInt("room_id"))
+                        .price(rs.getInt("price"))
+                        .startDate(rs.getDate("start_date").toString())
+                        .expiration(rs.getDate("expiration").toString())
+                        .deposit(rs.getInt("deposit"))
+                        .hostelOwnerId(rs.getInt("hostel_owner_id"))
+                        .renterId(rs.getInt("renter_id"))
+                        .renter_sign(rs.getString("renter_sign"))
+                        .owner_sign(rs.getString("owner_sign"))
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return contract;
+    }
+
+    public boolean addContractRenter(int contract_id, String sign) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                pst = cn.prepareStatement("Update [Contracts] set renter_sign = ? where contract_id = ?");
+                pst.setString(1, sign);
+                pst.setInt(2, contract_id);
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.codebrew.roommart.servlets.OwnerServlets.Hostel;
 
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
-import com.codebrew.roommart.dto.OwnerDTO.HandlerStatus;
+import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 
 import javax.servlet.ServletException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "UpdateHostelServlet", value = "/UpdateHostelServlet")
+@WebServlet(name = "UpdateHostelServlet", value = "/update-hostel")
 public class UpdateHostelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,6 +45,7 @@ public class UpdateHostelServlet extends HttpServlet {
                     .district(hostelDistrict)
                     .city(hostelProvince).build();
             boolean checkUpdate = dao.updateHostel(newHostel, hostelID);
+            System.out.println(checkUpdate);
             if (checkUpdate) {
                 req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)

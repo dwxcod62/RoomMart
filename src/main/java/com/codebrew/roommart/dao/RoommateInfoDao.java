@@ -3,6 +3,7 @@ package com.codebrew.roommart.dao;
 import com.codebrew.roommart.dto.Information;
 import com.codebrew.roommart.dto.RoommateInfo;
 import com.codebrew.roommart.utils.DatabaseConnector;
+import com.codebrew.roommart.utils.OwnerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,9 +64,7 @@ public class RoommateInfoDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) rs.close();
-            if (psm != null) psm.close();
-            if (conn != null) conn.close();
+            OwnerUtils.closeSQL(conn, psm, rs);
         }
         return list;
     }

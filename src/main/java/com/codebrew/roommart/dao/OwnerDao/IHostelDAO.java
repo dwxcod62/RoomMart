@@ -4,6 +4,7 @@ import com.codebrew.roommart.dto.HostelService;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IHostelDAO {
@@ -20,4 +21,10 @@ public interface IHostelDAO {
     public Hostel getHostelByRoomId(int roomId);
 
     public boolean updateHostel(Hostel hostel, int hostelID);
+
+    boolean deleteHostelById(int hostelId);
+
+    public boolean checkOwnerHostel(int accId);
+
+    public ArrayList<Integer> getListRenterIdByHostelId(int hostelId);
 }
