@@ -186,22 +186,46 @@
                                 </tr>
                                 </tbody>
                             </c:forEach>
-
                         </table>
                     </div>
                 </div>
                 <div class="content__spacer"></div>
-                <div class="row">
-                    <div class="col-12 col-md-6 content__table">
-                        <h2 class="content__infor-title">Người cho thuê</h2>
-                        <div style="text-align: center;">
-                            <img id="sig-image" src="./assets/images/system/sign.jpg" alt="Your signature will go here!" class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
+                <div class="content__infor">
+                    <div class="row">
+                        <!-- Người cho thuê -->
+                        <div class="col-12 col-sm-6">
+                            <h2 class="content__infor-title">Người cho thuê</h2>
+                            <c:choose>
+                                <c:when test="${sessionScope.USER.getRole() eq 1}">
+                                    <div style="text-align: center;">
+                                        <img id="sig-image" src="./assets/images/system/sign.jpg" alt="Your signature will go here!" class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
+                                    </div>
+                                </c:when>
+                                <c:when test="${sessionScope.USER.getRole() eq 2}">
+                                    <div style="text-align: center;">
+                                        <img src="${sessionScope.CONTRACT.getOwner_sign()}"  class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
+                                    </div>
+                                </c:when>
+                            </c:choose>
+                        </div>
+
+                        <!-- Người thuê -->
+                        <div class="col-12 col-sm-6">
+                            <h2 class="content__infor-title">Người thuê</h2>
+                            <c:choose>
+                                <c:when test="${sessionScope.USER.getRole() eq 1}">
+                                    <!-- Điền mã HTML cho trường hợp người thuê là role 1 nếu cần -->
+                                </c:when>
+                                <c:when test="${sessionScope.USER.getRole() eq 2}">
+                                    <div style="text-align: center;">
+                                        <img id="sig-image" src="./assets/images/system/sign.jpg" alt="Your signature will go here!" class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
+                                    </div>
+                                </c:when>
+                            </c:choose>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 content__table">
-                        <h2 class="content__infor-title">Người thuê</h2>
-                    </div>
                 </div>
+
                 <div class="content__spacer"></div>
                 <form action="confirm-contract" method="post" id="content__form" class="content__form">
                     <div class="form-group">
