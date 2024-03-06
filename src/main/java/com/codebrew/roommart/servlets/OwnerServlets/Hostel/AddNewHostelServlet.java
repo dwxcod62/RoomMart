@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AddNewHostelServlet", value = "/add-new-hostel")
+@WebServlet(name = "AddNewHostelServlet", value = "/add-new-hostel-v1")
 public class AddNewHostelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,7 +49,7 @@ public class AddNewHostelServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at AddHostel: " + e.toString());
         } finally {
-            response.sendRedirect("owner-hostel-list");
+            req.getRequestDispatcher("hostel-page").forward(req, response);
         }
     }
 }

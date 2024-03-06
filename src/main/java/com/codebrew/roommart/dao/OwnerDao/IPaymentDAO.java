@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IPaymentDAO {
     public List<Payment> getPaymentList();
+    public boolean updateBillStatus(int billID, int paymentID);
 }
