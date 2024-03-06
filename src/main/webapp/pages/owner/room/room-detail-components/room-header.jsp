@@ -228,10 +228,10 @@
             <!-- End update room information button -->
         </c:if>
 
-<%--        <c:set var="consumeThisMonth" value="${requestScope.consumeListThisMonth}"/>--%>
-<%--        <c:set var="consumeBeginMonth"--%>
-<%--               value="${consumeThisMonth.get(consumeThisMonth.size() - 1)}"/>--%>
-<%--        <c:set var="consumeEndMonth" value="${consumeThisMonth.get(0)}"/>--%>
+        <c:set var="consumeThisMonth" value="${requestScope.consumeListThisMonth}"/>
+        <c:set var="consumeBeginMonth"
+               value="${consumeThisMonth.get(consumeThisMonth.size() - 1)}"/>
+        <c:set var="consumeEndMonth" value="${consumeThisMonth.get(0)}"/>
 
         <c:choose>
             <c:when test="${sessionScope.room.roomStatus eq 1}">
