@@ -48,6 +48,8 @@ public class CalculateTotalCostServlet extends HttpServlet {
 
             String billTitle = null;
 
+            System.out.println(contract.getStartDate());
+
             if (new BillDao().getBillTitle(roomId, contract.getStartDate()) != null) {
                 String billTitleOld = new BillDao().getBillTitle(roomId, contract.getStartDate());
                 String month = billTitleOld.split("/")[0];
@@ -64,6 +66,8 @@ public class CalculateTotalCostServlet extends HttpServlet {
                         YearMonth.from(LocalDate.parse(consumeDateStart)),
                         YearMonth.from(LocalDate.parse(consumeDateEnd)));
 
+                System.out.println(monthsBetween);
+
                 if (monthsBetween == 0) {
                     String month = consumeDateEnd.split("-")[1];
                     String year = consumeDateEnd.split("-")[0];
@@ -79,6 +83,7 @@ public class CalculateTotalCostServlet extends HttpServlet {
                     billTitle = monthInteger + "/" + year;
                 }
             }
+            System.out.println(billTitle);
             request.setAttribute("billTitle", billTitle);
             List<ServiceInfo> serviceInfo = new ServiceInfoDAO().getServicesOfHostel(hostelID);
             request.setAttribute("serviceInfo", serviceInfo);
@@ -144,20 +149,20 @@ public class CalculateTotalCostServlet extends HttpServlet {
                     consumeIDStart, consumeIDEnd, accHostelOwnerID, accountRenterId, numberLastElectric, numberLastWater, listHostelServiceID);
 
             if (isInserted) {
-                url = "ownerRoomDetail?roomID=" + roomId + "&hostelID=" + hostelID;
+                url = "owner-get-invoice-list";
                 String renterMail = renterAccount.getAccountInfo().getInformation().getEmail();
                 new EmailUtils().sendMailNewBill(renterMail, billTitle);
                 handlerStatus = HandlerStatus.builder().status(true).content("Tạo hóa đơn thành công").build();
                 request.setAttribute("CREATE_BILL_MSG", handlerStatus);
                 request.setAttribute("roomID", roomId);
                 request.setAttribute("RENTER_ID", accountRenterId);
-                request.getRequestDispatcher(url).forward(request, response);
             } else {
                 url = "list-hostels";
-                request.getRequestDispatcher(url).forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }

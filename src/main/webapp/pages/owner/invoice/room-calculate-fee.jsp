@@ -152,7 +152,13 @@
                                                     </td>
 
                                                     <c:set var="totalCost" value="${totalCost + service.servicePrice * quantity}" />
-                                                    <td><fmt:formatNumber value="${service.servicePrice * quantity}" type="currency" /></td>
+                                                    <td>
+                                                        <fmt:formatNumber
+                                                            value="${service.servicePrice * quantity}"
+                                                            type="currency"
+                                                            currencySymbol="VNĐ"
+                                                        />
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                             <tr>
