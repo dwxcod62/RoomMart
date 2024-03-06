@@ -9,7 +9,7 @@
         <div class="navbar-center"></div>
         <div class="navbar-icons">
             <div class="notification-icon">
-                <div class="number">10</div>
+                <div class="number">!</div>
                 <i class='bx bx-message-rounded-dots icon'></i>
                 <div class="box-chat">
                         <div class="box-chat_content">

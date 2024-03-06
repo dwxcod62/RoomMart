@@ -40,8 +40,8 @@ nav .navbar .navbar-icons .notification-icon {
 
 nav .navbar .navbar-icons .notification-icon .number {
     font-size: 12px;
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
     background-color: #d63031;
     border-radius: 50%;
     color: white;
@@ -308,6 +308,7 @@ body {
     margin: 0;
     min-height: 100vh;
 }
+
 .content .table-content {
     width: 100%;
     padding-top: 80px;
