@@ -19,13 +19,14 @@ public class ShowListAccountServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
 // Get all account not only Owner
+            // Xem loi o dau
            List<Account> list = accountDao.GetAccountsBy2Role(1,2);
 //            List<Account> list = accountDao.GetAccountsByRole(1);
 
             request.setAttribute("OWNER_LIST", list);
             session.setAttribute("CURRENT_PAGE", "account");
         } catch (Exception e){
-            log("Error at ShowListOwnerAccountServlet: " + e.toString());
+            log("Error at ShowListAccountServlet: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request,response);
         }

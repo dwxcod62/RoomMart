@@ -57,6 +57,7 @@
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Inactive Account -->
+                <!-- Chi duyet Onner-->
                 <div class="row mt-5">
                     <div class="uncheck-acc col-12 col-xl-10 col-xxl-8 m-auto">
                         <div class="uncheck-acc__title">
