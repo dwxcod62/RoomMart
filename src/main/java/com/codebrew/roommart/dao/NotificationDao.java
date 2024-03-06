@@ -138,7 +138,7 @@ public class NotificationDao {
             }
         }
         return noti;
-
+    }
 
     public int creatNotification(int ownerId, int hostelId, String title, String content){
         Connection cn = null;
@@ -177,6 +177,5 @@ public class NotificationDao {
             OwnerUtils.closeSQL(cn, pst, rs);
         }
         return notiId;
-
     }
 }
