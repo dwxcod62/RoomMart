@@ -50,6 +50,11 @@
     <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3a77c7a9.msvbds.FrontEnd.GAMBannerViewer.min.js" async="" data-cfasync="false"></script>
     <script type="text/javascript" src="assets/sys-css/staticfile.batdongsan.com.vn/js/Origins/Binnova/filestatic.ver3.msvbds.FrontEnd.GAMBannerScript.min.js" async="" data-cfasync="false"></script>
 
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+    <%--    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">--%>
+    <%--    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">--%>
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
 
     <!-- CSS Push Notification -->
@@ -73,7 +78,7 @@
 
 
     <!-- Navbar -->
-    <%@include file="../../pages/hostel-owner/components/navbar.jsp"%>
+    <%@include file="../home/components/navbar.jsp"%>
 </div>
 
 
@@ -435,7 +440,7 @@
 
             </div>
         </div>
-        <%@include file="../../pages/hostel-owner/components/footer.jsp"%>
+        <%@include file="../home/components/footer.jsp"%>
         <!-- Push notification element -->
         <div id="push-noti"></div>
         <!-- end product-detail-->
@@ -496,7 +501,41 @@
 </script>
 <!-- Loader -->
 <script src="assets/js/loading-handler.js"></script>
+<script>
 
+
+    document.addEventListener("click", function(event) {
+        console.log("click"); // Log "click" to the console
+        var navDropdown = document.getElementById("nav-profile-dropdown"); // Get the dropdown menu element
+        navDropdown.style.textDecoration = "black";
+        var button = document.getElementById("nav-profile-btn"); // Get the button element
+        console.log("event target:", event.target);
+        var target = event.target;
+        var parent = target.parentNode.parentNode; // Get the parent element of the target
+        var parent2 = parent.parentNode;
+        console.log("Parent element:", parent);
+        console.log(button);
+
+        // Check if the clicked element is the button
+        if (parent === button || parent2 == button) {
+            console.log("click button"); // Log "click button" to the console
+            // Toggle the display of the dropdown menu
+            if (navDropdown.style.display == "block") {
+                navDropdown.style.display = "none"; // If currently displayed, hide the dropdown menu
+            } else {
+                console.log("block")
+                navDropdown.style.display = "block"; // If hidden, display the dropdown menu
+            }
+        }
+
+        // Check if the clicked element is neither the button nor the dropdown menu
+        if (parent !== button) {
+            navDropdown.style.display = "none"; // Hide the dropdown menu
+        }
+    });
+
+
+</script>
 </body>
 
 </html>

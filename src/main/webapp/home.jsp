@@ -41,11 +41,11 @@
 
     <%-- link local css   --%>
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
-    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
-    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
-
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
+    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
 
 </head>
 
@@ -72,7 +72,7 @@
         <%@include file="pages/home/components/navbar.jsp"%>
     </div>
 </div>
-<div class="re__main">
+<div class="re__main" style="min-height: 100vh;">
     <div class="re__home">
         <!-- ok -->
         <div class="re__content-block re__home__head-block">
