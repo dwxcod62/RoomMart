@@ -1,3 +1,4 @@
+<%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,7 +17,7 @@
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-view-list-invoice.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-bill.css">
 
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
@@ -25,9 +26,9 @@
 </head>
 
 <body>
-<%--<%--%>
-<%--  Account account = (Account) session.getAttribute("USER");--%>
-<%--%>--%>
+<%
+  Account account = (Account) session.getAttribute("USER");
+%>
 <div>
     <%@include file="component/navbar.jsp"%>
 
@@ -51,7 +52,7 @@
                     <c:forEach var="bL" items="${BILL_LIST}">
                         <fmt:parseDate pattern="yyyy-MM-dd" value="${bL.createdDate}" var="createdDate"/>
                         <tr>
-                            <td style="height: 22px;"><a href="RenterBill?billID=${bL.billID}"> #${bL.billID} </a></td>
+                            <td style="height: 22px;"><a href="RenterPayment?billID=${bL.billID}"> #${bL.billID} </a></td>
                             <td style="height: 22px;"><fmt:formatDate value="${createdDate}" type="Date"
                                                                       pattern="dd-MM-yyyy"/></td>
                             <td style="height: 22px;"><fmt:setLocale value="vi_VN"/>
@@ -105,6 +106,11 @@
     window.onbeforeunload = function(){
         receiveWebsocket.disconnectWebSocket();
     };
+</script>
+
+<script>
+    var currentPage = window.location.pathname.split("/").pop().split(".")[0];
+    document.getElementById(currentPage).classList.add("active");
 </script>
 
 </body>

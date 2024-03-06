@@ -7,13 +7,22 @@ import com.codebrew.roommart.utils.OwnerUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationDao {
     private static final String GET_NOTIFICATION_BY_OWNER_ID =
-            "SELECT * FROM Notifications WHERE hostel_owner_account_id = ?";
+            "SELECT notification_id, title, content, create_date, hostel_id \n" +
+                    "FROM Notifications WHERE hostel_owner_account_id = ?";
+    private static final String GET_NOTIFICATION_BY_RENTER_ID =
+            "SELECT n.title, n.content, n.create_date\n" +
+                    "FROM Notifications n\n" +
+                    "JOIN Rooms r ON n.hostel_id = r.hostel_id\n" +
+                    "JOIN Contracts c ON r.room_id = c.room_id\n" +
+                    "JOIN Accounts a ON a.account_id = c.renter_id\n" +
+                    "WHERE a.account_id = ?";
 
     public List<Notification> getNotificationByOwnerId(int accId) {
         Connection cn = null;
@@ -88,6 +97,48 @@ public class NotificationDao {
         }
         return noti;
     }
+    public List<Notification> getNotificationByRenterId(int accId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        List<Notification> noti = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_NOTIFICATION_BY_RENTER_ID);
+                pst.setInt(1, accId);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    String title = rs.getString("title");
+                    String content = rs.getString("content");
+                    String createDate = rs.getString("create_date");
+                    noti.add(Notification
+                            .builder()
+                            .title(title)
+                            .content(content)
+                            .createDate(createDate)
+                            .build());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return noti;
+
 
     public int creatNotification(int ownerId, int hostelId, String title, String content){
         Connection cn = null;
@@ -126,5 +177,6 @@ public class NotificationDao {
             OwnerUtils.closeSQL(cn, pst, rs);
         }
         return notiId;
+
     }
 }
