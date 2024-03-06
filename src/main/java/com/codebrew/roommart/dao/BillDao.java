@@ -19,7 +19,8 @@ public class BillDao {
                 "b.expired_payment_date, b.payment_date, b.status, b.payment_id, b.room_id\n" +
                 "FROM Bill b\n" +
                 "INNER JOIN Contracts c ON b.room_id = c.room_id\n" +
-                "WHERE c.renter_id = ?";
+                "WHERE c.renter_id = ?\n" +
+                "ORDER BY b.created_date DESC";
 
     private static final String GET_BILL_DETAIL =
             "SELECT bill_detail_id, consumeIDStart, consumeIDEnd, " +
@@ -33,8 +34,6 @@ public class BillDao {
                     "FROM Bill\n" +
                     "WHERE bill_id = ?";
 
-
-    
     private static final String INSERT_NEW_BILL = "INSERT INTO Bill (total_money, created_date, bill_title, expired_payment_date, status, payment_id, room_id)\n" +
             "VALUES (?, GETDATE(), ?, ?, 0, NULL, ?)";
     private static final String INSERT_NEW_BILL_DETAIL = "INSERT INTO BillDetail (consumeIDStart, consumeIDEnd, accountHostelOwnerID, accountRenterID, bill_id)\n" +

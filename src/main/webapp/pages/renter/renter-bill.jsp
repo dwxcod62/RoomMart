@@ -48,7 +48,6 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     <c:forEach var="bL" items="${BILL_LIST}">
                         <fmt:parseDate pattern="yyyy-MM-dd" value="${bL.createdDate}" var="createdDate"/>
                         <tr>
