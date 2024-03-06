@@ -5,6 +5,7 @@ import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.dto.OwnerDTO.Bill;
 import com.codebrew.roommart.dto.OwnerDTO.BillDetail;
 import com.codebrew.roommart.dto.OwnerDTO.Consume;
+import com.codebrew.roommart.utils.Decorations;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,6 +19,17 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
     private static final String ERROR = "renter-Payment";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            try {
+                Load_Renter_Payment(request, response);
+            } catch (ServletException | IOException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }, "GetRenterBillPaymentServlet");
+    }
+
+    protected void Load_Renter_Payment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
         try {
             HttpSession session = request.getSession();
@@ -37,6 +49,7 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
 
             if (bill != null){
                 request.setAttribute("BILL", bill);
+
                 //get number electric and water
                 int consumeIDStart = billDetail.getConsumeIDStart();
                 int consumeIDEnd = billDetail.getConsumeIDEnd();
@@ -44,8 +57,6 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
                 Consume consumeEnd = new ConsumeDao().getConsumeByID(consumeIDEnd);
                 request.setAttribute("CONSUME_START", consumeStart);
                 request.setAttribute("CONSUME_END", consumeEnd);
-                System.out.println(consumeStart);
-                System.out.println(consumeEnd);
 
                 url = SUCCESS;
             }

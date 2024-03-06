@@ -102,7 +102,10 @@
                             <c:forEach var="service" items="${LIST_SERVICES}">
                                 <tr>
                                     <td>${service.serviceName}</td>
-                                    <td>${service.servicePrice}</td>
+                                    <td>
+                                        <fmt:setLocale value="vi_VN"/>
+                                        <fmt:formatNumber value="${service.servicePrice}"/>
+                                    </td>
                                     <td>${service.unit}</td>
                                     <td>
                                         <c:choose>
@@ -112,7 +115,6 @@
                                             <c:when test="${service.serviceName=='Nước'}">
                                                 ${CONSUME_START.numberWater}
                                             </c:when>
-                                            <c:otherwise>1</c:otherwise>
                                         </c:choose>
                                     </td>
                                     <td>
@@ -123,13 +125,26 @@
                                             <c:when test="${service.serviceName=='Nước'}">
                                                 ${CONSUME_END.numberWater}
                                             </c:when>
-                                            <c:otherwise>1</c:otherwise>
                                         </c:choose>
                                     </td>
                                     <td>
-                                        <fmt:setLocale value="vi_VN"/>
-                                        <fmt:formatNumber
-                                                value="${(CONSUME_END.numberElectric - CONSUME_START.numberElectric)*service.servicePrice}"/>
+                                        <c:choose>
+                                            <c:when test="${service.serviceName=='Điện'}">
+                                                <fmt:setLocale value="vi_VN"/>
+                                                <fmt:formatNumber
+                                                        value="${(CONSUME_END.numberElectric - CONSUME_START.numberElectric)*service.servicePrice}"/>
+                                            </c:when>
+                                            <c:when test="${service.serviceName=='Nước'}">
+                                                <fmt:setLocale value="vi_VN"/>
+                                                <fmt:formatNumber
+                                                        value="${(CONSUME_END.numberWater - CONSUME_START.numberWater)*service.servicePrice}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <fmt:setLocale value="vi_VN"/>
+                                                <fmt:formatNumber
+                                                        value="${service.servicePrice}"/>
+                                            </c:otherwise>
+                                        </c:choose>
                                    </td>
                                 </tr>
                             </c:forEach>
@@ -139,16 +154,21 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>5.350.000</td>
+                                <td><fmt:formatNumber value="${BILL.totalMoney}"/></td>
                             </tr>
                             </tbody>
                         </table>
                         <a href="" class="btn btn-outline-success btn-lg float-left mt-4">
                             Xuất hóa đơn ra file Excel
                         </a>
-                        <a href="" class="btn btn-outline-danger btn-lg float-right mt-4">
-                            Thanh toán
-                        </a>
+                        <c:if test="${BILL.payment.paymentID == 0}">
+                            <form>
+                                <button type="submit" id="payment-button"
+                                        class="btn btn-outline-danger btn-lg float-right mt-4">
+                                    Thanh Toán
+                                </button>
+                            </form>
+                        </c:if>
                         <div class="clearfix"></div>
                         <a href="RenterBill" class="btn btn-outline-dark btn-lg float-left mt-3 mb-5">
                             Quay lại
