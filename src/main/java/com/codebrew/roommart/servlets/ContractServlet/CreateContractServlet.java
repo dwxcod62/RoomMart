@@ -71,7 +71,7 @@ public class CreateContractServlet extends HttpServlet {
                             int roomWater = Integer.parseInt(req.getParameter("room-water"));
 
                             if (informationDao.isExistEmail(email)) {
-                                if (  ( (int) AccountDao.getRoomOfRenter(email)) == 0){
+                                    if (  ( (int) new AccountDao().getRoomOfRenter(email)) == 0){
                                     url = SUCCESS;
 
                                     Information _renter_info = new InformationDao().getAccountInformationByEmail(email);
