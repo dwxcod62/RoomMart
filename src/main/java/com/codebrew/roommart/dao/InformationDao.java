@@ -224,7 +224,7 @@ public class InformationDao {
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
-                    inf = Information.builder()
+                    inf = Information.builder().account_id(rs.getInt("account_id"))
                             .fullname(fullname)
                             .email(email)
                             .birthday(birthday)

@@ -1,6 +1,7 @@
 package com.codebrew.roommart.servlets.ContractServlet;
 
 import com.codebrew.roommart.dao.ContractDao;
+import com.codebrew.roommart.dao.InformationDao;
 import com.codebrew.roommart.dao.RoomDao;
 import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.utils.Decorations;
@@ -38,18 +39,29 @@ public class ConfirmContractServlet extends HttpServlet {
 
     private void confirm_contract_renter(HttpServletRequest req, HttpServletResponse res) throws Exception{
         HttpSession session = req.getSession();
-
+        String url = "error";
         try {
             String data = req.getParameter("data");
             String decode_data = EncodeUtils.decodeString(data);
+            RoomDao roomDao = new RoomDao();
+            ContractDao contractDao = new ContractDao();
 
             Account acc = (Account) session.getAttribute("USER");
             if ( acc != null ){
                 if (Objects.equals(acc.getAccountInfo().getInformation().getEmail(), decode_data)){
+                    int room_status = roomDao.getRoomStatusByContractAndEmail(decode_data);
+                    if (room_status == -1){
+                        Contract c = contractDao.getContractByRenterId(acc.getAccId());
 
 
 
 
+
+                    } else {
+
+                    }
+                } else {
+                    url = "denied";
                 }
             } else {
 
