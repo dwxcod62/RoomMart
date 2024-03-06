@@ -1465,7 +1465,6 @@ public List<String>getListImgByRoomId(int rid){
         }
         return room_area;
     }
-
 }
 
 

@@ -52,7 +52,7 @@
                     <c:forEach var="bL" items="${BILL_LIST}">
                         <fmt:parseDate pattern="yyyy-MM-dd" value="${bL.createdDate}" var="createdDate"/>
                         <tr>
-                            <td style="height: 22px;"><a href="RenterBill?billID=${bL.billID}"> #${bL.billID} </a></td>
+                            <td style="height: 22px;"><a href="RenterPayment?billID=${bL.billID}"> #${bL.billID} </a></td>
                             <td style="height: 22px;"><fmt:formatDate value="${createdDate}" type="Date"
                                                                       pattern="dd-MM-yyyy"/></td>
                             <td style="height: 22px;"><fmt:setLocale value="vi_VN"/>

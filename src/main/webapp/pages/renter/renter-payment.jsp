@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -40,21 +41,47 @@
                         <div class="invoice-board_Detail">
                             <div class="float-left">
                                 <p class="mb-2">
-                                    <span class="fw-medium">Hóa đơn số: </span>
+                                    <span class="fw-medium">Hóa đơn số:
+                                        <span class="fw-normal">
+                                            #${BILL.billID}
+                                        </span>
+                                    </span>
                                 </p>
                                 <p class="mb-2">
-                                    <span class="fw-medium">Phòng số: </span>
+                                    <span class="fw-medium">Phòng số:
+                                        <span class="fw-normal">
+                                            ${RoomInfor.roomNumber}
+                                        </span>
+                                    </span>
                                 </p>
                                 <p class="mb-2">
-                                    <span class="fw-medium">Tình trạng: </span>
+                                    <span class="fw-medium">Tình trạng:
+                                        <c:if test="${BILL.status != 1}">
+                                            <span style="color: red">Chưa thanh toán</span>
+                                        </c:if>
+                                        <c:if test="${BILL.status == 1}">
+                                            <span style="color: green">Đã thanh toán</span>
+                                        </c:if>
+                                    </span>
                                 </p>
                             </div>
                             <div class="float-right">
                                 <p class="mb-2">
-                                    <span class="fw-medium">Ngày tạo hóa đơn: </span>
+                                    <span class="fw-medium">
+                                        Ngày tạo hóa đơn:
+                                        <span class="fw-normal">
+                                            <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate"/>
+                                            <fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/>
+                                        </span>
+                                    </span>
                                 </p>
                                 <p class="mb-2">
-                                    <span class="fw-medium">Hạn thanh toán: </span>
+                                    <span class="fw-medium">Hạn thanh toán:
+                                         <span class="fw-normal">
+                                             <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.expiredPaymentDate}" var="expiredPaymentDate"/>
+                                            <fmt:formatDate value="${expiredPaymentDate}" type="Date" pattern="dd-MM-yyyy"/>
+                                        </span>
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -72,14 +99,40 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Điện</td>
-                                <td>3.500</td>
-                                <td>Kwh</td>
-                                <td>150</td>
-                                <td>350</td>
-                                <td>350.000</td>
-                            </tr>
+                            <c:forEach var="service" items="${LIST_SERVICES}">
+                                <tr>
+                                    <td>${service.serviceName}</td>
+                                    <td>${service.servicePrice}</td>
+                                    <td>${service.unit}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${service.serviceName=='Điện'}">
+                                                ${CONSUME_START.numberElectric}
+                                            </c:when>
+                                            <c:when test="${service.serviceName=='Nước'}">
+                                                ${CONSUME_START.numberWater}
+                                            </c:when>
+                                            <c:otherwise>1</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${service.serviceName=='Điện'}">
+                                                ${CONSUME_END.numberElectric}
+                                            </c:when>
+                                            <c:when test="${service.serviceName=='Nước'}">
+                                                ${CONSUME_END.numberWater}
+                                            </c:when>
+                                            <c:otherwise>1</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>
+                                        <fmt:setLocale value="vi_VN"/>
+                                        <fmt:formatNumber
+                                                value="${(CONSUME_END.numberElectric - CONSUME_START.numberElectric)*service.servicePrice}"/>
+                                   </td>
+                                </tr>
+                            </c:forEach>
                             <tr>
                                 <td>Tổng tiền</td>
                                 <td></td>
