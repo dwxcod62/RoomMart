@@ -1469,6 +1469,7 @@ public List<String>getListImgByRoomId(int rid){
         return room_area;
     }
 
+
     public boolean updateRoomStatus(int room_id,int status){
         boolean st = false;
         Connection cn = null;

@@ -1,6 +1,7 @@
 package com.codebrew.roommart.dao;
 
 import com.codebrew.roommart.dto.OwnerDTO.Bill;
+import com.codebrew.roommart.dto.OwnerDTO.BillDetail;
 import com.codebrew.roommart.dto.Payment;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
@@ -21,6 +22,16 @@ public class BillDao {
                 "FROM Bill b\n" +
                 "INNER JOIN Contracts c ON b.room_id = c.room_id\n" +
                 "WHERE c.renter_id = ?";
+    private static final String GET_BILL_DETAIL =
+            "SELECT bill_detail_id, consumeIDStart, consumeIDEnd, " +
+                "accountHostelOwnerID, accountRenterID\n" +
+                "FROM BillDetail\n" +
+                "WHERE bill_id = ?";
+    private static final String GET_RENTER_BILL_BY_ID =
+            "SELECT bill_id, total_money, created_date, bill_title, " +
+                    "expired_payment_date, payment_date, status, payment_id, room_id\n" +
+                    "FROM Bill\n" +
+                    "WHERE bill_id = ?";
     public List<Bill> getBllListByRenterID(int renterID) throws SQLException {
         List<Bill> billList = new ArrayList<>();
         Connection cn = null;
@@ -75,5 +86,109 @@ public class BillDao {
             }
         }
         return billList;
+    }
+
+    public BillDetail getBillDetail(int billID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        BillDetail billDetail = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_BILL_DETAIL);
+                pst.setInt(1, billID);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int billDetailID = rs.getInt("bill_detail_id");
+                    int consumeIDStart = rs.getInt("consumeIDStart");
+                    int consumeIDEnd = rs.getInt("consumeIDEnd");
+                    int accountHostelOwnerID = rs.getInt("accountHostelOwnerID");
+                    int accountRenterID = rs.getInt("accountRenterID");
+                    billDetail = new BillDetail(billDetailID, consumeIDStart, consumeIDEnd, accountHostelOwnerID, accountRenterID);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return billDetail;
+    }
+
+    public Bill getRenterBillByID(int billID) throws SQLException {
+        Bill bill = null;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            cn = DatabaseConnector.makeConnection();
+            ptm = cn.prepareStatement(GET_RENTER_BILL_BY_ID);
+            ptm.setInt(1, billID);
+            rs = ptm.executeQuery();
+            if (rs != null && rs.next()) {
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                java.sql.Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return bill;
     }
 }

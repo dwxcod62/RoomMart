@@ -34,7 +34,15 @@ public class ServiceInfoDAO {
                     "    S.unit;";
     private static final String GET_ALL_SERVICES =
             "SELECT * FROM Services\n";
-
+    private static final String GET_SERVICES_OF_BILL=
+            "SELECT hs.hostel_service_id, hs.service_id, " +
+            "s.service_name, hs.valid_date, hs.service_price, s.unit\n" +
+            "FROM HostelService hs\n" +
+            "JOIN Services s ON hs.service_id = s.service_id\n" +
+            "WHERE hs.hostel_id = ? AND hs.hostel_service_id IN " +
+                "(SELECT hostel_service_id\n" +
+                "FROM BillService\n" +
+                "WHERE bill_detail_id = ?)";
     public List<Services> getAllServices() {
 //        System.out.println(GET_SERVICES_OF_HOSTEL);
         System.out.println("getAllServices");
@@ -107,6 +115,59 @@ public class ServiceInfoDAO {
                         int servicePrice = rs.getInt("service_price");
                         String unit = rs.getString("unit");
                         String validDate = rs.getString("valid_date")!=null?rs.getString("valid_date"):"null";
+                        servicesList.add(new ServiceInfo(hostelServiceId, hostelID, serviceID, serviceName, validDate, servicePrice, unit));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return servicesList;
+    }
+
+    public List<ServiceInfo> getServiceOfBill(int billDetailID, int hostelID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<ServiceInfo> servicesList = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_SERVICES_OF_BILL);
+                pst.setInt(1, hostelID);
+                pst.setInt(2, billDetailID);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int hostelServiceId = rs.getInt("hostel_service_id");
+                        int serviceID = rs.getInt("service_id");
+                        String serviceName = rs.getString("service_name");
+                        int servicePrice = rs.getInt("service_price");
+                        String unit = rs.getString("unit");
+                        String validDate = rs.getString("valid_date");
                         servicesList.add(new ServiceInfo(hostelServiceId, hostelID, serviceID, serviceName, validDate, servicePrice, unit));
                     }
                 }
