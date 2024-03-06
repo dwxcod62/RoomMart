@@ -58,7 +58,7 @@
                         </th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                             colspan="1" aria-label="Nội dung: activate to sort column ascending"
-                            style="width: 379.32px;" data-orderable="false">Nội dung</th>
+                            data-orderable="false">Nội dung</th>
                         <th class="text-center sorting" aria-controls="notification-table" rowspan="1" colspan="1"
                             aria-label="Ngày gửi: activate to sort column ascending" style="width: 130px;"
                             data-orderable="false">Ngày gửi</th>
