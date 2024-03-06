@@ -1,3 +1,4 @@
+<%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -25,15 +26,14 @@
 </head>
 
 <body>
-<%--<%--%>
-<%--    Account account = (Account) session.getAttribute("USER");--%>
-<%--%>--%>
+<%
+    Account account = (Account) session.getAttribute("USER");
+%>
 <div>
     <!-- navbar -->
-
+    <%@include file="component/navbar.jsp" %>
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
-        <%@include file="component/navbar.jsp" %>
         <%@include file="component/sidebar.jsp" %>
 
         <div class="content row">

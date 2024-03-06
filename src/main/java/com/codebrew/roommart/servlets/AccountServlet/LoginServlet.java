@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void login(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        String url = "loginPage";
+        String url = "login-page";
         AccountDao accountDAO = new AccountDao();
         String username = req.getParameter("txtemail");
         String password = new EncodeUtils().hashMd5(req.getParameter("txtpassword"));
@@ -54,6 +54,7 @@ public class LoginServlet extends HttpServlet {
 //                        accountDAO.updateTokenByUserName(token, username);
                     }
                 }
+
                 session.setAttribute("CURRENT_PAGE", "dashboard");
             }else if (account != null && account.getStatus() == -1){
                 req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()

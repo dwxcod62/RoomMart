@@ -43,6 +43,8 @@ nav .user-menu {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: none;
+  width: 300px;
+  height: 250px;
 }
 
 nav .user-menu.active {
@@ -276,8 +278,9 @@ footer {
 }
 
 body {
-  font-size: 20px;
+  font-size: 17px;
   overflow-x: hidden;
+  min-height: calc(100vh - 80px);
 }
 
 .dashboard {
@@ -288,126 +291,91 @@ body {
   display: none;
 }
 
+.main-body {
+  padding: 0;
+  margin: 0;
+}
+
 .content {
   width: 80%;
-  margin: 0;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
+  row-gap: 20px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.content .hidden_notification {
-  display: none;
+
+.content .cardUser {
+  margin-bottom: 150px;
 }
-.content .display_notification {
-  position: absolute;
-  display: inline-block;
-  font-size: 18px;
-  width: fit-content;
-  padding: 20px 15px;
-  border-radius: 4px;
-  background-color: #141619;
-  color: #f6f5f9;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
-  transform: translateY(30px);
-  opacity: 0;
-  visibility: hidden;
-  animation: fade 4s linear forwards;
-  right: 5px;
-  top: 5px;
+
+.content .cardUser .cardInside {
+  border-radius: 10px;
+  -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+  box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+  border: 1px solid #e0e0e0;
+  margin-left: 0px;
+  margin-right: 0px;
 }
-.content .progress {
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
-  width: 0;
-  height: 3px;
-  background-image: linear-gradient(to right, #529bdb, #3250bf);
-  border-radius: 4px;
-  animation: progress 3s 0.25s linear forwards;
+
+/*.cardInside .card-blockImg {*/
+/*  padding: 20px 0;*/
+/*  border-radius: 10px 0 0 10px;*/
+/*}*/
+
+/*.card-blockImg .userImg {*/
+/*  margin-bottom: 25px;*/
+/*}*/
+
+/*.card-blockImg .userImg img{*/
+/*  max-width: 70%;*/
+/*  max-height: 70%;*/
+/*  border-radius: 50%;*/
+/*}*/
+
+/*.card-blockImg i {*/
+/*  font-size: 24px;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.cardInside .card-blockImg {*/
+/*  padding: 20px 0;*/
+/*  background: #8CC247;*/
+/*}*/
+
+.cardInside .card-blockInfo {
+  padding: 15px 0 0 10px;
 }
-@keyframes fade {
-  5% {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(0px);
-  }
-  90% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  95% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
+
+.card-blockInfo .infoHeader {
+  border-bottom: 1px solid #e0e0e0;
+  margin: 0 5px 15px 5px;
+  display: flex;
+  justify-content: space-between;
 }
-@keyframes progress {
-  to {
-    width: calc(100% - 10px);
-  }
-}
-.content .profile {
-  width: 50%;
-  margin: 100px auto;
-  padding: 20px 30px 20px 30px;
-  color: #000000;
-  height: fit-content;
-  border-radius: 8px;
-  border: 1px solid gray;
-}
-.content .profile h2 {
-  margin-bottom: 10px;
-  font-size: 1.6em;
-  width: 100%;
-  line-height: 40px;
-  display: block;
-  text-align: center;
-}
-.content .profile h3 {
-  text-align: left;
-  margin: 5px;
-  display: block;
-  font-size: 24px;
-  width: 100%;
-  font-weight: 400;
-  line-height: 40px;
-}
-.content .profile h3 span {
-  font-weight: 500;
-}
-.content .profile a {
-  text-decoration: none;
+
+.card-blockInfo .infoHeader h2 {
+  font-weight: 600;
   font-size: 22px;
-  border-radius: 8px;
-  width: 130px;
-  background-color: blue;
-  color: #FFFFFF;
-  padding: 10px;
-  line-height: 22px;
-  margin: 15px auto;
+}
+
+.card-blockInfo .infoHeader a {
+  padding-top: 5px;
+}
+
+.card-blockInfo .infoHeader h5 {
   font-weight: 400;
-  display: block;
-  text-align: center;
 }
 
-@media screen and (max-width: 1024px) {
-  .content {
-    width: 100%;
-    padding: 0;
-    min-height: calc(100vh - 80px);
-  }
-  .content .profile {
-    width: 80%;
-  }
-  .dashboard {
-    display: none;
-  }
-  .dropdown {
-    display: block;
-    padding: 0;
-    width: fit-content;
-    height: fit-content;
-  }
+.card-blockInfo .infoDetail {
+  margin-bottom: 10px;
 }
 
-/*# sourceMappingURL=Renter-profile.css.map */
+.card-blockInfo .infoDetail h5 {
+  font-weight: 600;
+}
+
+.card-blockInfo .infoDetail h3 {
+  font-weight: 400;
+}
