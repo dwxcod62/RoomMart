@@ -11,6 +11,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BillDAO implements IBillDAO {
     @Override
@@ -295,5 +296,51 @@ public class BillDAO implements IBillDAO {
             OwnerUtils.closeSQL(cn, ptm, rs);
         }
         return listBill;
+    }
+
+    @Override
+    public List<Bill> getListBillByRoomID(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Bill> bills = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "\n" +
+                        "SELECT bill_id, total_money, created_date, bill_title, expired_payment_date, payment_date, status, payment_id\n" +
+                        "FROM Bill\n" +
+                        "WHERE room_id = ?\n" +
+                        "ORDER BY created_date DESC";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int billID = rs.getInt("bill_id");
+                        int totalMoney = rs.getInt("total_money");
+                        String createdDate = rs.getString("created_date");
+                        String billTitle = rs.getString("bill_title");
+                        String expiredPaymentDate = rs.getString("expired_payment_date");
+                        String paymentDate = rs.getString("payment_date");
+                        int status = rs.getInt("status");
+                        if (rs.getString("payment_id") == null) {
+                            bills.add(new Bill(billID, roomID, totalMoney, createdDate, billTitle, expiredPaymentDate, paymentDate, status, new Payment(0, null)));
+                        } else {
+                            int paymentID = rs.getInt("payment_id");
+                            String paymentName = getPaymentName(paymentID);
+                            bills.add(new Bill(billID, roomID, totalMoney, createdDate, billTitle, expiredPaymentDate, paymentDate, status, new Payment(paymentID, paymentName)));
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, rs);
+        }
+        return bills;
     }
 }

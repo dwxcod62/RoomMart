@@ -4,6 +4,7 @@ import com.codebrew.roommart.dto.OwnerDTO.Bill;
 import com.codebrew.roommart.dto.OwnerDTO.BillDetail;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IBillDAO {
     public Bill getLastBill(int roomID);
@@ -13,4 +14,6 @@ public interface IBillDAO {
 
     public Bill getBillByID(int billID);
     public ArrayList<Bill> GetListBillByHostelYearQuater(String hostelName,  String year, String quatertmp);
+
+    public List<Bill> getListBillByRoomID(int roomID);
 }

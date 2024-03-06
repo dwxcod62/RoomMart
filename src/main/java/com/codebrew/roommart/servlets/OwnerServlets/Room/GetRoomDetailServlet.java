@@ -6,10 +6,12 @@ import com.codebrew.roommart.dao.OwnerDao.IConsumeDAO;
 import com.codebrew.roommart.dao.OwnerDao.IInfrastructureDAO;
 import com.codebrew.roommart.dao.OwnerDao.IRoomDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.*;
+import com.codebrew.roommart.dao.RoommateInfoDao;
 import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.dto.OwnerDTO.Bill;
 import com.codebrew.roommart.dto.OwnerDTO.BillDetail;
 import com.codebrew.roommart.dto.OwnerDTO.Consume;
+import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,123 +26,122 @@ import java.util.List;
 public class GetRoomDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String ERROR = "error";
-            String url = "pages/owner/room/room-detail.jsp";
+        String ERROR = "error";
+        String url = "pages/owner/room/room-detail.jsp";
 
-            try {
-                HttpSession session = request.getSession();
+        try {
+            HttpSession session = request.getSession();
 
-                int accID = ((Account) session.getAttribute("USER")).getAccId();
+            int accID = ((Account) session.getAttribute("USER")).getAccId();
 
-                int hostelID = (request.getParameter("hostelID") != null ) ? Integer.parseInt(request.getParameter("hostelID")) : ((Hostel) session.getAttribute("hostel")).getHostelID();
+            int hostelID = (request.getParameter("hostelID") != null) ? Integer.parseInt(request.getParameter("hostelID")) : ((Hostel) session.getAttribute("hostel")).getHostelID();
 //                int hostelID =  Integer.parseInt(request.getParameter("hostelID"));
 
-                int roomId = (request.getParameter("roomID") != null ) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
+            int roomId = (request.getParameter("roomID") != null) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
 //                int roomId = Integer.parseInt(request.getParameter("roomID"));
 
-                // Check xem roomID có thuộc ownerID không
-                if (new HostelDAO().checkOwnerRoom(accID, roomId)) {
+            // Check xem roomID có thuộc ownerID không
+            if (new HostelDAO().checkOwnerRoom(accID, roomId)) {
 
-                    IRoomDAO roomDAO = new RoomDAO();
-                    IConsumeDAO consumeDAO = new ConsumeDAO();
-                    IAccountDAO accountDAO = new AccountDAO();
-                    IInfrastructureDAO infrastructureDAO = new InfrastructureDAO();
-
-
-                    Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
-                    if(room != null){
-                        session.setAttribute("room", room);
-                        session.setAttribute("current_room_id", room.getRoomId());
-
-                        com.codebrew.roommart.dto.OwnerDTO.Hostel hostel = new HostelDAO().getHostelById(hostelID);
-
-                        session.setAttribute("hostel", hostel);
-
-                        Contract contract = new ContractDAO().getContract(roomId);
-                        request.setAttribute("contractRoom", contract);
-
-                        List<Consume> consumeList = consumeDAO.getConsumeHistory(roomId);
-                        request.setAttribute("consumeList", consumeList);
-
-                        Consume consumeNumber = consumeDAO.getNearestConsume(roomId);
-                        request.setAttribute("consumeNumber", consumeNumber);
-
-                        List<InfrastructureItem> infrastructureItemList = infrastructureDAO.getAllInfrastructure();
-                        request.setAttribute("infrastructureList", infrastructureItemList);
+                IRoomDAO roomDAO = new RoomDAO();
+                IConsumeDAO consumeDAO = new ConsumeDAO();
+                IAccountDAO accountDAO = new AccountDAO();
+                IInfrastructureDAO infrastructureDAO = new InfrastructureDAO();
 
 
-                        List<Consume> consumeThisMonth = consumeDAO.getConsumeThisMonth(roomId);
-                        request.setAttribute("consumeListThisMonth", consumeThisMonth);
+                Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
+                if (room != null) {
+                    session.setAttribute("room", room);
+                    session.setAttribute("current_room_id", room.getRoomId());
 
-                        if (contract != null) {
-                            Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
-                            request.setAttribute("renterAccount", renterAccount);
+                    com.codebrew.roommart.dto.OwnerDTO.Hostel hostel = new HostelDAO().getHostelById(hostelID);
 
-//                            List<Roommate> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(contract.getRenterId()); // loi khong the convert to int
-                            request.setAttribute("listRoommatesInfo", null);
-                        }
+                    session.setAttribute("hostel", hostel);
 
-                        Bill bill = new BillDAO().getLastBill(roomId);
-                        request.setAttribute("billRoom", bill);
+                    Contract contract = new ContractDAO().getContract(roomId);
+                    request.setAttribute("contractRoom", contract);
 
-                        List<Payment> payments = new PaymentDAO().getPaymentList();
-                        request.setAttribute("paymentList", payments);
+                    List<Consume> consumeList = consumeDAO.getConsumeHistory(roomId);
+                    request.setAttribute("consumeList", consumeList);
 
-                        if (bill != null) {
-                            int billID = bill.getBillID();
-                            BillDetail billDetail = new BillDAO().getBillDetail(billID);
-                            int consumeIDStart = billDetail.getConsumeIDStart();
-                            int consumeIDEnd = billDetail.getConsumeIDEnd();
+                    Consume consumeNumber = consumeDAO.getNearestConsume(roomId);
+                    request.setAttribute("consumeNumber", consumeNumber);
 
-                            if (bill.getStatus() == 0 || bill.getPayment() != null) {
-                                String paymentName = new BillDAO().getPaymentName(bill.getPayment().getPaymentID());
-                                request.setAttribute("paymentName", paymentName);
-                            }
+                    List<InfrastructureItem> infrastructureItemList = infrastructureDAO.getAllInfrastructure();
+                    request.setAttribute("infrastructureList", infrastructureItemList);
 
-                            Consume consumeStart = new ConsumeDAO().getConsumeByID(consumeIDStart);
-                            Consume consumeEnd = new ConsumeDAO().getConsumeByID(consumeIDEnd);
 
-                            int numberConsumeElectric = consumeEnd.getNumberElectric() - consumeStart.getNumberElectric();
-                            int numberConsumeWater = consumeEnd.getNumberWater() - consumeStart.getNumberWater();
+                    List<Consume> consumeThisMonth = consumeDAO.getConsumeThisMonth(roomId);
+                    request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
-                            request.setAttribute("consumeStart", consumeStart);
-                            request.setAttribute("consumeEnd", consumeEnd);
+                    if (contract != null) {
+                        Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
+                        request.setAttribute("renterAccount", renterAccount);
 
-                            int billDetailID = billDetail.getBillDetailID();
-                            List<ServiceInfo> serviceInfos = new ServiceInfoDAO().getServiceOfBill(billDetailID, hostelID);
-                            request.setAttribute("serviceInfo", serviceInfos);
-
-                            int accountHOID = billDetail.getAccountHostelOwnerID();
-                            int accountRenterID = billDetail.getAccountRenterID();
-                            AccountInfo accountHOInfo = accountDAO.getAccountInformationById(accountHOID);
-                            AccountInfo accountRenterInfo = accountDAO.getAccountInformationById(accountRenterID);
-
-                            request.setAttribute("billMakerFullName", accountHOInfo.getInformation().getFullname());
-                            request.setAttribute("billPaymenterFullName", accountRenterInfo.getInformation().getFullname());
-                        }
-                        List<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
-                        request.setAttribute("infrastructures", infrastructures);
-                    }else {
-                        url = ERROR;
+                        List<RoommateInfo> listRoommatesInfo = new RoommateInfoDao().getListRoommatesOfAnAccount(contract.getRenterId());
+                        request.setAttribute("listRoommatesInfo", listRoommatesInfo);
                     }
-                }else {
+
+                    Bill bill = new BillDAO().getLastBill(roomId);
+                    request.setAttribute("billRoom", bill);
+
+                    List<Payment> payments = new PaymentDAO().getPaymentList();
+                    request.setAttribute("paymentList", payments);
+
+                    if (bill != null) {
+                        int billID = bill.getBillID();
+                        BillDetail billDetail = new BillDAO().getBillDetail(billID);
+                        int consumeIDStart = billDetail.getConsumeIDStart();
+                        int consumeIDEnd = billDetail.getConsumeIDEnd();
+
+                        if (bill.getStatus() == 0 || bill.getPayment() != null) {
+                            String paymentName = new BillDAO().getPaymentName(bill.getPayment().getPaymentID());
+                            request.setAttribute("paymentName", paymentName);
+                        }
+
+                        Consume consumeStart = new ConsumeDAO().getConsumeByID(consumeIDStart);
+                        Consume consumeEnd = new ConsumeDAO().getConsumeByID(consumeIDEnd);
+
+                        int numberConsumeElectric = consumeEnd.getNumberElectric() - consumeStart.getNumberElectric();
+                        int numberConsumeWater = consumeEnd.getNumberWater() - consumeStart.getNumberWater();
+
+                        request.setAttribute("consumeStart", consumeStart);
+                        request.setAttribute("consumeEnd", consumeEnd);
+
+                        int billDetailID = billDetail.getBillDetailID();
+                        List<ServiceInfo> serviceInfos = new ServiceInfoDAO().getServiceOfBill(billDetailID, hostelID);
+                        request.setAttribute("serviceInfo", serviceInfos);
+
+                        int accountHOID = billDetail.getAccountHostelOwnerID();
+                        int accountRenterID = billDetail.getAccountRenterID();
+                        System.out.println(billDetail.toString());
+                        AccountInfo accountHOInfo = accountDAO.getAccountInformationById(accountHOID);
+                        AccountInfo accountRenterInfo = accountDAO.getAccountInformationById(accountRenterID);
+                        System.out.println(accountHOID + ", " + accountRenterID);
+
+                        request.setAttribute("billMakerFullName", accountHOInfo.getInformation().getFullname());
+                        request.setAttribute("billPaymenterFullName", accountRenterInfo.getInformation().getFullname());
+                    }
+                    List<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
+                    request.setAttribute("infrastructures", infrastructures);
+                } else {
                     url = ERROR;
                 }
-
-                session.setAttribute("CURRENT_PAGE", "room");
-
-
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-
-                if (ERROR.equalsIgnoreCase(url))
-                    response.sendRedirect(url);
-                else
-                    request.getRequestDispatcher(url).forward(request, response);
+            } else {
+                url = ERROR;
             }
+
+            session.setAttribute("CURRENT_PAGE", "room");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ERROR.equalsIgnoreCase(url))
+                response.sendRedirect(url);
+            else
+                request.getRequestDispatcher(url).forward(request, response);
+        }
 //        request.getRequestDispatcher("/pages/owner/room/room-detail.jsp").forward(request, response);
     }
 
