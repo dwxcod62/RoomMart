@@ -37,6 +37,8 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
 
             if (bill != null){
                 request.setAttribute("BILL", bill);
+                System.out.println(bill);
+
                 //get number electric and water
                 int consumeIDStart = billDetail.getConsumeIDStart();
                 int consumeIDEnd = billDetail.getConsumeIDEnd();

@@ -161,12 +161,14 @@
                         <a href="" class="btn btn-outline-success btn-lg float-left mt-4">
                             Xuất hóa đơn ra file Excel
                         </a>
-                        <form>
-                            <button type="submit" id="payment-button"
-                                    class="btn btn-outline-danger btn-lg float-right mt-4">
-                                Thanh Toán
-                            </button>
-                        </form>
+                        <c:if test="${BILL.payment.paymentID == 0}">
+                            <form>
+                                <button type="submit" id="payment-button"
+                                        class="btn btn-outline-danger btn-lg float-right mt-4">
+                                    Thanh Toán
+                                </button>
+                            </form>
+                        </c:if>
                         <div class="clearfix"></div>
                         <a href="RenterBill" class="btn btn-outline-dark btn-lg float-left mt-3 mb-5">
                             Quay lại
