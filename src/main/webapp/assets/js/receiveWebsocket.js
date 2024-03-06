@@ -1,10 +1,14 @@
 function receiveWebsocket(callback) {
     console.log("receisocket func")
     const websocket = new WebSocket("ws://localhost:8080/RoomMart/push-noti-websocket");
-    websocket.onmessage = function(message) { processMessage(message); };
+
+    websocket.onmessage = function(message) {
+
+        processMessage(message); };
     websocket.onclose
 
     function processMessage(message) {
+
         let mess = JSON.parse(message.data).message;
         let ch = JSON.parse(message.data).chat;
         let rid = JSON.parse(message.data).rid;
@@ -19,7 +23,44 @@ function receiveWebsocket(callback) {
         });
     };
 };
+function receiveBoxChatWebsocket(callback) {
+    console.log("receiveBoxChatWebsocket func")
+    const websocket = new WebSocket("ws://localhost:8080/RoomMart/show-box-chat");
 
+    websocket.onmessage = function(message) {
+
+        processMessage(message); };
+    websocket.onclose
+
+    function processMessage(message) {
+
+        let mess = JSON.parse(message.data).message;
+        let ownerId = JSON.parse(message.data).ownerId;
+        let renterId = JSON.parse(message.data).renterId;
+        let role = JSON.parse(message.data).role;
+
+        let hostelID = JSON.parse(message.data).hostelID;
+        let roomID = JSON.parse(message.data).roomID;
+
+        let username = JSON.parse(message.data).username;
+
+        console.log("processmess receiveBoxChatWebsocket: "+ mess,ownerId,renterId,role,hostelID,roomID,username);
+        callback({
+            message: mess,
+            ownerId:ownerId,
+            renterId:renterId,
+            role:role,
+            username: username,
+            hostelID:hostelID,
+            roomID:roomID,
+
+
+        });
+    };
+};
+receiveBoxChatWebsocket.disconnectWebSocket = () => {
+    websocket && websocket.close();
+};
 receiveWebsocket.disconnectWebSocket = () => {
     websocket && websocket.close();
 };

@@ -13,8 +13,8 @@ import java.util.List;
 
 @WebServlet(name = "GetHostelInfoServlet", value = "/GetHostelInfoServlet")
 public class GetHostelInfoServlet extends HttpServlet {
-    public static final String ERROR = "/pages/renter/renter-room-info.jsp";
-    public static final String SUCCESS = "/pages/renter/renter-room-info.jsp";
+    public static final String ERROR = "renter-Home";
+    public static final String SUCCESS = "renter-Home";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Decorations.measureExecutionTime(() -> {
@@ -42,14 +42,15 @@ public class GetHostelInfoServlet extends HttpServlet {
             session.setAttribute("uri", request.getRequestURI());
 
             //Get Hostel
-            Hostel hostel = (Hostel) session.getAttribute("HOSTEL");
-            if (hostel == null) {
-                hostel = contractDAO.getHostelByContract(renterId);
-                System.out.println(hostel);
+
+            if (session.getAttribute("HOSTEL") == null) {
+                System.out.println("a");
+                Hostel hostel = contractDAO.getHostelByContract(renterId);
+
                 session.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }
-
+            System.out.println(session.getAttribute("HOSTEL"));
             //Get Room Info
             Room room = (Room) session.getAttribute("ROOM_INFOR");
             if (room == null) {
@@ -88,7 +89,7 @@ public class GetHostelInfoServlet extends HttpServlet {
 
 //            session.setAttribute("CURRENT_PAGE", "hostel-renter-page");
         } catch (Exception e) {
-            log("Error at GetHostelInfoServlet: " + e.toString());
+            System.out.println(e);
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

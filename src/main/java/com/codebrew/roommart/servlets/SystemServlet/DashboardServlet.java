@@ -39,10 +39,10 @@ public class DashboardServlet extends HttpServlet {
                         url = "AdminDashboard";
                         break;
                     case 1:
-                        url = "ahihi";
+                        url = "owner-dashboard";
                         break;
                     case 2:
-                        url = "Renter-HomePage";
+                        url = "RenterHome";
                         break;
                 }
             }

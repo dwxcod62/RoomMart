@@ -11,7 +11,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
-console.log(db);
+// console.log(db);
 const chatForm = document.getElementById("messages");
 const chatInput = document.getElementById("chat-id-1-form");
 const chatHeader = document.getElementById("chatHeader");
@@ -132,8 +132,9 @@ function sendMessage(e) {
         sendToWebSocket("hostel_renter", "hostel_owner", null, ownerId, null,message,null,null);
     }
     if (accId==ownerId){
+        console.log("Send open box chat to renter");
+        sendToWebSocket2("hostel_owner", "hostel_renter", null, renterId, null,null,null,null,renterName,"2",renterId,ownerId);
         console.log("Send notify to renter");
-
         sendToWebSocket( "hostel_owner","hostel_renter", null, renterId, null,message,roomID,hostelID);
     }
 
@@ -371,11 +372,11 @@ fetchChat.on("child_added", function (snapshot) {
 
     // append the message on the page
 
-if(messages.role==='3'){
+if(messages.role==='2'){
     console.log("messrole: "+messages.role)
     document.getElementById("messages").innerHTML += message2;}
 else {
-    console.log("messrole else"+messages.role)
+    console.log("messrole else: "+messages.role)
     document.getElementById("messages").innerHTML += message3;
 }
 

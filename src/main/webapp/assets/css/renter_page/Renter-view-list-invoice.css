@@ -43,6 +43,8 @@ nav .user-menu {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   display: none;
+  width: 300px;
+  height: 250px;
 }
 
 nav .user-menu.active {
@@ -297,7 +299,7 @@ body {
   font-size: 18px;
   width: 80%;
   margin: 0;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
 }
 .content .table-content {
   width: 100%;

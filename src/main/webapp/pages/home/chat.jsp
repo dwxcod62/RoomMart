@@ -454,7 +454,7 @@
                                 </div>
                             </div>
                             <h5>${requestScope.infor2.fullname}</h5>
-                            <p class="text-muted">${requestScope.infor2.sex==true?"male":"female"}</p>
+                            <p class="text-muted">${requestScope.infor2.sex==1?"male":"female"}</p>
                         </div>
 
                         <ul class="list-group list-group-flush mb-8">
@@ -528,20 +528,18 @@
 <!-- Scripts -->
 <script>
     const ownerId = "${sessionScope.ownerId !=null ? sessionScope.ownerId: "null"}";
-
     const renterId = "${sessionScope.renterId !=null ? sessionScope.renterId: "null"}";
     const role = "${sessionScope.role !=null ? sessionScope.role: "null"}";
     const acc = "${sessionScope.USER !=null ? sessionScope.USER: "null"}";
     const username = "${requestScope.infor.fullname!=null ? requestScope.infor.fullname: "null"}";
+
     const hostelID = "${requestScope.hostelId !=null ? EncodeUtils.encodeString(requestScope.hostelId): "null"}";
     const roomID = "${requestScope.roomId !=null ? EncodeUtils.encodeString(requestScope.roomId): "null"}";
     const accId = "${sessionScope.USER.accId !=null ? sessionScope.USER.accId: "null"}";
 
-
-
-
-
-
+    const renterName = "${requestScope.infor2.fullname !=null ? requestScope.infor2.fullname: "null"}";
+    //account_id
+    const renID ="${requestScope.infor2.account_id !=null ? requestScope.infor2.account_id: "null"}";
 
     console.log("accId" + accId);
     console.log("userid : "+renterId);
@@ -563,9 +561,10 @@
 <script src="assets/js/chat/chat.js"></script>
 <script src="assets/js/sendWebsocket.js"></script>
 
-<script src="assets/js/loading-handler.js"></script>
+<script src="./assets/js/loading-handler.js"></script>
 
 <!-- Scripts -->
 
 </body>
+
 </html>

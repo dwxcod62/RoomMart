@@ -154,7 +154,7 @@
     // Set up the UI
     // var sigText = document.getElementById("sig-dataUrl");
     var sigImage = document.getElementById("sig-image");
-    var inputHidden = document.getElementById("asdfgh");
+    var inputHidden = document.getElementById("user__sign");
     var clearBtn = document.getElementById("sig-clearBtn");
     var submitBtn = document.getElementById("sig-submitBtn");
     clearBtn.addEventListener(
@@ -189,6 +189,7 @@
                 inputHidden.setAttribute("value", resizedDataUrl);
             };
             img.src = dataUrl;
+            popup.style.display = "none";
         },
         false
     );

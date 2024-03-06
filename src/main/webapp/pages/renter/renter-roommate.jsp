@@ -28,15 +28,15 @@
 
 <body>
 <div>
-        <%
+    <%
         ArrayList<RoommateInfo> listRoommateInfor = (ArrayList<RoommateInfo>) request.getAttribute("listRoommateInfor");
         Account account = (Account)session.getAttribute("USER");
-  %>
+    %>
     <!-- navbar -->
+    <%@include file="component/navbar.jsp" %>
 
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
-        <%@include file="component/navbar.jsp" %>
         <%@include file="component/sidebar.jsp" %>
 
         <div class="content">

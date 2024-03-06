@@ -1185,16 +1185,7 @@
   .footer-middle-colum1:last-child {
   margin-right: 0px;
 }
-.re__home__head__search-container .select-text:after {
-  content: "\e9e0";
-  font-family: "font-icon-bds" !important;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
 .re__home__head__search-container .re__search-box-content {
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 0 4px 4px 4px;
@@ -3639,16 +3630,7 @@
   .re__tab-box-ghost--sm {
   padding: 6px 32px;
 }
-.re__home-search-box .select-text:after {
-  content: "\e9e0";
-  font-family: "font-icon-bds" !important;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
 .re__home-search-box .re__search-box-content {
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 0 4px 4px 4px;
@@ -5498,8 +5480,8 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
   position: absolute;
-  right: 15px;
-  top: 3px;
+  right: 5px;
+  top: 15px;
 }
 .re__home-search-box .select-text span.select-text-content,
 .re__home-search-box .select-text input.select-text-content {
