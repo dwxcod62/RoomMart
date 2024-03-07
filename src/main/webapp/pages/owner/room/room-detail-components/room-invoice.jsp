@@ -284,7 +284,7 @@
             <c:if test="${requestScope.billRoom.status eq 0 && requestScope.billRoom ne null}">
                 <!-- If this invoice has been paid, please hide this button -->
                 <!-- Start invoice confirm paid button -->
-                <button class="invoice-action-btn invoice-confirm-paid-btn"
+                <button  class="invoice-action-btn invoice-confirm-paid-btn"
                         data-bs-toggle="modal" data-bs-target="#invoice-confirm-paid-modal">
                     Xác nhận đã thanh toán
                 </button>
@@ -302,13 +302,13 @@
                             <div class="modal-body">
                                 Bạn có chắc chắn là người thuê đã thanh toán tiền phòng?
                             </div>
-                            <form action="updateBilLStatus" method="POST">
+                            <form id="updateBilLStatusForm" action="updateBilLStatus" method="POST">
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-danger"
                                             data-bs-dismiss="modal">Hủy bỏ
                                     </button>
                                     <input type="hidden" name="billID" value="${requestScope.billRoom.billID}">
-                                    <button type="submit" class="btn btn-success">
+                                    <button onclick="sendConfirm()" type="button" class="btn btn-success">
                                         Xác nhận
                                     </button>
                                 </div>
@@ -321,3 +321,4 @@
         </div>
     </div>
 </div>
+
