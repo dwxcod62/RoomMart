@@ -216,6 +216,8 @@
 <script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 
+<script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
 <script>
     <c:choose>
     <c:when test="${requestScope.RESPONSE_MSG.status eq true}">

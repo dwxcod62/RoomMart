@@ -177,4 +177,34 @@ public class HostelDao {
         return hostel;
     }
 
+    public int getHostelByRoomId(int room_id) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int hostel_id = -1;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select hostel_id from [Rooms] where room_id = ?");
+                pst.setInt(1, room_id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    hostel_id = rs.getInt("hostel_id");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return hostel_id;
+    }
 }

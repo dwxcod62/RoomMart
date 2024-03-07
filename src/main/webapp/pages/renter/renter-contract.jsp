@@ -67,10 +67,10 @@
                             </c:if>
                         </h5><br>
                         <h5>
-                            <strong>CCCD: </strong>${RENTER_INFO.cccd eq null ? "Không có thông tin!" : RENTER_INFO.cccd}
+                            <strong>CCCD: </strong>${RENTER_INFO.cccd eq "" ? "Không có thông tin!" : RENTER_INFO.cccd}
                         </h5><br>
                         <h5>
-                            <strong>SĐT: </strong>${RENTER_INFO.phone eq null ? "Không có thông tin!" : RENTER_INFO.phone}
+                            <strong>SĐT: </strong>${RENTER_INFO.phone eq "" ? "Không có thông tin!" : RENTER_INFO.phone}
                         </h5><br>
                     </div>
                 </div>
@@ -126,6 +126,10 @@
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
 
+<script>
+    var currentPage = window.location.pathname.split("/").pop().split(".")[0];
+    document.getElementById(currentPage).classList.add("active");
+</script>
 
 <script type="text/javascript">
     // Receive

@@ -61,12 +61,12 @@ public class ContractDao {
             "WHERE renter_id = ?";
 
     private static final String
-            GET_CONTRACT = "SELECT start_date, expiration, deposit, price\n" +
+            GET_CONTRACT_BY_RENTER_ID = "SELECT *\n" +
             "FROM Contracts\n" +
             "WHERE renter_id = ?";
 
     private static final String ADD_AN_CONTRACT_OWNER =
-            "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status], [renter_sign])\n" +
+            "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status], [owner_sign])\n" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public Hostel getHostelByContract(int renterId){
@@ -608,19 +608,138 @@ public class ContractDao {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement(GET_INFO_CONTRACT);
+                pst = cn.prepareStatement(GET_CONTRACT_BY_RENTER_ID);
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
             }  if (rs != null && rs.next()) {
-//                contract = Contract.builder()
-//                        .startDate(rs.getDate())
-//                        .room_id(roomID)
-//                        .hostelOwnerId(owner.getAccId())
-//                        .renterId(_renter_info.getAccount_id())
-//                        .status(1)
-//                        .expiration(endDate)
-//                        .price(Integer.parseInt(price))
-//                        .deposit(Integer.parseInt(deposit)).build();
+                contract = Contract.builder()
+                        .contract_id(rs.getInt("contract_id"))
+                        .room_id(rs.getInt("room_id"))
+                        .price(rs.getInt("price"))
+                        .startDate(rs.getDate("start_date").toString())
+                        .expiration(rs.getDate("expiration").toString())
+                        .deposit(rs.getInt("deposit"))
+                        .hostelOwnerId(rs.getInt("hostel_owner_id"))
+                        .renterId(rs.getInt("renter_id"))
+                        .renter_sign(rs.getString("renter_sign"))
+                        .owner_sign(rs.getString("owner_sign"))
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return contract;
+    }
+
+    public boolean addContractRenter(int contract_id, String sign) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                pst = cn.prepareStatement("Update [Contracts] set renter_sign = ? where contract_id = ?");
+                pst.setString(1, sign);
+                pst.setInt(2, contract_id);
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public Contract getContract(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status\n" +
+                        "FROM Contracts\n" +
+                        "WHERE room_id = ? AND status = 1";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int contract_id = rs.getInt("contract_id");
+                    int price = rs.getInt("price");
+                    String startDate = rs.getString("start_date");
+                    String expiration = rs.getString("expiration");
+                    int deposit = rs.getInt("deposit");
+                    int hostelAccountId = rs.getInt("hostel_owner_id");
+                    int renterAccountId = rs.getInt("renter_id");
+                    int status = rs.getInt("status");
+                    contract = Contract.builder()
+                            .contract_id(contract_id)
+                            .room_id(roomID)
+                            .price(price)
+                            .startDate(startDate)
+                            .expiration(expiration)
+                            .deposit(deposit)
+                            .hostelOwnerId(hostelAccountId)
+                            .renterId(renterAccountId)
+                            .status(status)
+                            .build();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

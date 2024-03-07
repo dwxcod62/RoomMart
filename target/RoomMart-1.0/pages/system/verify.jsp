@@ -45,7 +45,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-xs-9 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4 m-auto">
-                        <form action="check-otp" method="POST" id="verify-form" class="custom-form verify-form">
+                        <form action="check-otp" method="post" id="verify-form" class="custom-form verify-form">
                             <input type="hidden" name="email" value="${requestScope.EMAIL_REGISTER}">
                             <div class="form-header">
                                 <h3 class="form-title">Xác thực tài khoản</h3>

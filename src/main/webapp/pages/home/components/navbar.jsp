@@ -6,9 +6,17 @@
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
 <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
+
+
 <link
         href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
         rel="stylesheet"  type='text/css'>
+
+<style>
+    a{
+        color: black;
+    }
+</style>
 
 <div class="main-nav bg-white">
     <div class="container">
@@ -122,7 +130,7 @@
                             <!-- Remove class "active" when don't have any new notification -->
                             <span class="notification__warning active"><i class="fa-solid fa-exclamation"></i></span>
                         </div>
-                        <div id="nav-profile-btn" class="profile">
+                        <div  id="nav-profile-btn" class="profile">
                             <div class="profile__infor">
                                 <h3 class="infor__name">${sessionScope.USER.accountInfo.information.fullname}</h3>
                                 <span class="infor__role">
@@ -235,7 +243,7 @@
 
             <!-- Profile dropdown -->
             <div id="nav-profile-dropdown" class="profile__actions">
-                <a href="profile" class="action__view-profile-link">
+                <a href="profile" class="action__view-profile-link" style="color: black">
                     <div class="action__image">
                         <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex ==1? "male" : "female"}.png" alt="User avatar">
                     </div>
@@ -248,8 +256,8 @@
 
 
 
-                <c:if test="${sessionScope.st}">
-                    <a href="Renter-HomePage" class="action__view-profile-link">
+                <c:if test="${sessionScope.st != 0}">
+                    <a href="Renter-HomePage" class="action__view-profile-link" style="color: black">
                         <div class="action__image">
                             <i class="fa-sharp fa-solid fa-person-shelter fa-2xl"></i>
                         </div>
@@ -262,7 +270,7 @@
 
                 </c:if>
 
-                <a href="home" class="action__view-profile-link">
+                <a href="home" class="action__view-profile-link" style="color: black">
                     <div class="action__image">
                         <i class="fa-solid fa-magnifying-glass fa-xl"></i>
                     </div>
@@ -274,7 +282,7 @@
                 <div class="spacer"></div>
 
                 <c:if test="${sessionScope.USER.role eq 1}">
-                    <a href="Renter-HomePage" class="action__view-profile-link">
+                    <a href="Renter-HomePage" class="action__view-profile-link" style="color: black">
                         <div class="action__image">
                             <i class="fa-solid fa-people-roof fa-xl"></i>
                         </div>
@@ -284,7 +292,7 @@
                         </div>
                     </a>
                     <div class="spacer"></div>
-                    <a href="chat" class="action__view-profile-link">
+                    <a href="chat" class="action__view-profile-link" style="color: black">
                         <div class="action__image">
                             <i class="fa-regular fa-comment"></i>
                         </div>
@@ -295,7 +303,7 @@
                     </a>
                     <div class="spacer"></div>
                 </c:if>
-                <a href="logout" class="action__logout">
+                <a href="logout" class="action__logout" style="color: black">
                     <div class="action__image">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </div>
@@ -307,3 +315,16 @@
         </div>
     </div>
 </div>
+
+<%--<script>--%>
+
+<%--    function showNav() {--%>
+<%--        var navDropdown = document.getElementById("nav-profile-dropdown");--%>
+<%--        if (navDropdown.style.display == "block") {--%>
+<%--            navDropdown.style.display = "none";--%>
+<%--        } else {--%>
+<%--            navDropdown.style.display = "block";--%>
+<%--        }--%>
+<%--    }--%>
+
+<%--</script>--%>

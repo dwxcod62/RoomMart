@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông báo</title>
+    <title>Báo cáo</title>
     <!-- Favicon -->
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -58,9 +58,9 @@
                         </th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                             colspan="1" aria-label="Nội dung: activate to sort column ascending"
-                            style="width: 399.32px;" data-orderable="false">Nội dung</th>
+                            data-orderable="false">Nội dung</th>
                         <th class="text-center sorting" aria-controls="notification-table" rowspan="1" colspan="1"
-                            aria-label="Ngày gửi: activate to sort column ascending" style="width: 110px;"
+                            aria-label="Ngày gửi: activate to sort column ascending" style="width: 130px;"
                             data-orderable="false">Ngày gửi</th>
                         <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                             colspan="1" aria-label="Trạng thái: activate to sort column ascending"
@@ -76,7 +76,7 @@
                             <td style="text-align: left">${rp.content}</td>
                             <td>
                                 <fmt:parseDate var="sendDate" value="${rp.sendDate}" pattern="yy-MM-dd"/>
-                                <fmt:formatDate value="${sendDate}" pattern="dd-MM-yy"/>
+                                <fmt:formatDate value="${sendDate}" pattern="dd-MM-yyyy"/>
                             </td>
                             <td>
                                 <c:if test="${rp.status == 0}">
@@ -106,7 +106,7 @@
                                 <label for="category" class="form-label">Loại đơn:
                                     <span>*</span>
                                 </label>
-                                <select name="cateID" id="category" class="form-control">
+                                <select name="cateID" id="category" class="form-control" required>
                                     <option value="" selected disabled hidden>Chọn loại đơn</option>
                                     <%-- Thêm các option ở đây --%>
                                     <c:forEach var="cate" items="${requestScope.REPORT_CATE}">
@@ -121,7 +121,7 @@
                                 <label for="report-content" class="form-label">Nội dung:
                                     <span>*</span></label>
                                 <textarea name="form-input" id="report-content"
-                                          class="form-control textarea" style="font-size: 15px"></textarea>
+                                          class="form-control textarea" style="font-size: 15px" required></textarea>
                                 <span class="form-message mt-4 mb-0"></span>
                             </div>
                         </div>
@@ -199,6 +199,9 @@
                 });
             });
         });
+
+        var currentPage = window.location.pathname.split("/").pop().split(".")[0];
+        document.getElementById(currentPage).classList.add("active");
     </script>
 
 </body>

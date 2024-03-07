@@ -2,39 +2,6 @@ function goToHomePage() {
     window.location.href = "RenterHome"; // Chuyển hướng trang về Renter-HomePage
 }
 
-function toggleUserMenu() {
-    var userMenu = document.getElementById('userMenu');
-    if (userMenu.classList.contains('active')) {
-        hideUserMenu();
-    } else {
-        showUserMenu();
-    }
-}
-
-function showUserMenu() {
-    var userMenu = document.getElementById('userMenu');
-    var userIcon = document.querySelector('.user-icon');
-    var iconRect = userIcon.getBoundingClientRect();
-    var menuRect = userMenu.getBoundingClientRect();
-
-    // Tính toán vị trí cho popup
-    var topPos = iconRect.bottom + 15; // Cách icon 15px
-    var leftPos = iconRect.left - (menuRect.width / 2) + (iconRect.width / 2) - 59; // Di chuyển về bên trái một chút
-
-    // Đặt vị trí cho popup
-    userMenu.style.top = topPos + 'px';
-    userMenu.style.left = leftPos + 'px';
-
-    userMenu.classList.add('active');
-}
-
-function hideUserMenu(event) {
-    event.preventDefault();
-
-    var userMenu = document.getElementById('userMenu');
-    userMenu.classList.remove('active');
-}
-
 document.addEventListener("DOMContentLoaded", function() {
     var nameElement = document.querySelector(".name");
     var emailElement = document.querySelector(".email");
@@ -72,5 +39,6 @@ document.addEventListener("DOMContentLoaded", function() {
         nameElement.setAttribute("title", fullName); // Thêm title để hiển thị tên đầy đủ khi di chuột vào
     }
 });
+
 
 

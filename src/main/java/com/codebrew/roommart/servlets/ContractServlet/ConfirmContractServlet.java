@@ -1,8 +1,6 @@
 package com.codebrew.roommart.servlets.ContractServlet;
 
-import com.codebrew.roommart.dao.ContractDao;
-import com.codebrew.roommart.dao.InformationDao;
-import com.codebrew.roommart.dao.RoomDao;
+import com.codebrew.roommart.dao.*;
 import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EmailUtils;
@@ -12,6 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 @WebServlet(name = "ConfirmContractServlet", value = "/ConfirmContractServlet")
@@ -22,7 +21,14 @@ public class ConfirmContractServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        Decorations.measureExecutionTime(() -> {
+            try {
+                confirm_contract_renter(request, response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }, "ConfirmContractServlet.doGet");
     }
 
     @Override
@@ -45,26 +51,51 @@ public class ConfirmContractServlet extends HttpServlet {
             String decode_data = EncodeUtils.decodeString(data);
             RoomDao roomDao = new RoomDao();
             ContractDao contractDao = new ContractDao();
+            InformationDao informationDao = new InformationDao();
 
             Account acc = (Account) session.getAttribute("USER");
             if ( acc != null ){
                 if (Objects.equals(acc.getAccountInfo().getInformation().getEmail(), decode_data)){
                     int room_status = roomDao.getRoomStatusByContractAndEmail(decode_data);
                     if (room_status == -1){
-                        Contract c = contractDao.getContractByRenterId(acc.getAccId());
+                        Contract _contract = contractDao.getContractByUserId(acc.getAccId());
+                        session.setAttribute("CONTRACT", _contract);
 
+                        Information _renter_info = acc.getAccountInfo().getInformation();
+                        session.setAttribute("CONTRACT_RENTER", _renter_info);
 
+                        AccountInfo _owner_info = new AccountInfo().builder().information(informationDao.getAccountInformationById(_contract.getHostelOwnerId())).build();
+                        session.setAttribute("CONTRACT_OWNER", _owner_info);
 
+                        int _hostel_id = new HostelDao().getHostelByRoomId(_contract.getRoom_id());
+                        List<ServiceInfo> _list_Services = new ServiceInfoDAO().getServicesOfHostel(_hostel_id);
+                        session.setAttribute("CONTRACT_SERVICES_LIST", _list_Services);
 
+                        List<Infrastructures> _list_Infrastructures = new InfrastructureDao().getRoomInfrastructures(_contract.getRoom_id());
+                        session.setAttribute("CONTRACT_ROOM_INFRASTRUCTURE_LIST", _list_Infrastructures);
+
+                        Room _room = new RoomDao().getRoomById(_contract.getRoom_id());
+                        session.setAttribute("CONTRACT_ROOM", _room);
+
+                        Hostel _hostel = new HostelDao().getHostelById(_hostel_id);
+                        session.setAttribute("CONTRACT_HOSTEL", _hostel);
+
+                        req.getRequestDispatcher("ConfirmContract").forward(req, res);
 
                     } else {
-
+                        System.out.println("a");
+                        url = "denied";
+                        res.sendRedirect(url);
                     }
                 } else {
+                    System.out.println("b");
                     url = "denied";
+                    res.sendRedirect(url);
                 }
             } else {
-
+                System.out.println("c");
+                url = "denied";
+                res.sendRedirect(url);
             }
         } catch ( Exception e){
             System.out.println(e);
@@ -76,23 +107,31 @@ public class ConfirmContractServlet extends HttpServlet {
         String sign = req.getParameter("sign");
         try {
             HttpSession session = req.getSession();
+            Account acc = (Account) session.getAttribute("USER");
             Contract contract = (Contract) session.getAttribute("CONTRACT");
             Information _renter_info = (Information) session.getAttribute("CONTRACT_RENTER");
             Room r = (Room) session.getAttribute("CONTRACT_ROOM");
 
-            contract.setOwner_sign(sign);
-            contract.setStatus(-1);
 
+            AccountDao accountDao = new AccountDao();
             ContractDao contractDAO = new ContractDao();
             RoomDao roomDAO = new RoomDao();
 
-            if ( contractDAO.addContractOwner(contract) && roomDAO.updateRoomStatus(r.getRoomId(), -1)){
-                url = SUCCESS + "?roomID" + r.getRoomId() + "&hostelID=" + r.getHostelId();
-                String email_renter = _renter_info.getEmail();
-                String email_renter_encode = EncodeUtils.encodeString(email_renter);
-                new EmailUtils().sendContractConfirmationEmail(email_renter, email_renter_encode);
-            }
+            if ( acc.getRole() == 1 ){
+                contract.setOwner_sign(sign);
+                contract.setStatus(-1);
 
+                if ( contractDAO.addContractOwner(contract) && roomDAO.updateRoomStatus(r.getRoomId(), -1)){
+                    url = SUCCESS + "?roomID" + r.getRoomId() + "&hostelID=" + r.getHostelId();
+                    String email_renter = _renter_info.getEmail();
+                    String email_renter_encode = EncodeUtils.encodeString(email_renter);
+                    new EmailUtils().sendContractConfirmationEmail(email_renter, email_renter_encode);
+                }
+            } else {
+                if ( contractDAO.addContractRenter(contract.getContract_id(), sign) && roomDAO.updateRoomStatus(contract.getRoom_id(), 0) && accountDao.updateRoomForAccount(acc.getAccId(), contract.getRoom_id()) ){
+                    url = "dashboard";
+                }
+            }
         } catch ( Exception e){
             System.out.println(e);
         }

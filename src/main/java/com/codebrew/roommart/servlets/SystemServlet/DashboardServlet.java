@@ -1,5 +1,6 @@
 package com.codebrew.roommart.servlets.SystemServlet;
 
+import com.codebrew.roommart.dao.AccountDao;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.utils.Decorations;
 
@@ -32,6 +33,9 @@ public class DashboardServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession(true);
             Account account = (Account) session.getAttribute("USER");
+            String email = account.getAccountInfo().getInformation().getEmail();
+            AccountDao ad = new AccountDao();
+            int checkRenterHasRoom = ad.getRoomOfRenter(email);
 
             if (account != null) {
                 switch (account.getRole()) {
@@ -42,7 +46,11 @@ public class DashboardServlet extends HttpServlet {
                         url = "owner-dashboard";
                         break;
                     case 2:
-                        url = "RenterHome";
+                        session.setAttribute("st",checkRenterHasRoom);
+                        if (checkRenterHasRoom==0){
+                            url = "home";
+                        }else { url = "RenterHome";}
+
                         break;
                 }
             }

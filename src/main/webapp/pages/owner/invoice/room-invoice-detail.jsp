@@ -86,7 +86,7 @@
                                 <p class="bill__item">Khu trọ: <span>${sessionScope.hostel.hostelName}</span></p>
                                 <p class="bill__item">Phòng số: <span>${sessionScope.room.roomNumber}</span></p>
                                 <p class="bill__item">Địa chỉ:
-                                    <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+                                    <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward}, ${sessionScope.hostel.district}, ${sessionScope.hostel.city}</span>
                                 </p>
                                 <c:set var="consumeBeginMonth" value="${requestScope.consumeStart}"/>
                                 <c:set var="consumeEndMonth" value="${requestScope.consumeEnd}"/>
