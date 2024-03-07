@@ -153,14 +153,10 @@
                                 <div class="search-filter dropdown">
 <%--select-text--%>
 <%--dropdown-menu--%>
-   <div title="Chọn mức giá phòng mong muốn" class="select-text select-custom js__listing-search-select-button js__listing-search-select-tooltip dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <div onclick={showdropdown()} title="Chọn mức giá phòng mong muốn"  class="select-text select-custom js__listing-search-select-button js__listing-search-select-tooltip dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
     <span  class="select-text-content js__listing-search-select-button-current-text" style="font-size: inherit">Mức Giá</span>
-<%--        <div class="dropdown-menu re__listing-search-select-dropdown " aria-labelledby="dropdownMenuButton">--%>
-<%--            <a class="dropdown-item " href="#">Action</a>--%>
-<%--            <a class="dropdown-item" href="#">Another action</a>--%>
-<%--            <a class="dropdown-item" href="#">Something else here</a>--%>
-<%--        </div>--%>
+
       <jsp:include page="pages/home/drop-down-price.jsp"></jsp:include>
 
    </div>
@@ -369,7 +365,7 @@
 <script src="./assets/js/sendWebsocket.js"></script>
 <script>
 
-    sendToWebSocket("hostel_owner", "hostel_renter", null, 4, null," chat chat chat chat chat chat chat chat chat chat");
+    // sendToWebSocket("hostel_owner", "hostel_renter", null, 4, null," Chức năng thông báo");
 
 </script>
 
@@ -455,6 +451,7 @@
 </script>
 
 <script>
+
     document.addEventListener("DOMContentLoaded", function() {
         var loadingOverlay = document.getElementById('loading-overlay');
 
@@ -468,8 +465,17 @@
         });
     });
 
+function showdropdown(){
+    console.log("showdropdown");
+    const dropdownElement = document.getElementById("dropdownPricev2");
+    console.log(dropdownElement)
+    if(dropdownElement.style.display == "block"){
+        dropdownElement.style.display = "none";
 
+    }else
+    dropdownElement.style.display = "block";
 
+}
 
 </script>
 <script>

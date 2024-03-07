@@ -119,6 +119,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
                 req.setAttribute("LIST_SERVICES", serviceInfoList);
                 url = SUCCESS;
             }
+
             //Create Workbook
             Workbook workbook = new XSSFWorkbook();
             //Create name of new sheet
@@ -457,7 +458,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
             req.setAttribute("SUCCESS_EXPORT", "Xuất hoá đơn ra Excel thành công!");
 
         } catch (Exception e) {
-            log("Error at ExportBillToExcelServlet: " + e.toString());
+            System.out.println(e);
             req.setAttribute("ERROR_EXPORT", "Đã có lỗi không thể xuất excel!");
         }
     }

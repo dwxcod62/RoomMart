@@ -162,7 +162,8 @@
                             Xuất hóa đơn ra file Excel
                         </a>
                         <c:if test="${BILL.payment.paymentID == 0}">
-                            <form>
+                            <form action="vnp-payment">
+                                <input type="hidden" name="vnp_OrderId" value="${BILL.billID}">
                                 <button type="submit" id="payment-button"
                                         class="btn btn-outline-danger btn-lg float-right mt-4">
                                     Thanh Toán
@@ -181,5 +182,21 @@
     </div>
 </div>
     <%@include file="component/footer.jsp"%>
+    <!-- Push notification element -->
+    <div id="push-noti"></div>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
+
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
+        // Close when leave
+        window.onbeforeunload = function () {
+            receiveWebsocket.disconnectWebSocket();
+        };
+    </script>
 </body>
 </html>

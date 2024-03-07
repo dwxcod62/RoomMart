@@ -1,5 +1,6 @@
 package com.codebrew.roommart.servlets.ContractServlet;
 
+import com.codebrew.roommart.dao.ContractDao;
 import com.codebrew.roommart.dao.RoomDao;
 import com.codebrew.roommart.dto.Room;
 import com.codebrew.roommart.utils.Decorations;
@@ -35,6 +36,8 @@ public class DeleteContractServlet extends HttpServlet {
 
         try{
             RoomDao roomDao = new RoomDao();
+            ContractDao contractDao = new ContractDao();
+
             roomDao.updateRoomStatus(r.getRoomId(), 1);
             url = "ownerRoomDetail?" + "roomID=" + r.getRoomId() + "&hostelID=" + r.getHostelId();
         } catch ( Exception e){

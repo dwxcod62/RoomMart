@@ -71,7 +71,22 @@
     </div>
 </div>
 <%@include file="component/footer.jsp" %>
+<!-- Push notification element -->
+<div id="push-noti"></div>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
 
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+    // Close when leave
+    window.onbeforeunload = function () {
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 <script src="./assets/js/renter/Renter-navbar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

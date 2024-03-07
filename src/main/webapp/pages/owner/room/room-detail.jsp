@@ -131,7 +131,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Hủy bỏ
                                                 </button>
-                                                <form action="end-rental-contract" method="POST">
+                                                <form action="end-contract" method="POST">
                                                     <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
                                                     <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}" />
                                                     <button type="submit" class="btn btn-danger">Đồng ý</button>
@@ -246,7 +246,7 @@
     params.sender = "hostel_owner";
     params.receiver = "hostel_renter";
     params.hostel_receiver_id = null;
-    params.account_receiver_id = "${requestScope.RENTER_ID}";
+    params.account_receiver_id = "${requestScope.renterAccount.accId}";
     params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
     sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
     </c:if>
@@ -264,6 +264,22 @@
     <!-- Loader -->
     <script src="./assets/js/loading-handler.js"></script>
 </c:if>
+<script>
+
+    function sendConfirm(){
+        const params = new Object();
+        params.sender = "hostel_owner";
+        params.receiver = "hostel_renter";
+        params.hostel_receiver_id = null;
+        params.account_receiver_id = "${requestScope.renterAccount.accId}";
+        params.messages = "Chủ trọ đã xác nhận thanh toán hóa đơn!";
+        sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
+        //updateBilLStatus
+        setTimeout(function() {
+            document.getElementById("updateBilLStatusForm").submit();
+        }, 1000); // 3000 milliseconds = 3 seconds
+    }
+</script>
 </body>
 
 </html>

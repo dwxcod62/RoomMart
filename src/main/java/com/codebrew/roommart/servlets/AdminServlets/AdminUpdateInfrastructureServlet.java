@@ -20,6 +20,7 @@ public class AdminUpdateInfrastructureServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         try {
             HandlerStatus handlerStatus;
             int infrastructureId = Integer.parseInt(request.getParameter("infrastructureId"));
