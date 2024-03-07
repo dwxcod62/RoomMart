@@ -42,15 +42,13 @@ public class GetHostelInfoServlet extends HttpServlet {
             session.setAttribute("uri", request.getRequestURI());
 
             //Get Hostel
-
             if (session.getAttribute("HOSTEL") == null) {
-                System.out.println("a");
                 Hostel hostel = contractDAO.getHostelByContract(renterId);
 
                 session.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }
-            System.out.println(session.getAttribute("HOSTEL"));
+
             //Get Room Info
             Room room = (Room) session.getAttribute("ROOM_INFOR");
             if (room == null) {

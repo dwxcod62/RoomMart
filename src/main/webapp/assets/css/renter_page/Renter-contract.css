@@ -303,89 +303,66 @@ body {
 }
 
 .content {
-  margin: 0;
-  text-align: left;
   width: 80%;
-  padding: 10px;
-  min-height: calc(100vh - 80px);
-}
-.content .contract-content {
-  padding: 20px 40px;
-  border: 1px solid black;
-  width: 80%;
-  margin: 60px auto;
-  border-radius: 8px;
-  height: fit-content;
-}
-.content .contract-content .contract-head h4 {
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 30px;
-  font-weight: 550;
-}
-.content .contract-content .contract-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.content .contract-content .contract-body .owner-infor {
-  text-align: left;
-}
-.content .contract-content .contract-body .owner-infor p {
-  margin-bottom: 30px;
-  font-size: 25px;
-  font-weight: 600;
-}
-.content .contract-content .contract-body .owner-infor strong {
-  font-weight: 500;
-}
-.content .contract-content .contract-body .owner-infor h5 {
-  font-size: 20px;
-  font-weight: 400;
-}
-.content .contract-content .contract-body .renter-infor {
-  text-align: left;
-}
-.content .contract-content .contract-body .renter-infor p {
-  margin-bottom: 30px;
-  font-size: 25px;
-  font-weight: 600;
-}
-.content .contract-content .contract-body .renter-infor strong {
-  font-weight: 500;
-}
-.content .contract-content .contract-body .renter-infor h5 {
-  font-size: 20px;
-  font-weight: 400;
-}
-.content .contract-content .contract-result p {
-  margin-bottom: 30px;
-  text-align: left;
-  font-size: 25px;
-  font-weight: 600;
-}
-.content .contract-content .contract-result strong {
-  font-weight: 500;
-}
-.content .contract-content .contract-result h5 {
-  font-weight: 400;
-  font-size: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 60px;
 }
 
-@media screen and (max-width: 1024px) {
-  body .content {
-    width: 100%;
-    padding: 0;
-    min-height: calc(100vh - 80px);
-  }
-  body .dashboard {
-    display: none;
-  }
-  body .dropdown {
-    display: block;
-    padding: 0;
-    width: fit-content;
-    height: fit-content;
-  }
+.content .contract-content {
+  height: fit-content;
+  margin-bottom: 80px;
+  padding: 16px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.08) 0px 1px 2px;
+}
+
+.content__spacer {
+  background: rgba(0, 0, 0, 0.3);
+  height: 0.2px;
+  margin: 10px 0 15px 0;
+}
+
+.content__infor-title {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.content__infor-item {
+  font-weight: 600;
+}
+
+.content__infor-item span {
+  font-weight: 400;
+}
+
+.content__table .content__infor-table .good {
+  color: #009a13;
+}
+.content__table .content__infor-table .break {
+  color: #d90000;
+}
+
+.user-sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.user-sign .mage-sign {
+  width: fit-content;
+  height: fit-content;
+}
+
+.user-sign p {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
 }
 
 .active {

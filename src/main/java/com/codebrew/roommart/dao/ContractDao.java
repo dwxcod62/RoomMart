@@ -37,7 +37,8 @@ public class ContractDao {
             "INNER JOIN rooms ON Contracts.room_id = rooms.room_id\n" +
             "WHERE Contracts.renter_id = ?";
     private static final String
-            GET_INFRASTRUCTURES_BY_CONTRACT = "SELECT infrastructureitem.infrastructure_name, infrastructuresroom.quantity\n" +
+            GET_INFRASTRUCTURES_BY_CONTRACT = "SELECT infrastructureitem.infrastructure_name, " +
+            "infrastructuresroom.quantity, infrastructuresroom.status\n" +
             "FROM Contracts\n" +
             "JOIN rooms ON Contracts.room_id = rooms.room_id\n" +
             "JOIN infrastructuresroom ON rooms.room_id = infrastructuresroom.room_id\n" +
@@ -56,7 +57,7 @@ public class ContractDao {
             "FROM Contracts\n" +
             "WHERE room_id IN (SELECT room_id FROM Contracts WHERE renter_id = ?)";
     private static final String
-            GET_INFO_CONTRACT = "SELECT start_date, expiration, deposit, price\n" +
+            GET_INFO_CONTRACT = "SELECT start_date, expiration, deposit, price, renter_sign, owner_sign\n" +
             "FROM Contracts\n" +
             "WHERE renter_id = ?";
 
@@ -303,10 +304,12 @@ public class ContractDao {
                 while (rs.next()) {
                     String name = rs.getString("infrastructure_name");
                     int quantity = rs.getInt("quantity");
+                    int status = rs.getInt("status");
 
                     Infrastructures infrastructures = Infrastructures.builder()
                             .name(name)
                             .quantity(quantity)
+                            .status(status)
                             .build();
 
                     infrastructuresList.add(infrastructures);
@@ -452,12 +455,16 @@ public class ContractDao {
                 String expiration = rs.getDate("expiration").toString();
                 int deposit = rs.getInt("deposit");
                 int price = rs.getInt("price");
+                String renter_sign = rs.getString("renter_sign");
+                String owner_sign = rs.getString("owner_sign");
 
                 contractInfor = Contract.builder()
                         .startDate(start_date)
                         .expiration(expiration)
                         .deposit(deposit)
                         .price(price)
+                        .renter_sign(renter_sign)
+                        .owner_sign(owner_sign)
                         .build();
             }
         } catch (Exception e) {
