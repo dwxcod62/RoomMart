@@ -181,5 +181,21 @@
     </div>
 </div>
     <%@include file="component/footer.jsp"%>
+    <!-- Push notification element -->
+    <div id="push-noti"></div>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
+
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
+        // Close when leave
+        window.onbeforeunload = function () {
+            receiveWebsocket.disconnectWebSocket();
+        };
+    </script>
 </body>
 </html>

@@ -246,7 +246,7 @@
     params.sender = "hostel_owner";
     params.receiver = "hostel_renter";
     params.hostel_receiver_id = null;
-    params.account_receiver_id = "${requestScope.RENTER_ID}";
+    params.account_receiver_id = "${requestScope.renterAccount.accId}";
     params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
     sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
     </c:if>
@@ -271,13 +271,13 @@
         params.sender = "hostel_owner";
         params.receiver = "hostel_renter";
         params.hostel_receiver_id = null;
-        params.account_receiver_id = "${sessionScope.renterAccount.accId}";
+        params.account_receiver_id = "${requestScope.renterAccount.accId}";
         params.messages = "Chủ trọ đã xác nhận thanh toán hóa đơn!";
         sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
         //updateBilLStatus
         setTimeout(function() {
             document.getElementById("updateBilLStatusForm").submit();
-        }, 1200); // 3000 milliseconds = 3 seconds
+        }, 1000); // 3000 milliseconds = 3 seconds
     }
 </script>
 </body>

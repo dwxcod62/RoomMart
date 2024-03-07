@@ -78,6 +78,8 @@
     </div>
 </div>
 <%@include file="component/footer.jsp" %>
+<!-- Push notification element -->
+<div id="push-noti"></div>
 <script src="./assets/js/renter/Renter-navbar.js"></script>
 
 <script>
@@ -96,6 +98,20 @@
         } else {
         }
     }
+</script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+    // Close when leave
+    window.onbeforeunload = function () {
+        receiveWebsocket.disconnectWebSocket();
+    };
 </script>
 </body>
 </html>
