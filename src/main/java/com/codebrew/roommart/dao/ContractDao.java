@@ -663,7 +663,7 @@ public class ContractDao {
             if (cn != null) {
                 cn.setAutoCommit(false);
 
-                pst = cn.prepareStatement("Update [Contracts] set renter_sign = ? where contract_id = ?");
+                pst = cn.prepareStatement("Update [Contracts] set renter_sign = ? , status = 0 where contract_id = ?");
                 pst.setString(1, sign);
                 pst.setInt(2, contract_id);
 
@@ -713,7 +713,7 @@ public class ContractDao {
             if (cn != null) {
                 String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status\n" +
                         "FROM Contracts\n" +
-                        "WHERE room_id = ? AND status = 1";
+                        "WHERE room_id = ? AND status = 0";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);

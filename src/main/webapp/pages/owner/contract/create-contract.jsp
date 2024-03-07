@@ -10,10 +10,10 @@
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
 
     <!-- Title -->
-    <title>Thêm khu trọ</title>
+    <title>Room Mart - Tạo hợp đồng</title>
 
     <!-- Date picker -->
-    <link rel="stylesheet" href="./assets/scss/datepicker/rome.css">
+    <link rel="stylesheet" href="./assets/css/datepicker/rome.css">
 
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -75,7 +75,7 @@
                             <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">
                             <input type="hidden" name="hostel_id" value="${sessionScope.hostel.hostelID}">
                             <div class="form-header">
-                                <div class="form-title main-title">Tạo tài khoản</div>
+                                <div class="form-title main-title">Tạo hợp đồng</div>
                             </div>
                             <div class="spacer"></div>
                             <div class="form-group">

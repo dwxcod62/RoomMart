@@ -97,7 +97,7 @@
                                             </div>
                                             <div class="invoice-detail__infor-detail">
                                                 Địa chỉ:
-                                                <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+                                                <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward}, ${sessionScope.hostel.district}, ${sessionScope.hostel.city}</span>
                                             </div>
                                         </div>
                                         <div class="col-6 invoice-detail__infor-right">

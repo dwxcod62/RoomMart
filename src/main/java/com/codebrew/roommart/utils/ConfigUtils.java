@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ConfigUtils {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_Returnurl = "http://localhost:8080/HappyHostel/confirm-payment-status";
+    public static String vnp_Returnurl = "http://localhost:8080/RoomMart/confirm-payment-status";
     public static String vnp_TmnCode = "CGXZLS0Z";
     public static String vnp_HashSecret = "XNBCJFAKAZQSGTARRLGCHVZWCIOIGSHN";
     public static String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/merchant.html";

@@ -162,7 +162,8 @@
                             Xuất hóa đơn ra file Excel
                         </a>
                         <c:if test="${BILL.payment.paymentID == 0}">
-                            <form>
+                            <form action="vnp-payment">
+                                <input type="hidden" name="vnp_OrderId" value="${BILL.billID}">
                                 <button type="submit" id="payment-button"
                                         class="btn btn-outline-danger btn-lg float-right mt-4">
                                     Thanh Toán

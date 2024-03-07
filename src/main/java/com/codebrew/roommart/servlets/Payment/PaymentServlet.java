@@ -69,7 +69,7 @@ public class PaymentServlet extends HttpServlet {
             vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
             Calendar cldvnp_ExpireDate = Calendar.getInstance();
-            cldvnp_ExpireDate.add(Calendar.SECOND, 30);
+            cldvnp_ExpireDate.add(Calendar.MINUTE, 15);
             Date vnp_ExpireDateD = cldvnp_ExpireDate.getTime();
             String vnp_ExpireDate = formatter.format(vnp_ExpireDateD);
 
