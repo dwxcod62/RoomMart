@@ -9,6 +9,7 @@ import com.codebrew.roommart.utils.OwnerUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,5 +78,61 @@ public class InfrastructureDAO implements IInfrastructureDAO {
             OwnerUtils.closeSQL(cn, pst, rs);
         }
         return infrastructures;
+    }
+
+    @Override
+    public boolean updateInfrastructureStatus(int idInfrastructureRoom, int status) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isSuccess = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "UPDATE InfrastructuresRoom\n" +
+                        "SET status = ?\n" +
+                        "WHERE id_infrastructure = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, status);
+                pst.setInt(2, idInfrastructureRoom);
+
+                if (pst.executeUpdate() > 0) {
+                    isSuccess = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, null);
+        }
+        return isSuccess;
+    }
+
+    @Override
+    public Boolean addNewInfrastructure(int roomID, int quantity, int status, int idInfrastructureItem) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isSuccess = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (?, ?, ?, ?)";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                pst.setInt(2, quantity);
+                pst.setInt(3, status);
+                pst.setInt(4, idInfrastructureItem);
+
+                if (pst.executeUpdate() > 0) {
+                    isSuccess = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, null);
+        }
+        return isSuccess;
     }
 }
