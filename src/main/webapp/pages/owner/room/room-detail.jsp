@@ -13,6 +13,7 @@
     <!-- Title -->
     <title>Chi tiết phòng</title>
 
+
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -215,6 +216,8 @@
 <script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 
+<script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
 <script>
     <c:choose>
     <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
@@ -243,7 +246,7 @@
     params.sender = "hostel_owner";
     params.receiver = "hostel_renter";
     params.hostel_receiver_id = null;
-    params.account_receiver_id = "${requestScope.RENTER_ID}";
+    params.account_receiver_id = "${requestScope.renterAccount.accId}";
     params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
     sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
     </c:if>
@@ -261,6 +264,22 @@
     <!-- Loader -->
     <script src="./assets/js/loading-handler.js"></script>
 </c:if>
+<script>
+
+    function sendConfirm(){
+        const params = new Object();
+        params.sender = "hostel_owner";
+        params.receiver = "hostel_renter";
+        params.hostel_receiver_id = null;
+        params.account_receiver_id = "${requestScope.renterAccount.accId}";
+        params.messages = "Chủ trọ đã xác nhận thanh toán hóa đơn!";
+        sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
+        //updateBilLStatus
+        setTimeout(function() {
+            document.getElementById("updateBilLStatusForm").submit();
+        }, 1000); // 3000 milliseconds = 3 seconds
+    }
+</script>
 </body>
 
 </html>

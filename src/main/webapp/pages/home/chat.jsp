@@ -303,7 +303,7 @@
                         <!-- Message -->
 
                     </div>
-                    <div class="end-of-chat"></div>
+                    <div id="end-of-chat" class="end-of-chat"></div>
 
                     <!-- Scroll to end -->
                 </div>
@@ -533,8 +533,8 @@
     const acc = "${sessionScope.USER !=null ? sessionScope.USER: "null"}";
     const username = "${requestScope.infor.fullname!=null ? requestScope.infor.fullname: "null"}";
 
-    const hostelID = "${requestScope.hostelId !=null ? EncodeUtils.encodeString(requestScope.hostelId): "null"}";
-    const roomID = "${requestScope.roomId !=null ? EncodeUtils.encodeString(requestScope.roomId): "null"}";
+    const hostelID = "${requestScope.hostelId !=null ? (requestScope.hostelId): "null"}";
+    const roomID = "${requestScope.roomId !=null ? (requestScope.roomId): "null"}";
     const accId = "${sessionScope.USER.accId !=null ? sessionScope.USER.accId: "null"}";
 
     const renterName = "${requestScope.infor2.fullname !=null ? requestScope.infor2.fullname: "null"}";

@@ -101,7 +101,7 @@ public class EmailUtils {
 
     public boolean sendContractConfirmationEmail(String receiverEmail, String data) {
         String subject = "Xác nhận Hợp đồng Thuê";
-        String contractLink = "http://" + host + ":8080/RoomMart/contract?data=" + data;
+        String contractLink = "http://" + host + ":8080/RoomMart/confirm-contract?data=" + data;
         String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"
@@ -118,4 +118,121 @@ public class EmailUtils {
                 + "</div>";
         return send(receiverEmail, subject, emailContent);
     }
+
+    public boolean sendMailNewBill(String receiveMail, String billTitle){
+        String domain = "http://" + host + ":8080/RoomMart/renter-invoice";
+        String mailObject = "Bạn vừa nhận được 1 hóa đơn mới";
+        String mailBody = "<!doctype html>\n" +
+                "<html lang=\"vi\">\n" +
+                "\n" +
+                "<head>\n" +
+                "    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\" />\n" +
+                "    <title>Reset Password</title>\n" +
+                "    <meta name=\"description\" content=\"Reset Password Email Template.\">\n" +
+                "    <style type=\"text/css\">\n" +
+                "        a:hover {\n" +
+                "            text-decoration: underline !important;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body marginheight=\"0\" topmargin=\"0\" marginwidth=\"0\" style=\"margin: 0px; background-color: #f2f3f8;\" leftmargin=\"0\">\n" +
+                "    <!--100% body table-->\n" +
+                "    <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" width=\"100%\" bgcolor=\"#f2f3f8\"\n" +
+                "        style=\"@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;\">\n" +
+                "        <tr>\n" +
+                "            <td>\n" +
+                "                <table style=\"background-color: #f2f3f8; \n" +
+                "                max-width: 670px;  \n" +
+                "                margin: 0 auto;\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align: center;\">\n" +
+                "                            <a href=\"\" title=\"logo\" target=\"_blank\">\n" +
+                "                                <img width=\"150\" src=\"https://camo.githubusercontent.com/eda1d1f5b51e3eed064cedd85298c95e93aa6a34200b5c932e936b01bfab2c48/68747470733a2f2f73636f6e74656e742e66646164312d322e666e612e666263646e2e6e65742f762f74312e31353735322d392f3432383231353034345f3934333530343234363639363833355f333336323038363139323731303432313033315f6e2e706e673f5f6e635f6361743d313032266363623d312d37265f6e635f7369643d386364306132265f6e635f657569323d41654630754566763643737a704f6a3362676c526e794e444a505175713041612d62776b3943367251427235764643423034754c78716146724436617861707136775f35454e4a356a4d38504d625838476c7a4373322d34265f6e635f6f68633d496853786773364232434d41585f684473596f265f6e635f68743d73636f6e74656e742e66646164312d322e666e61266f683d30335f41645370454d3851306a4b4543565a437a345867316b5a69744e724964583251415069625376626e383477557641266f653d3635463938443831\" title=\"logo\" alt=\"logo\">\n" +
+                "                            </a>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height: 20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td>\n" +
+                "                            <table width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width: 670px;\n" +
+                "                                background:#fff; \n" +
+                "                                border-radius: 3px;\n" +
+                "                                text-align: center;\n" +
+                "                                -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                -moz-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\">\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height: 40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"padding:0 35px;\">\n" +
+                "                                        <h1 style=\"color: #1e1e2d; \n" +
+                "                                            font-weight: 500; margin: 0;\n" +
+                "                                            font-size: 32px;\n" +
+                "                                            font-family:'Rubik', sans-serif;\">\n" +
+                "                                            Bạn đã nhận được hóa đơn phòng "+billTitle+" \n" +
+                "                                        </h1>\n" +
+                "                                        <span style=\"display: inline-block;\n" +
+                "                                            vertical-align:middle;\n" +
+                "                                            margin: 29px 0 26px; \n" +
+                "                                            border-bottom: 1px solid #cecece;\n" +
+                "                                            width: 100px;\">\n" +
+                "                                        </span>\n" +
+                "                                        <p style=\"color:#455056;\n" +
+                "                                        font-size: 15px;\n" +
+                "                                        line-height: 24px; \n" +
+                "                                        margin: 0;\">\n" +
+                "                                            Chủ trọ vừa gửi cho bạn 1 hóa đơn tháng này. Vui lòng thanh toán đúng hạn.</br>  Xin cảm ơn\n" +
+                "                                        </p>\n" +
+                "                                        <a href=\""+domain+"\" style=\"background: #20e277;\n" +
+                "                                            text-decoration: none !important; \n" +
+                "                                            font-weight: 600; \n" +
+                "                                            margin-top: 35px; \n" +
+                "                                            color: #fff;\n" +
+                "                                            text-transform: uppercase;\n" +
+                "                                            font-size: 14px;\n" +
+                "                                            padding: 14px 24px;\n" +
+                "                                            width: 200px;\n" +
+                "                                            display: inline-block;\n" +
+                "                                            border-radius:50px;\" onmouseout=\"this.style.background='#20e277'\"\n" +
+                "                                            onmouseover=\"this.style.background='#0bb658'\">\n" +
+                "                                            Xem hóa đơn\n" +
+                "                                        </a>\n" +
+                "                                    </td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height:40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                            </table>\n" +
+                "                        </td>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align:center;\">\n" +
+                "                            <p\n" +
+                "                                style=\"font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;\">\n" +
+                "                                &copy; <strong>www.codebrew.com</strong></p>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                </table>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "    <!--/100% body table-->\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        return send(receiveMail, mailObject, mailBody);
+    }
+
 }

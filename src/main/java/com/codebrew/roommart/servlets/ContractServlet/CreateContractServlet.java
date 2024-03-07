@@ -1,8 +1,10 @@
 package com.codebrew.roommart.servlets.ContractServlet;
 
 import com.codebrew.roommart.dao.*;
+import com.codebrew.roommart.dao.OwnerDao.Impl.ConsumeDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.RoomDAO;
 import com.codebrew.roommart.dto.*;
+import com.codebrew.roommart.dto.OwnerDTO.Consume;
 import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.StringUtils;
 
@@ -71,7 +73,7 @@ public class CreateContractServlet extends HttpServlet {
                             int roomWater = Integer.parseInt(req.getParameter("room-water"));
 
                             if (informationDao.isExistEmail(email)) {
-                                if (  ( (int) AccountDao.getRoomOfRenter(email)) == 0){
+                                    if ( ((int) new AccountDao().getRoomOfRenter(email)) == 0){
                                     url = SUCCESS;
 
                                     Information _renter_info = new InformationDao().getAccountInformationByEmail(email);
@@ -97,6 +99,14 @@ public class CreateContractServlet extends HttpServlet {
 
                                     List<Infrastructures> _list_Infrastructures = new InfrastructureDao().getRoomInfrastructures(roomID);
                                     List<ServiceInfo> _list_Services = new ServiceInfoDAO().getServicesOfHostel(hostelID);
+
+
+                                    Consume _consume = new Consume().builder()
+                                                    .roomID(roomID)
+                                                    .status(0)
+                                                    .numberWater(roomWater)
+                                                    .numberElectric(roomElectric).build();
+                                    new ConsumeDAO().updateConsumeNumber(_consume);
 
                                     session.setAttribute("CONTRACT_ROOM_INFRASTRUCTURE_LIST", _list_Infrastructures);
                                     session.setAttribute("CONTRACT_SERVICES_LIST", _list_Services);

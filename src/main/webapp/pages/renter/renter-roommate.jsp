@@ -171,5 +171,10 @@
         };
     </script>
 
+    <script>
+        var currentPage = window.location.pathname.split("/").pop().split(".")[0];
+        document.getElementById(currentPage).classList.add("active");
+    </script>
+
 </body>
 </html>

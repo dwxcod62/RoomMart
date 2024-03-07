@@ -1,8 +1,10 @@
 package com.codebrew.roommart.dao;
 
+import com.codebrew.roommart.dao.OwnerDao.Impl.AccountDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Propose;
 import com.codebrew.roommart.utils.DatabaseConnector;
+import com.codebrew.roommart.utils.OwnerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -117,4 +119,68 @@ public class ProposeDao {
     }
 
 
+    public List<Propose> getAllProposeBySenderId(int senderId) {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Propose> proposeList = new ArrayList<>();
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                String GET_ALL_PROPOSES_BY_SENDER_ID =
+                        "SELECT id, content, send_date, reply, reply_date, status, send_account_id,\n" +
+                                "reply_account_id FROM Propose WHERE send_account_id = ? ORDER BY send_date DESC";
+                pst = conn.prepareStatement(GET_ALL_PROPOSES_BY_SENDER_ID);
+                pst.setInt(1, senderId);
+                rs = pst.executeQuery();
+
+                AccountDAO accountDAO = new AccountDAO();
+                while (rs.next()) {
+                    Account sendAccount = accountDAO.getAccountById(rs.getInt("send_account_id"));
+                    Account replyAccount = accountDAO.getAccountById(rs.getInt("reply_account_id"));
+                    proposeList.add(Propose.builder()
+                            .id(rs.getInt("id"))
+                            .content(rs.getString("content"))
+                            .sendDate(rs.getString("send_date"))
+                            .reply(rs.getString("reply"))
+                            .replyDate(rs.getString("reply_date"))
+                            .status(rs.getInt("status"))
+                            .sendAccount(sendAccount)
+                            .replyAccount(replyAccount).build());
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(conn, pst, rs);
+        }
+        return proposeList;
+    }
+
+    public boolean insertNewPropose(String content, int senderId) {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                conn.setAutoCommit(false);
+                String INSERT_NEW_PROPOSE =
+                        "INSERT INTO Propose(content, send_date, status, send_account_id) VALUES(?, GETDATE(), 0, ?)";
+                pst = conn.prepareStatement(INSERT_NEW_PROPOSE);
+                pst.setString(1, content);
+                pst.setInt(2, senderId);
+                check = pst.executeUpdate() > 0;
+                if (!check) {
+                    conn.rollback();
+                }
+                conn.setAutoCommit(true);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(conn, pst, null);
+        }
+        return check;
+    }
 }

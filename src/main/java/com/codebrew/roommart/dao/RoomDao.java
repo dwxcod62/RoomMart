@@ -827,7 +827,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-                System.out.println(sql);
+//                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -962,7 +962,7 @@ public List<String>getListImgByRoomId(int rid){
         return isExist;
     }
     public static Date get_end_date_by_RoomId(int rid) {
-        System.out.println("-> get_end_date_by_RoomId ");
+//        System.out.println("-> get_end_date_by_RoomId ");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -1469,6 +1469,7 @@ public List<String>getListImgByRoomId(int rid){
         return room_area;
     }
 
+
     public boolean updateRoomStatus(int room_id,int status){
         boolean st = false;
         Connection cn = null;
@@ -1518,6 +1519,85 @@ public List<String>getListImgByRoomId(int rid){
         return st;
     }
 
+    public int getRoomStatusByContractAndEmail(String email) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        int status = 2;
+        try {
+
+            conn = DatabaseConnector.makeConnection();
+
+            if (conn != null) {
+                String sql = "select r.room_status from [Rooms] r\n" +
+                        "join [Contracts] c on r.room_id = c.room_id\n" +
+                        "join [Accounts] a on a.account_id = c.renter_id\n" +
+                        "join [AccountInformations] ai on ai.account_id = a.account_id\n" +
+                        "where ai.email = ?";
+
+                psm = conn.prepareStatement(sql);
+                psm.setString(1, email);
+                rs = psm.executeQuery();
+                if (rs != null && rs.next()) {
+                    status = rs.getInt("room_status");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) { rs.close(); }
+            if (psm != null) { psm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return status;
+    }
+
+    public Room getRoomInfoByRenterId(int renterId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfo = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT R.* FROM Rooms AS R INNER JOIN Contracts AS C \n" +
+                        "ON R.room_id = C.room_id WHERE C.renter_id = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int room_id = rs.getInt("room_id");
+                    int hostel_id = rs.getInt("hostel_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    roomInfo = Room
+                            .builder()
+                            .roomId(room_id)
+                            .hostelId(hostel_id)
+                            .roomNumber(roomNumber)
+                            .capacity(capacity)
+                            .roomArea(roomArea)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfo;
+    }
 }
 
 

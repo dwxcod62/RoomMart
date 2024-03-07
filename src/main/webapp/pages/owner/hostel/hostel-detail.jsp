@@ -71,7 +71,7 @@
                     <!-- Hostel information -->
                     <div class="hostel-infor">
                         <h2 class="hostel-name">${hostelInformation.hostelName}</h2>
-                        <div class="hostel-address">${hostelInformation.address}, ${hostelInformation.district.split('-')[1]}, ${hostelInformation.city.split('-')[1]}</div>
+                        <div class="hostel-address">${hostelInformation.address}, ${hostelInformation.district}, ${hostelInformation.city}</div>
                     </div>
                     <div class="hostel-actions">
                         <!-- Add service button -->

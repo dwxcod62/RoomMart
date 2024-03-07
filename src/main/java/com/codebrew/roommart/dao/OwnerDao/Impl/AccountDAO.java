@@ -3,6 +3,7 @@ package com.codebrew.roommart.dao.OwnerDao.Impl;
 import com.codebrew.roommart.dao.OwnerDao.IAccountDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.AccountInfo;
+import com.codebrew.roommart.dto.Information;
 import com.codebrew.roommart.utils.DatabaseConnector;
 import com.codebrew.roommart.utils.OwnerUtils;
 
@@ -57,11 +58,11 @@ public class AccountDAO implements IAccountDAO {
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
                     String birthday = rs.getString("birthday");
-                    boolean sex = OwnerUtils.convertIntToBoolean(rs.getInt("sex"));
+                    int sex = rs.getInt("sex");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("identity_card_number");
-//                    inf = new AccountInfo(fullname, email, birthday, sex, phone, address, cccd);
+                    inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd));
                 }
             }
         } catch (Exception e) {

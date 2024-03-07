@@ -8,10 +8,39 @@ import com.codebrew.roommart.utils.OwnerUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentDAO implements IPaymentDAO {
+    @Override
+    public boolean updateBillStatus(int billID, int paymentID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean updated = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                String sql = "UPDATE Bill\n" +
+                        "SET payment_date = GETDATE(), status = 1, payment_id = ?\n" +
+                        "WHERE bill_id = ?\n";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, paymentID);
+                pst.setInt(2, billID);
+
+                if (pst.executeUpdate() > 0) {
+                    updated = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, null);
+        }
+        return updated;
+    }
+
     @Override
     public List<Payment> getPaymentList() {
         Connection cn = null;

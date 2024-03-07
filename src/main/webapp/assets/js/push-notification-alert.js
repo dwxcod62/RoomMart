@@ -172,14 +172,14 @@ function showBoxChat({ message = "",ownerId="",renterId="",role="",
 
             if (document.getElementById("messages") != null) {
                 document
-                    .getElementById("messages")
-                    .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+                    .getElementById("end-of-chat")
+                    .scrollIntoView(true);
                 // document
                 //     .getElementById("chatContainer")
                 //     .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
                 document
                     .getElementById("chat-footer")
-                    .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+                    .scrollIntoView(true);
 
             }
             ;
@@ -221,14 +221,14 @@ function showBoxChat({ message = "",ownerId="",renterId="",role="",
 
             //auto scroll to bottom
             document
-                .getElementById("messages")
-                .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+                .getElementById("end-of-chat")
+                .scrollIntoView(true);
             // document
             //     .getElementById("chatContainer")
             //     .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
             document
                 .getElementById("chat-footer")
-                .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+                .scrollIntoView(true);
 
             var read = false;
             // create db collection and send in the data
@@ -468,14 +468,14 @@ function showBoxChat({ message = "",ownerId="",renterId="",role="",
             if (document
                 .getElementById("messages") != null)
                 document
-                    .getElementById("messages")
-                    .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+                    .getElementById("end-of-chat")
+                    .scrollIntoView(true);
             // document
             //     .getElementById("chatContainer")
             //     .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
             document
                 .getElementById("chat-footer")
-                .scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+                .scrollIntoView(true);
 
         });
     }

@@ -178,4 +178,36 @@ public class ConsumeDAO implements IConsumeDAO {
         }
         return consume;
     }
+
+    public Boolean updateConsumeNumber(Consume consume) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isSuccess = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String sql = "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                        "VALUES (?, ?, GETDATE(), ?, ?)";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, consume.getNumberElectric());
+                pst.setInt(2, consume.getNumberWater());
+                pst.setInt(3, consume.getStatus());
+                pst.setInt(4, consume.getRoomID());
+
+                if (pst.executeUpdate() > 0) {
+                    isSuccess = true;
+                } else {
+                    cn.rollback();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, null);
+        }
+        return isSuccess;
+    }
 }

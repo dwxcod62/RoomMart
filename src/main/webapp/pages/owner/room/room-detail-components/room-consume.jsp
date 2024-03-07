@@ -105,6 +105,7 @@
                                         data-bs-dismiss="modal">Hủy bỏ
                                 </button>
                                 <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
+                                <input type="hidden" name="hostelID" value="${sessionScope.hostel.hostelID}">
                                 <button type="submit" class="btn btn-danger">
                                     Cập nhật
                                 </button>
