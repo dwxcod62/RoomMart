@@ -238,8 +238,8 @@
 
 
 
-                <c:if test="${sessionScope.st}">
-                    <a href="Renter-HomePage" class="action__view-profile-link">
+                <c:if test="${sessionScope.st != 0}">
+                    <a href="RenterHome" class="action__view-profile-link">
                         <div class="action__image">
                             <i class="fa-sharp fa-solid fa-person-shelter fa-2xl"></i>
                         </div>

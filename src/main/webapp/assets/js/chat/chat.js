@@ -42,17 +42,23 @@ function hideSidebar(){
 function roleHandler() {
     console.log("role : " + role);
     if (role == 1) {
-         // username = "admin";
-        showChat();
+         // username = "owner";
+        // showChat();
         sidebarList.style.display="block";
         chatInput.hidden=true;
-        showChat();
+
         if(renterId == "null"){
             chatHeader.style.display="none";
+            chatInput.hidden=true;
+        }else{
+            showChat();
+            readbtn.hidden = true;
+            chatForm.hidden = false;
+            chatInput.hidden = false;
         }
 
     } else {
-        // username = "thanh";
+        // username = "renter";
         readbtn.hidden = true;
         chatForm.hidden = false;
         chatInput.hidden = false;
