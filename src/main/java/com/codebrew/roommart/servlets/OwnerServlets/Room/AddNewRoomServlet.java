@@ -67,6 +67,8 @@ public class AddNewRoomServlet extends HttpServlet {
         Part airConditionsStatusPart = request.getPart("room-air-conditioner-status");
         Part roomDoorsPart = request.getPart("room-door");
         Part roomDoorsStatusPart = request.getPart("room-door-status");
+        Part roomPricePart = request.getPart("room-price");
+
 
         // Convert parts to appropriate data types
         int quantityRoom = Integer.parseInt(getPartValue(quantityRoomPart));
@@ -82,6 +84,8 @@ public class AddNewRoomServlet extends HttpServlet {
         int airConditionsStatus = Integer.parseInt(getPartValue(airConditionsStatusPart));
         int roomDoors = Integer.parseInt(getPartValue(roomDoorsPart));
         int roomDoorsStatus = Integer.parseInt(getPartValue(roomDoorsStatusPart));
+        int price = Integer.parseInt(getPartValue(roomPricePart));
+
 
         RoomDao roomDao = new RoomDao();
 
@@ -127,7 +131,7 @@ public class AddNewRoomServlet extends HttpServlet {
                 String tempImg = "https://res.cloudinary.com/dqp6vdayn/image/upload/v1707647165/What-is-a-404-error-code_lu1xgy.png";
                 for (int i = 0; i < quantityRoom; i++) {
                     boolean isSuccess = roomDao.addNewManyRooms(hostelId, capacity, roomArea, attic, 1,
-                            tempImg,restrooms, restroomStatus,
+                            tempImg,1000000,restrooms, restroomStatus,
                             windows, windowsStatus,
                             roomDoors, roomDoorsStatus,
                             airConditions, airConditionsStatus);
@@ -152,7 +156,7 @@ public class AddNewRoomServlet extends HttpServlet {
 //                        windows, windowsStatus,
 //                        roomDoors, roomDoorsStatus,
 //                        airConditions, airConditionsStatus);
-                boolean isSuccess = roomDao.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 1,roomFiles
+                boolean isSuccess = roomDao.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 1,roomFiles,price
                         , restrooms, restroomStatus,
                         windows, windowsStatus,
                         roomDoors, roomDoorsStatus,

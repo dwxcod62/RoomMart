@@ -58,6 +58,7 @@ public class UpdateRoomServlet extends HttpServlet {
         Part capacityPart = request.getPart("room-capacity");
         Part roomAreaPart = request.getPart("room-area");
         Part atticPart = request.getPart("room-attic");
+        Part pricePart = request.getPart("room-price");
 
 
         int roomNumber = Integer.parseInt(getPartValue(roomNumberPart));
@@ -65,7 +66,7 @@ public class UpdateRoomServlet extends HttpServlet {
         int capacity = Integer.parseInt(getPartValue(capacityPart));
         double roomArea = Double.parseDouble(getPartValue(roomAreaPart));
         int attic = Integer.parseInt(getPartValue(atticPart));
-
+        int price = Integer.parseInt(getPartValue(pricePart));
 
         int roomID = Integer.parseInt(request.getParameter("roomID"));
 
@@ -118,7 +119,7 @@ public class UpdateRoomServlet extends HttpServlet {
         }
         System.out.println("room files: "+roomFiles);
         try {
-            boolean isSuccessUpdate = roomDao.updateRoom(roomID, roomNumber, capacity, roomArea, attic,roomFiles);
+            boolean isSuccessUpdate = roomDao.updateRoom(roomID, roomNumber, capacity, roomArea, attic,roomFiles,price);
 
             if (isSuccessUpdate) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
