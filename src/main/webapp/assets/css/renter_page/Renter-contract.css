@@ -328,15 +328,19 @@ body {
 
 .content__infor-title {
   text-align: center;
-  margin-bottom: 18px;
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 
 .content__infor-item {
   font-weight: 600;
+  font-size: 16px;
 }
 
 .content__infor-item span {
   font-weight: 400;
+  font-size: 16px;
+
 }
 
 .content__table .content__infor-table .good {
@@ -360,7 +364,7 @@ body {
 
 .user-sign p {
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   font-style: italic;
 }

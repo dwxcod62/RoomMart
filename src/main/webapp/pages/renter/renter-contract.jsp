@@ -37,7 +37,7 @@
         <%@include file="component/sidebar.jsp" %>
 
         <div class="content row">
-            <div class="col-10">
+            <div class="col-9">
                 <div class="contract-content">
                     <div class="content__infor">
                         <h2 class="content__infor-title">Thông tin khu trọ</h2>
