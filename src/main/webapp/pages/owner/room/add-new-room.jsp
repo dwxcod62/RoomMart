@@ -165,6 +165,20 @@
 
                             <span class="form-message"></span>
                         </div>
+
+                        <div class="form-group">
+                            <div class="form-wrapper">
+                                <label for="room-price" class="form-label">Số lượng thành viên tối đa:
+                                    <span>*</span></label>
+
+                                <input id="room-price" name="room-price" type="number"
+                                       class="form-control" value="1000000">
+                            </div>
+
+
+                            <span class="form-message"></span>
+                        </div>
+
                         <div class="form-group">
                             <div class="form-wrapper">
                                 <label for="room-area" class="form-label fill-label">
@@ -349,10 +363,16 @@
             rules: [
 
                 Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
+                Validator.isRequired('#room-img', 'Vui lòng nhập Thêm ảnh phòng cần tạo'),
 
                 Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
                 Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
                 Validator.isInteger('#room-quantity', 'Số lượng phòng phải là số nguyên'),
+
+                Validator.isRequired('#room-price', 'Vui lòng nhập số tiền phòng cần tạo'),
+                Validator.minNumber('#room-price', 1000, 'Vui lòng nhập số tiền tối thiểu là 1000'),
+                Validator.isInteger('#room-price', 'Số lượng phòng phải là số nguyên'),
+
                 Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
                 Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
                 Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
@@ -380,7 +400,7 @@
                 inputName.setAttribute("disabled", "true");
                 inputName.value = "0";
                 fileImg.setAttribute("disabled", "true");
-                fileImg.setAttribute("required","true");
+                fileImg.setAttribute("required","false");
                 errorElement.innerHTML = "";
             } else {
                 inputName.removeAttribute("disabled");
