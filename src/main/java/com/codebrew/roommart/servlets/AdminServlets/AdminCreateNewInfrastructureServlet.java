@@ -18,6 +18,7 @@ public class AdminCreateNewInfrastructureServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         try {
             HandlerStatus handlerStatus;
             String infrastructureName = request.getParameter("infrastructureName").trim();
