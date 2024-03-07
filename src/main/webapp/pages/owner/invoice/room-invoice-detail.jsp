@@ -249,9 +249,9 @@
                                     </a>
                                 </c:when>
                             </c:choose>
-                            <a class="btn btn-secondary fs-4" href="export-excel?billID=${requestScope.billRoom.billID}&hostelID=${sessionScope.hostel.hostelID}&roomID=${sessionScope.room.roomId}">
-                                Xuất Excel
-                            </a>
+<%--                            <a class="btn btn-secondary fs-4" href="export-excel?billID=${requestScope.billRoom.billID}&hostelID=${sessionScope.hostel.hostelID}&roomID=${sessionScope.room.roomId}">--%>
+<%--                                Xuất Excel--%>
+<%--                            </a>--%>
                             <form action="updateBilLStatus" method="post" class="bill__form d-flex justify-content-end">
                                 <c:choose>
                                     <c:when test="${requestScope.billRoom.status eq 0}">

@@ -54,7 +54,7 @@
         <div class="row">
             <!-- Turn back -->
             <div class="col-12">
-                <a href="home-page" class="turn-back__link">
+                <a href="home" class="turn-back__link">
                     <i class="turn-back__link-icon fa-solid fa-caret-left"></i>
                     Quay về trang chủ
                 </a>
