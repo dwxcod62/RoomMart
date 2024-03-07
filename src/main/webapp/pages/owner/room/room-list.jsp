@@ -62,19 +62,19 @@
                         <td></td>
                         <td>Khu trọ</td>
                     </tr>
-                    <tr>
-                        <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                        <form id="filter-form">
-                            <td>
-                                <select name="hostelId" id="filter__hostel-select">
-                                    <option value="">Tất cả</option>
-                                    <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">
-                                        <option value="${hostel.hostelID}">${hostel.hostelName}</option>
-                                    </c:forEach>
-                                </select>
-                            </td>
-                        </form>
-                    </tr>
+<%--                    <tr>--%>
+<%--                        <td><i class="fa-solid fa-sliders"></i> Lọc</td>--%>
+<%--                        <form id="filter-form">--%>
+<%--                            <td>--%>
+<%--                                <select name="hostelId" id="filter__hostel-select">--%>
+<%--                                    <option value="">Tất cả</option>--%>
+<%--                                    <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">--%>
+<%--                                        <option value="${hostel.hostelID}">${hostel.hostelName}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </select>--%>
+<%--                            </td>--%>
+<%--                        </form>--%>
+<%--                    </tr>--%>
                 </table>
             </div>
             <!-- Infor box -->
