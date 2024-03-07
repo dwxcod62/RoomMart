@@ -154,7 +154,7 @@
             <div class="col-md-10 col-lg-9 col-xl-8 m-auto">
               <div class="update__wrapper">
                 <div class="update__image">
-                  <img id="update__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg"
+                  <img id="update__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.png"
                        alt="" class="update__img">
                   <input id="update__input-img" type="file"
                          accept="image/x-png,image/gif,image/jpeg" class="update__input-img">

@@ -186,7 +186,7 @@
                         </div>
                         <div class="spacer"></div>
                         <div class="add-hostel-action">
-                            <a href="list-hostels" class="form-submit">Hủy bỏ</a>
+                            <a href="owner-hostel-list" class="form-submit">Hủy bỏ</a>
                             <input type="submit" class="form-submit btn btn-primary" value="Tạo khu trọ">
                         </div>
                     </form>

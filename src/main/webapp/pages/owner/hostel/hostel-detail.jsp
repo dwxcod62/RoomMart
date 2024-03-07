@@ -62,7 +62,7 @@
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
             <!-- History link -->
             <div class="content-history">
-                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <a href="owner-hostel-list" class="history-link">Danh sách khu trọ</a>
                 <i class="fa-solid fa-chevron-right"></i>
                 <div class="current">${hostelInformation.hostelName}</div>
             </div>
