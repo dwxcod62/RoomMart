@@ -141,4 +141,80 @@ public class RoommateInfoDao {
         }
         return check;
     }
+
+    public boolean UpdateRoommateInfo(RoommateInfo roommateInfo) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                String UPDATE_ROOMMATE_INFO =
+                        "UPDATE [dbo].[RoomateInformations]\n" +
+                                "SET fullname = ?, email = ?, birthday = ?, sex = ?, phone = ?,\n" +
+                                "address = ?, identity_card_number = ?, parent_name = ?, parent_phone = ?\n" +
+                                "WHERE roomate_info_id = ?";
+                psm = conn.prepareStatement(UPDATE_ROOMMATE_INFO);
+                psm.setString(1, roommateInfo.getInformation().getFullname());
+                psm.setString(2, roommateInfo.getInformation().getEmail());
+                psm.setString(3, roommateInfo.getInformation().getBirthday());
+                psm.setInt(4, roommateInfo.getInformation().getSex());
+                psm.setString(5, roommateInfo.getInformation().getPhone());
+                psm.setString(6, roommateInfo.getInformation().getAddress());
+                psm.setString(7, roommateInfo.getInformation().getCccd());
+                psm.setString(8, roommateInfo.getParentName());
+                psm.setString(9, roommateInfo.getParentPhone());
+                psm.setInt(10, roommateInfo.getRoommateID());
+
+                check = psm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(conn, psm, null);
+        }
+        return check;
+    }
+
+    public boolean DeleteRoommateInfo(int accountId, int roommateId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                String DELETE_ROOMMATE_INFO = "DELETE FROM RoomateInformations WHERE account_renter_id = ? AND roomate_info_id = ?";
+                psm = conn.prepareStatement(DELETE_ROOMMATE_INFO);
+                psm.setInt(1, accountId);
+                psm.setInt(2, roommateId);
+
+                check = psm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(conn, psm, null);
+        }
+        return check;
+    }
+
+    public boolean DeleteRoommateInfo(int roomID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement("DELETE FROM RoomateInformations WHERE roomate_info_id = ?");
+                psm.setInt(1, roomID);
+
+                check = psm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(conn, psm, null);
+        }
+        return check;
+    }
 }
