@@ -32,7 +32,7 @@ public class GetOwnerReportServlet extends HttpServlet {
 
             List<Hostel> hostelList = new HostelDAO().getHostelByOwnerId(hostelOwnerId);
 
-            session.setAttribute("CURRENT_PAGE", "Report");
+            session.setAttribute("CURRENT_PAGE", "report");
             request.setAttribute("TYPE", type);
             request.setAttribute("HOSTEL_LIST", hostelList);
             request.setAttribute("REPORT_NO_REPLY_DETAIL_LIST", reportNoReplyDetailList);
