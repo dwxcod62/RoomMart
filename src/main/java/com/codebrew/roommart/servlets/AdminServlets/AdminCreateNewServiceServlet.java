@@ -20,6 +20,7 @@ public class AdminCreateNewServiceServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         try {
             //Lỗi tiếng việt
             request.setCharacterEncoding("UTF-8");
