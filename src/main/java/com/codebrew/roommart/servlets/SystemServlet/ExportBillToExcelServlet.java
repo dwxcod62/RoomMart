@@ -119,6 +119,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
                 req.setAttribute("LIST_SERVICES", serviceInfoList);
                 url = SUCCESS;
             }
+
             //Create Workbook
             Workbook workbook = new XSSFWorkbook();
             //Create name of new sheet
