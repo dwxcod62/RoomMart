@@ -39,6 +39,12 @@
                         <span class="link">Thông báo</span>
                     </a>
                 </li>
+                <li class="list">
+                    <a href="renter-Response" class="nav-link" id="renter-Response">
+                        <i class="bx bx-message-error icon"></i>
+                        <span class="link">Góp ý</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
