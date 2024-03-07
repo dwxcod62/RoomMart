@@ -8,7 +8,7 @@ import java.util.Properties;
 public class EmailUtils {
     private static final String email = "ar.snowyy@gmail.com";
     private static final String pswd = "samx mhzb eaww ymgz";
-    private static final String host = "localhost";
+    private static final String host = "mammal-casual-boar.ngrok-free.app";
 
     private boolean send(String receiverEmail, String subject, String content) {
         String senderEmail = email;
@@ -44,7 +44,7 @@ public class EmailUtils {
 
     public boolean sendToken(String receiverEmail, String otp, String data) {
         String subject = "OTP from send-otp";
-        String lik = "http://" + host +":8080/RoomMart/check-otp?data=" + data;
+        String lik = "http://" + host +"/RoomMart/check-otp?data=" + data;
         String content = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"
@@ -64,7 +64,7 @@ public class EmailUtils {
 
     public boolean sendRecoverPass(String receiverEmail, String data) {
         String subject = "Recover Password!";
-        String recoveryLink = "http://" + host +":8080/RoomMart/password-reset?data=" + data;
+        String recoveryLink = "http://" + host +"/RoomMart/password-reset?data=" + data;
         String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"
@@ -101,7 +101,7 @@ public class EmailUtils {
 
     public boolean sendContractConfirmationEmail(String receiverEmail, String data) {
         String subject = "Xác nhận Hợp đồng Thuê";
-        String contractLink = "http://" + host + ":8080/RoomMart/confirm-contract?data=" + data;
+        String contractLink = "http://" + host + "/RoomMart/confirm-contract?data=" + data;
         String emailContent = "<div style=\"font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2\">"
                 + "<div style=\"margin: 50px auto; width: 70%; padding: 20px 0\">"
                 + "<div style=\"border-bottom: 1px solid #eee\">"
@@ -120,7 +120,7 @@ public class EmailUtils {
     }
 
     public boolean sendMailNewBill(String receiveMail, String billTitle){
-        String domain = "http://" + host + ":8080/RoomMart/renter-invoice";
+        String domain = "http://" + "mammal-casual-boar.ngrok-free.app" + "/RoomMart/RenterBill";
         String mailObject = "Bạn vừa nhận được 1 hóa đơn mới";
         String mailBody = "<!doctype html>\n" +
                 "<html lang=\"vi\">\n" +
