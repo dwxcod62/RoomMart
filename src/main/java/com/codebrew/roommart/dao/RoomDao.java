@@ -827,7 +827,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-                System.out.println(sql);
+//                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -962,7 +962,7 @@ public List<String>getListImgByRoomId(int rid){
         return isExist;
     }
     public static Date get_end_date_by_RoomId(int rid) {
-        System.out.println("-> get_end_date_by_RoomId ");
+//        System.out.println("-> get_end_date_by_RoomId ");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

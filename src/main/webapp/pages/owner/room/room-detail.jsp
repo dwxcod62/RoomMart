@@ -264,6 +264,22 @@
     <!-- Loader -->
     <script src="./assets/js/loading-handler.js"></script>
 </c:if>
+<script>
+
+    function sendConfirm(){
+        const params = new Object();
+        params.sender = "hostel_owner";
+        params.receiver = "hostel_renter";
+        params.hostel_receiver_id = null;
+        params.account_receiver_id = "${sessionScope.renterAccount.accId}";
+        params.messages = "Chủ trọ đã xác nhận thanh toán hóa đơn!";
+        sendToWebSocket(params.sender,params.receiver,params.hostel_receiver_id,params.account_receiver_id,params.messages,null,null,null);
+        //updateBilLStatus
+        setTimeout(function() {
+            document.getElementById("updateBilLStatusForm").submit();
+        }, 1200); // 3000 milliseconds = 3 seconds
+    }
+</script>
 </body>
 
 </html>
