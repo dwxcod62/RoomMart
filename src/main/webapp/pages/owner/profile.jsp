@@ -1,4 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -48,9 +50,12 @@
 <div class="container">
   <div class="row position-relative">
     <!-- Side bar -->
-    <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-      <%@include file="./components/sidebar.jsp"%>
-    </div>
+    <c:if test="${sessionScope.st != 0}">
+      <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
+        <%@include file="./components/sidebar.jsp"%>
+      </div>
+    </c:if>
+
 
     <!-- Content -->
     <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
@@ -79,7 +84,13 @@
                      class="account__sub-img">
                 <div class="account__sub-info">
                   <h2 class="account__sub-name">${sessionScope.USER.accountInfo.information.fullname}</h2>
-                  <p class="account__sub-role">Chủ trọ</p>
+                  <c:if test="${sessionScope.USER.role == 1}">
+                    <p class="account__sub-role">Chủ trọ</p>
+                  </c:if>
+                  <c:if test="${sessionScope.USER.role == 2}">
+                    <p class="account__sub-role">Nguời thuê phòng</p>
+                  </c:if>
+
                 </div>
               </div>
               <div class="account__wrapper">
@@ -154,7 +165,7 @@
             <div class="col-md-10 col-lg-9 col-xl-8 m-auto">
               <div class="update__wrapper">
                 <div class="update__image">
-                  <img id="update__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg"
+                  <img id="update__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.png"
                        alt="" class="update__img">
                   <input id="update__input-img" type="file"
                          accept="image/x-png,image/gif,image/jpeg" class="update__input-img">

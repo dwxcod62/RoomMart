@@ -485,7 +485,7 @@
 
 <script>
 
-    sendToWebSocket("hostel_owner", "hostel_renter", null, 22, null," chat chat chat chat chat chat chat chat chat chat");
+    // sendToWebSocket("hostel_owner", "hostel_renter", null, 22, null,"Chức năng thông báo");
 
 
 </script>

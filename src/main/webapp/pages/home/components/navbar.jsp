@@ -18,7 +18,7 @@
     }
 </style>
 
-<div class="main-nav bg-white">
+<div class="main-nav bg-white" id="dropdownPrice">
     <div class="container">
         <div class="row main-nav-body">
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
@@ -257,7 +257,7 @@
 
 
                 <c:if test="${sessionScope.st != 0}">
-                    <a href="Renter-HomePage" class="action__view-profile-link" style="color: black">
+                    <a href="RenterHome" class="action__view-profile-link" style="color: black">
                         <div class="action__image">
                             <i class="fa-sharp fa-solid fa-person-shelter fa-2xl"></i>
                         </div>
@@ -282,12 +282,12 @@
                 <div class="spacer"></div>
 
                 <c:if test="${sessionScope.USER.role eq 1}">
-                    <a href="Renter-HomePage" class="action__view-profile-link" style="color: black">
+                    <a href="dashboard" class="action__view-profile-link" style="color: black">
                         <div class="action__image">
                             <i class="fa-solid fa-people-roof fa-xl"></i>
                         </div>
                         <div class="action__content">
-                            <div class="title">Quản lý phòng</div>
+                            <div class="title">Quản lý Trọ</div>
 
                         </div>
                     </a>
