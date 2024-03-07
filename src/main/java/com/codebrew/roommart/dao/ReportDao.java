@@ -87,9 +87,6 @@ public class ReportDao {
                 ptm.setInt(5, report.getSendAccountID());
                 ptm.setInt(6, report.getCateID());
 
-                // Print the SQL query
-                System.out.println("SQL Query: " + ptm.toString());
-
                 boolean check = ptm.executeUpdate() > 0;
 
                 if (!check) {

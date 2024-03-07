@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProposeDao {
+    //Users Send Propose
+    private static final String INSERT_NEW_PROPOSE =
+            "INSERT INTO Propose(content, send_date, status, send_account_id)\n" +
+                    "VALUES(?, GETDATE(), 0, ?)";
 
     //Admin Dashboard
     private static final String GET_ALL_PROPOSES =
@@ -118,6 +122,43 @@ public class ProposeDao {
         return check;
     }
 
+public boolean insertNewPropose(Propose propose) {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                conn.setAutoCommit(false);
+                pst = conn.prepareStatement(INSERT_NEW_PROPOSE);
+                pst.setString(1, propose.getContent());
+                pst.setInt(2, propose.getSendAccount().getAccId());
+                check = pst.executeUpdate() > 0;
+                if (!check) {
+                    conn.rollback();
+                }
+                conn.setAutoCommit(true);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return check;
+    }
 
     public List<Propose> getAllProposeBySenderId(int senderId) {
         Connection conn = null;
@@ -157,30 +198,4 @@ public class ProposeDao {
         return proposeList;
     }
 
-    public boolean insertNewPropose(String content, int senderId) {
-        Connection conn = null;
-        PreparedStatement pst = null;
-        boolean check = false;
-        try {
-            conn = DatabaseConnector.makeConnection();
-            if (conn != null) {
-                conn.setAutoCommit(false);
-                String INSERT_NEW_PROPOSE =
-                        "INSERT INTO Propose(content, send_date, status, send_account_id) VALUES(?, GETDATE(), 0, ?)";
-                pst = conn.prepareStatement(INSERT_NEW_PROPOSE);
-                pst.setString(1, content);
-                pst.setInt(2, senderId);
-                check = pst.executeUpdate() > 0;
-                if (!check) {
-                    conn.rollback();
-                }
-                conn.setAutoCommit(true);
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            OwnerUtils.closeSQL(conn, pst, null);
-        }
-        return check;
-    }
 }
