@@ -63,7 +63,7 @@ public class ContractDao {
     private static final String
             GET_CONTRACT_BY_RENTER_ID = "SELECT *\n" +
             "FROM Contracts\n" +
-            "WHERE renter_id = ?";
+            "WHERE renter_id = ? and status = -1";
 
     private static final String ADD_AN_CONTRACT_OWNER =
             "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status], [owner_sign])\n" +

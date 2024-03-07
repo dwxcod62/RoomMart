@@ -112,7 +112,7 @@ public class AddHostelServlet extends HttpServlet {
                         .content("Đã có lỗi xảy ra! Tạo khu trọ thất bại!").build());
             }
         } catch (Exception e) {
-            log("Error at AddHostel: " + e.toString());
+            System.out.println(e);
         } finally {
 //            req.getRequestDispatcher(url).forward(req, response);
             response.sendRedirect("owner-hostel-list");

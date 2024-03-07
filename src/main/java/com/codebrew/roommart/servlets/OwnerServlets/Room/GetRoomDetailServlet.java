@@ -12,6 +12,7 @@ import com.codebrew.roommart.dto.OwnerDTO.Bill;
 import com.codebrew.roommart.dto.OwnerDTO.BillDetail;
 import com.codebrew.roommart.dto.OwnerDTO.Consume;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
+import com.codebrew.roommart.utils.Decorations;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +27,17 @@ import java.util.List;
 public class GetRoomDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Decorations.measureExecutionTime(() -> {
+            try {
+                get(request, response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }, "ownerRoomDetail.doGet");
+    }
+
+    private void get(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String ERROR = "error";
         String url = "pages/owner/room/room-detail.jsp";
 
@@ -40,24 +52,26 @@ public class GetRoomDetailServlet extends HttpServlet {
             int roomId = (request.getParameter("roomID") != null) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
 //                int roomId = Integer.parseInt(request.getParameter("roomID"));
 
-            // Check xem roomID có thuộc ownerID không
+            System.out.print(" START CHECK ROOM OF OWNER: ");
             if (new HostelDAO().checkOwnerRoom(accID, roomId)) {
+                System.out.println("SUCCESS");
 
                 IRoomDAO roomDAO = new RoomDAO();
                 IConsumeDAO consumeDAO = new ConsumeDAO();
                 IAccountDAO accountDAO = new AccountDAO();
                 IInfrastructureDAO infrastructureDAO = new InfrastructureDAO();
 
-
+                System.out.print(" START GET ROOM INFORMATION BY ROOM ID ( " + roomId + " ) : ");
                 Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
                 if (room != null) {
+                    System.out.println(" SUCCESS");
                     session.setAttribute("room", room);
                     session.setAttribute("current_room_id", room.getRoomId());
 
                     com.codebrew.roommart.dto.OwnerDTO.Hostel hostel = new HostelDAO().getHostelById(hostelID);
 
-                        session.setAttribute("hostel", hostel);
-                        request.setAttribute("hid",hostelID);
+                    session.setAttribute("hostel", hostel);
+                    request.setAttribute("hid",hostelID);
 
 
                     Contract contract = new ContractDAO().getContract(roomId);
@@ -76,7 +90,9 @@ public class GetRoomDetailServlet extends HttpServlet {
                     List<Consume> consumeThisMonth = consumeDAO.getConsumeThisMonth(roomId);
                     request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
+                    System.out.print(" START GET CONTRACT BY ROOM ID ( " + roomId + " ) : ");
                     if (contract != null) {
+                        System.out.println(" SUCCESS");
                         Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
                         request.setAttribute("renterAccount", renterAccount);
 
@@ -127,9 +143,11 @@ public class GetRoomDetailServlet extends HttpServlet {
                     List<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
                     request.setAttribute("infrastructures", infrastructures);
                 } else {
+                    System.out.println(" FAIL");
                     url = ERROR;
                 }
             } else {
+                System.out.println(" FAIL");
                 url = ERROR;
             }
 

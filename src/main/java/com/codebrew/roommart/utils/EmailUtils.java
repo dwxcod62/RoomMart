@@ -8,7 +8,7 @@ import java.util.Properties;
 public class EmailUtils {
     private static final String email = "ar.snowyy@gmail.com";
     private static final String pswd = "samx mhzb eaww ymgz";
-    private static final String host = "mammal-casual-boar.ngrok-free.app";
+    private static final String host = "localhost:8080";
 
     private boolean send(String receiverEmail, String subject, String content) {
         String senderEmail = email;

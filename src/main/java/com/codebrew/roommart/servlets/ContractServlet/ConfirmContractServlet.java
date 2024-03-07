@@ -1,7 +1,9 @@
 package com.codebrew.roommart.servlets.ContractServlet;
 
 import com.codebrew.roommart.dao.*;
+import com.codebrew.roommart.dao.OwnerDao.Impl.ConsumeDAO;
 import com.codebrew.roommart.dto.*;
+import com.codebrew.roommart.dto.OwnerDTO.Consume;
 import com.codebrew.roommart.utils.Decorations;
 import com.codebrew.roommart.utils.EmailUtils;
 import com.codebrew.roommart.utils.EncodeUtils;
@@ -83,7 +85,6 @@ public class ConfirmContractServlet extends HttpServlet {
                         req.getRequestDispatcher("ConfirmContract").forward(req, res);
 
                     } else {
-                        System.out.println("a");
                         url = "denied";
                         res.sendRedirect(url);
                     }
@@ -118,6 +119,9 @@ public class ConfirmContractServlet extends HttpServlet {
             RoomDao roomDAO = new RoomDao();
 
             if ( acc.getRole() == 1 ){
+                Consume _consume = (Consume) session.getAttribute("CONTRACT_CONSUME");
+                new ConsumeDAO().updateConsumeNumber(_consume);
+
                 contract.setOwner_sign(sign);
                 contract.setStatus(-1);
 
