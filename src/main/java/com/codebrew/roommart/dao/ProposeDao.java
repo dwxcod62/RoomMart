@@ -122,7 +122,7 @@ public class ProposeDao {
         return check;
     }
 
-public boolean insertNewPropose(Propose propose) {
+    public boolean insertNewProposerRenter(Propose propose) {
         Connection conn = null;
         PreparedStatement pst = null;
         boolean check = false;
@@ -133,6 +133,44 @@ public boolean insertNewPropose(Propose propose) {
                 pst = conn.prepareStatement(INSERT_NEW_PROPOSE);
                 pst.setString(1, propose.getContent());
                 pst.setInt(2, propose.getSendAccount().getAccId());
+                check = pst.executeUpdate() > 0;
+                if (!check) {
+                    conn.rollback();
+                }
+                conn.setAutoCommit(true);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return check;
+    }
+
+    public boolean insertNewProposeOwner(String content, int senderId) {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                conn.setAutoCommit(false);
+                pst = conn.prepareStatement(INSERT_NEW_PROPOSE);
+                pst.setString(1, content);
+                pst.setInt(2, senderId);
                 check = pst.executeUpdate() > 0;
                 if (!check) {
                     conn.rollback();

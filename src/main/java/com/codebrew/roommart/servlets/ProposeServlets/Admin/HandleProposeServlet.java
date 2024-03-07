@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.ProposeServlets;
+package com.codebrew.roommart.servlets.ProposeServlets.Admin;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

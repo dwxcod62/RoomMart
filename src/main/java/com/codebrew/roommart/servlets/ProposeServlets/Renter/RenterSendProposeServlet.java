@@ -33,7 +33,7 @@ public class RenterSendProposeServlet extends HttpServlet {
                     .build();
 
             ProposeDao proposeDao = new ProposeDao();
-            boolean success = proposeDao.insertNewPropose(propose);
+            boolean success = proposeDao.insertNewProposerRenter(propose);
 
             if (success) {
                 request.setAttribute("successMessage", "Gửi phản hồi thành công!");
