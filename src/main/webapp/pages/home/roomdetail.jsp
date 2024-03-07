@@ -52,8 +52,8 @@
 
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
-    <%--    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">--%>
-    <%--    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">--%>
+        <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
+        <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
 
@@ -431,7 +431,7 @@
                         <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                         <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                        <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${sessionScope.USER == null? 'disabled':''} title="Đăng nhập để chat" type="submit"><i class="bi bi-chat"></i>Nhắn tin với chủ phòng</button>
+                        <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${(sessionScope.USER == null)? 'disabled':''} ${(sessionScope.USER.role == 1)? 'disabled':''} title="Đăng nhập tài khoản người dùng để chat." type="submit"><i class="bi bi-chat"></i>Nhắn tin với chủ phòng ${sessionScope.USER.role}</button>
                     </form>
 
                 </div>
