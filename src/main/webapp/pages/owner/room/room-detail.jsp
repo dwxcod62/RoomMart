@@ -131,7 +131,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Hủy bỏ
                                                 </button>
-                                                <form action="end-rental-contract" method="POST">
+                                                <form action="end-contract" method="POST">
                                                     <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
                                                     <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}" />
                                                     <button type="submit" class="btn btn-danger">Đồng ý</button>
