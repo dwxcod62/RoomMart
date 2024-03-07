@@ -1,7 +1,8 @@
 
-
-const websocket = new WebSocket("ws://localhost:8080/RoomMart/push-noti-websocket");
-const websocket2 = new WebSocket("ws://localhost:8080/RoomMart/show-box-chat");
+var host = "mammal-casual-boar.ngrok-free.app"
+// var host = "localhost:8080"
+const websocket = new WebSocket("ws://"+host+"/RoomMart/push-noti-websocket");
+const websocket2 = new WebSocket("ws://"+host+"/RoomMart/show-box-chat");
 function sendMessage(message) {
     // let i = 0;
     // do {
