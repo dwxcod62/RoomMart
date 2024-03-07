@@ -109,4 +109,36 @@ public class RoommateInfoDao {
         return list;
     }
 
+    public boolean AddRoommateInformationOfAnAccount(RoommateInfo roommateInfo, int accountId) {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        boolean check = false;
+        try {
+            conn = DatabaseConnector.makeConnection();
+            if (conn != null) {
+                String ADD_ROOMMATE_INFORMATION_OF_AN_ACCOUNT =
+                        "INSERT INTO [dbo].[RoomateInformations] (fullname, email, birthday, \n" +
+                                "sex, phone, address, identity_card_number, parent_name, parent_phone, account_renter_id) \n" +
+                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                psm = conn.prepareStatement(ADD_ROOMMATE_INFORMATION_OF_AN_ACCOUNT);
+                psm.setString(1, roommateInfo.getInformation().getFullname());
+                psm.setString(2, roommateInfo.getInformation().getEmail());
+                psm.setString(3, roommateInfo.getInformation().getBirthday());
+                psm.setInt(4, roommateInfo.getInformation().getSex());
+                psm.setString(5, roommateInfo.getInformation().getPhone());
+                psm.setString(6, roommateInfo.getInformation().getAddress());
+                psm.setString(7, roommateInfo.getInformation().getCccd());
+                psm.setString(8, roommateInfo.getParentName());
+                psm.setString(9, roommateInfo.getParentPhone());
+                psm.setInt(10, accountId);
+
+                check = psm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(conn, psm, null);
+        }
+        return check;
+    }
 }
