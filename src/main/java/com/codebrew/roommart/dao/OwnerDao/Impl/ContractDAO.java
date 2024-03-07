@@ -23,7 +23,7 @@ public class ContractDAO implements IContractDAO {
             if (cn != null) {
                 String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status\n" +
                         "FROM Contracts\n" +
-                        "WHERE room_id = ? AND status = 1";
+                        "WHERE room_id = ? AND status = 0";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);

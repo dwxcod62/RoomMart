@@ -43,7 +43,7 @@ public class BillDao {
 
     private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = ?\n" +
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
-
+    private static final String UPDATE_BILL_STATUS = "UPDATE [dbo].[Bill] SET [status] = ?, [payment_date] = ?, [payment_id]= ? WHERE [bill_id] = ?";
 
 
     public List<Bill> getBllListByRenterID(int renterID) throws SQLException {
@@ -356,5 +356,51 @@ public class BillDao {
             }
         }
         return bill;
+    }
+
+    public boolean updateBillStatus(int billId, int status, String payDate, int payId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean result = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String sql = UPDATE_BILL_STATUS;
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, status);
+                pst.setString(2, payDate);
+                pst.setInt(3, payId);
+                pst.setInt(4, billId);
+
+
+                if (pst.executeUpdate() > 0) {
+                    result = true;
+                    cn.commit();
+                } else {
+                    cn.rollback();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return result;
     }
 }
