@@ -245,6 +245,8 @@ public class InformationDao {
     }
 
     public boolean updateOwnerProfileByAccId(Information accountInfos,int accId) throws SQLException {
+        System.out.println(accountInfos.getBirthday().toString());
+        System.out.println(java.sql.Date.valueOf(accountInfos.getBirthday()));
         boolean checkUpdate = false;
         Connection cn = null;
         PreparedStatement ptm = null;

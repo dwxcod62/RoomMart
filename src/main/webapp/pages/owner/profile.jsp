@@ -75,7 +75,7 @@
           <div class="row">
             <div class="col-12 col-md-8 col-lg-8 col-xl-7 m-auto">
               <div class="account__wrapper">
-                <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg" alt="User avatar"
+                <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.png" alt="User avatar"
                      class="account__sub-img">
                 <div class="account__sub-info">
                   <h2 class="account__sub-name">${sessionScope.USER.accountInfo.information.fullname}</h2>
@@ -106,7 +106,7 @@
                     <c:choose>
                       <c:when test="${sessionScope.USER.accountInfo.information.birthday ne null}">
                         <fmt:parseDate pattern="yyyy-MM-dd" value="${sessionScope.USER.accountInfo.information.birthday}" var="dateOfBirth"/>
-                        <fmt:formatDate var="dateOfBirthFormatted" pattern="dd/MM/yyyy" value="${dateOfBirth}"/>
+                        <fmt:formatDate var="dateOfBirthFormatted" pattern="dd-MM-yyyy" value="${dateOfBirth}"/>
                         ${dateOfBirthFormatted}
                       </c:when>
                       <c:otherwise>
@@ -178,7 +178,7 @@
                   </div>
                   <div class="form-group col-6">
                     <label for="birthday" class="form-label">Ngày sinh:</label>
-                    <input id="birthday" name="birthday" value="${dateOfBirthFormatted}" type="text"
+                    <input id="birthday" name="birthday" value="${sessionScope.USER.accountInfo.information.birthday}" type="text"
                            class="form-control" placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
