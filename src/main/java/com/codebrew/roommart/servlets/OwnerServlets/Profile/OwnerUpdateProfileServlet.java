@@ -53,7 +53,7 @@ public class OwnerUpdateProfileServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at UpdateProfileServlet: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            response.sendRedirect(url);
         }
     }
 }
