@@ -37,62 +37,141 @@
         <%@include file="component/sidebar.jsp" %>
 
         <div class="content row">
-            <div class="contract-content">
-                <div class="contract-head"><h4>Hợp Đồng Thuê Phòng</h4></div>
-                <div class="contract-body">
-                    <div class="owner-infor">
-                        <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
-                        <h5><strong>Ngày sinh: </strong>
-                            <c:if test="${OWNER_INFO.birthday != null}">
-                                <fmt:parseDate pattern="yyyy-MM-dd" value="${OWNER_INFO.birthday}" var="birthday"/>
-                                <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-                            </c:if>
-                            <c:if test="${OWNER_INFO.birthday == null}">
-                                Không có thông tin!
-                            </c:if>
-                        </h5><br>
-                        <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
-                        <h5><strong>SĐT: </strong>${OWNER_INFO.phone eq null ? "Không có thông tin!" : OWNER_INFO.phone}
-                        </h5><br>
+            <div class="col-10">
+                <div class="contract-content">
+                    <div class="content__infor">
+                        <h2 class="content__infor-title">Thông tin khu trọ</h2>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <p class="content__infor-item">Khu trọ: <span>${HOSTEL.hostelName}</span></p>
+                                <p class="content__infor-item">Địa chỉ:
+                                    <span>
+                                ${HOSTEL.address},
+                                ${HOSTEL.ward},
+                                ${HOSTEL.district},
+                                ${HOSTEL.city}
+                            </span></p>
+                                <p class="content__infor-item">Chủ trọ: <span>${OWNER_INFO.fullname}</span></p>
+                                <p class="content__infor-item">Số Điện Thoại: <span>${OWNER_INFO.phone}</span></p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <p class="content__infor-item">Người thuê: <span>${RENTER_INFO.fullname}</span></p>
+                                <p class="content__infor-item">Năm sinh:
+                                    <span>
+                                        <fmt:parseDate pattern="yyyy-MM-dd" value="${RENTER_INFO.birthday}" var="birthday"/>
+                                        <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                                    </span>
+                                </p>
+                                <p class="content__infor-item">Số Điện Thoại: <span>${RENTER_INFO.phone}</span></p>
+                                <p class="content__infor-item">CCCD: <span>${RENTER_INFO.cccd}</span></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="renter-infor">
-                        <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
-                        <h5><strong>Ngày sinh: </strong>
-                            <c:if test="${RENTER_INFO.birthday != null}">
-                                <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday"/>
-                                <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-                            </c:if>
-                            <c:if test="${RENTER_INFO.birthday == null}">
-                                Không có thông tin!
-                            </c:if>
-                        </h5><br>
-                        <h5>
-                            <strong>CCCD: </strong>${RENTER_INFO.cccd eq "" ? "Không có thông tin!" : RENTER_INFO.cccd}
-                        </h5><br>
-                        <h5>
-                            <strong>SĐT: </strong>${RENTER_INFO.phone eq "" ? "Không có thông tin!" : RENTER_INFO.phone}
-                        </h5><br>
+
+                    <div class="content__spacer"></div>
+                    <div class="content__infor">
+                        <h2 class="content__infor-title">Thông tin phòng trọ</h2>
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <p class="content__infor-item">Phòng số: <span>${ROOM.roomNumber}</span></p>
+                                <p class="content__infor-item">Diện tích: <span>${ROOM.roomArea} m2</span></p>
+                                <p class="content__infor-item">Gác: <span>${ROOM.hasAttic eq 0 ? "Không" : "Có"}</span></p>
+                                <p class="content__infor-item">Số lượng thành viên tối đa: <span>${ROOM.capacity}</span></p>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.startDate}" var="startDate"/>
+                                <p class="content__infor-item">Ngày bắt đầu thuê: <span><fmt:formatDate pattern="dd/MM/yyyy" value="${startDate}"/></span></p>
+                                <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.expiration}" var="endDate"/>
+                                <p class="content__infor-item">Ngày kết thúc thuê: <span><fmt:formatDate pattern="dd/MM/yyyy" value="${endDate}"/></span></p>
+                                <p class="content__infor-item">Tiền cọc:
+                                    <span>
+                                        <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
+                                    </span></p>
+                                <p class="content__infor-item">Tiền phòng:
+                                    <span>
+                                        <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="contract-result">
-                    <h3><strong style="font-size: 22px; margin-bottom: 5px">Thông tin phòng</strong></h3>
-                    <h5><strong>Địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward},
-                        ${HOSTEL.district}, ${HOSTEL.city} </h5><br>
-                    <h5><strong>Giá: </strong>
-                        <fmt:setLocale value="vi_VN"/>
-                        <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>
-                    </h5><br>
-                    <h5><strong>Tiền cọc: </strong>
-                        <fmt:setLocale value="vi_VN"/>
-                        <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
-                    </h5><br>
-                    <h5><strong>Hợp đồng có giá trị từ ngày: </strong>
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.startDate}" var="startDate"/>
-                        <fmt:formatDate value="${startDate}" type="Date" pattern="dd-MM-yyyy"/>
-                        <strong>đến ngày: </strong>
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.expiration}" var="expiration"/>
-                        <fmt:formatDate value="${expiration}" type="Date" pattern="dd-MM-yyyy"/>
-                    </h5>
+
+                    <div class="content__spacer"></div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 content__table">
+                            <h2 class="content__infor-title">Phí dịch vụ hàng tháng</h2>
+                            <table class="table table-bordered content__infor-table">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>Tên</th>
+                                    <th>Giá</th>
+                                    <th>Đơn vị tính</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="listServices" items="${SERVICES}">
+                                    <tr>
+                                        <td>${listServices.serviceName}</td>
+                                        <td>
+                                            <fmt:formatNumber value="${listServices.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                        </td>
+                                        <td>1 ${listServices.unit}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12 col-md-6 content__table">
+                            <h2 class="content__infor-title">Cơ sở vật chất</h2>
+                            <table class="table table-bordered content__infor-table">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>Tên</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <c:forEach var="infrastructure" items="${INFRASTRUCTURES}">
+                                    <tbody>
+                                    <tr>
+                                        <td>${infrastructure.name}</td>
+                                        <c:choose>
+                                            <c:when test="${infrastructure.status == 1}">
+                                                <td class="good">Sử dụng tốt</td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td class="break">Hư hỏng</td>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </tr>
+                                    </tbody>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="content__spacer"></div>
+
+                    <div class="content__infor">
+                        <div class="row">
+                            <!-- Người cho thuê -->
+                            <div class="col-12 col-sm-6">
+                                <h2 class="content__infor-title">Người cho thuê</h2>
+                                <div class="user-sign">
+                                    <img class="image-sign" src="${CONTRACT.owner_sign}"/>
+                                    <p>${OWNER_INFO.fullname}</p>
+                                </div>
+                            </div>
+                            <!-- Người thuê -->
+                            <div class="col-12 col-sm-6">
+                                <h2 class="content__infor-title">Người thuê</h2>
+                                    <div class="user-sign">
+                                        <img class="image-sign" src="${CONTRACT.renter_sign}"/>
+                                        <p>${RENTER_INFO.fullname}</p>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
