@@ -240,6 +240,7 @@
                     </div>
                     <div class="form-group">
                         <input type="hidden" id="user__sign" class="user__sign" name="sign" value="">
+                        <input type="text"  class="user__sign" name="contract_id" value="${sessionScope.CONTRACT.getContract_id()}">
                         <span class="form-message"></span>
                     </div>
                     <div class="form-actions">

@@ -185,7 +185,7 @@ public class RoomDAO implements IRoomDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                String sql = "SELECT room_id, H.hostel_id as hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
+                String sql = "SELECT room_id, H.hostel_id as hostel_id, room_number, capacity, room_status,price, room_area, has_attic, name, address, ward, district, city\n" +
                         "FROM Rooms R JOIN Hostels H ON R.hostel_id = H.hostel_id\n" +
                         "WHERE R.room_id = ?\n" +
                         "AND H.hostel_id = ?\n";
@@ -207,6 +207,7 @@ public class RoomDAO implements IRoomDAO {
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
+                    int price = rs.getInt("price");
                     RoomInformation roomInformation = RoomInformation.builder()
                             .hostelName(name)
                             .address(address)
@@ -222,6 +223,7 @@ public class RoomDAO implements IRoomDAO {
                             .capacity(capacity)
                             .roomArea(roomArea)
                             .hasAttic(hasAttic)
+                            .price(price)
                             .roomInformation(roomInformation)
                             .build();
                 }

@@ -37,7 +37,8 @@ public class ContractDao {
             "INNER JOIN rooms ON Contracts.room_id = rooms.room_id\n" +
             "WHERE Contracts.renter_id = ?";
     private static final String
-            GET_INFRASTRUCTURES_BY_CONTRACT = "SELECT infrastructureitem.infrastructure_name, infrastructuresroom.quantity\n" +
+            GET_INFRASTRUCTURES_BY_CONTRACT = "SELECT infrastructureitem.infrastructure_name, " +
+            "infrastructuresroom.quantity, infrastructuresroom.status\n" +
             "FROM Contracts\n" +
             "JOIN rooms ON Contracts.room_id = rooms.room_id\n" +
             "JOIN infrastructuresroom ON rooms.room_id = infrastructuresroom.room_id\n" +
@@ -56,18 +57,22 @@ public class ContractDao {
             "FROM Contracts\n" +
             "WHERE room_id IN (SELECT room_id FROM Contracts WHERE renter_id = ?)";
     private static final String
-            GET_INFO_CONTRACT = "SELECT start_date, expiration, deposit, price\n" +
+            GET_INFO_CONTRACT = "SELECT start_date, expiration, deposit, price, renter_sign, owner_sign\n" +
             "FROM Contracts\n" +
             "WHERE renter_id = ?";
 
     private static final String
             GET_CONTRACT_BY_RENTER_ID = "SELECT *\n" +
             "FROM Contracts\n" +
-            "WHERE renter_id = ?";
+            "WHERE renter_id = ? and status = -1";
 
     private static final String ADD_AN_CONTRACT_OWNER =
             "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status], [owner_sign])\n" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String UPDATE_CONTRACT_STATUS =
+            "UPDATE Contracts SET status = 1, cancelDate = GETDATE()\n" +
+                    "WHERE room_id = ? AND renter_id = ? AND status = 0";
 
     public Hostel getHostelByContract(int renterId){
         Connection cn = null;
@@ -299,10 +304,12 @@ public class ContractDao {
                 while (rs.next()) {
                     String name = rs.getString("infrastructure_name");
                     int quantity = rs.getInt("quantity");
+                    int status = rs.getInt("status");
 
                     Infrastructures infrastructures = Infrastructures.builder()
                             .name(name)
                             .quantity(quantity)
+                            .status(status)
                             .build();
 
                     infrastructuresList.add(infrastructures);
@@ -448,12 +455,16 @@ public class ContractDao {
                 String expiration = rs.getDate("expiration").toString();
                 int deposit = rs.getInt("deposit");
                 int price = rs.getInt("price");
+                String renter_sign = rs.getString("renter_sign");
+                String owner_sign = rs.getString("owner_sign");
 
                 contractInfor = Contract.builder()
                         .startDate(start_date)
                         .expiration(expiration)
                         .deposit(deposit)
                         .price(price)
+                        .renter_sign(renter_sign)
+                        .owner_sign(owner_sign)
                         .build();
             }
         } catch (Exception e) {
@@ -663,7 +674,7 @@ public class ContractDao {
             if (cn != null) {
                 cn.setAutoCommit(false);
 
-                pst = cn.prepareStatement("Update [Contracts] set renter_sign = ? where contract_id = ?");
+                pst = cn.prepareStatement("Update [Contracts] set renter_sign = ? , status = 0 where contract_id = ?");
                 pst.setString(1, sign);
                 pst.setInt(2, contract_id);
 
@@ -713,7 +724,7 @@ public class ContractDao {
             if (cn != null) {
                 String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status\n" +
                         "FROM Contracts\n" +
-                        "WHERE room_id = ? AND status = 1";
+                        "WHERE room_id = ? AND status = 0";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -767,6 +778,43 @@ public class ContractDao {
             }
         }
         return contract;
+    }
+
+    public boolean updateContractStatus (int roomId, int renterAccountId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement(UPDATE_CONTRACT_STATUS);
+                // Return key Identity of data just inserted
+                pst.setInt(1, roomId);
+                pst.setInt(2, renterAccountId);
+
+                check = pst.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
     }
 
 }

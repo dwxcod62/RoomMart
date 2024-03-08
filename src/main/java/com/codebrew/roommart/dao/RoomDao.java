@@ -167,7 +167,7 @@ public class RoomDao {
         return rooms;
     }
 
-    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls,
+    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,List<String> imgUrls, int price,
                               int quantity1, int status1,
                               int quantity2, int status2,
                               int quantity3, int status3,
@@ -180,37 +180,41 @@ public class RoomDao {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 // Insert new room include Nhà vệ sinh, cửa sổ, cửa ra vào, máy lạnh theo thứ tự
-                String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-                        "VALUES (?, ?, ?, ?, ?, ?)\n" +
-                        "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-                        "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
-                        "VALUES (0, 0, GETDATE(), 0, @roomID)" +
+                String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status, price)\n" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)\n" ;
+
+                String sql2="INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                        "VALUES (0, 0, GETDATE(), 0, ?)" +
+
                         "DECLARE @restQuantity int = ?\n" +
                         "WHILE ( @restQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
                         "\tSET @restQuantity = @restQuantity - 1\n" +
                         "END\n" +
+
                         "DECLARE @windowQuantity int = ?\n" +
                         "WHILE ( @windowQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
                         "\tSET @windowQuantity = @windowQuantity - 1\n" +
                         "END\n" +
+
                         "DECLARE @doorQuantity int = ?\n" +
                         "WHILE ( @doorQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
                         "\tSET @doorQuantity = @doorQuantity - 1\n" +
                         "END\n" +
+
                         "DECLARE @airConditionQuantity int = ?\n" +
                         "WHILE ( @airConditionQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))\n" +
                         "\tSET @airConditionQuantity = @airConditionQuantity - 1\n" +
                         "END";
 
@@ -221,29 +225,48 @@ public class RoomDao {
                 pst.setDouble(4, roomArea);
                 pst.setInt(5, attic);
                 pst.setInt(6, roomStatus);
+                pst.setInt(7, price);
 
-                pst.setInt(7, quantity1);
-                pst.setInt(8, status1);
 
-                pst.setInt(9, quantity2);
-                pst.setInt(10, status2);
-
-                pst.setInt(11, quantity3);
-                pst.setInt(12, status3);
-
-                pst.setInt(13, quantity4);
-                pst.setInt(14, status4);
 
                 if (pst.executeUpdate() > 0) {
                     int room_Id = -1;
                     rs = pst.getGeneratedKeys();
                     if (rs.next()) {
                         room_Id = rs.getInt(1);
+                        System.out.println("roomId 1:" +room_Id);
+
+
+                    }
+                    pst=pst = cn.prepareStatement(sql2);
+                    pst.setInt(1, room_Id);
+
+                    pst.setInt(2, quantity1);
+                    pst.setInt(3, room_Id);
+                    pst.setInt(4, status1);
+
+
+                    pst.setInt(5, quantity2);
+                    pst.setInt(6, room_Id);
+                    pst.setInt(7, status2);
+
+                    pst.setInt(8, quantity3);
+                    pst.setInt(9, room_Id);
+                    pst.setInt(10, status3);
+
+                    pst.setInt(11, quantity4);
+                    pst.setInt(12, room_Id);
+                    pst.setInt(13, status4);
+                    if (pst.executeUpdate() > 0) {
+                        isInserted = true;
+                    } else {
+                        isInserted = false;
 
                     }
                     System.out.println("step add imgs");
                     pst = cn.prepareStatement(ADD_IMGs);
                     for (int i = 0; i < imgUrls.size(); i++) {
+                        System.out.println("roomId 2:" +room_Id);
                         pst.setInt(1, room_Id);
                         pst.setString(2, imgUrls.get(i));
                         if (pst.executeUpdate() > 0) {
@@ -278,7 +301,7 @@ public class RoomDao {
         return isInserted;
     }
 
-    public boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,String  imgUrls,
+    public boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,String imgUrls,int price,
                                    int quantity1, int status1,
                                    int quantity2, int status2,
                                    int quantity3, int status3,
@@ -298,8 +321,8 @@ public class RoomDao {
                         "\tSET @room_number = 1\n" +
                         "ELSE\n" +
                         "\tSET @room_number = @room_number + 1\n" +
-                        "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-                        "VALUES (?, @room_number, ?, ?, ?, ?)\n" +
+                        "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status, price)\n" +
+                        "VALUES (?, @room_number, ?, ?, ?, ?,?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
                         "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
                         "VALUES (0, 0, GETDATE(), 0, @roomID)" +
@@ -339,18 +362,20 @@ public class RoomDao {
                 pst.setDouble(4, roomArea);
                 pst.setInt(5, attic);
                 pst.setInt(6, roomStatus);
+                pst.setInt(7, price);
 
-                pst.setInt(7, quantity1);
-                pst.setInt(8, status1);
 
-                pst.setInt(9, quantity2);
-                pst.setInt(10, status2);
+                pst.setInt(8, quantity1);
+                pst.setInt(9, status1);
 
-                pst.setInt(11, quantity3);
-                pst.setInt(12, status3);
+                pst.setInt(10, quantity2);
+                pst.setInt(11, status2);
 
-                pst.setInt(13, quantity4);
-                pst.setInt(14, status4);
+                pst.setInt(12, quantity3);
+                pst.setInt(13, status3);
+
+                pst.setInt(14, quantity4);
+                pst.setInt(15, status4);
 
                 if (pst.executeUpdate() > 0) {
                     int room_Id = -1;
@@ -400,7 +425,7 @@ public class RoomDao {
         return isInserted;
     }
 
-    public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic,List<String> imgUrls) {
+    public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic,List<String> imgUrls, int price) {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "dqp6vdayn",
                 "api_key", "527664667972471",
@@ -427,7 +452,7 @@ public class RoomDao {
                     rs = pst.executeQuery();
                     if (rs != null) {
                         while (rs.next()) {
-                            imageUrls.add(rs.getString("imgurl"));
+                            imageUrls.add(rs.getString("url_img"));
 
 
                         }
@@ -469,7 +494,7 @@ public class RoomDao {
                 System.out.println("step 3 - update new list img and information");
 
                 String sqlUpdateRoom = "UPDATE Rooms\n" +
-                        "SET room_number = ?, capacity = ?, room_area = ?, has_attic = ?\n" +
+                        "SET room_number = ?, capacity = ?, room_area = ?, has_attic = ?, price = ?\n" +
                         "WHERE room_id = ?";
 
                 pst = cn.prepareStatement(sqlUpdateRoom);
@@ -477,7 +502,8 @@ public class RoomDao {
                 pst.setInt(2, capacity);
                 pst.setDouble(3, roomArea);
                 pst.setInt(4, hasAttic);
-                pst.setInt(5, roomID);
+                pst.setInt(5, price);
+                pst.setInt(6, roomID);
 
                 if (pst.executeUpdate() == 0) {
                     cn.rollback();
@@ -827,7 +853,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-//                System.out.println(sql);
+                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -1533,7 +1559,7 @@ public List<String>getListImgByRoomId(int rid){
                         "join [Contracts] c on r.room_id = c.room_id\n" +
                         "join [Accounts] a on a.account_id = c.renter_id\n" +
                         "join [AccountInformations] ai on ai.account_id = a.account_id\n" +
-                        "where ai.email = ?";
+                        "where ai.email = ? and c.status = -1";
 
                 psm = conn.prepareStatement(sql);
                 psm.setString(1, email);

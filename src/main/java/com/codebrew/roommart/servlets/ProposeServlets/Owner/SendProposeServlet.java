@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.OwnerServlets.Propose;
+package com.codebrew.roommart.servlets.ProposeServlets.Owner;
 
 import com.codebrew.roommart.dao.ProposeDao;
 import com.codebrew.roommart.dto.Account;
@@ -21,13 +21,14 @@ public class SendProposeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         try {
             HandlerStatus handlerStatus;
             HttpSession session = request.getSession();
             Account ownerAccount = (Account) session.getAttribute("USER");
             String proposeContent = request.getParameter("propose-content").trim();
             if (!proposeContent.isEmpty()) {
-                boolean insertStatus = new ProposeDao().insertNewPropose(proposeContent, ownerAccount.getAccId());
+                boolean insertStatus = new ProposeDao().insertNewProposeOwner(proposeContent, ownerAccount.getAccId());
                 if (insertStatus) {
                     handlerStatus = HandlerStatus.builder()
                             .status(true)

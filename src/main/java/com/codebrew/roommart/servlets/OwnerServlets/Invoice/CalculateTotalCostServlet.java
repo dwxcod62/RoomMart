@@ -83,7 +83,6 @@ public class CalculateTotalCostServlet extends HttpServlet {
                     billTitle = monthInteger + "/" + year;
                 }
             }
-            System.out.println(billTitle);
             request.setAttribute("billTitle", billTitle);
             List<ServiceInfo> serviceInfo = new ServiceInfoDAO().getServicesOfHostel(hostelID);
             request.setAttribute("serviceInfo", serviceInfo);
@@ -149,20 +148,20 @@ public class CalculateTotalCostServlet extends HttpServlet {
                     consumeIDStart, consumeIDEnd, accHostelOwnerID, accountRenterId, numberLastElectric, numberLastWater, listHostelServiceID);
 
             if (isInserted) {
-                url = "owner-get-invoice-list";
+                url = "ownerRoomDetail";
                 String renterMail = renterAccount.getAccountInfo().getInformation().getEmail();
                 new EmailUtils().sendMailNewBill(renterMail, billTitle);
                 handlerStatus = HandlerStatus.builder().status(true).content("Tạo hóa đơn thành công").build();
                 request.setAttribute("CREATE_BILL_MSG", handlerStatus);
                 request.setAttribute("roomID", roomId);
-                request.setAttribute("RENTER_ID", accountRenterId);
+                response.sendRedirect(url);
             } else {
                 url = "list-hostels";
+                request.getRequestDispatcher(url).forward(request, response);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }

@@ -32,6 +32,7 @@
         <div class="content">
             <div class="col-10">
                 <div id="list-notifications-container" class="content__body view_report">
+                    <h1 class="text-center" style="padding: 5px 0 20px 0">Thông báo từ chủ nhà</h1>
                     <table id="notification-table" class="content__table table table-bordered table-striped dataTable no-footer"
                            aria-describedby="notification-table_info">
                         <thead class="content__thead">

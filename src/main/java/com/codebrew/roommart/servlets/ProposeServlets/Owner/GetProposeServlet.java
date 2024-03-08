@@ -1,4 +1,4 @@
-package com.codebrew.roommart.servlets.OwnerServlets.Propose;
+package com.codebrew.roommart.servlets.ProposeServlets.Owner;
 
 import com.codebrew.roommart.dao.ProposeDao;
 import com.codebrew.roommart.dto.Account;

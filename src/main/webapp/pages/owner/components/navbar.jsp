@@ -238,8 +238,8 @@
 
 
 
-                <c:if test="${sessionScope.st}">
-                    <a href="Renter-HomePage" class="action__view-profile-link">
+                <c:if test="${sessionScope.st != 0}">
+                    <a href="RenterHome" class="action__view-profile-link">
                         <div class="action__image">
                             <i class="fa-sharp fa-solid fa-person-shelter fa-2xl"></i>
                         </div>
@@ -264,12 +264,12 @@
                 <div class="spacer"></div>
 
                 <c:if test="${sessionScope.USER.role eq 1}">
-                    <a href="Renter-HomePage" class="action__view-profile-link">
+                    <a href="dashboard" class="action__view-profile-link">
                         <div class="action__image">
                             <i class="fa-solid fa-people-roof fa-xl"></i>
                         </div>
                         <div class="action__content">
-                            <div class="title">Quản lý phòng</div>
+                            <div class="title">Quản lý Trọ</div>
 
                         </div>
                     </a>

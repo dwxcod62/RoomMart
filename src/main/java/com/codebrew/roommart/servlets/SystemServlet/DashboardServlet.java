@@ -35,6 +35,7 @@ public class DashboardServlet extends HttpServlet {
             Account account = (Account) session.getAttribute("USER");
             String email = account.getAccountInfo().getInformation().getEmail();
             AccountDao ad = new AccountDao();
+            System.out.println("check renter has room");
             int checkRenterHasRoom = ad.getRoomOfRenter(email);
 
             if (account != null) {
@@ -43,6 +44,7 @@ public class DashboardServlet extends HttpServlet {
                         url = "AdminDashboard";
                         break;
                     case 1:
+                        session.setAttribute("st",0);
                         url = "owner-dashboard";
                         break;
                     case 2:

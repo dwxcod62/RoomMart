@@ -109,6 +109,24 @@
                                     </div>
                                     <span class="form-message mt-3"></span>
                                 </div>
+                                <!-- Room price -->
+                                <div class="form-group">
+                                    <div class="row align-items-center">
+                                        <div class="col-6">
+                                            <label for="update-room-infor__room-price"
+                                                   class="form-label">
+                                                Mức giá
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="number" name="room-price"
+                                                   id="update-room-infor__room-price"
+                                                   value="${sessionScope.room.price}"
+                                                   class="form-control m-0">
+                                        </div>
+                                    </div>
+                                    <span class="form-message mt-3"></span>
+                                </div>
                                 <!-- Room capacity -->
                                 <div class="form-group">
                                     <div class="row align-items-center">
@@ -390,6 +408,13 @@
             Validator.isInteger("#update-room-infor__room-number"),
             Validator.minNumber(
                 "#update-room-infor__room-number",
+                1,
+                `Vui lòng nhập số phòng tối thiểu là ${1}`
+            ),
+            Validator.isRequired("#update-room-infor__room-price"),
+            Validator.isInteger("#update-room-infor__room-price"),
+            Validator.minNumber(
+                "#update-room-infor__room-price",
                 1,
                 `Vui lòng nhập số phòng tối thiểu là ${1}`
             ),

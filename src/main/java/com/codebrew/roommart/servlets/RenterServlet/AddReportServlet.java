@@ -27,7 +27,6 @@ public class AddReportServlet extends HttpServlet {
         LocalDate dateObj = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String sendDate = dateObj.format(formatter);
-        HandlerStatus handlerStatus;
         request.setAttribute("uri", request.getRequestURI());
         try {
             HttpSession session = request.getSession();

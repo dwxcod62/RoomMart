@@ -106,8 +106,8 @@ public class CreateContractServlet extends HttpServlet {
                                                     .status(0)
                                                     .numberWater(roomWater)
                                                     .numberElectric(roomElectric).build();
-                                    new ConsumeDAO().updateConsumeNumber(_consume);
 
+                                    session.setAttribute("CONTRACT_CONSUME", _consume);
                                     session.setAttribute("CONTRACT_ROOM_INFRASTRUCTURE_LIST", _list_Infrastructures);
                                     session.setAttribute("CONTRACT_SERVICES_LIST", _list_Services);
                                     session.setAttribute("CONTRACT_OWNER", owner.getAccountInfo());
