@@ -1,5 +1,5 @@
 function goToHomePage() {
-    window.location.href = "RenterHome"; // Chuyển hướng trang về Renter-HomePage
+    window.location.href = "home"; // Chuyển hướng trang về Renter-HomePage
 }
 
 document.addEventListener("DOMContentLoaded", function() {

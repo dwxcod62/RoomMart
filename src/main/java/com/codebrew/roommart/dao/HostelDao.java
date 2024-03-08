@@ -207,4 +207,56 @@ public class HostelDao {
         }
         return hostel_id;
     }
+
+
+    private static final String GET_HOSTEL_BY_OWNER_ID =
+            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE owner_account_id = ?";
+    public List<Hostel> getHostelByOwnerId(int hostelOwnerAccountID) throws SQLException {
+        List<Hostel> listHostels = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_HOSTEL_BY_OWNER_ID);
+                pst.setInt(1, hostelOwnerAccountID);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int hostelID = rs.getInt("hostel_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = Hostel.builder()
+                            .hostelID(hostelID)
+                            .hostelOwnerAccountID(hostelOwnerAccountID)
+                            .hostelName(name)
+                            .address(address)
+                            .ward(ward)
+                            .district(district)
+                            .city(city).build();
+                    listHostels.add(hostel);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listHostels;
+    }
+
+
+
 }

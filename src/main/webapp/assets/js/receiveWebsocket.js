@@ -1,7 +1,7 @@
 function receiveWebsocket(callback) {
     console.log("receisocket func")
-    var host = "mammal-casual-boar.ngrok-free.app"
-// var host = "localhost:8080"
+    // var host = "mammal-casual-boar.ngrok-free.app;"
+var host = "localhost:8080";
     const websocket = new WebSocket("ws://"+host+"/RoomMart/push-noti-websocket");
 
 
@@ -27,6 +27,8 @@ function receiveWebsocket(callback) {
     };
 };
 function receiveBoxChatWebsocket(callback) {
+    // var host = "mammal-casual-boar.ngrok-free.app;"
+    var host = "localhost:8080";
     console.log("receiveBoxChatWebsocket func")
     const websocket = new WebSocket("ws://"+host+"/RoomMart/show-box-chat");
 

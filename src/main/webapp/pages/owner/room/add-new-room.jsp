@@ -168,7 +168,7 @@
 
                         <div class="form-group">
                             <div class="form-wrapper">
-                                <label for="room-price" class="form-label">Số lượng thành viên tối đa:
+                                <label for="room-price" class="form-label">Giá phòng:
                                     <span>*</span></label>
 
                                 <input id="room-price" name="room-price" type="number"
