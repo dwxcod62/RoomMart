@@ -338,6 +338,8 @@ fetchChat.on("child_added", function (snapshot) {
             '<!-- Message: body -->' +
             '</div>';
     } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        var renterId = urlParams.get('renterId');
         message2 = '<div class="message">' +
             '<!-- Avatar -->' +
             '<a class="avatar avatar-sm mr-4 mr-lg-5" href="#" onclick="showProfileSidebar()">' +
@@ -354,10 +356,15 @@ fetchChat.on("child_added", function (snapshot) {
             '<div class="mt-1">' +
             '<small class="opacity-65">' + messages.formattedDate + '</small>' +
             '</div>' +
-            (messages.hostelID != "null" ? '<a class="nav-link" href="ownerRoomDetail?hostelID=' + messages.hostelID + '&roomID=' + messages.roomID + '">' +
-                '<i class="fe-chevrons-right"></i>' +
-                'Xem Phòng' +
-                '</a>' : '') +
+            (messages.hostelID != "null" ?
+                    "<form action='ownerRoomDetail?roomID=" + messages.roomID + '&hostelID=' + messages.hostelID + "' method='GET' class='row mt-4' id='form-update-information'>" +
+                    "<input type='hidden' id='user_id_from_chat' name='user_id_from_chat' value='" + renterId + "' /> " +
+                    "<button type='submit'>" +
+                    'Xem Phòng' +
+                    '</button>' +
+                    "</form>"
+                    : ''
+            ) + "</form>" +
             '</div>' +
             '<!-- Message: content -->' +
             '</div>' +

@@ -19,7 +19,7 @@
 
 
     <title> ROOMMART </title>
-
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
@@ -46,7 +46,43 @@
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+    <style>
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
 
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .ads-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ads-img img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body class="re__body re__body-home over-flow-hidden">
@@ -480,6 +516,31 @@ function showdropdown(){
 </script>
 <script>
 
+</script>
+<!-- Popup Container -->
+<div class="popup-container" id="popupContainer">
+    <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">
+                <i class='bx bx-x' style="font-size: 30px;"></i>
+            </span>
+        <div class="ads-img">
+            <img src="https://channel.mediacdn.vn/2022/3/2/photo-1-1646225726739989482093.jpg" alt="Advertisement">
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPopup() {
+        document.getElementById("popupContainer").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("popupContainer").style.display = "none";
+    }
+
+    window.onload = function () {
+        openPopup();
+    };
 </script>
 <!--Script-->
 </body>

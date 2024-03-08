@@ -563,6 +563,16 @@
 
 <script src="./assets/js/loading-handler.js"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var inputs = document.querySelectorAll("input#user_id_from_chat");
+
+        inputs.forEach(function(input) {
+            input.value = '1';
+        });
+    });
+</script>
+
 <!-- Scripts -->
 
 </body>
