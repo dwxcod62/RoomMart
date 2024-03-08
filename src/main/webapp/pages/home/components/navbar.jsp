@@ -117,8 +117,8 @@
                             <button class="home-navbar__actions-link home-navbar__actions-link--register">
                                 Đăng ký
                                 <div class="register-modal">
-                                    <a href="registerPage" class="register-owner">Chủ trọ</a>
-                                    <a href="renter-register-page" class="register-renter">Người thuê</a>
+                                    <a href="register-page" class="register-owner">Chủ trọ</a>
+                                    <a href="register-page" class="register-renter">Người thuê</a>
                                 </div>
                             </button>
                         </div>
