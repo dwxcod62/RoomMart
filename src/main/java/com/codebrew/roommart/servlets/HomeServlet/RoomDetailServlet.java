@@ -118,6 +118,11 @@ public class RoomDetailServlet extends HttpServlet {
             request.setAttribute("infrasList",list_infras);
 
         }
+        rd.addView(r.getRoomId());
+        Account accRenter = (Account) session.getAttribute("USER");
+        if (accRenter!= null && accRenter.getRole()==2){
+            rd.updateRecentlyRoomId(r.getRoomId(),accRenter.getAccId());
+        }
 
         request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
     }

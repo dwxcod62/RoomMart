@@ -2,6 +2,7 @@ package com.codebrew.roommart.servlets.HomeServlet;
 
 import com.codebrew.roommart.dao.HostelDao;
 import com.codebrew.roommart.dao.RoomDao;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.Hostel;
 import com.codebrew.roommart.dto.Room;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,6 +86,52 @@ public class HomeServlet extends HttpServlet {
         }else {
             request.setAttribute("rooms", rooms);
         }
+        Account accRent = (Account) session.getAttribute("USER");
+
+        System.out.println("--> check acc user: "+ accRent);
+        if (accRent != null){
+            Date currentDate = new Date();
+
+            // Định dạng ngày thành chuỗi
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                // Chuyển chuỗi createDate thành đối tượng Date
+                Date createDateObj = formatter.parse(accRent.getCreateDate());
+                Date expiration = formatter.parse(accRent.getExpiredDate());
+
+                System.out.println("create date: "+createDateObj);
+                // So sánh ngày hiện tại với ngày từ createDate
+                //check tai khoan tao hon 1 ngay chua
+                if (currentDate.after(createDateObj)) {
+                    //check lan cuoi dang nhap da hon 1 ngay chua
+
+                    if (currentDate.after(expiration)){
+//                        rd.updateExpiredDateRoomId(accRent.getAccId());
+                        System.out.println("suggest");
+                        Room mostView = rd.getRoomMostView();
+                        Room recently = rd.getRoomById(accRent.getRecentlyRoom());
+                        System.out.println("recently: "+recently);
+                        if (recently != null){
+                            session.setAttribute("recently",recently);
+                            Room budget = rd.getbudgetRoom(recently.getHostelId());
+                            session.setAttribute("budget",budget);
+                            System.out.println("budget: "+budget);
+
+                        }
+                        session.setAttribute("mostView",mostView);
+                        System.out.println("mostView: "+mostView);
+
+                    }
+                }
+            } catch (ParseException e) {
+                System.out.println(e);
+            } catch (SQLException e) {
+                System.out.println(e);;
+            }
+        }
+
+
 
         request.getRequestDispatcher("home.jsp").forward(request,response);
 
