@@ -1,6 +1,6 @@
 
-var host = "mammal-casual-boar.ngrok-free.app"
-// var host = "localhost:8080"
+// var host = "mammal-casual-boar.ngrok-free.app;"
+var host = "localhost:8080";
 const websocket = new WebSocket("ws://"+host+"/RoomMart/push-noti-websocket");
 const websocket2 = new WebSocket("ws://"+host+"/RoomMart/show-box-chat");
 function sendMessage(message) {

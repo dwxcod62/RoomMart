@@ -47,10 +47,9 @@ public class EndContractServlet extends HttpServlet {
                         .content("Đã có lỗi xảy ra! Kết thúc hợp đồng thất bại!").build());
             }
             url += roomId + "&HostelID=" + hostelId;
+            response.sendRedirect(url);
         } catch (Exception e) {
             log("Error at EndRentalServlet: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }
