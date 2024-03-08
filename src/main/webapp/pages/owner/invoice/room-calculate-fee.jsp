@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -203,7 +204,39 @@
                                     <input type="hidden" name="consumeEndID" value="${consumeEndMonth}" />
                                     <input type="hidden" name="billTitle" value="${requestScope.billTitle}" />
                                     <div class="bill__form d-flex justify-content-between">
-                                            <button class="btn btn-primary fs-2" type="submit">Xác nhận</button>
+                                        <button class="btn btn-primary fs-2" data-bs-toggle="modal" data-bs-target="#confrim-bill-modal" type="button">Xác nhận</button>
+                                        <div class="modal fade" id="confrim-bill-modal" tabindex="-1" aria-labelledby="confrim-bill-modal" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-warning" id="change-room-status-modalLabel">
+                                                            Xác nhận
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="form-group" style="margin: 0px 10px">
+                                                        <label for="bank-list" class="form-label">Chọn ngân hàng: <span>*</span></label>
+                                                        <select name="bank-list" id="bank-list" class="form-control form-select bank-list">
+                                                            <option value="all" selected>Chọn ngân hàng</option>
+                                                        </select>
+                                                        <span class="form-message"></span>
+                                                    </div>
+
+                                                    <div class="form-group" style="margin: 0px 10px">
+                                                        <label for="bank-list" class="form-label">Chọn ngân hàng: <span>*</span></label>
+                                                        <input id="stk" name="Stk"  type="text" placeholder="VD: 0123456789"
+                                                               class="form-control">
+                                                        <span class="form-message"></span>
+                                                    </div>
+
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                                                        <button type="submit" class="btn btn-danger">Đồng ý</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <a href="ownerRoomDetail?roomID=${sessionScope.room.roomId}&hostelID=${sessionScope.hostel.hostelID}" class="btn btn-secondary fs-2"> Hủy bỏ </a>
                                     </div>
                                 </div>
@@ -223,10 +256,12 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"
         ></script>
+        <script src="./assets/js/toast-alert.js"></script>
         <script src="./assets/js/jquery-3.5.1.min.js"></script>
         <script src="./assets/js/handle-main-navbar.js"></script>
         <script src="./assets/js/push-notification-alert.js"></script>
         <script src="./assets/js/receiveWebsocket.js"></script>
+        <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <script type="text/javascript">
             // Receive
             receiveWebsocket(alertPushNoti);
@@ -235,6 +270,29 @@
             window.onbeforeunload = function () {
                 receiveWebsocket.disconnectWebSocket();
             };
+        </script>
+
+        <script>
+            var bankSelect = document.getElementById("bank-list");
+            var request = new XMLHttpRequest();
+            request.open('GET', 'https://api.vietqr.io/v2/banks', true);
+
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    var data = JSON.parse(request.responseText);
+
+                    data.data.forEach(function(bank) {
+                        var option = document.createElement("option");
+                        option.value = bank.id;
+                        option.setAttribute('data-thumbnail', bank.logo);
+                        option.appendChild(document.createTextNode(bank.name));
+                        bankSelect.add(option);
+                    });
+                } else {
+                    console.error("Không thể lấy dữ liệu từ API.");
+                }
+            };
+            request.send();
         </script>
     </body>
 </html>
