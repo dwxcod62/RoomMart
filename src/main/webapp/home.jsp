@@ -11,6 +11,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -40,6 +41,13 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        /* [ADD] them css text-limit */
+        .text-limit {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 250px;
         }
     </style>
 </head>
@@ -182,9 +190,19 @@
                 <div class="col-md-9">
                     <div class="boking_table">
                         <div class="row">
+
+                            <!-- [ADD] Search -->
+                            <div class="col-md-12">
+                                <div class="book_tabel_item">
+                                    <div class="input-group">
+                                        <input value="${requestScope.key}" id="textInput" name="key" type="text" class="form-control" placeholder="Enter your search here..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ADD] Search -->
                             <div class="col-md-4">
                                 <div class="book_tabel_item">
-                                    <input value="${requestScope.key}" type="text" id="textInput" name="key" title="Enter address follow pattern: province,(district),(ward)">
+
 
                                     <div class="input-group">
                                         <select id="city" name="city" class="wide">
@@ -266,7 +284,7 @@
 
                 <a href="roomDetailH?hostelId=${encodedHostelId}&rid=${encodedRoomId}"><h4 class="sec_h4">Phòng ${r.roomNumber} - ${hostelName}</h4></a>
                 <h6>${r.price >= 1000000 ? r.price/1000000 : r.price} ${r.price >= 1000000 ? "Triệu":""}<small>/ tháng - </small> ${r.roomArea} m<sup>2</sup></h6>
-                <h6 style="align-self: flex-start">
+                <h6 style="align-self: flex-start" class="text-limit">
                     ${address}
                 </h6>
                 <i class="bi bi-image"></i>
@@ -382,6 +400,7 @@
 %>
 <%--<!--Script-->--%>
 
+js tinh thanh ten gi
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -425,43 +444,50 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
 <script>
 
-    var citis = document.getElementById("city");
+<%--    Cai nay lay the ul--%>
+    var citySelect = document.getElementById("city");
+    var niceSelectUl = citySelect.nextElementSibling.querySelector("ul.list");
+    niceSelectUl.style.maxHeight = "200px";
+    niceSelectUl.style.overflowY = "auto";
+
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
     var Parameter = {
         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
         method: "GET",
-        responseType: "application/json",
     };
     var promise = axios(Parameter);
+
     promise.then(function (result) {
         renderCity(result.data);
     });
 
     function renderCity(data) {
         for (const x of data) {
-            var opt = document.createElement('option');
-            opt.value = x.Name;
-            opt.text = x.Name;
-            opt.style.color = 'black';
-            opt.setAttribute('data-id', x.Id);
-            citis.options.add(opt);
+            // Cai nay la them
+            var li = document.createElement("li");
+            li.setAttribute("data-value", x.Id);
+            li.textContent = x.Name;
+            li.classList.add("option");
+
+            niceSelectUl.appendChild(li);
         }
         citis.onchange = function () {
             districts.length = 1;
             wards.length = 1;
-            if(this.options[this.selectedIndex].dataset.id != ""){
-                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter((n) => n.Id === this.options[this.selectedIndex].dataset.id);
 
                 for (const k of result[0].Districts) {
-                    var opt = document.createElement('option');
+                    var opt = document.createElement("option");
                     opt.value = k.Name;
                     opt.text = k.Name;
-                    opt.style.color = 'black';
+                    opt.style.color = "black";
 
-                    opt.setAttribute('data-id', k.Id);
+                    opt.setAttribute("data-id", k.Id);
                     districts.options.add(opt);
                 }
             }
@@ -470,21 +496,20 @@
             wards.length = 1;
             const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
             if (this.options[this.selectedIndex].dataset.id != "") {
-                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+                const dataWards = dataCity[0].Districts.filter((n) => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
 
                 for (const w of dataWards) {
-                    var opt = document.createElement('option');
+                    var opt = document.createElement("option");
                     opt.value = w.Name;
                     opt.text = w.Name;
-                    opt.style.color = 'black';
+                    opt.style.color = "black";
 
-                    opt.setAttribute('data-id', w.Id);
+                    opt.setAttribute("data-id", w.Id);
                     wards.options.add(opt);
                 }
             }
         };
     }
-
 </script>
 
 <script>

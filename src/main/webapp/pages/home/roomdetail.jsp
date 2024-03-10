@@ -47,7 +47,22 @@
 
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+    <!-- [ADD]  thêm style -->
+    <style>
+        .image-container {
+            width: 100%;
+            max-width: 750px;
+            height: 500px;
+            overflow: hidden;
+            position: relative;
+        }
 
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <body class="over-flow-hidden">
@@ -184,7 +199,7 @@
                                 data-ride="carousel"
                         >
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
+                                <div class="carousel-item active image-container">
                                     <img
                                             src="${requestScope.roomImg[0]}"
                                             class="d-block w-100"
@@ -193,7 +208,7 @@
                                 </div>
                                 <c:if test="${requestScope.roomImg.size() > 1}">
                                     <c:forEach var="image" items="${requestScope.roomImg}" begin="1" end="${requestScope.roomImg.size()-1}">
-                                        <div class="carousel-item">
+                                        <div class="carousel-item image-container">
                                             <img
                                                     src="${image}"
                                                     class="d-block w-100"
@@ -428,7 +443,7 @@
                             <img
                                     class="author_img rounded-circle"
                                     src="https://media-cdn.tripadvisor.com/media/photo-m/1280/13/d8/ea/1b/a-room-at-the-beach.jpg"
-                                    style="width: 100px"
+                                    style="width: 100%; height: 100%; max-height: 100px; max-width: 100px; object-fit: cover; overflow: hidden"
                                     alt=""
                             />
                             <h4>Nguyen Anh Duc</h4>
