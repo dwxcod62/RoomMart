@@ -9,88 +9,50 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-
-    <!-- Basic -->
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
-
-
-    <title> ROOMMART</title>
-<%--    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>--%>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-    <%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
-    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/support.css" />
-    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.home.min.css" />
-    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.card-compact.min.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-
-    <!-- Bootstrap 5.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <!-- Vendor CSS Files -->
-    <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="./assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="./assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="./assets/vendor/aos/aos.css" rel="stylesheet">
-
-    <%-- link local css   --%>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="assets/images/favicon.png" type="image/png" />
+    <title>Royal Hotel</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./assets/css/new_home_style/bootstrap.css" />
+    <link rel="stylesheet" href="./assets/vendors/linericon/style.css" />
+    <link rel="stylesheet" href="./assets/css/new_home_style/font-awesome.min.css" />
+    <link rel="stylesheet" href="./assets/vendors/nice-select/css/nice-select.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="./assets/css/new_home_style/style.css" />
+    <link rel="stylesheet" href="./assets/css/new_home_style/responsive.css" />
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
-    <link rel="stylesheet" href="./assets/css/core_style/core.css">
-    <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
-    <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
-    <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
     <style>
-        a:hover{
-            text-decoration: none !important; /* Loại bỏ gạch chân mặc định */
+        .image-container {
+            width: 100%;
+            max-width: 250px;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
         }
-        .popup-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        .image-container img {
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
+            object-fit: cover;
         }
-
-        .popup-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 10px;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        .ads-img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .ads-img img {
-            width: 100%;
-            height: 100%;
+        /* [ADD] them css text-limit */
+        .text-limit {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 250px;
         }
     </style>
 </head>
 
-<body class="re__body re__body-home over-flow-hidden">
-
-
+<body class="over-flow-hidden">
 
 <div id="preloader">
     <div class="dots">
@@ -101,280 +63,328 @@
 </div>
 
 
-
-<div class="form-content">
-
-    <div class="re__bg-header">
-        <!-- Navbar -->
-
-        <!-- End Navbar -->
-        <%@include file="pages/home/components/navbar.jsp"%>
-    </div>
-</div>
-<div class="re__main" style="min-height: 100vh;">
-    <div class="re__home">
-        <!-- ok -->
-        <div class="re__content-block re__home__head-block">
-            <div class="re__home-search-box">
-                <!-- form -->
-                <form action="search" method="get" id="boxSearchForm" class="re__home-search-box js__home-search-box" data-home-search="true">
-                    <div class="re__search-box-container">
-
-                        <div class="re__search-box-content js__search-box-content">
-                            <div class="re__input-group--sm re__search-box-row js__search-row-location">
-
-                                <div class="re__search-location-select-header js_search-location-select-header" tabindex="0">
-                                    <div class="re__search-location-row re__search-location-select-header-item js_search-location-select-header-item" style="padding: 10px">
-                                        <i class="js__selected-icon re__icon-search re__city-icon-search fa-solid fa-magnifying-glass" style="padding: inherit"></i>
-
-                                        <input value="${requestScope.key}" type="text" id="textInput" name="key" title="Enter address follow pattern: province,(district),(ward)" class="w3-input w3-animate-input re__city-code-select js__listing-search-select-container js__city-code-select">
-
-                                        <button type="submit" class="re__btn re__btn-pr-solid--sm re__btn-icon-left--sm re__btn-search" id="btnSearch">
-                                            <span>Tìm kiếm</span>
-                                        </button>
-                                    </div>
-                                    <div class="re__search-location-select-header-item-no-city js_search-location-select-header-item-no-city">
-                                        <div class="re__header-item-no-city">
-                                            <div class="re__city-search-select-header-title">Bạn muốn tìm Room tại tỉnh thành nào?</div>
-                                            <a class="re__city-search-select-button-close js__listing-search-no-city-button-close">
-                                                <i class="re__icon-close-no-circle no-city-button-close"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="home-filter home-filter-1">
-
-                                <div class="search-filter" >
-
-                                    <select id="city" name="city" class="select-text">
-                                        <option style="color:#f0f0f0" value="all" selected>Chọn tỉnh thành</option>
-                                    </select>
-
-                                </div>
-
-                                <div class="search-filter">
-
-
-                                    <select id="district" name="district" class="select-text" >
-                                        <option style="color:#f0f0f0" value="all" selected>Chọn quận huyện</option>
-                                    </select>
-
-                                </div>
-
-                                <div class="search-filter">
-
-                                    <select id="ward" name="ward" class="select-text" >
-                                        <option style="color:#f0f0f0" value="all" selected>Chọn phường xã</option>
-                                    </select>
-
-
-                                </div>
-
-
-
-                            </div>
-                            <div class="home-filter home-filter-1">
-
-                                <div class="search-filter" >
-
-                                    <select title="Chọn diện tích phòng mong muốn"  name="area" class="select-text">
-
-                                        <option style="color:black" value="0" selected>Diện tích</option>
-                                        <c:forEach var="area" items="${listRoomArea}">
-                                            <option style="color:black" value="${area}">${area}</option>
-                                        </c:forEach>
-                                    </select>
-
-                                </div>
-
-                                <div class="search-filter dropdown">
-<%--select-text--%>
-<%--dropdown-menu--%>
-   <div onclick={showdropdown()} title="Chọn mức giá phòng mong muốn"  class="select-text select-custom js__listing-search-select-button js__listing-search-select-tooltip dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-    <span  class="select-text-content js__listing-search-select-button-current-text" style="font-size: inherit">Mức Giá</span>
-
-      <jsp:include page="pages/home/drop-down-price.jsp"></jsp:include>
-
-   </div>
-                                </div>
-
-                                <div class="search-filter">
-                                    <input title="Chọn ngày muốn thuê phòng" name="expiration" class="select-text" type="date" style="font-size: inherit; color: #f0f0f0">
-<%--                                    <select  name="hostelID" class="select-text" >--%>
-<%--&lt;%&ndash;                                        for each&ndash;%&gt;--%>
-<%--    <option style="color:black" value="0" selected>Khu trọ</option>--%>
-<%--    <c:forEach var="hostel" items="${listHostel}">--%>
-<%--        <option style="color:black" value="${hostel.hostelID}">${hostel.hostelName}</option>--%>
-<%--    </c:forEach>--%>
-<%--                                    </select>--%>
-
-
-                                </div>
-
-
-
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-
-            </div>
-            <div class="re__home__head__banner-container re__banner-container re__banner-container-no-style js__gam__home__head__banner-container" style="height: 260px;margin-top: 5%">
-
-
-            </div>
-        </div>
-
-
-        <div class="re__content-block re__home__bds-for-you-block re__bg-grey-50">
-            <div class="re__content-container">
-
-
-                <h2 class="re__content-container-label">Phòng dành cho bạn</h2>
-
-
-                <div id="interestedProductsBinnovaContent" class="re__product-container">
-
-                    <!-- list img -->
-                    <div class="home-product product-4-you">
-                        <div class="js__interested-product re__interested-product-cards">
-                            <c:if test="${not empty requestScope.rooms}">
-                                <c:forEach items="${requestScope.rooms}" var="r">
-                                    <c:set var="address" value="${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}" />
-                                    <c:set var="hostelName" value="${r.roomInformation.hostelName}" />
-
-                                    <div class="re__product-item re__interested-product-card js__product-item" style="display: block">
-
-                                        <div class="js__card js__card-compact-web
-     pr-container re__card-compact re__vip-normal">
-
-                                            <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
-                                            <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(r.hostelId)}" />
-                                            <a class="js__product-link-for-product-id" href="roomDetailH?hostelId=${encodedHostelId}&rid=${encodedRoomId}" title="Roommart" previewlistener="true">
-                                                <div class="re__card-image">
-                                                    <img class="pr-img ls-is-cached lazyloaded" src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="room Image">
-
-                                                    <div class="re__card-image-feature">
-                                                        <i class="bi bi-image"></i>
-                                                        <span>${not empty r.hostelId ? r.hostelId : 0}</span>
-                                                        <i class="bi bi-eye"></i>
-                                                        <span>${not empty r.roomView ? r.roomView : 0}</span>
-                                                    </div>
-
-
-                                                </div>
-                                                <div class="re__card-info" style="text-decoration: none !important;">
-                                                    <div class="re__card-info-content">
-                                                        <div class="re__card-title">
-                                                            <h3 class="js__card-title">
-                                                                    ${r.roomId} - ${hostelName} - ${r.roomNumber}
-                                                            </h3>
-                                                        </div>
-                                                        <div class="re__card-config">
-                                                            <span class="re__card-config-price">${r.price >= 1000000 ? r.price/1000000 : r.price} ${r.price >= 1000000 ? "Triệu":""} VNĐ</span>
-
-                                                            <span class="re__card-config-area">
-                                                        <span class="re__card-config-dot">·</span>
-                                                    </span>
-
-                                                            <span class="re__card-config-price"> ${r.roomArea}m2</span>
-
-
-
-
-
-                                                            <div class="re__clear"></div>
-                                                            <div class="re__clear"></div>
-                                                        </div>
-                                                        <div class="re__card-location">
-                                                            <i class="bi bi-house-fill"></i>
-                                                            <span>${address}</span>
-                                                        </div>
-                                                        <div class="re__clearfix"></div>
-                                                        <div class="re__card-contact">
-                                                            <div class="re__card-published-info">
-                                                                <c:set var="endDate" value="${RoomDao.get_end_date_by_RoomId(r.roomId).toString()}"></c:set>
-                                                                <c:set var="startDate" value="${RoomDao.get_start_date_by_RoomId(r.roomId).toString()}"></c:set>
-                                                                <c:set var="formattedEndDate" value="${endDate.substring(8, 10)}/${endDate.substring(5, 7)}/${endDate.substring(0, 4)}" />
-                                                                <c:set var="formattedStartDate" value="${startDate.substring(8, 10)}/${startDate.substring(5, 7)}/${startDate.substring(0, 4)}" />
-                                                                <c:if test="${r.roomStatus==1}">
-                                                                    <span style="color: green" class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                                                        Có thể thuê
-                                                                    </span>
-                                                                </c:if>
-                                                                <c:if test="${r.roomStatus==0}">
-                                                                    <span class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                                                        Đã Thuê
-                                                                        <br>
-                                                                       Từ ${formattedStartDate} đến ${formattedEndDate}
-                                                                    </span>
-
-                                                                </c:if>
-                                                                <c:if test="${r.roomStatus==-1}">
-                                                                    <span style="color:orange;" class="re__card-published-info-published-at" data-microtip-position="right" role="tooltip">
-                                                                        Đang duyệt
-                                                                        <br>
-                                                                        Thuê từ ${formattedStartDate} đến ${formattedEndDate}
-                                                                    </span>
-                                                                </c:if>
-
-
-                                                            </div>
-
-                                                            <div class="re__clear-both"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="re__clearfix"></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-
-                            </c:if>
-                            <c:if test="${empty requestScope.rooms}">
-                                <h2>Không tìm thấy phòng phù hợp</h2>
-                            </c:if>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-        <%--                                pagination--%>
-        <div class="pagination justify-content-center" style="display: flex;text-align: center;margin-top: 20px;margin-bottom: 20px;">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <c:forEach begin="1" end="${requestScope.total}" step="1" var="i">
-
-                        <li class="page-item <c:if test="${i == requestScope.page}"> active </c:if> "  >
-                            <a class="page-link" href="home?page=${i}&key=${requestScope.key}&city=${requestScope.citySelected}&dístrict=${requestScope.districtSelected}&ward=${requestScope.wardSelected}">
-                                    ${i}
-                            </a>
-                        </li>
-                    </c:forEach>
+<header class="header_area">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <a class="navbar-brand logo_h" href="home"
+            ><img style="height: 70px" src="./assets/images/as.png" alt=""
+            /></a>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div
+                    class="collapse navbar-collapse offset"
+                    id="navbarSupportedContent"
+            >
+                <ul class="nav navbar-nav menu_nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home">Trang chủ</a>
+                    </li>
+                    <li class="nav-item submenu dropdown">
+                        <c:if test = "${sessionScope.USER == null}">
+                            <a
+                                    href="profile"
+                                    class="nav-link dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    role="button"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >Tài khoản</a
+                            >
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="login-page">Đăng nhập</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="register-page">Đăng kí</a>
+                                </li>
+                            </ul>
+                        </c:if>
+                        <c:if test = "${sessionScope.USER != null}">
+                            <a
+                                    href="profile"
+                                    class="nav-link dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    role="button"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >${sessionScope.USER.accountInfo.information.fullname}</a
+                            >
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="profile">Xem trang cá nhân của bạn</a>
+                                </li>
+                                <c:if test="${sessionScope.st != 0}">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="RenterHome">Xem Phòng</a>
+                                    </li>
+                                </c:if>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="home">Tìm Phòng</a>
+                                </li>
+                                <c:if test="${sessionScope.USER.role eq 1}">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="dashboard">Đăng kí</a>
+                                    </li>
+                                </c:if>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="logout">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </c:if>
+
+
+                    </li>
                 </ul>
-            </nav>
-        </div>
-        <%--                                end pagination--%>
+            </div>
+        </nav>
     </div>
-</div>
+</header>
+<!--================Header Area =================-->
 
+<!--================Banner Area =================-->
+<section class="banner_area">
+    <div class="booking_table d_flex align-items-center">
+        <div
+                class="overlay bg-parallax"
+                data-stellar-ratio="0.9"
+                data-stellar-vertical-offset="0"
+                data-background=""
+        ></div>
+        <div class="container">
+            <div class="banner_content text-center">
+                <h6>Escape the Mundane with RoomMart</h6>
+                <h2>Find Your Sanctuary</h2>
+                <p>
+                    Discover your perfect living space with RoomMart's seamless rental
+                    and management services. Whether you seek urban elegance or
+                    suburban tranquility, we've got you covered.
+                </p>
+            </div>
+        </div>
+    </div>
+    <form action="search" method="get">
+    <div class="hotel_booking_area position">
+        <div class="container">
+            <div class="hotel_booking_table">
+                <div class="col-md-3">
+                    <h2>
+                        Get<br />
+                        Your Room
+                    </h2>
+                </div>
+                <div class="col-md-9">
+                    <div class="boking_table">
+                        <div class="row">
+
+                            <!-- [ADD] Search -->
+                            <div class="col-md-12">
+                                <div class="book_tabel_item">
+                                    <div class="input-group">
+                                        <input value="${requestScope.key}" id="textInput" name="key" type="text" class="form-control" placeholder="Enter your search here..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ADD] Search -->
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+
+
+                                    <div class="input-group">
+                                        <select id="city" name="city" class="wide">
+                                            <option value="all" selected>Chọn tỉnh thành</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group date" id="datetimepicker1">
+                                            <input title="Chọn ngày muốn thuê phòng" name="expiration" class="form-control" type="date">
+
+<%--                                            <span class="input-group-addon">--%>
+<%--                            <i class="fa fa-calendar" aria-hidden="true"></i>--%>
+                          </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                    <div class="input-group">
+                                        <select id="district" name="district" class="wide" >
+                                            <option value="all" selected>Chọn quận huyện</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="input-group">
+                                        <div onclick={showdropdown()} title="Chọn mức giá phòng mong muốn"  class="nice-select wide dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span>Mức Giá</span>
+                                            <jsp:include page="pages/home/drop-down-price.jsp"></jsp:include>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <select id="ward" name="ward" class="wide" >
+                                                <option value="all" selected>Chọn phường xã</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <button class="book_now_btn button_hover" type="submit">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</section>
+<!--================Banner Area =================-->
+
+<!--================ Accomodation Area  =================-->
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center"></div>
+        <div class="row mb_30">
+
+<c:if test="${not empty requestScope.rooms}">
+
+    <c:forEach items="${requestScope.rooms}" var="r">
+        <c:set var="address" value="${r.roomInformation.city} - ${r.roomInformation.district} - ${r.roomInformation.ward}" />
+        <c:set var="hostelName" value="${r.roomInformation.hostelName}" />
+        <div class="col-lg-3 col-sm-6">
+            <div
+                    class="accomodation_item text-center"
+                    style="display: flex;
+                flex-direction: column;
+                align-items: flex-start;">
+                <div class="hotel_img image-container">
+                    <img src="${not empty r.imgUrl ? r.imgUrl[0] : 'https://media.licdn.com/dms/image/C5112AQEw1fXuabCTyQ/article-inline_image-shrink_1500_2232/0/1581099611064?e=1710374400&v=beta&t=LKfE3ie3occM50NiiYBq9mIgdJMjkeGnaiuREah4wEE'}" alt="" />
+                </div>
+                <c:set var="encodedRoomId" value="${EncodeUtils.encodeString(r.roomId)}" />
+                <c:set var="encodedHostelId" value="${EncodeUtils.encodeString(r.hostelId)}" />
+
+                <a href="roomDetailH?hostelId=${encodedHostelId}&rid=${encodedRoomId}"><h4 class="sec_h4">Phòng ${r.roomNumber} - ${hostelName}</h4></a>
+                <h6>${r.price >= 1000000 ? r.price/1000000 : r.price} ${r.price >= 1000000 ? "Triệu":""}<small>/ tháng - </small> ${r.roomArea} m<sup>2</sup></h6>
+                <h6 style="align-self: flex-start" class="text-limit">
+                    ${address}
+                </h6>
+                <i class="bi bi-image"></i>
+                <span>${not empty r.hostelId ? r.hostelId : 0}</span>
+                <i class="bi bi-eye"></i>
+                <span>${not empty r.roomView ? r.roomView : 0}</span>
+                <c:set var="endDate" value="${RoomDao.get_end_date_by_RoomId(r.roomId).toString()}"></c:set>
+                <c:set var="startDate" value="${RoomDao.get_start_date_by_RoomId(r.roomId).toString()}"></c:set>
+                <c:set var="formattedEndDate" value="${endDate.substring(8, 10)}/${endDate.substring(5, 7)}/${endDate.substring(0, 4)}" />
+                <c:set var="formattedStartDate" value="${startDate.substring(8, 10)}/${startDate.substring(5, 7)}/${startDate.substring(0, 4)}" />
+
+                <c:if test="${r.roomStatus==1}">
+                 <h6 style="color: green" >
+                   Có thể thuê
+                 </h6>
+                </c:if>
+                <c:if test="${r.roomStatus==0}">
+                <h6>
+                 Đã Thuê
+                 <br>
+                  Từ ${formattedStartDate} đến ${formattedEndDate}
+                 </h6>
+
+                </c:if>
+                <c:if test="${r.roomStatus==-1}">
+                 <h6 style="color:orange;">
+                 Đang duyệt
+                   <br>
+                  Thuê từ ${formattedStartDate} đến ${formattedEndDate}
+                 </h6>
+                </c:if>
+
+            </div>
+        </div>
+    </c:forEach>
+
+
+</c:if>
+<c:if test="${empty requestScope.rooms}">
+    <h2>Không tìm thấy phòng phù hợp</h2>
+</c:if>
+</div>
+    </div>
+    <div class="container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+
+                <c:forEach begin="1" end="${requestScope.total}" step="1" var="i">
+
+                    <li class="page-item <c:if test="${i == requestScope.page}"> active </c:if> "  >
+                        <a class="page-link" href="home?page=${i}&key=${requestScope.key}&city=${requestScope.citySelected}&dístrict=${requestScope.districtSelected}&ward=${requestScope.wardSelected}">
+                                ${i}
+                        </a>
+                    </li>
+                </c:forEach>
+
+            </ul>
+        </nav>
+    </div>
+</section>
+<!--================ Accomodation Area  =================-->
+
+<!--================ start footer Area  =================-->
+<footer class="footer-area" style="padding: 0px">
+    <div class="container">
+        <div
+                class="row footer-bottom d-flex justify-content-between align-items-center"
+        >
+            <p class="col-lg-8 col-sm-12 footer-text m-0">
+                Copyright &copy;
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                All rights reserved | This template is made with
+                <i class="fa fa-heart-o" aria-hidden="true"></i> by
+                <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            </p>
+            <div class="col-lg-4 col-sm-12 footer-social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--================ End footer Area  =================-->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="./assets/js/jquery-3.2.1.min.js"></script>
+<script src="./assets/js/bootstrap.min.js"></script>
+<script src="./assets/vendors/owl-carousel/owl.carousel.min.js"></script>
+<script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+<script src="./assets/vendors/nice-select/js/jquery.nice-select.js"></script>
+<script src="./assets/js/stellar.js"></script>
+<script src="./assets/vendors/lightbox/simpleLightbox.min.js"></script>
+<script src="./assets/js/custom.js"></script>
 
 
 <!-- food section -->
-<jsp:include page="pages/home/components/footer.jsp"></jsp:include>
+<%--<jsp:include page="pages/home/components/footer.jsp"></jsp:include>--%>
 <!-- Push notification element -->
 <jsp:include page="./pages/home/components/boxchat.jsp" />
 <div id="push-noti"></div>
@@ -390,6 +400,7 @@
 %>
 <%--<!--Script-->--%>
 
+js tinh thanh ten gi
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -433,43 +444,50 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
 <script>
 
-    var citis = document.getElementById("city");
+<%--    Cai nay lay the ul--%>
+    var citySelect = document.getElementById("city");
+    var niceSelectUl = citySelect.nextElementSibling.querySelector("ul.list");
+    niceSelectUl.style.maxHeight = "200px";
+    niceSelectUl.style.overflowY = "auto";
+
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
     var Parameter = {
         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
         method: "GET",
-        responseType: "application/json",
     };
     var promise = axios(Parameter);
+
     promise.then(function (result) {
         renderCity(result.data);
     });
 
     function renderCity(data) {
         for (const x of data) {
-            var opt = document.createElement('option');
-            opt.value = x.Name;
-            opt.text = x.Name;
-            opt.style.color = 'black';
-            opt.setAttribute('data-id', x.Id);
-            citis.options.add(opt);
+            // Cai nay la them
+            var li = document.createElement("li");
+            li.setAttribute("data-value", x.Id);
+            li.textContent = x.Name;
+            li.classList.add("option");
+
+            niceSelectUl.appendChild(li);
         }
         citis.onchange = function () {
             districts.length = 1;
             wards.length = 1;
-            if(this.options[this.selectedIndex].dataset.id != ""){
-                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter((n) => n.Id === this.options[this.selectedIndex].dataset.id);
 
                 for (const k of result[0].Districts) {
-                    var opt = document.createElement('option');
+                    var opt = document.createElement("option");
                     opt.value = k.Name;
                     opt.text = k.Name;
-                    opt.style.color = 'black';
+                    opt.style.color = "black";
 
-                    opt.setAttribute('data-id', k.Id);
+                    opt.setAttribute("data-id", k.Id);
                     districts.options.add(opt);
                 }
             }
@@ -478,21 +496,20 @@
             wards.length = 1;
             const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
             if (this.options[this.selectedIndex].dataset.id != "") {
-                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+                const dataWards = dataCity[0].Districts.filter((n) => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
 
                 for (const w of dataWards) {
-                    var opt = document.createElement('option');
+                    var opt = document.createElement("option");
                     opt.value = w.Name;
                     opt.text = w.Name;
-                    opt.style.color = 'black';
+                    opt.style.color = "black";
 
-                    opt.setAttribute('data-id', w.Id);
+                    opt.setAttribute("data-id", w.Id);
                     wards.options.add(opt);
                 }
             }
         };
     }
-
 </script>
 
 <script>

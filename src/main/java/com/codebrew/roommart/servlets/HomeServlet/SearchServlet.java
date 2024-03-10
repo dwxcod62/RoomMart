@@ -24,7 +24,7 @@ public class SearchServlet extends HttpServlet {
         String city = request.getParameter("city") == "" ? "all" : request.getParameter("city");
         //hostelID , area
 //        int hostelID = request.getParameter("hostelID") == "" ? 0 : Integer.parseInt(request.getParameter("hostelID"));
-        int area = request.getParameter("area") == "" ? 0 : Integer.parseInt(request.getParameter("area"));
+        int area = 0;
 
         String district = request.getParameter("district") == "" ? "all" : request.getParameter("district");
         String ward = request.getParameter("ward") == "" ? "all" : request.getParameter("ward");

@@ -671,7 +671,7 @@ public List<String>getListImgByRoomId(int rid){
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                String sql = "SELECT room_id, H.hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city,R.price , H.owner_account_id\n" +
+                String sql = "SELECT room_id, H.hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward,room_view , district, city,R.price , H.owner_account_id\n" +
                         "FROM Rooms R JOIN Hostels H ON R.hostel_id = H.hostel_id\n" +
                         "WHERE R.room_id = ? and H.status = 0\n";
 
@@ -688,6 +688,7 @@ public List<String>getListImgByRoomId(int rid){
                     int capacity = rs.getInt("capacity");
                     int roomStatus = rs.getInt("room_status");
                     int price = rs.getInt("price");
+                    int room_view = rs.getInt("room_view");
                     double roomArea = rs.getDouble("room_area");
                     int hasAttic = rs.getInt("has_attic");
                     String name = rs.getString("name");
@@ -715,6 +716,7 @@ public List<String>getListImgByRoomId(int rid){
                             .roomInformation(roomInformation)
                             .imgUrl(urlImg)
                             .price(price)
+                            .roomView(room_view)
                             .build();
                 }
             }
