@@ -72,12 +72,6 @@
                                         <span class="form-message"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="hostel-name" class="form-label">Tên: <span>*</span></label>
-                                        <input id="hostel-name" name="hostel-name" type="text" value="${requestScope.HOSTEL.hostelName}"
-                                               placeholder="Nhập tên khu trọ" class="form-control">
-                                        <span class="form-message"></span>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="hostel-address" class="form-label">Địa chỉ: <span>*</span></label>
                                         <input id="hostel-address" name="hostel-address" value="${requestScope.HOSTEL.address}"
                                             placeholder="Nhập địa chỉ khu trọ" type="text" class="form-control">
