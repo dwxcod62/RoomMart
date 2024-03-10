@@ -20,6 +20,9 @@
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'account'}">
                                 Quản lý tài khoản
                             </c:when>
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'license'}">
+                                Xác nhận giấy phép
+                            </c:when>
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'propose'}">
                                 Quản lý đề xuất người dùng
                             </c:when>

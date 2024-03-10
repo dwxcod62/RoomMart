@@ -12,6 +12,12 @@
             <div class="group-option__label">Quản lý tài khoản</div>
         </a>
     </div>
+    <div class="group-option ${sessionScope.CURRENT_PAGE eq "license" ? "active" : ""}">
+        <a href="AdminListAcc" class="group-option__link">
+            <i class="group-option__icon fa-solid fa-user-gear"></i>
+            <div class="group-option__label">Xác nhận giấy phép</div>
+        </a>
+    </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "propose" ? "active" : ""}">
         <a href="manage-propose" class="group-option__link">
             <i class="group-option__icon fa-solid fa-lightbulb"></i>
