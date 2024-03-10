@@ -287,10 +287,11 @@
                 <h6 style="align-self: flex-start" class="text-limit">
                     ${address}
                 </h6>
-                <i class="bi bi-image"></i>
-                <span>${not empty r.hostelId ? r.hostelId : 0}</span>
-                <i class="bi bi-eye"></i>
-                <span>${not empty r.roomView ? r.roomView : 0}</span>
+
+                <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+
+                        ${not empty r.roomView ? r.roomView : 0}</span>
                 <c:set var="endDate" value="${RoomDao.get_end_date_by_RoomId(r.roomId).toString()}"></c:set>
                 <c:set var="startDate" value="${RoomDao.get_start_date_by_RoomId(r.roomId).toString()}"></c:set>
                 <c:set var="formattedEndDate" value="${endDate.substring(8, 10)}/${endDate.substring(5, 7)}/${endDate.substring(0, 4)}" />
