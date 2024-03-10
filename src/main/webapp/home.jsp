@@ -49,6 +49,10 @@
             text-overflow: ellipsis;
             max-width: 250px;
         }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) hue-rotate(180deg); /* Thay đổi màu sắc của biểu tượng */
+            margin-right: 5px !important; /* Adjust the value as needed */
+        }
     </style>
 </head>
 
@@ -401,7 +405,7 @@
 %>
 <%--<!--Script-->--%>
 
-js tinh thanh ten gi
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -455,7 +459,15 @@ js tinh thanh ten gi
     niceSelectUl.style.overflowY = "auto";
 
     var districts = document.getElementById("district");
+    var niceSelectUl2 = districts.nextElementSibling.querySelector("ul.list");
+    niceSelectUl2.style.maxHeight = "200px";
+    niceSelectUl2.style.overflowY = "auto";
+
     var wards = document.getElementById("ward");
+var niceSelectUl3 = wards.nextElementSibling.querySelector("ul.list");
+niceSelectUl3.style.maxHeight = "200px";
+niceSelectUl3.style.overflowY = "auto";
+
     var Parameter = {
         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
         method: "GET",
@@ -468,48 +480,32 @@ js tinh thanh ten gi
 
     function renderCity(data) {
         for (const x of data) {
-            // Cai nay la them
             var li = document.createElement("li");
             li.setAttribute("data-value", x.Id);
             li.textContent = x.Name;
             li.classList.add("option");
 
+            li.addEventListener("click", function () {
+                for (const y of x.Districts){
+                    var li_dis = document.createElement("li");
+                    li_dis.setAttribute("data-value", y.Id);
+                    li_dis.textContent = y.Name;
+                    li_dis.classList.add("option");
+
+                    li_dis.addEventListener("click", function () {
+                        for (const z of y.Wards) {
+                            var li_ward = document.createElement("li");
+                            li_ward.setAttribute("data-value", z.Id);
+                            li_ward.textContent = z.Name;
+                            li_ward.classList.add("option");
+                            niceSelectUl3.appendChild(li_ward)
+                        }
+                    });
+                    niceSelectUl2.appendChild(li_dis);
+                }
+            });
             niceSelectUl.appendChild(li);
         }
-        citis.onchange = function () {
-            districts.length = 1;
-            wards.length = 1;
-            if (this.options[this.selectedIndex].dataset.id != "") {
-                const result = data.filter((n) => n.Id === this.options[this.selectedIndex].dataset.id);
-
-                for (const k of result[0].Districts) {
-                    var opt = document.createElement("option");
-                    opt.value = k.Name;
-                    opt.text = k.Name;
-                    opt.style.color = "black";
-
-                    opt.setAttribute("data-id", k.Id);
-                    districts.options.add(opt);
-                }
-            }
-        };
-        districts.onchange = function () {
-            wards.length = 1;
-            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
-            if (this.options[this.selectedIndex].dataset.id != "") {
-                const dataWards = dataCity[0].Districts.filter((n) => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
-
-                for (const w of dataWards) {
-                    var opt = document.createElement("option");
-                    opt.value = w.Name;
-                    opt.text = w.Name;
-                    opt.style.color = "black";
-
-                    opt.setAttribute("data-id", w.Id);
-                    wards.options.add(opt);
-                }
-            }
-        };
     }
 </script>
 

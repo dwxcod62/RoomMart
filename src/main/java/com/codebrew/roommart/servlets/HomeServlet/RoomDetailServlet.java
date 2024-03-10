@@ -62,7 +62,7 @@ public class RoomDetailServlet extends HttpServlet {
         //call dao
         RoomDao rd = new RoomDao();
         endDate = rd.get_end_date_by_RoomId(rid); // end date
-        System.out.println("end date: " + endDate);
+//        System.out.println("end date: " + endDate);
         InformationDao ud = new InformationDao();
         boolean isSuccess = false;
         InfrastructureDao infraDao = new InfrastructureDao();
