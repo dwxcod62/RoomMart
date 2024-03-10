@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "AddNewHostelServlet", value = "/add-new-hostel-v1")
@@ -40,8 +41,8 @@ public class AddNewHostelServlet extends HttpServlet {
             String hostelProvince = req.getParameter("hostel-province");
             String hostelDistrict = req.getParameter("hostel-district");
             String hostelWard = req.getParameter("hostel-ward");
-
-            new HostelDAO().addNewHostel(new Hostel(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince));
+            List<String> imgUrl= new ArrayList<>();
+            new HostelDAO().addNewHostel(new Hostel(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince,imgUrl));
 //            req.setAttribute("HOSTEL_ID", hostelId);
             req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                     .status(true)

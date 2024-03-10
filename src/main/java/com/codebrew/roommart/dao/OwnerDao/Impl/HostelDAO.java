@@ -12,19 +12,22 @@ import java.util.List;
 
 public class HostelDAO implements IHostelDAO {
     private static final String GET_HOSTEL_BY_OWNER_ID =
-            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM Hostels WHERE owner_account_id = ?";
+            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM Hostels WHERE owner_account_id = ? and hostels.status=0";
     private static final String GET_HOSTEL_BY_ID_WITH_CONSTRAINT =
-            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM Hostels WHERE hostel_id = ? AND owner_account_id = ?";
+            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM Hostels WHERE hostel_id = ? AND owner_account_id = ? and hostels.status=0";
 
     private static final String INSERT_HOSTEl =
-            "INSERT INTO Hostels(owner_account_id, name, address, ward, district, city) VALUES(?, ?, ?, ?, ?, ?)";
+            "INSERT INTO Hostels(owner_account_id, name, address, ward, district, city,status) VALUES(?, ?, ?, ?, ?, ?,?)";
 
     private static final String INSERT_NEW_HOSTEl =
-            "INSERT INTO Hostels(owner_account_id, name, address, ward, district, city) VALUES(?, ?, ?, ?, ?, ?)";
+            "INSERT INTO Hostels(owner_account_id, name, address, ward, district, city,status) VALUES(?, ?, ?, ?, ?, ?,1)";
 
     private static final String INSERT_HOSTEL_SERVICE =
             "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date, status)\n" +
                     "VALUES (?, ?, ?, GETDATE(), 1)";
+    private static final String INSERT_HOSTEL_IMG =
+            "INSERT INTO imgHostel (hostel_id, imgURL)\n" +
+                    "VALUES (?,?)";
     @Override
     public Hostel getHostelById(int hostelId) {
         Connection cn = null;
@@ -234,6 +237,7 @@ public class HostelDAO implements IHostelDAO {
                 ptm.setString(4, hostel.getWard());
                 ptm.setString(5, hostel.getDistrict());
                 ptm.setString(6, hostel.getCity());
+                ptm.setInt(7, hostel.getStatus());
                 check = ptm.executeUpdate() > 0;
                 if (!check) {
                     cn.rollback();
@@ -252,6 +256,17 @@ public class HostelDAO implements IHostelDAO {
                     ptm.setInt(1, id);
                     ptm.setInt(2, ser.getServiceID());
                     ptm.setInt(3, ser.getServicePrice());
+                    check = ptm.executeUpdate() > 0;
+                    if (!check) {
+                        cn.rollback();
+                        cn.setAutoCommit(true);
+                        return -1;
+                    }
+                }
+                for(String url : hostel.getImgUrl()){
+                    ptm = cn.prepareStatement(INSERT_HOSTEL_IMG);
+                    ptm.setInt(1, id);
+                    ptm.setString(2, url);
                     check = ptm.executeUpdate() > 0;
                     if (!check) {
                         cn.rollback();
