@@ -35,7 +35,7 @@ public class AccountDao {
             String password = rs.getString("password");
             String createdate = rs.getString("create_date");
             String expired_date = rs.getString("expired_date");
-            int recently_Room = rs.getInt("recently_Room");
+            int recently_Room = rs.getInt("room_id");
             int status = rs.getInt("status");
             int role = rs.getInt("role");
             int roomId = rs.getInt("room_id");

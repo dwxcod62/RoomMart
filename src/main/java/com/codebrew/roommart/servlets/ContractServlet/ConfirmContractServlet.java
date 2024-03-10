@@ -69,7 +69,7 @@ public class ConfirmContractServlet extends HttpServlet {
                         AccountInfo _owner_info = new AccountInfo().builder().information(informationDao.getAccountInformationById(_contract.getHostelOwnerId())).build();
                         session.setAttribute("CONTRACT_OWNER", _owner_info);
 
-                        int _hostel_id = new HostelDao().getHostelByRoomId(_contract.getRoom_id());
+                        int _hostel_id = new HostelDao().getHosteIdlByRoomId(_contract.getRoom_id());
                         List<ServiceInfo> _list_Services = new ServiceInfoDAO().getServicesOfHostel(_hostel_id);
                         session.setAttribute("CONTRACT_SERVICES_LIST", _list_Services);
 

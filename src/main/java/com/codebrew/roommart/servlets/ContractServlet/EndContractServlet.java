@@ -25,7 +25,7 @@ public class EndContractServlet extends HttpServlet {
         try {
             int roomId = Integer.parseInt(request.getParameter("room-id"));
             int renterAccountId = Integer.parseInt(request.getParameter("renter-account-id"));
-            int hostelId = new HostelDao().getHostelByRoomId(roomId);
+            int hostelId = new HostelDao().getHosteIdlByRoomId(roomId);
 
             AccountDao accountDAO = new AccountDao();
             RoomDao roomDAO = new RoomDao();
