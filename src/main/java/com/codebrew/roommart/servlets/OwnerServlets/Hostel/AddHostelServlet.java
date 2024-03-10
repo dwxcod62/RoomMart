@@ -1,8 +1,13 @@
 package com.codebrew.roommart.servlets.OwnerServlets.Hostel;
 
+
+import com.codebrew.roommart.dao.OwnerDao.IRoomDAO;
+
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
+import com.codebrew.roommart.dao.OwnerDao.Impl.RoomDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.ServiceDAO;
 import com.codebrew.roommart.dao.ServiceInfoDAO;
 import com.codebrew.roommart.dto.Account;
@@ -20,7 +25,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
+import java.util.HashMap;
+
 import java.util.Collection;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -161,6 +170,19 @@ public class AddHostelServlet extends HttpServlet {
 
             if (hostelId >= 0) {
                 req.setAttribute("HOSTEL_ID", hostelId);
+
+                List<Hostel> listHostel = new HostelDAO().getHostelByOwnerId(accountId);
+                req.setAttribute("LIST_HOSTEL", listHostel);
+
+                Map<Integer, Integer> ListNumberTotalRoomsOfHostel = new HashMap<>();
+                IRoomDAO roomDAO = new RoomDAO();
+                if (listHostel.size() > 0) {
+                    for (Hostel hostel1 : listHostel) {
+                        ListNumberTotalRoomsOfHostel.put(hostel1.getHostelID(), roomDAO.getNumberRoomSpecificHostel(hostel1.getHostelID()));
+                    }
+                    req.setAttribute("LIST_TOTAL_ROOM", ListNumberTotalRoomsOfHostel);
+                }
+
                 req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)
                         .content("Tạo khu trọ thành công!").build());
@@ -172,8 +194,8 @@ public class AddHostelServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e);
         } finally {
-//            req.getRequestDispatcher(url).forward(req, response);
-            response.sendRedirect("owner-hostel-list");
+            req.getRequestDispatcher("hostel-page").forward(req, response);
+//            response.sendRedirect("owner-hostel-list");
         }
     }
     private String getFileName(Part part) {

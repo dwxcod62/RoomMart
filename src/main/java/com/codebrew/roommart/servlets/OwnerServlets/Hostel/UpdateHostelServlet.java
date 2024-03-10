@@ -1,6 +1,9 @@
 package com.codebrew.roommart.servlets.OwnerServlets.Hostel;
 
+import com.codebrew.roommart.dao.OwnerDao.IRoomDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
+import com.codebrew.roommart.dao.OwnerDao.Impl.RoomDAO;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 
@@ -9,7 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "UpdateHostelServlet", value = "/update-hostel")
 public class UpdateHostelServlet extends HttpServlet {
@@ -29,6 +36,9 @@ public class UpdateHostelServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         String url = "owner-hostel-list";
         req.setCharacterEncoding("UTF-8");
+        HttpSession session = req.getSession();
+        Account acc = (Account) session.getAttribute("USER");
+        int accountId = acc.getAccId();
         try {
             int hostelID = Integer.parseInt(req.getParameter("hostelID"));
             String hostelName = req.getParameter("hostel-name");
@@ -47,6 +57,20 @@ public class UpdateHostelServlet extends HttpServlet {
             boolean checkUpdate = dao.updateHostel(newHostel, hostelID);
             System.out.println(checkUpdate);
             if (checkUpdate) {
+
+                List<Hostel> listHostel = new HostelDAO().getHostelByOwnerId(accountId);
+                req.setAttribute("LIST_HOSTEL", listHostel);
+
+                Map<Integer, Integer> ListNumberTotalRoomsOfHostel = new HashMap<>();
+                IRoomDAO roomDAO = new RoomDAO();
+                if (listHostel.size() > 0) {
+                    for (Hostel hostel1 : listHostel) {
+                        ListNumberTotalRoomsOfHostel.put(hostel1.getHostelID(), roomDAO.getNumberRoomSpecificHostel(hostel1.getHostelID()));
+                    }
+                    req.setAttribute("LIST_TOTAL_ROOM", ListNumberTotalRoomsOfHostel);
+                }
+
+
                 req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)
                         .content("Cập nhật thông tin khu trọ thành công!").build());
@@ -58,7 +82,7 @@ public class UpdateHostelServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at UpdateHostel: " + e.toString());
         } finally {
-            response.sendRedirect(url);
+            req.getRequestDispatcher("hostel-page").forward(req, response);
         }
     }
 }
