@@ -1047,7 +1047,7 @@ public List<String>getListImgByRoomId(int rid){
         return endDate;
     }
     public static Date get_start_date_by_RoomId(int rid) {
-        System.out.println("-> get_end_date_by_RoomId ");
+//        System.out.println("-> get_start_date_by_RoomId ");
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

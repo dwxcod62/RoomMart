@@ -88,7 +88,7 @@ public class HomeServlet extends HttpServlet {
         }
         Account accRent = (Account) session.getAttribute("USER");
 
-        System.out.println("--> check acc user: "+ accRent);
+//        System.out.println("--> check acc user: "+ accRent);
         if (accRent != null){
             Date currentDate = new Date();
 
@@ -100,7 +100,7 @@ public class HomeServlet extends HttpServlet {
                 Date createDateObj = formatter.parse(accRent.getCreateDate());
                 Date expiration = formatter.parse(accRent.getExpiredDate());
 
-                System.out.println("create date: "+createDateObj);
+//                System.out.println("create date: "+createDateObj);
                 // So sánh ngày hiện tại với ngày từ createDate
                 //check tai khoan tao hon 1 ngay chua
                 if (currentDate.after(createDateObj)) {
@@ -108,15 +108,15 @@ public class HomeServlet extends HttpServlet {
 
                     if (currentDate.after(expiration)){
 //                        rd.updateExpiredDateRoomId(accRent.getAccId());
-                        System.out.println("suggest");
+//                        System.out.println("suggest");
                         Room mostView = rd.getRoomMostView();
                         Room recently = rd.getRoomById(accRent.getRecentlyRoom());
-                        System.out.println("recently: "+recently);
+//                        System.out.println("recently: "+recently);
                         if (recently != null){
                             session.setAttribute("recently",recently);
                             Room budget = rd.getbudgetRoom(recently.getHostelId());
                             session.setAttribute("budget",budget);
-                            System.out.println("budget: "+budget);
+//                            System.out.println("budget: "+budget);
 
                         }
                         session.setAttribute("mostView",mostView);
