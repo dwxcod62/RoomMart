@@ -1370,7 +1370,7 @@ public List<String>getListImgByRoomId(int rid){
                         "FROM \n" +
                         "    rooms \n" +
                         "JOIN \n" +
-                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n where 1=1 " ;
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n where 1=1 and hostels.status = 0 " ;
 
 
                 if(inputText!=null&&!inputText.isEmpty()){
