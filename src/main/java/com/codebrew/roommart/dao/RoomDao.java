@@ -615,8 +615,8 @@ public List<String>getListImgByRoomId(int rid){
             if (cn != null) {
                 pst = cn.prepareStatement(
                         "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic], R.[hostel_id], R.[room_status],R.[room_view],R.[price]\n" +
-                                "FROM [dbo].[Rooms] AS R\n" +
-                                "WHERE R.[room_id]= ?");
+                                "FROM [dbo].[Rooms] AS R join hostels on R.[hostel_id] = hostels.hostel_id\n" +
+                                "WHERE R.[room_id]= ? and hostels.status = 0");
                 pst.setInt(1, roomId);
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
@@ -673,7 +673,7 @@ public List<String>getListImgByRoomId(int rid){
             if (cn != null) {
                 String sql = "SELECT room_id, H.hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city,R.price , H.owner_account_id\n" +
                         "FROM Rooms R JOIN Hostels H ON R.hostel_id = H.hostel_id\n" +
-                        "WHERE R.room_id = ?\n";
+                        "WHERE R.room_id = ? and H.status = 0\n";
 
 
                 pst = cn.prepareStatement(sql);
@@ -797,7 +797,7 @@ public List<String>getListImgByRoomId(int rid){
                         "left JOIN \n" +
                         "    contracts ON rooms.room_id = contracts.room_id \n" +
                         "JOIN \n" +
-                        "    imgURL ON rooms.room_id = imgURL.room_id \n  where 1=1 ";
+                        "    imgURL ON rooms.room_id = imgURL.room_id \n  where 1=1 and hostels.status = 0 ";
 
 
                 if(!inputText.isEmpty()){
@@ -946,8 +946,10 @@ public List<String>getListImgByRoomId(int rid){
 
 
     sql = "SELECT COUNT(*) AS count_roomber\n" +
-            "FROM rooms\n" +
-            "WHERE room_number = ? and hostel_id=? and room_number <> ?;";
+            "FROM rooms \n" +
+            "JOIN \n" +
+            "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
+            "WHERE room_number = ? and hostel_id=? and room_number <> ? and hostels.status = 0;";
 
 
         try {
@@ -1125,7 +1127,7 @@ public List<String>getListImgByRoomId(int rid){
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
                         "JOIN \n" +
                         "    imgURL ON rooms.room_id = imgURL.room_id \n" +
-                        " WHERE rooms.room_id <> ? and (rooms.price BETWEEN rooms.price-500000 AND rooms.price+1000000) and rooms.hostel_id = (select hostel_id from rooms where room_id = ?)\n"+
+                        " WHERE hostels.status = 0 and rooms.room_id <> ? and (rooms.price BETWEEN rooms.price-500000 AND rooms.price+1000000) and rooms.hostel_id = (select hostel_id from rooms where room_id = ?)\n"+
                         "GROUP BY \n" +
                         "    rooms.room_id, \n" +
                         "    room_number, \n" +
@@ -1650,7 +1652,7 @@ public List<String>getListImgByRoomId(int rid){
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 String sql = "SELECT room_id, Hostels.hostel_id as 'hostel_id', room_number, room_status\n" +
                         "FROM Hostels, Rooms\n" +
-                        "WHERE Hostels.owner_account_id = ?\n" +
+                        "WHERE Hostels.owner_account_id = ? and Hostels.status =0\n" +
                         "AND Hostels.hostel_id = Rooms.hostel_id\n";
 
                 pst = cn.prepareStatement(sql);
@@ -1812,7 +1814,9 @@ public List<String>getListImgByRoomId(int rid){
                         "FROM rooms\n" +
                         "SELECT TOP 1 *\n" +
                         "FROM rooms\n" +
-                        "WHERE price = (SELECT MIN(price) FROM rooms) and hostel_id = ?\n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n "+
+                        "WHERE price = (SELECT MIN(price) FROM rooms) and hostel_id = ? and hostels.status = 0\n" +
                         "ORDER BY room_area DESC;";
 
                 pst = cn.prepareStatement(sql);
