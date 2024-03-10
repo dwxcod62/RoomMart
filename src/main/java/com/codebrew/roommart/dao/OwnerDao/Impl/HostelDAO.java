@@ -428,7 +428,7 @@ public class HostelDAO implements IHostelDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                ptm = cn.prepareStatement("delete from hostels where hostel_id = ?");
+                ptm = cn.prepareStatement("update hostels set status = -1 where hostel_id = ?");
 
                 ptm.setInt(1, hostelId);
                 checkDelete = ptm.executeUpdate() > 0;

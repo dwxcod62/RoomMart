@@ -98,7 +98,11 @@ public class HomeServlet extends HttpServlet {
             try {
                 // Chuyển chuỗi createDate thành đối tượng Date
                 Date createDateObj = formatter.parse(accRent.getCreateDate());
-                Date expiration = formatter.parse(accRent.getExpiredDate());
+                Date expiration;
+                if (accRent.getExpiredDate() == null){
+                    expiration = new Date();
+                }else
+                 expiration = formatter.parse(accRent.getExpiredDate());
 
                 System.out.println("create date: "+createDateObj);
                 // So sánh ngày hiện tại với ngày từ createDate
