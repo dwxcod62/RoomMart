@@ -60,7 +60,7 @@
             </div>
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 m-auto">
-                    <form action="add-new-hostel" method="POST" class="custom-form add-hostel-form" id="add-hostel-form">
+                    <form action="add-new-hostel" method="POST" enctype="multipart/form-data" class="custom-form add-hostel-form" id="add-hostel-form">
                         <div class="form-header">
                             <div class="form-title main-title">Thêm khu trọ mới</div>
                         </div>
@@ -74,6 +74,11 @@
                         <div class="form-group">
                             <label for="hostel-name" class="form-label">Tên: <span>*</span></label>
                             <input id="hostel-name" name="hostel-name" type="text" class="form-control" placeholder="Điền tên khu trọ">
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="hostel-img" class="form-label">Giấy tờ đất: <span>*</span></label>
+                            <input id="hostel-img" type="file" name="fileImage" accept=".png, .jpg" multiple class="form-control" onchange="validateFiles(this)">
                             <span class="form-message"></span>
                         </div>
                         <div class="form-group">
@@ -230,6 +235,7 @@
         errorSelector: '.form-message',
         rules: [
             Validator.isRequired('#hostel-name', 'Vui lòng nhập tên của khu trọ'),
+            Validator.isRequired('#hostel-img', 'Vui lòng thêm ảnh giấy tờ đất khu trọ'),
             Validator.isRequired('#hostel-address', 'Vui lòng nhập địa chỉ của khu trọ'),
             Validator.isRequired('#hostel-province', 'Vui lòng chọn tỉnh/thành phố'),
             Validator.isRequired('#hostel-district', 'Vui lòng chọn quận/huyện'),
@@ -389,6 +395,44 @@
         };
     }
 
+
+    function validateFiles(input) {
+        console.log("validateFiles")
+        const files = input.files;
+        const allowedExtensions = /(\.png|\.jpg)$/i;
+        const maxSize = 2097152; // 10 MB
+        var totalSize = 0;
+        var submitBtn = document.getElementById("submitBTN");
+        console.log(submitBtn.innerText);
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            if (!allowedExtensions.exec(file.name)) {
+                alert('Chỉ chấp nhận ảnh .png và .jpg.');
+                input.value = '';
+                return false;
+            }
+
+            if (file.size > maxSize) {
+                alert('Kích thước file tối đa là 2 MB.');
+                input.value = '';
+                return false;
+            }
+        }
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            totalSize += file.size
+            console.log(i+": "+file.size);
+        }
+        console.log(totalSize)
+        console.log(maxSize)
+        if (totalSize > 2097152) {
+            alert('Tổng Kích thước tất cả file tối đa là 2 MB.');
+            input.value = '';
+            return false;
+        }
+    }
 </script>
 
 </body>

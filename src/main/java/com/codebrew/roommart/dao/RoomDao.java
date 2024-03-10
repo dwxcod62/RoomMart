@@ -614,9 +614,9 @@ public List<String>getListImgByRoomId(int rid){
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(
-                        "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic], R.[hostel_id], R.[room_status]\n" +
-                                "FROM [dbo].[Rooms] AS R\n" +
-                                "WHERE R.[room_id]= ?");
+                        "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic], R.[hostel_id], R.[room_status],R.[room_view],R.[price]\n" +
+                                "FROM [dbo].[Rooms] AS R join hostels on R.[hostel_id] = hostels.hostel_id\n" +
+                                "WHERE R.[room_id]= ? and hostels.status = 0");
                 pst.setInt(1, roomId);
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
@@ -627,6 +627,10 @@ public List<String>getListImgByRoomId(int rid){
                     int capacity = rs.getInt("capacity");
                     int hasAttic = rs.getInt("has_Attic");
                     int roomStatus = rs.getInt("room_status");
+                    int room_view = rs.getInt("room_view");
+                    int price = rs.getInt("price");
+                    List<String> imgUrl = new ArrayList<>();
+                    imgUrl.add(getListImgByRoomId(roomID).get(0));
                     roomInfor = Room
                             .builder()
                             .roomId(roomID)
@@ -636,6 +640,9 @@ public List<String>getListImgByRoomId(int rid){
                             .capacity(capacity)
                             .hasAttic(hasAttic)
                             .roomStatus(roomStatus)
+                            .roomView(room_view)
+                            .price(price)
+                            .imgUrl(imgUrl)
                             .build();
                 }
             }
@@ -666,7 +673,7 @@ public List<String>getListImgByRoomId(int rid){
             if (cn != null) {
                 String sql = "SELECT room_id, H.hostel_id, room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city,R.price , H.owner_account_id\n" +
                         "FROM Rooms R JOIN Hostels H ON R.hostel_id = H.hostel_id\n" +
-                        "WHERE R.room_id = ?\n";
+                        "WHERE R.room_id = ? and H.status = 0\n";
 
 
                 pst = cn.prepareStatement(sql);
@@ -763,13 +770,13 @@ public List<String>getListImgByRoomId(int rid){
                         "    hostels.name, \n" +
                         "    address,\n" +
                         "    city,\n" +
-                        "    ward, rooms.price,\n" +
+                        "    ward, rooms.price,rooms.room_view,\n" +
                         "    district\n"+" ORDER BY \n" +
 
                         "    rooms.room_id ASC\n";
                 String sql = "SELECT \n" +
                         "    rooms.room_id, \n" +
-                        "    rooms.price, \n" +
+                        "    rooms.price, rooms.room_view, \n" +
                         "    room_number, \n" +
                         "    capacity, \n" +
                         "    room_area, \n" +
@@ -790,7 +797,7 @@ public List<String>getListImgByRoomId(int rid){
                         "left JOIN \n" +
                         "    contracts ON rooms.room_id = contracts.room_id \n" +
                         "JOIN \n" +
-                        "    imgURL ON rooms.room_id = imgURL.room_id \n  where 1=1 ";
+                        "    imgURL ON rooms.room_id = imgURL.room_id \n  where 1=1 and hostels.status = 0 ";
 
 
                 if(!inputText.isEmpty()){
@@ -853,7 +860,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-                System.out.println(sql);
+//                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -875,6 +882,8 @@ public List<String>getListImgByRoomId(int rid){
                         String ward2 = rs.getString("ward");
                         int imgNumber = rs.getInt("count_img");
                         String img = rs.getString("imgUrl");
+                        int room_view = rs.getInt("room_view");
+
                         List<String> imgList = new ArrayList<>();
                         imgList.add(img);
 
@@ -892,6 +901,7 @@ public List<String>getListImgByRoomId(int rid){
                                 .hasAttic(hasAttic)
                                 .roomInformation(roomInformation)
                                 .imgUrl(imgList)
+                                .roomView(room_view)
                                 .build());
                     }
                 }else {rooms=null;}
@@ -936,8 +946,10 @@ public List<String>getListImgByRoomId(int rid){
 
 
     sql = "SELECT COUNT(*) AS count_roomber\n" +
-            "FROM rooms\n" +
-            "WHERE room_number = ? and hostel_id=? and room_number <> ?;";
+            "FROM rooms \n" +
+            "JOIN \n" +
+            "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
+            "WHERE room_number = ? and hostel_id=? and room_number <> ? and hostels.status = 0;";
 
 
         try {
@@ -1098,7 +1110,7 @@ public List<String>getListImgByRoomId(int rid){
                         "    rooms.room_id, \n" +
                         "    room_number, \n" +
                         "    capacity, \n" +
-                        "    room_area, \n" +
+                        "    room_area,room_view, \n" +
                         "    has_attic, \n" +
                         "    room_status,\n" +
                         "    hostels.name, \n" +
@@ -1115,12 +1127,12 @@ public List<String>getListImgByRoomId(int rid){
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n" +
                         "JOIN \n" +
                         "    imgURL ON rooms.room_id = imgURL.room_id \n" +
-                        " WHERE rooms.room_id <> ? and (rooms.price BETWEEN rooms.price-500000 AND rooms.price+1000000) and rooms.hostel_id = (select hostel_id from rooms where room_id = ?)\n"+
+                        " WHERE hostels.status = 0 and rooms.room_id <> ? and (rooms.price BETWEEN rooms.price-500000 AND rooms.price+1000000) and rooms.hostel_id = (select hostel_id from rooms where room_id = ?)\n"+
                         "GROUP BY \n" +
                         "    rooms.room_id, \n" +
                         "    room_number, \n" +
                         "    capacity, \n" +
-                        "    room_area, \n" +
+                        "    room_area,room_view, \n" +
                         "    has_attic, \n" +
                         "    room_status,price,\n" +
                         "    hostels.name, \n" +
@@ -1151,6 +1163,8 @@ public List<String>getListImgByRoomId(int rid){
                         String ward = rs.getString("ward");
                         String img = rs.getString("imgUrl");
                         int imgNumber = rs.getInt("count_img");
+                        int room_view = rs.getInt("room_view");
+
                         List<String> imgList = new ArrayList<>();
                         imgList.add(img);
 
@@ -1166,6 +1180,7 @@ public List<String>getListImgByRoomId(int rid){
                                 .roomInformation(roomInformation)
                                 .imgUrl(imgList)
                                 .price(price)
+                                .roomView(room_view)
                                 .build());
                     }
                 }else {rooms=null;}
@@ -1355,7 +1370,7 @@ public List<String>getListImgByRoomId(int rid){
                         "FROM \n" +
                         "    rooms \n" +
                         "JOIN \n" +
-                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n where 1=1 " ;
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n where 1=1 and hostels.status = 0 " ;
 
 
                 if(inputText!=null&&!inputText.isEmpty()){
@@ -1623,6 +1638,318 @@ public List<String>getListImgByRoomId(int rid){
             }
         }
         return roomInfo;
+    }
+
+    public List<Room> getListRoomsByHostelOwnerId(int hostelOwnerID) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                String sql = "SELECT room_id, Hostels.hostel_id as 'hostel_id', room_number, room_status\n" +
+                        "FROM Hostels, Rooms\n" +
+                        "WHERE Hostels.owner_account_id = ? and Hostels.status =0\n" +
+                        "AND Hostels.hostel_id = Rooms.hostel_id\n";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, hostelOwnerID);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int roomID = rs.getInt("room_id");
+                        int hosteLId = rs.getInt("hostel_id");
+                        int roomNumber = rs.getInt("room_number");
+                        int roomStatus = rs.getInt("room_status");
+                        rooms.add(Room.builder()
+                                .roomId(roomID)
+                                .hostelId(hosteLId)
+                                .roomNumber(roomNumber)
+                                .roomStatus(roomStatus)
+                                .build());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return rooms;
+    }
+
+    public void addView(int roomID){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                String sql = "update rooms set room_view = room_view + 1\n" +
+                        "FROM Rooms\n" +
+                        "WHERE room_id = ?\n";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+
+                pst.executeUpdate();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    public Room getRoomMostView() throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfo = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT TOP 1 *\n" +
+                        "FROM rooms\n" +
+                        "ORDER BY room_view DESC;\n";
+
+                pst = cn.prepareStatement(sql);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int room_id = rs.getInt("room_id");
+                    int hostel_id = rs.getInt("hostel_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    int roomView = rs.getInt("room_view");
+                    int price = rs.getInt("price");
+                    List<String> imgUrl = new ArrayList<>();
+                    imgUrl.add(getListImgByRoomId(room_id).get(0));
+                    roomInfo = Room
+                            .builder()
+                            .roomId(room_id)
+                            .hostelId(hostel_id)
+                            .roomNumber(roomNumber)
+                            .capacity(capacity)
+                            .roomArea(roomArea)
+                            .roomView(roomView)
+                            .price(price)
+                            .imgUrl(imgUrl)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfo;
+    }
+    public Room getbudgetRoom(int hostelId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfo = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT *\n" +
+                        "FROM rooms\n" +
+                        "SELECT TOP 1 *\n" +
+                        "FROM rooms\n" +
+                        "JOIN \n" +
+                        "    hostels ON rooms.hostel_id = hostels.hostel_id \n "+
+                        "WHERE price = (SELECT MIN(price) FROM rooms) and hostel_id = ? and hostels.status = 0\n" +
+                        "ORDER BY room_area DESC;";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1,hostelId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int room_id = rs.getInt("room_id");
+                    int hostel_id = rs.getInt("hostel_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    int roomView = rs.getInt("room_view");
+                    int price = rs.getInt("price");
+                    List<String> imgUrl = new ArrayList<>();
+                    imgUrl.add(getListImgByRoomId(room_id).get(0));
+                    roomInfo = Room
+                            .builder()
+                            .roomId(room_id)
+                            .hostelId(hostel_id)
+                            .roomNumber(roomNumber)
+                            .capacity(capacity)
+                            .roomArea(roomArea)
+                            .roomView(roomView)
+                            .price(price)
+                            .imgUrl(imgUrl)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfo;
+    }
+    public void updateRecentlyRoomId(int roomID, int accId){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                String sql = "update Accounts set recently_Room = ? where account_id = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                pst.setInt(2, accId);
+
+                pst.executeUpdate();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    public void updateExpiredDateRoomId(int accId){
+        // update ngay dang nhap moi nhat
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                String sql = "update Accounts set expired_date = GETDATE() where account_id = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, accId);
+
+                pst.executeUpdate();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }
 

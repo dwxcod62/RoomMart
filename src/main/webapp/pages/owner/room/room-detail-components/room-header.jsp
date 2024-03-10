@@ -277,9 +277,7 @@
             </c:when>
             <c:when test="${sessionScope.room.roomStatus eq -1}">
                 <!-- Start view QR Code button -->
-                <form action="get-invite-code" method="post">
-                    <button type="submit" class="action-create-account-link" style="margin-right: 0;">Xem mã tham gia</button>
-                </form>
+
                 <!-- End view QR Code button -->
             </c:when>
         </c:choose>

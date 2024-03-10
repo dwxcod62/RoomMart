@@ -125,6 +125,8 @@ public class ConfirmContractServlet extends HttpServlet {
                 contract.setOwner_sign(sign);
                 contract.setStatus(-1);
 
+                new ConsumeDAO().UpdateFirstConsume(r.getRoomId());
+
                 if ( contractDAO.addContractOwner(contract) && roomDAO.updateRoomStatus(r.getRoomId(), -1)){
                     url = SUCCESS + "?roomID" + r.getRoomId() + "&hostelID=" + r.getHostelId();
                     String email_renter = _renter_info.getEmail();

@@ -27,4 +27,5 @@ public class Account {
     private String expiredTimeRecoverPassword;
     private AccountInfo accountInfo;
     private List<RoommateInfo> roommateInfo;
+    int recentlyRoom;
 }

@@ -18,8 +18,8 @@
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
 
 
-    <title> ROOMMART </title>
-
+    <title> ROOMMART</title>
+<%--    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>--%>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <%--    <link rel="stylesheet" href="assets/sys-css/staticfile.batdongsan.com.vn/css/web/filestatic.ver3a77c7a9.msvbds.layout.min.css" />--%>
@@ -46,7 +46,46 @@
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/dashboard/style.css">
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home2.css">
+    <style>
+        a:hover{
+            text-decoration: none !important; /* Loại bỏ gạch chân mặc định */
+        }
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
 
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .ads-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ads-img img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body class="re__body re__body-home over-flow-hidden">
@@ -85,8 +124,8 @@
                             <div class="re__input-group--sm re__search-box-row js__search-row-location">
 
                                 <div class="re__search-location-select-header js_search-location-select-header" tabindex="0">
-                                    <div class="re__search-location-row re__search-location-select-header-item js_search-location-select-header-item">
-                                        <i class="js__selected-icon re__icon-search re__city-icon-search fa-solid fa-magnifying-glass" ></i>
+                                    <div class="re__search-location-row re__search-location-select-header-item js_search-location-select-header-item" style="padding: 10px">
+                                        <i class="js__selected-icon re__icon-search re__city-icon-search fa-solid fa-magnifying-glass" style="padding: inherit"></i>
 
                                         <input value="${requestScope.key}" type="text" id="textInput" name="key" title="Enter address follow pattern: province,(district),(ward)" class="w3-input w3-animate-input re__city-code-select js__listing-search-select-container js__city-code-select">
 
@@ -222,10 +261,13 @@
                                                     <div class="re__card-image-feature">
                                                         <i class="bi bi-image"></i>
                                                         <span>${not empty r.hostelId ? r.hostelId : 0}</span>
+                                                        <i class="bi bi-eye"></i>
+                                                        <span>${not empty r.roomView ? r.roomView : 0}</span>
                                                     </div>
 
+
                                                 </div>
-                                                <div class="re__card-info">
+                                                <div class="re__card-info" style="text-decoration: none !important;">
                                                     <div class="re__card-info-content">
                                                         <div class="re__card-title">
                                                             <h3 class="js__card-title">
@@ -336,6 +378,9 @@
 <!-- Push notification element -->
 <jsp:include page="./pages/home/components/boxchat.jsp" />
 <div id="push-noti"></div>
+<c:if test="${sessionScope.mostView != null}">
+    <jsp:include page="pages/home/popup.jsp"></jsp:include>
+</c:if>
 
 <!-- end food section -->
 <%
@@ -481,6 +526,6 @@ function showdropdown(){
 <script>
 
 </script>
-<!--Script-->
+
 </body>
 </html>

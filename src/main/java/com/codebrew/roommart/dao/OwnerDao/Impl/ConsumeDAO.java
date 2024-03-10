@@ -107,7 +107,7 @@ public class ConsumeDAO implements IConsumeDAO {
             if (cn != null) {
                 String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
                         "FROM Consumes\n" +
-                        "WHERE room_id = ?\n AND status = 0\n" +
+                        "WHERE room_id = ?\n and status = 0\n" +
                         "ORDER BY update_date DESC";
 
                 pst = cn.prepareStatement(sql);
@@ -195,6 +195,34 @@ public class ConsumeDAO implements IConsumeDAO {
                 pst.setInt(2, consume.getNumberWater());
                 pst.setInt(3, consume.getStatus());
                 pst.setInt(4, consume.getRoomID());
+
+                if (pst.executeUpdate() > 0) {
+                    isSuccess = true;
+                } else {
+                    cn.rollback();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            OwnerUtils.closeSQL(cn, pst, null);
+        }
+        return isSuccess;
+    }
+
+    public Boolean UpdateFirstConsume(int room_id) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean isSuccess = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String sql = "Update Consumes set status = 1 where room_id = ? and number_electric = 0 ";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, room_id);
 
                 if (pst.executeUpdate() > 0) {
                     isSuccess = true;

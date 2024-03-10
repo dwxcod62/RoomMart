@@ -352,7 +352,7 @@
       const  hostelId = document.getElementById("noti-hostel-id").options[document.getElementById("noti-hostel-id").selectedIndex].value;
        console.log("hostelId reiceiver 1 : "+hostelId);
        const str = hostelId.toString();
-       sendToWebSocket("hostel_owner", "hostel", str, null, "Có thông báo mới",null);
+       // sendToWebSocket("hostel_owner", "hostel", str, null, "Có thông báo mới",null);
 
        document.getElementById("valueSelected").value = hostelId;
        console.log("input hidden: "+document.getElementById("valueSelected").value);

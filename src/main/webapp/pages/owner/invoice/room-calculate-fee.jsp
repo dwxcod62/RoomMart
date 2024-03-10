@@ -223,7 +223,7 @@
                                                     </div>
 
                                                     <div class="form-group" style="margin: 0px 10px">
-                                                        <label for="bank-list" class="form-label">Chọn ngân hàng: <span>*</span></label>
+                                                        <label for="bank-list" class="form-label"> Nhập số tài khoản: <span>*</span></label>
                                                         <input id="stk" name="Stk"  type="text" placeholder="VD: 0123456789"
                                                                class="form-control">
                                                         <span class="form-message"></span>

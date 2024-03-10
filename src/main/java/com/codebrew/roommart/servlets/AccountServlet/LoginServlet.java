@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
         Account account = null;
         try {
             account = accountDAO.getAccountByUsernameAndPassword(username, password);
+            System.out.println("recently_Room: "+account.getRecentlyRoom());
             if (account != null && account.getStatus() == 1) {
                 url = "success";
                 HttpSession session = req.getSession(true);

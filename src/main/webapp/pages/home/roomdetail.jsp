@@ -431,7 +431,14 @@
                         <input type="hidden" name="hostelId" value="${requestScope.room.hostelId}"/>
                         <input type="hidden" name="roomId" value="${requestScope.room.roomId}"/>
 
-                        <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${(sessionScope.USER == null)? 'disabled':''} ${(sessionScope.USER.role == 1)? 'disabled':''} title="Đăng nhập tài khoản người dùng để chat." type="submit"><i class="bi bi-chat"></i>Nhắn tin với chủ phòng ${sessionScope.USER.role}</button>
+                        <c:if test="${sessionScope.USER != null}" >
+                            <button onclick="showChat()" class="re__btn re__btn-se-border--md js__btnSendContact js__btn-send-contact-from-contact-box" ${(sessionScope.USER == null)? 'disabled':''} ${(sessionScope.USER.role == 1)? 'disabled':''} title="Đăng nhập tài khoản người dùng để chat." type="submit"><i class="bi bi-chat"></i>Nhắn tin với chủ phòng </button>
+                        </c:if>
+
+                        <c:if test="${sessionScope.USER == null}" >
+                            <a href="login-page">Dang nhap de su dung</a>
+                        </c:if>
+
                     </form>
 
                 </div>
@@ -536,6 +543,9 @@
 
 
 </script>
+
+
+
 </body>
 
 </html>

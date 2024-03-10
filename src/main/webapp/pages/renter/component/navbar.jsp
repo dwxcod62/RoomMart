@@ -9,36 +9,36 @@
         <div class="navbar-center"></div>
         <div class="navbar-icons">
             <div class="notification-icon">
-                <div class="number">!</div>
-                <i class='bx bx-message-rounded-dots icon'></i>
-                <div class="box-chat">
-                        <div class="box-chat_content">
-                            <h3>Đoạn chat</h3>
-                            <div class="chat-section">
-                                <a href="https://codepen.io/Golez/">
-                                    <div class="chat-section_img">
-                                        <img src="https://c1.staticflickr.com/5/4007/4626436851_5629a97f30_b.jpg">
-                                    </div>
-                                    <div class="chat-section_txt">
-                                        <h5>James liked your post: "In Winslow's classic 1920 definition"</h5>
-                                        <h6>11/7 - 2:30 pm</h6>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="chat-section">
-                                <a href="https://codepen.io/Golez/">
-                                    <div class="chat-section_img">
-                                        <img src="https://c1.staticflickr.com/5/4007/4626436851_5629a97f30_b.jpg">
-                                    </div>
-                                    <div class="chat-section_txt">
-                                        <h5>James liked your post: "In Winslow's classic 1920 definition"</h5>
-                                        <h6>11/7 - 2:30 pm</h6>
-                                    </div>
-                                </a>
-                            </div>
-                    </div>
-                </div>
-            </div>
+<%--                <div class="number">!</div>--%>
+<%--                <i class='bx bx-message-rounded-dots icon'></i>--%>
+<%--                <div class="box-chat">--%>
+<%--                        <div class="box-chat_content">--%>
+<%--                            <h3>Đoạn chat</h3>--%>
+<%--                            <div class="chat-section">--%>
+<%--                                <a href="https://codepen.io/Golez/">--%>
+<%--                                    <div class="chat-section_img">--%>
+<%--                                        <img src="https://c1.staticflickr.com/5/4007/4626436851_5629a97f30_b.jpg">--%>
+<%--                                    </div>--%>
+<%--                                    <div class="chat-section_txt">--%>
+<%--                                        <h5>James liked your post: "In Winslow's classic 1920 definition"</h5>--%>
+<%--                                        <h6>11/7 - 2:30 pm</h6>--%>
+<%--                                    </div>--%>
+<%--                                </a>--%>
+<%--                            </div>--%>
+<%--                            <div class="chat-section">--%>
+<%--                                <a href="https://codepen.io/Golez/">--%>
+<%--                                    <div class="chat-section_img">--%>
+<%--                                        <img src="https://c1.staticflickr.com/5/4007/4626436851_5629a97f30_b.jpg">--%>
+<%--                                    </div>--%>
+<%--                                    <div class="chat-section_txt">--%>
+<%--                                        <h5>James liked your post: "In Winslow's classic 1920 definition"</h5>--%>
+<%--                                        <h6>11/7 - 2:30 pm</h6>--%>
+<%--                                    </div>--%>
+<%--                                </a>--%>
+<%--                            </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
             <div class="user-icon">
                 <i class="bx bx-user-circle icon"></i>
                 <div class="box-setting">
@@ -59,9 +59,9 @@
                     </div>
 
                     <div class="user-menu-items">
-                        <a href="RenterProfile" class="user-menu-item">
+                        <a href="RenterProfileUpdate" class="user-menu-item">
                             <i class="bx bx-id-card box-setting_icon"></i>
-                            <span class="box-setting_link">Thông tin cá nhân</span>
+                            <span class="box-setting_link">Sửa cá nhân</span>
                         </a>
                         <a href="renter-Change-Pass" class="user-menu-item">
                             <i class="bx bx-cog box-setting_icon"></i>
