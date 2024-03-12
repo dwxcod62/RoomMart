@@ -36,21 +36,9 @@
                             ${NOTI-DETAIL}
                         </span>
                         <p class="noti-detail-1">
-                            Post by binhbna on 02/03/24 11:02
                         </p>
                         <hr>
                         <p class="noti-detail-2">
-                            Phòng Khảo thí thông báo đến các em sinh viên danh sách phòng thi Retake Block 5 (03/03/2024) (VNR202 HCM202 MLN111)
-
-                            Chi tiết ở tệp đính kèm.
-
-                            Khi đi thi các em sinh viên chuẩn bị thẻ sinh viên, bút, tai nghe có dây và dây sạc laptop; kiểm tra phần mềm và máy tính cá nhân trước ngày thi; đọc kỹ nội quy phòng thi tại đây.
-
-                            Academic Examination Department would like to inform students about the updated room list of  Retake Block 5 (03/03/2024) (VNR202 HCM202 MLN111). Details in the attached file.
-
-                            Students come to campus to take exam.
-
-                            Remember to bring ID card, pen, wired earphones and laptop charger with you; check the testing software and personal laptop before the exam date; read the Examination room regulations carefully
                         </p>
                     </div>
                     <a href="">Trở lại</a>

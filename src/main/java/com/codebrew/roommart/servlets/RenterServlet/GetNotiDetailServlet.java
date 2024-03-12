@@ -8,6 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,27 +18,17 @@ public class GetNotiDetailServlet extends HttpServlet {
     public static final String SUCCESS = "renter-Notification-Detail";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = ERROR;
-        try {
-            request.setAttribute("uri", "/RoomMart/GetNotiDetailServlet");
-            HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("USER");
-            int accID = account.getAccId();
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            Notification notifications = new NotificationDao().getNotificationById(id);
 
-            int notiID = (request.getAttribute("notification_id") != null) ? (int) request.getAttribute("notification_id") : Integer.parseInt(request.getParameter("notification_id")) ;
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
 
-            Notification notifications = new NotificationDao().getNotificationById(notiID);
+            response.getWriter().write(notifications.getContent());
 
-            if (notifications != null){
-                request.setAttribute("NOTI-DETAIL", notifications);
-                System.out.println(notifications);
-            url = SUCCESS;
-            }
-
-        }catch (Exception e){
-            log("Error at GetNotiDetailServlet: " + e.toString());
-        }finally {
-            request.getRequestDispatcher(url).forward(request,response);
+        } catch ( Exception e){
+            System.out.println(e);
         }
     }
 
