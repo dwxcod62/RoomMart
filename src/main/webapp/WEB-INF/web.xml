@@ -6,6 +6,11 @@
     </context-param>
 
     <context-param>
+        <param-name>AUTHENTICATION_PROPERTIES_FILE_LOCATION</param-name>
+        <param-value>/WEB-INF/authentication.properties</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>AUTHORIZATION_PROPERTIES_FILE_LOCATION</param-name>
         <param-value>/WEB-INF/authorization.properties</param-value>
     </context-param>
