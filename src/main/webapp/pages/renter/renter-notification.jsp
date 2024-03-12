@@ -55,7 +55,7 @@
                             <tr style="text-align: center">
                                 <td>${index}</td>
                                 <td style="text-align: left; padding-left: 1.5rem">
-                                    <h3>${nt.title}</h3>
+                                    <a href="RenterNotiDe?notificationId=${nt.notification_id}"><h3>${nt.title}</h3></a>
                                     <h4 style="font-weight: 400; font-size: 1.6rem">${nt.content}</h4>
                                 </td>
                                 <td>

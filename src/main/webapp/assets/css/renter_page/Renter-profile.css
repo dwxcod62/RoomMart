@@ -321,8 +321,20 @@ body {
   background-color: #fff;
   background-clip: border-box;
   border: 0 solid rgba(0,0,0,.125);
-  border-radius: .25rem;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.08) 0px 1px 2px;
+  padding: 10px 12px;
+}
+
+.card-info h2 {
+  font-weight: 600;
+  font-size: 22px;
+  padding: 5px 0;
+}
+
+.cardBody-inside {
+  margin-bottom: 15px;
+  font-size: 16px;
 }
 
 .card-Info__body {
@@ -331,6 +343,11 @@ body {
   padding: 1rem;
 }
 
-.card-Info__body--title h6 {
-  font-size: 16px;
+.a_custom{
+  float: left;
+  margin-top: 10px;
+  padding: 2px 0;
+  font-size: 12px;
+  text-decoration: underline;
 }
+

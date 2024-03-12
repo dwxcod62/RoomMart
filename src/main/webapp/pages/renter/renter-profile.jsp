@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -30,50 +32,69 @@
         <div class="content">
             <div class="col-6">
                 <div class="card-info">
+                    <h2 class="text-center">Thông tin cá nhân</h2>
                     <div class="card-Info__body">
-                        <div class="row">
-                            <div class="col-sm-3 mb-4 card-Info__body--title">
-                                <h6 class="mb-0">Full Name</h6>
+                        <div class="row cardBody-inside">
+                            <div class="col-sm-4 card-Info__body--title">
+                                <div class="mb-0">Họ và tên:</div>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                Kenneth Valdez
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3 mb-4 card-Info__body--title">
-                                <h6 class="mb-0">Email</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                fip@jukmuh.al
+                            <div class="col-sm-8 text-secondary">
+                                ${sessionScope.USER.accountInfo.information.fullname}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3 mb-4 card-Info__body--title">
-                                <h6 class="mb-0">Phone</h6>
+                        <div class="row cardBody-inside">
+                            <div class="col-sm-4 card-Info__body--title">
+                                <div class="mb-0">Email:</div>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                (239) 816-9029
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3 mb-4 card-Info__body--title">
-                                <h6 class="mb-0">Mobile</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                (320) 380-4539
+                            <div class="col-sm-8 text-secondary">
+                                ${sessionScope.USER.accountInfo.information.email}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3 mb-4 card-Info__body--title">
-                                <h6 class="mb-0">Address</h6>
+                        <div class="row cardBody-inside">
+                            <div class="col-sm-4 card-Info__body--title">
+                                <div class="mb-0">Ngày sinh:</div>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                Bay Area, San Francisco, CA
+                            <div class="col-sm-8 text-secondary">
+                                <fmt:parseDate pattern="yyyy-MM-dd" value="${sessionScope.USER.accountInfo.information.birthday}" var="birthday"/>
+                                <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                            </div>
+                        </div>
+                        <div class="row cardBody-inside">
+                            <div class="col-sm-4 card-Info__body--title">
+                                <div class="mb-0">Giới tính:</div>
+                            </div>
+                            <div class="col-sm-8 text-secondary">
+                                <c:choose>
+                                    <c:when test="${sessionScope.USER.accountInfo.information.sex == 0}">
+                                        Nam
+                                    </c:when>
+                                    <c:otherwise>
+                                        Nữ
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <div class="row cardBody-inside">
+                            <div class="col-sm-4 card-Info__body--title">
+                                <div class="mb-0">Số điện thoại:</div>
+                            </div>
+                            <div class="col-sm-8 text-secondary">
+                                ${sessionScope.USER.accountInfo.information.phone}
+                            </div>
+                        </div>
+                        <div class="row cardBody-inside">
+                            <div class="col-sm-4 card-Info__body--title">
+                                <div class="mb-0">Căn cước công dân:</div>
+                            </div>
+                            <div class="col-sm-8 text-secondary">
+                                ${sessionScope.USER.accountInfo.information.cccd}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                <a href="RenterProfileUpdate" class="a_custom">
+                                    Chỉnh sửa
+                                </a>
                             </div>
                         </div>
                     </div>
