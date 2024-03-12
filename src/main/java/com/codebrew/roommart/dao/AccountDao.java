@@ -884,6 +884,54 @@ public class AccountDao {
         return check;
     }
 
+    public int getOwnerIdByRoomId(int room_id) {
+        int id = -1;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement("select a.account_id from Accounts a\n" +
+                        "join Hostels h on h.owner_account_id = a.account_id\n" +
+                        "join Rooms r on r.hostel_id = h.hostel_id\n" +
+                        "where r.room_id = ?");
+
+                pst.setInt(1, room_id);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    id = rs.getInt("account_id");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return id;
+    }
+
 
 }
 

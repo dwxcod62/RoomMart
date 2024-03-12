@@ -35,6 +35,21 @@ public class RoomDetailServlet extends HttpServlet {
         try{
             decodeRoomId = EncodeUtils.decodeString(request.getParameter("rid"));
             decodeHostelId = EncodeUtils.decodeString(request.getParameter("hostelId"));
+            String status = request.getParameter("sts");
+            if (status != null){
+                if (status.equals("0")){
+                    HandlerStatus status1 = HandlerStatus.builder()
+                            .status(true)
+                            .content("Có lỗi xảy ra").build();
+                    request.setAttribute("RESPONSE_MSG1", status1);
+                } else {
+                    HandlerStatus status1 = HandlerStatus.builder()
+                            .status(true)
+                            .content("Thành công! sau khi chủ trọ xác nhận sẽ gửi thông báo về mail của bạn!").build();
+                    request.setAttribute("RESPONSE_MSG1", status1);
+                }
+            }
+
             System.out.println("decodeRoomId: " +decodeRoomId);
             System.out.println("decodeHostelId: " +decodeHostelId);
             rid_raw = decodeRoomId;

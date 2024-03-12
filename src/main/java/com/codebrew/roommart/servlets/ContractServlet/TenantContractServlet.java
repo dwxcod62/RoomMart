@@ -18,7 +18,44 @@ public class TenantContractServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = "denied";
+        HttpSession session = request.getSession();
+        String start_day = request.getParameter("room-startdate");
+        String end_day = request.getParameter("room-enddate");
+        String room_id = request.getParameter("room_id");
+        String id1 = request.getParameter("id1");
+        String id2 = request.getParameter("id2");
 
+        AccountDao dao = new AccountDao();
+        ContractDao contractDao = new ContractDao();
+        RoomDao roomDao = new RoomDao();
+
+        try {
+            Account acc = (Account) session.getAttribute("USER");
+            int r_id = Integer.parseInt(room_id);
+            int owner_id = dao.getOwnerIdByRoomId(r_id);
+            Room r = roomDao.getRoomById(r_id);
+
+            Contract contract = Contract.builder()
+                                .room_id(r_id)
+                                .hostelOwnerId(owner_id)
+                                .renterId(acc.getAccId())
+                                .startDate(start_day)
+                                .expiration(end_day)
+                                .status(-1)
+                                .build();
+            boolean check = contractDao.insertContract(contract, r.getPrice());
+            int s = 0;
+            if (check){
+                s = 1;
+            }
+            url = "/roomDetailH?hostelId=" + id1 + "&rid=" + id2 + "&sts=" + s;
+
+        } catch ( Exception e){
+            System.out.println(e);
+        } finally{
+            response.sendRedirect(url);
+        }
     }
 
 

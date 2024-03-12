@@ -11,7 +11,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -25,28 +24,15 @@
     <link rel="stylesheet" href="./assets/vendors/linericon/style.css" />
     <link rel="stylesheet" href="./assets/css/new_home_style/font-awesome.min.css" />
     <link rel="stylesheet" href="./assets/vendors/owl-carousel/owl.carousel.min.css" />
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous"
-    />
-    <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"
-    ></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- main css -->
     <link rel="stylesheet" href="./assets/css/new_home_style/style.css" />
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
     <link rel="stylesheet" href="./assets/css/new_home_style/responsive.css" />
 
 
-
-
-
-
-    <!-- CSS Push Notification -->
-    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
     <!-- [ADD]  thêm style -->
     <style>
         .image-container {
@@ -62,6 +48,13 @@
             height: 100%;
             object-fit: cover;
         }
+
+         .form-control1 {
+             font-size: 1.2rem;
+             height: 40px;
+             margin: 4px 0 16px 0;
+             border-radius: 4px;
+         }
     </style>
 </head>
 
@@ -76,13 +69,7 @@
     </div>
 </div>
 
-
-
-
-
-
 <c:if test="${not empty requestScope.room}" >
-
 
     <!--================Header Area =================-->
     <header class="header_area">
@@ -114,6 +101,7 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
+
                         <li class="nav-item submenu dropdown">
                             <c:if test = "${sessionScope.USER == null}">
                                 <a
@@ -123,8 +111,7 @@
                                         role="button"
                                         aria-haspopup="true"
                                         aria-expanded="false"
-                                >Tài khoản</a
-                                >
+                                >Tài khoản</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
                                         <a class="nav-link" href="login-page">Đăng nhập</a>
@@ -142,11 +129,13 @@
                                         role="button"
                                         aria-haspopup="true"
                                         aria-expanded="false"
-                                >${sessionScope.USER.accountInfo.information.fullname}</a
-                                >
+                                >${sessionScope.USER.accountInfo.information.fullname}</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="profile">Xem trang cá nhân của bạn</a>
+                                        <a class="nav-link" href="profile">Thông tin của bạn</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="profile">Xem lịch sử đăng kí</a>
                                     </li>
                                     <c:if test="${sessionScope.st != 0}">
                                         <li class="nav-item">
@@ -255,7 +244,7 @@
 <%--                                        ></a>--%>
 <%--                                    </li>--%>
                                     <li>
-                                        <a href="#">${room.roomView} Views<i class="lnr lnr-eye"></i></a>
+                                        <a href="#">${room.roomView} Views <i class="lnr lnr-eye"></i></a>
                                     </li>
                                     <li></li>
                                 </ul>
@@ -271,16 +260,16 @@
                             <div class="quotes" style="font-style: normal">
                                 <div class="row">
                                     <div class="col">
-                                        <h6>Mức giá</h6>
-                                        <h6 class="text-info">${room.price >= 1000000 ? room.price/1000000 : room.price} ${room.price >= 1000000 ? "Triệu":""} VNĐ</h6>
+                                        <h4>Mức giá</h4>
+                                        <h4 class="text-info">${room.price >= 1000000 ? room.price/1000000 : room.price} ${room.price >= 1000000 ? "Triệu":""} VNĐ</h4>
                                     </div>
                                     <div class="col">
-                                        <h6>Diện tích</h6>
-                                        <h6 class="text-info">${room.roomArea} m<sup>2</sup></h6>
+                                        <h4>Diện tích</h4>
+                                        <h4 class="text-info">${room.roomArea} m<sup>2</sup></h4>
                                     </div>
                                     <div class="col">
-                                        <h6>Phòng</h6>
-                                        <h6 class="text-info">${room.capacity} phòng</h6>
+                                        <h4>Phòng</h4>
+                                        <h4 class="text-info">${room.capacity} phòng</h4>
                                     </div>
                                     <c:set var="endDate" value="${RoomDao.get_end_date_by_RoomId(room.roomId).toString()}"></c:set>
                                     <c:set var="startDate" value="${RoomDao.get_start_date_by_RoomId(room.roomId).toString()}"></c:set>
@@ -288,26 +277,26 @@
                                     <c:set var="formattedStartDate" value="${startDate.substring(8, 10)}/${startDate.substring(5, 7)}/${startDate.substring(0, 4)}" />
 
                                     <div class="col">
-                                        <h6>Tình trạng</h6>
+                                        <h4>Tình trạng</h4>
                                         <c:choose>
                                             <c:when test="${room.roomStatus==0}">
-                                         <h6 class="text-danger">
+                                         <h4 class="text-danger">
                                             Đã Thuê
                                         <br>
                                         (${formattedStartDate} - ${formattedEndDate})
-                                        </h6>
+                                        </h4>
 
                                             </c:when>
                                             <c:when test="${room.roomStatus==-1}">
-                                        <h6 style="color: yellow">
+                                        <h4 style="color: yellow">
                                              Đang duyệt
                                               <br>
                                              Thuê từ ${formattedStartDate} đến ${formattedEndDate}
-                                        </h6>
+                                        </h4>
 
                                             </c:when>
                                             <c:when test="${room.roomStatus==1}">
-                                                <h6 class="text-success">Có thể thuê</h6>
+                                                <h4 class="text-success">Có thể thuê</h4>
                                             </c:when>
                                         </c:choose>
 
@@ -316,7 +305,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <h5>Thông tin mô tả</h5>
+                                <h3>Thông tin mô tả</h3>
                                 <div class="">
                                     <table class="table table-bordered">
                                         <thead>
@@ -334,12 +323,7 @@
                                                 <td>${s.servicePrice}</td>
                                                 <td>${s.unit}</td>
                                             </tr>
-
                                         </c:forEach>
-
-
-
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -360,7 +344,6 @@
                                                     <td>1</td>
                                                     <td>Đang bảo trì</td>
                                                 </tr>
-
                                             </c:forEach>
                                         </c:if>
                                         <c:forEach var="s" items="${requestScope.infrasList}">
@@ -369,7 +352,6 @@
                                                 <td>${s.quantity}</td>
                                                 <td>${s.status==1?"Tốt":"Đang Bảo Trì"}</td>
                                             </tr>
-
                                         </c:forEach>
                                         </tbody>
                                     </table>
@@ -380,7 +362,7 @@
                                     <div
                                             class="re__section re__pr-specs re__pr-specs-v1 js__section js__li-specs"
                                     >
-                                        <h4 class="re__section-title">Đặc điểm bất động sản</h4>
+                                        <h3 class="re__section-title">Đặc điểm bất động sản</h3>
                                         <div
                                                 class="re__section-body re__border--std js__section-body"
                                         >
@@ -442,7 +424,7 @@
                         <aside class="single_sidebar_widget author_widget">
                             <img
                                     class="author_img rounded-circle"
-                                    src="https://media-cdn.tripadvisor.com/media/photo-m/1280/13/d8/ea/1b/a-room-at-the-beach.jpg"
+                                    src="https://i.pinimg.com/564x/41/a4/6c/41a46cdf8e3e0b67360f0905c56f3347.jpg"
                                     style="width: 100%; height: 100%; max-height: 100px; max-width: 100px; object-fit: cover; overflow: hidden"
                                     alt=""
                             />
@@ -453,20 +435,77 @@
                         </aside>
 
                         <aside class="single-sidebar-widget newsletter_widget">
-                            <h6 class="widget_title"></h6>
                             <div class="mt-3">
-                                <button
-                                        type="button"
-                                        class="btn btn-outline-primary btn-block mb-3 btn-custom"
-                                >
-                                    Đăng kí thuê phòng
-                                </button>
+                                <jsp:useBean id="ContractDao" class="com.codebrew.roommart.dao.ContractDao" scope="application" />
+                                <c:set var="count_contract" value="${ContractDao.countResgiterContractByRenterId(requestScope.USER.getAccId())}" />
+                                <c:choose>
+                                    <c:when test="${sessionScope.USER != null}">
+                                        <c:choose>
+                                            <c:when test="${count_contract > 3}">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-primary btn-block mb-3 btn-custom"
+                                                    style="font-size: 20px"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#delete-room-infor-modal"
+                                                >
+                                                    Đăng kí thuê phòng
+                                                </button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-primary btn-block mb-3 btn-custom"
+                                                    style="font-size: 20px"
+                                                    onclick="openPopup()"
+                                                >
+                                                    Đăng kí thuê phòng
+                                                </button>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-primary btn-block mb-3 btn-custom"
+                                            style="font-size: 20px"
+                                            onclick="openLoginPopup()"
+                                        >
+                                            Đăng nhập để thuê phòng
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
                                 <button
                                         type="button"
                                         class="btn btn-outline-success btn-block btn-custom"
+                                        style="font-size: 20px"
                                 >
                                     Đề xuất giá phòng
                                 </button>
+                            </div>
+
+                            <div class="modal fade" id="delete-room-infor-modal" tabindex="-1"
+                                 aria-labelledby="update-room-infor-modal-label" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="delete-room-infor-modal-label">
+                                                Đăng kí thuê phòng
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <!-- Form update room -->
+                                            <div class="modal-body">
+                                                Bạn chỉ được đăng kí tối đa 3 đơn
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">Quay lại
+                                                </button>
+                                            </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="br"></div>
                         </aside>
@@ -486,6 +525,9 @@
         </div>
     </section>
     <!--================Blog Area =================-->
+
+    <%@include file="./components/pop-up-contract.jsp"%>
+    <%@include file="./components/login-popup.jsp"%>
 
     <!--================ start footer Area  =================-->
     <footer class="footer-area" style="padding: 0px">
@@ -510,6 +552,9 @@
         </div>
     </footer>
     <!--================ End footer Area  =================-->
+
+    <div id="toast">&nbsp;</div>
+    <script src="./assets/js/toast-alert.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -565,6 +610,8 @@
 
 </script>
 
+
+
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
@@ -577,8 +624,6 @@
 <!-- Loader -->
 <script src="assets/js/loading-handler.js"></script>
 <script>
-
-
     document.addEventListener("click", function(event) {
         console.log("click"); // Log "click" to the console
         var navDropdown = document.getElementById("nav-profile-dropdown"); // Get the dropdown menu element
@@ -609,9 +654,42 @@
         }
     });
 
+    function openPopup() {
+        document.getElementById("popup-contract").style.display = "block";
+        document.body.style.overflow = "hidden"; //
+    }
 
+    function openLoginPopup() {
+        document.getElementById("popup-login").style.display = "block";
+        document.body.style.overflow = "hidden"; //
+    }
+
+    function closePopup() {
+        document.getElementById("popup-contract").style.display = "none";
+        document.body.style.overflow = "auto"; //
+    }
 </script>
 
+<script>
+    <c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG1.status eq true}">
+    toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG1.content}',
+        type: 'success',
+        duration: 5000
+    });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG1.status eq false}">
+    toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG1.content}',
+        type: 'error',
+        duration: 5000
+    });
+    </c:when>
+    </c:choose>
+</script>
 
 
 </body>

@@ -3,10 +3,7 @@ package com.codebrew.roommart.dao;
 import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +70,114 @@ public class ContractDao {
     private static final String UPDATE_CONTRACT_STATUS =
             "UPDATE Contracts SET status = 1, cancelDate = GETDATE()\n" +
                     "WHERE room_id = ? AND renter_id = ? AND status = 0";
+
+
+    private static final String INSERT_NEW_CONTRACT = "insert into Contracts (room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status, cancelDate, renter_sign, owner_sign )\n" +
+            "values(?,?,?,?,?,?,?,?,?,?,?)";
+
+
+    public int countResgiterContractByRenterId(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select count(*) as 'count' from Contracts where status = -1 and renter_id = ?");
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    count = rs.getInt("count");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return count;
+    }
+
+
+    public boolean insertContract(Contract contract, Integer price){
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                pst = cn.prepareStatement(INSERT_NEW_CONTRACT);
+
+                pst.setInt(1, contract.getRoom_id());
+                pst.setInt(2, price);
+                pst.setString(3, contract.getStartDate());
+                pst.setString(4, contract.getExpiration());
+                pst.setInt(5, contract.getDeposit());
+                pst.setInt(6, contract.getHostelOwnerId());
+                pst.setInt(7, contract.getRenterId());
+                pst.setInt(8, contract.getStatus());
+                pst.setString(9, contract.getCancelDate());
+                pst.setString(10, contract.getRenter_sign());
+                pst.setString(11, contract.getOwner_sign());
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
 
     public Hostel getHostelByContract(int renterId){
         Connection cn = null;
