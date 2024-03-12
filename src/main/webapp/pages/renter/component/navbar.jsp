@@ -59,9 +59,9 @@
                     </div>
 
                     <div class="user-menu-items">
-                        <a href="RenterProfileUpdate" class="user-menu-item">
+                        <a href="RenterProfile" class="user-menu-item">
                             <i class="bx bx-id-card box-setting_icon"></i>
-                            <span class="box-setting_link">Sửa cá nhân</span>
+                            <span class="box-setting_link">Thông tin cá nhân</span>
                         </a>
                         <a href="renter-Change-Pass" class="user-menu-item">
                             <i class="bx bx-cog box-setting_icon"></i>

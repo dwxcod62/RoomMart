@@ -309,7 +309,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 60px;
+  padding: 60px 0 40px 0;
 }
 
 .content__body {
@@ -354,6 +354,39 @@ body {
 .page-item.active .page-link:hover{
   border: 1px solid lightslategray;
   font-weight: 500;
+}
+
+.btn_custom {
+  background: none;
+}
+
+.btn_custom p:hover {
+  color: #0a53be;
+  cursor: pointer;
+}
+
+.modal-content {
+  border-radius: 6px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content:  center;
+}
+
+#delete-room-infor-modal .modal-body {
+  padding: 16px;
+  font-size: 16px;
+}
+
+.modal-footer button {
+  color: #dc3545;
+  font-size: 16px;
+  margin-right: 16px;
+}
+
+table td {
+  font-size: 16px;
 }
 
 .active {
