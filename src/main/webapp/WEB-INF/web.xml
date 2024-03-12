@@ -5,6 +5,11 @@
         <param-value>/WEB-INF/sitemap.properties</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>AUTHORIZATION_PROPERTIES_FILE_LOCATION</param-name>
+        <param-value>/WEB-INF/authorization.properties</param-value>
+    </context-param>
+
     <listener>
         <description>ServletContextListener, HttpSessionListener</description>
         <listener-class>com.codebrew.roommart.ServletListener</listener-class>
@@ -20,6 +25,10 @@
         <filter-class>com.codebrew.roommart.filter.RoleFilter</filter-class>
     </filter>
     <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>com.codebrew.roommart.filter.AuthorizationFilter</filter-class>
+    </filter>
+    <filter>
         <filter-name>DispatcherFilter</filter-name>
         <filter-class>com.codebrew.roommart.filter.DispatcherFilter</filter-class>
     </filter>
@@ -33,6 +42,12 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>RoleFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
