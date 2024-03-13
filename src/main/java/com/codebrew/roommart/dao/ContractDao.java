@@ -3,10 +3,7 @@ package com.codebrew.roommart.dao;
 import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +61,7 @@ public class ContractDao {
     private static final String
             GET_CONTRACT_BY_RENTER_ID = "SELECT *\n" +
             "FROM Contracts\n" +
-            "WHERE renter_id = ? and status = -1";
+            "WHERE renter_id = ? and status = 1";
 
     private static final String ADD_AN_CONTRACT_OWNER =
             "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status], [owner_sign])\n" +
@@ -73,6 +70,170 @@ public class ContractDao {
     private static final String UPDATE_CONTRACT_STATUS =
             "UPDATE Contracts SET status = 1, cancelDate = GETDATE()\n" +
                     "WHERE room_id = ? AND renter_id = ? AND status = 0";
+
+
+    private static final String INSERT_NEW_CONTRACT = "insert into Contracts (room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status, cancelDate, renter_sign, owner_sign )\n" +
+            "values(?,?,?,?,?,?,?,?,?,?,?)";
+
+
+
+
+    public Contract getContractByContractId(int con_id){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract con = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select * from Contracts where contract_id = ?");
+                pst.setInt(1, con_id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    con = Contract.builder()
+                            .room_id(rs.getInt("room_id"))
+                            .price(rs.getInt("price"))
+                            .startDate(rs.getDate("start_date").toString())
+                            .expiration(rs.getDate("expiration").toString())
+                            .hostelOwnerId(rs.getInt("hostel_owner_id"))
+                            .renterId(rs.getInt("renter_id"))
+                            .status(rs.getInt("status"))
+                            .owner_sign(rs.getString("owner_sign"))
+                            .renter_sign(rs.getString("renter_sign"))
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return con;
+    }
+
+
+    public int countResgiterContractByRenterId(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select count(*) as 'count' from Contracts where status = -1 and renter_id = ?");
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    count = rs.getInt("count");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return count;
+    }
+
+
+    public boolean insertContract(Contract contract, Integer price){
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                pst = cn.prepareStatement(INSERT_NEW_CONTRACT);
+
+                pst.setInt(1, contract.getRoom_id());
+                pst.setInt(2, price);
+                pst.setString(3, contract.getStartDate());
+                pst.setString(4, contract.getExpiration());
+                pst.setInt(5, contract.getDeposit());
+                pst.setInt(6, contract.getHostelOwnerId());
+                pst.setInt(7, contract.getRenterId());
+                pst.setInt(8, contract.getStatus());
+                pst.setString(9, contract.getCancelDate());
+                pst.setString(10, contract.getRenter_sign());
+                pst.setString(11, contract.getOwner_sign());
+
+                if (pst.executeUpdate() > 0) {
+                    check = true;
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
 
     public Hostel getHostelByContract(int renterId){
         Connection cn = null;
@@ -780,7 +941,7 @@ public class ContractDao {
         return contract;
     }
 
-    public boolean updateContractStatus (int roomId, int renterAccountId) {
+    public boolean EndContract (int roomId, int renterAccountId) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -789,7 +950,7 @@ public class ContractDao {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
 
-                pst = cn.prepareStatement(UPDATE_CONTRACT_STATUS);
+                pst = cn.prepareStatement("delete from Contracts where room_id = ? and renter_id = ?");
                 // Return key Identity of data just inserted
                 pst.setInt(1, roomId);
                 pst.setInt(2, renterAccountId);
@@ -816,5 +977,275 @@ public class ContractDao {
         }
         return check;
     }
+
+    public List<Contract> getListContractRenterSign(int owner_id, int status){
+        List<Contract> listContract = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select * from Contracts where status = ? and hostel_owner_id = ?");
+                pst.setInt(1, status);
+                pst.setInt(2, owner_id);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    contract = Contract.builder()
+                            .contract_id(rs.getInt("contract_id"))
+                            .room_id(rs.getInt("room_id"))
+                            .price(rs.getInt("price"))
+                            .startDate(rs.getDate("start_date").toString())
+                            .expiration(rs.getDate("expiration").toString())
+                            .hostelOwnerId(rs.getInt("hostel_owner_id"))
+                            .renterId(rs.getInt("renter_id"))
+                            .status(rs.getInt("status"))
+                            .owner_sign("owner_sign")
+                            .renter_sign("renter_sign")
+                            .build();
+                    listContract.add(contract);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listContract;
+    }
+
+    public int getStatusOfContract(int room_id, int renter_id) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select * from Contracts where room_id = ? and renter_id = ?");
+                pst.setInt(1, room_id);
+                pst.setInt(2, renter_id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    count = rs.getInt("status");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return count;
+    }
+
+    public boolean updateOwnerSign (int roomId, int renterAccountId, String sign) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement("update Contracts set status = 1, owner_sign = ? where room_id = ? and renter_id = ? ");
+                // Return key Identity of data just inserted
+                pst.setString(1, sign);
+                pst.setInt(2, roomId);
+                pst.setInt(3, renterAccountId);
+
+                check = pst.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+
+
+    public boolean updateStatusContract (int roomId, int renterAccountId, int status) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement("update Contracts set status = ? where room_id = ? and renter_id = ? ");
+                // Return key Identity of data just inserted
+                pst.setInt(1, status);
+                pst.setInt(2, roomId);
+                pst.setInt(3, renterAccountId);
+
+                check = pst.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public List<Contract> getListContractUser(int user_id){
+        List<Contract> listContract = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select * from Contracts where renter_id = ?");
+                pst.setInt(1, user_id);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    contract = Contract.builder()
+                            .contract_id(rs.getInt("contract_id"))
+                            .room_id(rs.getInt("room_id"))
+                            .price(rs.getInt("price"))
+                            .startDate(rs.getDate("start_date").toString())
+                            .expiration(rs.getDate("expiration").toString())
+                            .hostelOwnerId(rs.getInt("hostel_owner_id"))
+                            .renterId(rs.getInt("renter_id"))
+                            .status(rs.getInt("status"))
+                            .owner_sign("owner_sign")
+                            .renter_sign("renter_sign")
+                            .build();
+                    listContract.add(contract);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listContract;
+    }
+    public boolean deleteAfterCreateContract (int renterAccountId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement("delete from Contracts where status = -1 and renter_id = ? ");
+                pst.setInt(1, renterAccountId);
+
+                check = pst.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
 
 }
