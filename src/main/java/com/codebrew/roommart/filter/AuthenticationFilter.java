@@ -41,20 +41,21 @@ public class AuthenticationFilter implements Filter {
 
             //check resource authentication
             String rule = (String) authProperties.getProperty(resource);
+
             if (rule != null && rule.equals("restricted") && session.getAttribute("USER") == null) {
-                //CHECK COOKIE
-                Account acc = null;
-                if (c != null) {
-                    for (Cookie cookie : c) {
-                        if (cookie.getName().equals("selector")) {
-                            token = cookie.getValue();
+                    //CHECK COOKIE
+                    Account acc = null;
+                    if (c != null) {
+                        for (Cookie cookie : c) {
+                            if (cookie.getName().equals("selector")) {
+                                token = cookie.getValue();
+                            }
                         }
+                        if (token != null) acc = new AccountDao().getAccountByToken(token);
                     }
-                    if (token != null) acc = new AccountDao().getAccountByToken(token);
-                }
-                //NO COOKIE => LOGIN
-                if (acc == null) {
-                    ((HttpServletResponse) response).sendRedirect("loginPage");
+                    //NO COOKIE => LOGIN
+                    if (acc == null) {
+                    ((HttpServletResponse) response).sendRedirect("login-page");
                 } else {
                     session.setAttribute("CURRENT_PAGE", "dashboard");
                     session.setAttribute("USER", acc);
