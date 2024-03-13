@@ -13,7 +13,7 @@
         </a>
     </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "license" ? "active" : ""}">
-        <a href="AdminListAcc" class="group-option__link">
+        <a href="manage-license" class="group-option__link">
             <i class="group-option__icon fa-solid fa-user-gear"></i>
             <div class="group-option__label">Xác nhận giấy phép</div>
         </a>
