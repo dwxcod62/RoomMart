@@ -393,3 +393,9 @@ table td {
   background-color: var(--main-background);
   color: var(--main-color);
 }
+
+@media screen and (min-width: 14in) {
+  .user-icon:hover > .box-setting {
+    height: 20vh;
+  }
+}
