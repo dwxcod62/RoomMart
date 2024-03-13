@@ -26,8 +26,8 @@ public class HostelDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "list-hostels";
         String ERROR = "error-page";
-        Account acc;
         try {
+            Account acc;
             HttpSession session = request.getSession();
             acc = (Account) session.getAttribute("USER");
             int accountId = acc.getAccId();

@@ -25,7 +25,6 @@ public class GetRenterInfoServlet extends HttpServlet {
             int renterId = acc.getAccId();
 
             accInfo = new InformationDao().getAccountInformationById(renterId);
-            System.out.println(accInfo);
             if (accInfo != null){
                 request.setAttribute("ACC_INFO", accInfo);
                 url = SUCCESS;

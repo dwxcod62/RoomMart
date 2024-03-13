@@ -18,6 +18,12 @@
             <div class="group-option__label">Phòng trọ</div>
         </a>
     </div>
+    <div class="group-option ${sessionScope.CURRENT_PAGE eq "contract" ? "active" : ""}">
+        <a href="contract-list" class="group-option__link">
+            <i class="group-option__icon fa-solid fa-file-signature"></i>
+            <div class="group-option__label">Hợp đồng</div>
+        </a>
+    </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "notification" ? "active" : ""}">
         <a href="owner-get-notification-list" class="group-option__link">
             <i class="group-option__icon fa-solid fa-envelope-open-text"></i>

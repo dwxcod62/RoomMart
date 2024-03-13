@@ -120,7 +120,7 @@ public class RoomDAO implements IRoomDAO {
                 String sql = "SELECT rooms.room_id, rooms.hostel_id, rooms.room_number, rooms.room_status, hostels.name\n" +
                         "FROM rooms\n" +
                         "JOIN hostels ON rooms.hostel_id = hostels.hostel_id\n" +
-                        "WHERE hostels.owner_account_id = ?";
+                        "WHERE hostels.owner_account_id = ? and hostels.status = 0";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelOwnerID);

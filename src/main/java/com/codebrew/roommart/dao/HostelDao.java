@@ -178,7 +178,47 @@ public class HostelDao {
         return hostel;
     }
 
-    public int getHostelByRoomId(int room_id) throws SQLException {
+    public Hostel getHostelByRoomId(int room_id) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("select * from Hostels h\n" +
+                        "join Rooms r on r.hostel_id = h.hostel_id\n" +
+                        "where r.room_id = ?");
+                pst.setInt(1, room_id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    hostel = Hostel.builder()
+                            .hostelID(rs.getInt("hostel_id"))
+                            .address(rs.getString("address"))
+                            .city(rs.getString("city"))
+                            .district(rs.getString("district"))
+                            .ward(rs.getString("ward"))
+                            .hostelName(rs.getString("name"))
+                            .hostelOwnerAccountID(rs.getInt("owner_account_id")).build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return hostel;
+    }
+
+    public int getHosteIdlByRoomId(int room_id) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

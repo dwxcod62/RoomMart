@@ -305,83 +305,49 @@ body {
 .content {
   width: 80%;
   min-height: 100vh;
-  row-gap: 20px;
-  padding: 0 40px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 60px;
 }
 
-.content .cardUser {
-  margin-bottom: 150px;
-}
-
-.content .cardUser .cardInside {
-  border-radius: 10px;
-  -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
-  box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
-  border: 1px solid #e0e0e0;
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-/*.cardInside .card-blockImg {*/
-/*  padding: 20px 0;*/
-/*  border-radius: 10px 0 0 10px;*/
-/*}*/
-
-/*.card-blockImg .userImg {*/
-/*  margin-bottom: 25px;*/
-/*}*/
-
-/*.card-blockImg .userImg img{*/
-/*  max-width: 70%;*/
-/*  max-height: 70%;*/
-/*  border-radius: 50%;*/
-/*}*/
-
-/*.card-blockImg i {*/
-/*  font-size: 24px;*/
-/*  cursor: pointer;*/
-/*}*/
-
-/*.cardInside .card-blockImg {*/
-/*  padding: 20px 0;*/
-/*  background: #8CC247;*/
-/*}*/
-
-.cardInside .card-blockInfo {
-  padding: 15px 0 0 10px;
-}
-
-.card-blockInfo .infoHeader {
-  border-bottom: 1px solid #e0e0e0;
-  margin: 0 5px 15px 5px;
+.card-info {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.08) 0px 1px 2px;
+  padding: 10px 12px;
 }
 
-.card-blockInfo .infoHeader h2 {
+.card-info h2 {
   font-weight: 600;
   font-size: 22px;
+  padding: 5px 0;
 }
 
-.card-blockInfo .infoHeader a {
-  padding-top: 5px;
+.cardBody-inside {
+  margin-bottom: 15px;
+  font-size: 16px;
 }
 
-.card-blockInfo .infoHeader h5 {
-  font-weight: 400;
+.card-Info__body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
 }
 
-.card-blockInfo .infoDetail {
-  margin-bottom: 10px;
+.a_custom{
+  float: left;
+  margin-top: 10px;
+  padding: 2px 0;
+  font-size: 12px;
+  text-decoration: underline;
 }
 
-.card-blockInfo .infoDetail h5 {
-  font-weight: 600;
-}
-
-.card-blockInfo .infoDetail h3 {
-  font-weight: 400;
-}

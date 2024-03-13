@@ -17,7 +17,7 @@ public class NotificationDao {
             "SELECT notification_id, title, content, create_date, hostel_id \n" +
                     "FROM Notifications WHERE hostel_owner_account_id = ?";
     private static final String GET_NOTIFICATION_BY_RENTER_ID =
-            "SELECT n.title, n.content, n.create_date\n" +
+            "SELECT n.notification_id, n.title, n.content, n.create_date\n" +
                     "FROM Notifications n\n" +
                     "JOIN Rooms r ON n.hostel_id = r.hostel_id\n" +
                     "JOIN Contracts c ON r.room_id = c.room_id\n" +
@@ -108,11 +108,13 @@ public class NotificationDao {
                 pst.setInt(1, accId);
                 ResultSet rs = pst.executeQuery();
                 while (rs != null && rs.next()) {
+                    int noti_id = rs.getInt("notification_id");
                     String title = rs.getString("title");
                     String content = rs.getString("content");
                     String createDate = rs.getString("create_date");
                     noti.add(Notification
                             .builder()
+                            .notification_id(noti_id)
                             .title(title)
                             .content(content)
                             .createDate(createDate)

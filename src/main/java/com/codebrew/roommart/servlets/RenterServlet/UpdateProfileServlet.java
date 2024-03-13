@@ -18,7 +18,7 @@ public class UpdateProfileServlet extends HttpServlet {
     public static final String SUCCESS = "renter-Profile-Update";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("denied");
+//        doPost(request,response);
     }
 
     @Override
