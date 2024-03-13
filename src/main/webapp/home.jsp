@@ -141,7 +141,7 @@
                                 </li>
                                 <c:if test="${sessionScope.USER.role eq 1}">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="dashboard">Đăng kí</a>
+                                        <a class="nav-link" href="dashboard">Quản lý trọ</a>
                                     </li>
                                 </c:if>
 
@@ -199,7 +199,7 @@
                             <div class="col-md-12">
                                 <div class="book_tabel_item">
                                     <div class="input-group">
-                                        <input value="${requestScope.key}" id="textInput" name="key" type="text" class="form-control" placeholder="Enter your search here..." />
+                                        <input value="${requestScope.key}" id="textInput" name="key" type="text" class="form-control" placeholder="Nhập từ khoá..." />
                                     </div>
                                 </div>
                             </div>
@@ -363,9 +363,9 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                All rights reserved | This template is made with
+                All rights reserved | This Project is made with
                 <i class="fa fa-heart-o" aria-hidden="true"></i> by
-                <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <a href="https://colorlib.com" target="_blank">Roomart</a>
             </p>
             <div class="col-lg-4 col-sm-12 footer-social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
