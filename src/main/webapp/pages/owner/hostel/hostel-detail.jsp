@@ -139,9 +139,9 @@
                             <div class="hostel-services">
                                 <div class="services-header">
                                     <div class="service-title">Giá dịch vụ</div>
-                                    <button class="service-update-btn" data-bs-toggle="modal"
-                                            data-bs-target="#updateServicesModel">Cập nhật
-                                    </button>
+<%--                                    <button class="service-update-btn" data-bs-toggle="modal"--%>
+<%--                                            data-bs-target="#updateServicesModel">Cập nhật--%>
+<%--                                    </button>--%>
                                 </div>
                                 <div class="services-date">
                                     Áp dụng từ:
