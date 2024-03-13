@@ -4,6 +4,6 @@
     <title>Title</title>
 </head>
 <body>
-    <img src="./assets/images/system/sign.jpg">
+    <h1>Hello word</h1>
 </body>
 </html>

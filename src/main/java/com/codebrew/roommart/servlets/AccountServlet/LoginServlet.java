@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void login(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        String[] url_temp = req.getHeader("referer").split("/");
         String url = "login-page";
         AccountDao accountDAO = new AccountDao();
         String username = req.getParameter("txtemail");
@@ -41,7 +42,15 @@ public class LoginServlet extends HttpServlet {
             account = accountDAO.getAccountByUsernameAndPassword(username, password);
             System.out.println("recently_Room: "+account.getRecentlyRoom());
             if (account != null && account.getStatus() == 1) {
-                url = "success";
+                String temp = url_temp[url_temp.length-1];
+                System.out.println(temp);
+                if ( temp.contains("roomDetailH")) {
+                    url = url_temp[url_temp.length-1];
+                } else {
+                    url = "success";
+                }
+
+                System.out.println(url);
                 HttpSession session = req.getSession(true);
                 if (session != null) {
                     session.setAttribute("USER", account);
@@ -71,7 +80,7 @@ public class LoginServlet extends HttpServlet {
                         .content("Sai tài khoản hoặc mật khẩu. Vui lòng kiểm tra lại!").build());
             }
         } catch (Exception e) {
-            log("Error at LoginServlet: " + e.toString());
+            System.out.println(e);
         } finally {
             if (account != null && account.getStatus() == 1) {
                 res.sendRedirect(url);
