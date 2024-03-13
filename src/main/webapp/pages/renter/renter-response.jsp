@@ -27,13 +27,15 @@
     <div class="row main-body">
         <%@include file="component/sidebar.jsp" %>
         <div class="content">
-            <div class="col-6 container">
-                <form action="RenterSendPropose" method="post" id="feedbackForm">
-                    <h1>Góp ý tới hệ thống</h1>
-                    <textarea name="form-input" id="feedbackTextarea"
-                              placeholder="Vui lòng nhập nội dung..." onkeyup="checkContent()"></textarea>
-                    <button type="button" class="btn btn-outline-danger btn-lg mt-2 form-submit" onclick="confirmSubmit()" id="submitButton" disabled>Gửi</button>
-                </form>
+            <div class="col-6">
+                <div class="container">
+                    <form action="RenterSendPropose" method="post" id="feedbackForm">
+                        <h1>Góp ý tới hệ thống</h1>
+                        <textarea name="form-input" id="feedbackTextarea"
+                                  placeholder="Vui lòng nhập nội dung..." onkeyup="checkContent()"></textarea>
+                        <button type="button" class="btn btn-outline-danger btn-lg mt-2 form-submit" onclick="confirmSubmit()" id="submitButton" disabled>Gửi</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

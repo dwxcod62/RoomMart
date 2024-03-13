@@ -1,47 +1,70 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="main-side-bar" class="side-bar pt-5">
-    <div class="group-option ${sessionScope.CURRENT_PAGE eq "dashboard" ? "active" : ""}">
-        <a href="owner-dashboard" class="group-option__link">
-            <i class="group-option__icon fa-solid fa-gauge-high"></i>
-            <div class="group-option__label">Tổng quan</div>
-        </a>
-    </div>
-    <div class="group-option ${sessionScope.CURRENT_PAGE eq "hostel" ? "active" : ""}">
-        <a href="owner-hostel-list" class="group-option__link">
-            <i class="group-option__icon fa-solid fa-hotel"></i>
-            <div class="group-option__label">Khu trọ</div>
-        </a>
-    </div>
-    <div class="group-option ${sessionScope.CURRENT_PAGE eq "room" ? "active" : ""}">
-        <a href="owner-get-room-list" class="group-option__link">
-            <i class="group-option__icon fa-solid fa-door-open"></i>
-            <div class="group-option__label">Phòng trọ</div>
-        </a>
-    </div>
-    <div class="group-option ${sessionScope.CURRENT_PAGE eq "contract" ? "active" : ""}">
-        <a href="contract-list" class="group-option__link">
-            <i class="group-option__icon fa-solid fa-file-signature"></i>
-            <div class="group-option__label">Hợp đồng</div>
-        </a>
-    </div>
-    <div class="group-option ${sessionScope.CURRENT_PAGE eq "notification" ? "active" : ""}">
-        <a href="owner-get-notification-list" class="group-option__link">
-            <i class="group-option__icon fa-solid fa-envelope-open-text"></i>
-            <div class="group-option__label">Thông báo</div>
-        </a>
-    </div>
-    <div class="group-option ${sessionScope.CURRENT_PAGE eq "report" ? "active" : ""}">
-        <a href="owner-report" class="group-option__link">
-            <i class="group-option__icon fa-solid fa-triangle-exclamation"></i>
-            <div class="group-option__label">Báo cáo</div>
-        </a>
-    </div>
-    <div class="group-option ${sessionScope.CURRENT_PAGE eq "invoice" ? "active" : ""}">
-        <a href="owner-get-invoice-list" class="group-option__link">
-            <i class="group-option__icon fa-solid fa-file-invoice-dollar"></i>
-            <div class="group-option__label">Hóa đơn</div>
-        </a>
-    </div>
+<c:choose>
+    <c:when test="${sessionScope.USER.role eq 1}">
+        <div class="group-option ${sessionScope.CURRENT_PAGE eq "dashboard" ? "active" : ""}">
+            <a href="owner-dashboard" class="group-option__link">
+                <i class="group-option__icon fa-solid fa-gauge-high"></i>
+                <div class="group-option__label">Tổng quan</div>
+            </a>
+        </div>
+        <div class="group-option ${sessionScope.CURRENT_PAGE eq "hostel" ? "active" : ""}">
+            <a href="owner-hostel-list" class="group-option__link">
+                <i class="group-option__icon fa-solid fa-hotel"></i>
+                <div class="group-option__label">Khu trọ</div>
+            </a>
+        </div>
+        <div class="group-option ${sessionScope.CURRENT_PAGE eq "room" ? "active" : ""}">
+            <a href="owner-get-room-list" class="group-option__link">
+                <i class="group-option__icon fa-solid fa-door-open"></i>
+                <div class="group-option__label">Phòng trọ</div>
+            </a>
+        </div>
+    </c:when>
+</c:choose>
+
+    <c:choose>
+        <c:when test="${sessionScope.USER.role eq 1}">
+            <div class="group-option ${sessionScope.CURRENT_PAGE eq "contract" ? "active" : ""}">
+                <a href="contract-list" class="group-option__link">
+                    <i class="group-option__icon fa-solid fa-file-signature"></i>
+                    <div class="group-option__label">Hợp đồng</div>
+                </a>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="group-option ${sessionScope.CURRENT_PAGE eq "contract" ? "active" : ""}">
+                <a href="GetContractUserServlet" class="group-option__link">
+                    <i class="group-option__icon fa-solid fa-file-signature"></i>
+                    <div class="group-option__label">Hợp đồng</div>
+                </a>
+            </div>
+        </c:otherwise>
+    </c:choose>
+
+
+<c:choose>
+    <c:when test="${sessionScope.USER.role eq 1}">
+        <div class="group-option ${sessionScope.CURRENT_PAGE eq "notification" ? "active" : ""}">
+            <a href="owner-get-notification-list" class="group-option__link">
+                <i class="group-option__icon fa-solid fa-envelope-open-text"></i>
+                <div class="group-option__label">Thông báo</div>
+            </a>
+        </div>
+        <div class="group-option ${sessionScope.CURRENT_PAGE eq "report" ? "active" : ""}">
+            <a href="owner-report" class="group-option__link">
+                <i class="group-option__icon fa-solid fa-triangle-exclamation"></i>
+                <div class="group-option__label">Báo cáo</div>
+            </a>
+        </div>
+        <div class="group-option ${sessionScope.CURRENT_PAGE eq "invoice" ? "active" : ""}">
+            <a href="owner-get-invoice-list" class="group-option__link">
+                <i class="group-option__icon fa-solid fa-file-invoice-dollar"></i>
+                <div class="group-option__label">Hóa đơn</div>
+            </a>
+        </div>
+    </c:when>
+</c:choose>
 <%--    <div class="group-option ${sessionScope.CURRENT_PAGE eq "statistic" ? "active" : ""}">--%>
 <%--        <a href="owner-statistic" class="group-option__link">--%>
 <%--            <i class="group-option__icon fa-solid fa-chart-simple"></i>--%>

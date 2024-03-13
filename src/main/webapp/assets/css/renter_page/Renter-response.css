@@ -317,6 +317,7 @@ body {
     border: 1px solid var(--main-background);
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.12) 0px 1px 2px;
+    height: fit-content;
 }
 
 form h1 {
@@ -351,7 +352,8 @@ span {
 }
 
 @media screen and (min-width: 14in) {
-    .user-icon:hover > .box-setting {
-        height: 20vh;
+    .user-icon:hover>.box-setting {
+        height: 25vh;
     }
+
 }

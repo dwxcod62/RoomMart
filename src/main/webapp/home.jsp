@@ -204,13 +204,15 @@
                                 </div>
                             </div>
                             <!-- [ADD] Search -->
+                            <input type="hidden" id="selected_city" value="" name="city" >
+                            <input type="hidden" id="selected_dis" value="" name="district" >
+                            <input type="hidden" id="selected_ward" value="" name="ward" >
+
                             <div class="col-md-4">
                                 <div class="book_tabel_item">
-
-
                                     <div class="input-group">
-                                        <select id="city" name="city" class="wide">
-                                            <option value="all" selected>Chọn tỉnh thành</option>
+                                        <select id="city" name="city1" class="wide">
+                                            <option  value="all" selected>Chọn tỉnh thành</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -227,7 +229,7 @@
                             <div class="col-md-4">
                                 <div class="book_tabel_item">
                                     <div class="input-group">
-                                        <select id="district" name="district" class="wide" >
+                                        <select id="district" name="district1" class="wide" >
                                             <option value="all" selected>Chọn quận huyện</option>
                                         </select>
 
@@ -244,7 +246,7 @@
                                 <div class="book_tabel_item">
                                     <div class="input-group">
                                         <div class="input-group">
-                                            <select id="ward" name="ward" class="wide" >
+                                            <select id="ward" name="ward1" class="wide" >
                                                 <option value="all" selected>Chọn phường xã</option>
                                             </select>
 
@@ -468,6 +470,10 @@ var niceSelectUl3 = wards.nextElementSibling.querySelector("ul.list");
 niceSelectUl3.style.maxHeight = "200px";
 niceSelectUl3.style.overflowY = "auto";
 
+    var selected_city = document.getElementById("selected_city");
+    var selected_dis = document.getElementById("selected_dis");
+    var selected_ward = document.getElementById("selected_ward")
+
     var Parameter = {
         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
         method: "GET",
@@ -486,6 +492,7 @@ niceSelectUl3.style.overflowY = "auto";
             li.classList.add("option");
 
             li.addEventListener("click", function () {
+                selected_city.value = x.Name;
                 for (const y of x.Districts){
                     var li_dis = document.createElement("li");
                     li_dis.setAttribute("data-value", y.Id);
@@ -493,11 +500,15 @@ niceSelectUl3.style.overflowY = "auto";
                     li_dis.classList.add("option");
 
                     li_dis.addEventListener("click", function () {
+                        selected_dis.value = y.Name
                         for (const z of y.Wards) {
                             var li_ward = document.createElement("li");
                             li_ward.setAttribute("data-value", z.Id);
                             li_ward.textContent = z.Name;
                             li_ward.classList.add("option");
+                            li_dis.addEventListener("click", function () {
+                                selected_ward.value = z.Name;
+                            });
                             niceSelectUl3.appendChild(li_ward)
                         }
                     });

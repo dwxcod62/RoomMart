@@ -363,7 +363,7 @@ body {
 }
 
 @media screen and (min-width: 14in) {
-    .user-icon:hover > .box-setting {
-        height: 20vh;
+    .user-icon:hover>.box-setting {
+        height: 25vh;
     }
 }
