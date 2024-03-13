@@ -135,7 +135,7 @@
                                         <a class="nav-link" href="profile">Thông tin của bạn</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="profile">Xem lịch sử đăng kí</a>
+                                        <a class="nav-link" href="GetContractUserServlet">Xem lịch sử đăng kí</a>
                                     </li>
                                     <c:if test="${sessionScope.st != 0}">
                                         <li class="nav-item">
@@ -475,13 +475,13 @@
                                         </button>
                                     </c:otherwise>
                                 </c:choose>
-                                <button
-                                        type="button"
-                                        class="btn btn-outline-success btn-block btn-custom"
-                                        style="font-size: 20px"
-                                >
-                                    Đề xuất giá phòng
-                                </button>
+<%--                                <button--%>
+<%--                                        type="button"--%>
+<%--                                        class="btn btn-outline-success btn-block btn-custom"--%>
+<%--                                        style="font-size: 20px"--%>
+<%--                                >--%>
+<%--                                    Đề xuất giá phòng--%>
+<%--                                </button>--%>
                             </div>
 
                             <div class="modal fade" id="delete-room-infor-modal" tabindex="-1"

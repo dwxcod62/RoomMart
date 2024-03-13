@@ -517,10 +517,11 @@ body {
 
 @media screen and (min-width: 14in)  {
   .user-icon:hover>.box-setting {
-    height: 20vh;
+    height: 25vh;
   }
 
   .content .main-information {
     height: fit-content;
   }
+
 }

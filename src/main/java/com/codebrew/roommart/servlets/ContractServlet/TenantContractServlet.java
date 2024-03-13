@@ -49,7 +49,7 @@ public class TenantContractServlet extends HttpServlet {
             if (check){
                 s = 1;
             }
-            url = "/roomDetailH?hostelId=" + id1 + "&rid=" + id2 + "&sts=" + s;
+            url = "roomDetailH?hostelId=" + id1 + "&rid=" + id2 + "&sts=" + s;
 
         } catch ( Exception e){
             System.out.println(e);

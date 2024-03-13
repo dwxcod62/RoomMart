@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -46,7 +47,14 @@
                         <div class="avatar">
                             <div class="alternate">
                             </div>
-                            <img class="photo" src="./assets/images/logos/logo.png" alt="">
+                            <c:choose>
+                                <c:when test="${sessionScope.USER.accountInfo.information.sex == 0}">
+                                    <img class="photo" src="./assets/images/avatars/male.png" alt="">
+                                </c:when>
+                                <c:otherwise>
+                                    <img class="photo" src="./assets/images/avatars/female.png" alt="">
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <div class="info">
                             <h3 class="name heading m-b-0">
