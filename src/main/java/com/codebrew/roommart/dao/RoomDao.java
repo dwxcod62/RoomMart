@@ -1576,7 +1576,7 @@ public List<String>getListImgByRoomId(int rid){
                         "join [Contracts] c on r.room_id = c.room_id\n" +
                         "join [Accounts] a on a.account_id = c.renter_id\n" +
                         "join [AccountInformations] ai on ai.account_id = a.account_id\n" +
-                        "where ai.email = ? and c.status = -1";
+                        "where ai.email = ? and c.status = 1";
 
                 psm = conn.prepareStatement(sql);
                 psm.setString(1, email);

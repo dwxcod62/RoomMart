@@ -196,29 +196,30 @@
                         <div class="col-12 col-sm-6">
                             <h2 class="content__infor-title">Người cho thuê</h2>
                             <c:choose>
-                                <c:when test="${sessionScope.USER.getRole() eq 1}">
+                                <c:when test="${sessionScope.CONTRACT.getOwner_sign() eq null &&  sessionScope.USER.getRole() eq 1}">
                                     <div style="text-align: center;">
                                         <img id="sig-image" src="./assets/images/system/sign.jpg" alt="Your signature will go here!" class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
                                     </div>
                                 </c:when>
-                                <c:when test="${sessionScope.USER.getRole() eq 2}">
+                                <c:when test="${!(sessionScope.CONTRACT.getOwner_sign() eq null)}">
                                     <div style="text-align: center;">
-                                        <img src="${sessionScope.CONTRACT.getOwner_sign()}"  class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
+                                        <img src="${sessionScope.CONTRACT.getOwner_sign()}" class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
                                     </div>
                                 </c:when>
                             </c:choose>
                         </div>
-
                         <!-- Người thuê -->
                         <div class="col-12 col-sm-6">
                             <h2 class="content__infor-title">Người thuê</h2>
                             <c:choose>
-                                <c:when test="${sessionScope.USER.getRole() eq 1}">
-                                    <!-- Điền mã HTML cho trường hợp người thuê là role 1 nếu cần -->
-                                </c:when>
-                                <c:when test="${sessionScope.USER.getRole() eq 2}">
+                                <c:when test="${sessionScope.USER.getRole() eq 2 && sessionScope.CONTRACT.getRenter_sign() eq null && !(sessionScope.CONTRACT.getOwner_sign() eq null)}">
                                     <div style="text-align: center;">
                                         <img id="sig-image" src="./assets/images/system/sign.jpg" alt="Your signature will go here!" class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
+                                    </div>
+                                </c:when>
+                                <c:when test="${!(sessionScope.CONTRACT.getRenter_sign() eq null)}">
+                                    <div style="text-align: center;">
+                                        <img src="${sessionScope.CONTRACT.getRenter_sign()}"  class="alt-text" style="width: 50%; display: block; margin: 0 auto;" />
                                     </div>
                                 </c:when>
                             </c:choose>
@@ -244,8 +245,12 @@
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary fs-3">Tiếp tục</button>
-                        <a href="renter-register-page" class="btn btn-outline-danger fs-3"> Có sai sót, hủy bỏ </a>
+                        <button type="button" id="btn122" class="btn btn-outline-danger fs-3"> Từ chối </button>
                     </div>
+                </form>
+                <form id="form122" action="ViewContractServlet" method="post">
+                    <input type="hidden" value="${sessionScope.CONTRACT.room_id}" name="room_id">
+                    <input type="hidden" value="${sessionScope.CONTRACT.renterId}" name="renter_id">
                 </form>
             </div>
         </div>
@@ -279,5 +284,14 @@
         });
     </script>
     <script src="./assets/js/contract/sign.js"></script>
+    <script>
+        var btn122 = document.getElementById("btn122");
+
+        btn122.addEventListener("click", function() {
+            var form = document.getElementById("form122");
+            form.submit();
+        });
+    </script>
+
     </body>
 </html>

@@ -35,7 +35,7 @@ public class EndContractServlet extends HttpServlet {
 
             boolean updateRoomStatusResult = roomDAO.updateRoomStatus(roomId, 1);
 
-            boolean updateContractStatus = contractDAO.updateContractStatus(roomId, renterAccountId);
+            boolean updateContractStatus = contractDAO.EndContract(roomId, renterAccountId);
 
             if (updateResult && updateRoomStatusResult && updateContractStatus) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()

@@ -59,6 +59,8 @@ public class TenantContractServlet extends HttpServlet {
     }
 
 
+
+
     private void make_contract(HttpServletRequest req, HttpServletResponse res){
         HttpSession session = req.getSession();
         String start_date = req.getParameter("room_start_date");
@@ -87,6 +89,8 @@ public class TenantContractServlet extends HttpServlet {
                     .expiration(end_date)
                     .price(_room.getPrice())
                     .build();
+
+            _contract.getRenter_sign();
 
             List<Infrastructures> _list_Infrastructures = new InfrastructureDao().getRoomInfrastructures(room_id);
             List<ServiceInfo> _list_Services = new ServiceInfoDAO().getServicesOfHostel(_hostel.getHostelID());

@@ -119,22 +119,36 @@ public class ConfirmContractServlet extends HttpServlet {
             RoomDao roomDAO = new RoomDao();
 
             if ( acc.getRole() == 1 ){
-                Consume _consume = (Consume) session.getAttribute("CONTRACT_CONSUME");
-                new ConsumeDAO().updateConsumeNumber(_consume);
+                int status = contractDAO.getStatusOfContract(r.getRoomId(), _renter_info.getAccount_id());
+                if ( status == -1 ) {
+                    url = SUCCESS + "?roomID=" + r.getRoomId() + "&hostelID=" + r.getHostelId();
+                    boolean check = contractDAO.updateOwnerSign(r.getRoomId(), _renter_info.getAccount_id(), sign);
+                    if (check && roomDAO.updateRoomStatus(r.getRoomId(), -1)){
+                        String email_renter = _renter_info.getEmail();
+                        String email_renter_encode = EncodeUtils.encodeString(email_renter);
+                        new EmailUtils().sendContractConfirmationEmail(email_renter, email_renter_encode);
+                    }
+                } else {
+//                Consume _consume = (Consume) session.getAttribute("CONTRACT_CONSUME");
+//                new ConsumeDAO().updateConsumeNumber(_consume);
 
-                contract.setOwner_sign(sign);
-                contract.setStatus(-1);
+                    contract.setOwner_sign(sign);
+                    contract.setStatus(1);
 
-                new ConsumeDAO().UpdateFirstConsume(r.getRoomId());
+                    new ConsumeDAO().UpdateFirstConsume(r.getRoomId());
 
-                if ( contractDAO.addContractOwner(contract) && roomDAO.updateRoomStatus(r.getRoomId(), -1)){
-                    url = SUCCESS + "?roomID" + r.getRoomId() + "&hostelID=" + r.getHostelId();
-                    String email_renter = _renter_info.getEmail();
-                    String email_renter_encode = EncodeUtils.encodeString(email_renter);
-                    new EmailUtils().sendContractConfirmationEmail(email_renter, email_renter_encode);
+                    if ( contractDAO.addContractOwner(contract) && roomDAO.updateRoomStatus(r.getRoomId(), -1)){
+                        url = SUCCESS + "?roomID=" + r.getRoomId() + "&hostelID=" + r.getHostelId();
+                        String email_renter = _renter_info.getEmail();
+                        String email_renter_encode = EncodeUtils.encodeString(email_renter);
+                        new EmailUtils().sendContractConfirmationEmail(email_renter, email_renter_encode);
+                    }
                 }
+
+
             } else {
                 if ( contractDAO.addContractRenter(contract.getContract_id(), sign) && roomDAO.updateRoomStatus(contract.getRoom_id(), 0) && accountDao.updateRoomForAccount(acc.getAccId(), contract.getRoom_id()) ){
+                    contractDAO.deleteAfterCreateContract(acc.getAccId());
                     url = "dashboard";
                 }
             }

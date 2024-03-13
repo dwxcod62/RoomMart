@@ -428,7 +428,7 @@
                                     style="width: 100%; height: 100%; max-height: 100px; max-width: 100px; object-fit: cover; overflow: hidden"
                                     alt=""
                             />
-                            <h4>Nguyen Anh Duc</h4>
+                            <h4>Loi chua fix</h4>
                             <div class="social_icon">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                             </div>
