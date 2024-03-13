@@ -1,6 +1,7 @@
 package com.codebrew.roommart.dao.OwnerDao.Impl;
 
 import com.codebrew.roommart.dao.OwnerDao.IHostelDAO;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.HostelService;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
 import com.codebrew.roommart.utils.DatabaseConnector;
@@ -28,6 +29,10 @@ public class HostelDAO implements IHostelDAO {
     private static final String INSERT_HOSTEL_IMG =
             "INSERT INTO imgHostel (hostel_id, imgURL)\n" +
                     "VALUES (?,?)";
+
+
+    // Admin
+    private static final String GET_HOSTELS_FOR_LICENSE = "SELECT * FROM Hostels";
     @Override
     public Hostel getHostelById(int hostelId) {
         Connection cn = null;
@@ -440,4 +445,100 @@ public class HostelDAO implements IHostelDAO {
         }
         return checkDelete;
     }
+
+    // Admin license
+
+    public List<com.codebrew.roommart.dto.OwnerDTO.Hostel> GetHostelsForLicense() throws SQLException {
+        List<com.codebrew.roommart.dto.OwnerDTO.Hostel> hostels = new ArrayList<>();
+        try (Connection cn = DatabaseConnector.makeConnection();
+             PreparedStatement pst = cn.prepareStatement(GET_HOSTELS_FOR_LICENSE);
+             ResultSet rs = pst.executeQuery()) {
+            while (rs != null && rs.next()) {
+                int hostelId = rs.getInt("hostel_id");
+                int ownerAccountId = rs.getInt("owner_account_id");
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                String ward = rs.getString("ward");
+                String district = rs.getString("district");
+                String city = rs.getString("city");
+                int status = rs.getInt("status");
+                List<String> imgUrl = getHostelImgByHostelId(hostelId);
+                com.codebrew.roommart.dto.OwnerDTO.Hostel hostel = new com.codebrew.roommart.dto.OwnerDTO.Hostel(hostelId, ownerAccountId, name, address, ward, district, imgUrl,city, status);
+                hostels.add(hostel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hostels;
+    }
+
+    private List<String> getHostelImgByHostelId(int hostelId) throws SQLException {
+        List<String> listImg = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        String sql = "select imgURL from [imgHostel] where hostel_id = ? ";
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, hostelId);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    String img = rs.getString("imgURL");
+
+                    listImg.add(img);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listImg;
+    }
+
+    // Admin
+
+    public boolean updateHostelStatus(int id, int status) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
+        boolean result = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+                String sql = "Update [dbo].[Hostels]\n" +
+                        "Set status = ?\n" +
+                        "Where hostel_id = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, status);
+                pst.setInt(2, id);
+                int i = pst.executeUpdate();
+                if(i > 0) result = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null && pst != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
 }
