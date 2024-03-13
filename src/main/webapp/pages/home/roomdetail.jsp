@@ -31,7 +31,7 @@
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
     <link rel="stylesheet" href="./assets/css/new_home_style/responsive.css" />
-
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- [ADD]  thêm style -->
     <style>
@@ -55,6 +55,42 @@
              margin: 4px 0 16px 0;
              border-radius: 4px;
          }
+
+        .popup-container2 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .popup-content2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        .close-btn2 {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .ads-img2 {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ads-img2 img {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
@@ -594,9 +630,34 @@
 </c:if>
 
 
+<c:if test="${requestScope.ads}">
 
 
+<!-- Popup Container -->
+<div class="popup-container2" id="popupContainer2">
+    <div class="popup-content2">
+            <span class="close-btn2" onclick="closePopup2()">
+                <i class='bx bx-x' style="font-size: 30px;"></i>
+            </span>
+        <div class="ads-img2">
+            <img src="https://channel.mediacdn.vn/2022/3/2/photo-1-1646225726739989482093.jpg" alt="Advertisement">
+        </div>
+    </div>
+</div>
+<script>
+    function openPopup2() {
+        document.getElementById("popupContainer2").style.display = "block";
+    }
 
+    function closePopup2() {
+        document.getElementById("popupContainer2").style.display = "none";
+    }
+
+    window.onload = function () {
+        openPopup2();
+    };
+</script>
+</c:if>
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
