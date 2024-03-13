@@ -1818,7 +1818,7 @@ public List<String>getListImgByRoomId(int rid){
                         "FROM rooms\n" +
                         "JOIN \n" +
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n "+
-                        "WHERE price = (SELECT MIN(price) FROM rooms) and hostel_id = ? and hostels.status = 0\n" +
+                        "WHERE price = (SELECT MIN(price) FROM rooms) and rooms.hostel_id = ? and hostels.status = 0\n" +
                         "ORDER BY room_area DESC;";
 
                 pst = cn.prepareStatement(sql);
