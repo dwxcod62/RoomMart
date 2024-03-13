@@ -16,8 +16,7 @@ public class ServiceInfoDAO implements IServiceInfoDAO {
     private static final String GET_SERVICES_OF_HOSTEL =
             "SELECT N.hostel_service_id, S.service_id, service_name, valid_date, service_price, unit\n" +
                     "FROM Services S RIGHT JOIN HostelService N ON S.service_id = N.service_id\n" +
-//                    "WHERE N.status = 1 AND N.hostel_id = ?";
-                    "WHERE N.hostel_id = ?";
+                    "WHERE N.status = 1 AND N.hostel_id = ?";
     @Override
     public List<ServiceInfo> getServicesOfHostel(int hostelID) {
         Connection cn = null;

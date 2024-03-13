@@ -78,6 +78,7 @@ public class UpdateServiceServlet extends HttpServlet {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {
             if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
+//            request.getRequestDispatcher("hostel-page").forward(request, response);
             else response.sendRedirect("add-update-service-noti"); //check-here
         }
     }
