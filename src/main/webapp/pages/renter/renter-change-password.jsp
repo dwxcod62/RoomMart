@@ -96,7 +96,6 @@
         var saveButton = document.getElementById('saveButton');
 
         form.addEventListener('input', function(event) {
-            // Kiểm tra xem tất cả các trường dữ liệu đã được điền đầy đủ chưa
             if (newPassword.value !== '' && newPasswordVerify.value !== '' && oldPassword.value !== '') {
                 saveButton.removeAttribute('disabled');
             } else {
@@ -105,12 +104,14 @@
         });
 
         form.addEventListener('submit', function(event) {
-            // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận có trùng khớp không
             if (newPassword.value !== newPasswordVerify.value) {
                 alert('Mật khẩu mới và mật khẩu xác nhận không trùng khớp!');
-                event.preventDefault(); // Ngăn chặn gửi form nếu mật khẩu không trùng khớp
-                return;
+                return false;
             }
+        });
+
+        saveButton.addEventListener('click', function(event) {
+            showAlert();
         });
     });
 
