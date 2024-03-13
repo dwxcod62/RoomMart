@@ -133,6 +133,7 @@ public class OwnerPageServlet extends HttpServlet {
             request.setAttribute("NumberReadyRoom", readyRooms.size());
             request.setAttribute("NumberProcessRoom", processRooms.size());
             request.setAttribute("NumberNotification", new NotificationDao().getNotificationByOwnerId(account.getAccId()).size());
+            session.setAttribute("CURRENT_PAGE", "dashboard");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
