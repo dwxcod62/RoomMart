@@ -1,5 +1,6 @@
 package com.codebrew.roommart.dao;
 
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.Hostel;
 import com.codebrew.roommart.utils.DatabaseConnector;
 
@@ -256,7 +257,6 @@ public class HostelDao {
         }
         return listHostels;
     }
-
 
 
 }
