@@ -135,7 +135,7 @@
                             <a href="./invoices.html" class="bill__action-link">
                                 <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
                             </a>
-                            <form action="" method="POST" class="bill__form d-flex justify-content-end">
+                            <form action="updateBilLStatus" method="POST" class="bill__form d-flex justify-content-end">
                                 <input type="hidden" name="roomID" value="" />
                                 <!-- Change type="submit" of tag button below when implement -->
                                 <button class="bill__action-btn btn btn-outline-primary" type="button">

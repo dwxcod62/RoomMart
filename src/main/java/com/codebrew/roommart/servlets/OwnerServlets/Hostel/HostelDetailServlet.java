@@ -5,11 +5,8 @@ import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.RoomDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.ServiceDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.ServiceInfoDAO;
-import com.codebrew.roommart.dto.Account;
+import com.codebrew.roommart.dto.*;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
-import com.codebrew.roommart.dto.Room;
-import com.codebrew.roommart.dto.ServiceInfo;
-import com.codebrew.roommart.dto.Services;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +21,7 @@ import java.util.List;
 public class HostelDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "list-hostels";
+        String url = "listHostel";
         String ERROR = "error-page";
         try {
             Account acc;
@@ -59,7 +56,7 @@ public class HostelDetailServlet extends HttpServlet {
             request.setAttribute("services", listServicesNotInHostel);
             session.setAttribute("CURRENT_PAGE", "hostel");
         } catch (Exception e) {
-            log("Error at HostelDetailServlet: " + e.toString());
+            e.printStackTrace();
         } finally {
             if (ERROR.equalsIgnoreCase(url))
                 response.sendRedirect(url);

@@ -139,9 +139,9 @@
                             <div class="hostel-services">
                                 <div class="services-header">
                                     <div class="service-title">Giá dịch vụ</div>
-<%--                                    <button class="service-update-btn" data-bs-toggle="modal"--%>
-<%--                                            data-bs-target="#updateServicesModel">Cập nhật--%>
-<%--                                    </button>--%>
+                                    <button class="service-update-btn" data-bs-toggle="modal"
+                                            data-bs-target="#updateServicesModel">Cập nhật
+                                    </button>
                                 </div>
                                 <div class="services-date">
                                     Áp dụng từ:
@@ -349,7 +349,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Hủy bỏ
                     </button>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" onclick="sendReport()">
                         Cập nhật
                     </button>
                 </div>
@@ -436,7 +436,18 @@
         ]
     });
 </script>
+<%--<script src="./assets/js/sendWebsocket.js"></script>--%>
+<script>
+    function sendReport(){
+        const  hostelId = ${sessionScope.hostel.hostelID};
+        console.log("hostelId reiceiver: "+hostelId);
 
+        sendToWebSocket("hostel_owner", "hostel", hostelId, null, "Cập nhật dịch vụ của khu trọ",null);
+        setTimeout(function() {
+            document.getElementById("update-services-form").submit();
+        }, 1500); // 3000 milliseconds = 3 seconds
+    }
+</script>
 <script type="text/javascript">
     // Send
     <c:if test="${requestScope.RESPONSE_MSG.status == true &&  'Cập nhật dịch vụ thành công!' eq requestScope.RESPONSE_MSG.content }">
