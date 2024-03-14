@@ -6,7 +6,8 @@ function alertPushNoti({ message = "",chat="",rid="",hid="", duration = "" }) {
     const mainNoti = document.getElementById("push-noti");
 
 
-    const notify = message != null ? message : chat;
+    // const notify = (message != null ? message : chat);
+    const notify = message;
 
     if (mainNoti) {
         const noti = document.createElement("div");
@@ -30,7 +31,7 @@ function alertPushNoti({ message = "",chat="",rid="",hid="", duration = "" }) {
         noti.style.animation = `slideInRight ease .3s, fadeOut linear 2s ${delay}s forwards`;
         var n1 = `
             <div class="push-noti__wrapper">
-              <h5 class="push-noti__title">${message != null ? 'Thông báo mới' : 'Tin nhắn mới'}</h5>
+              <h5 class="push-noti__title">Thông báo mới</h5>
               <div class="push-noti__close">
                 <i class="fa-solid fa-xmark"></i>
               </div>

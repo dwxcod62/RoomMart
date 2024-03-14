@@ -21,6 +21,7 @@ public class PushNotiWebSocket {
 
     @OnOpen
     public void handleOpen(Session session) {
+        System.out.println("add");
         users.add(session);
     }
 

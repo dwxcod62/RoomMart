@@ -11,7 +11,6 @@ function sendMessage(message) {
     // } while (websocket.readyState != WebSocket.OPEN)
     setTimeout(() => {
             if (typeof websocket != 'undefined' && websocket.readyState == WebSocket.OPEN) {
-
                 websocket.send(message); //send json
 
             }

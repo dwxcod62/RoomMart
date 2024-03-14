@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-3">
                     <div class="main-nav__logo">
-                        <a href="home-page" class="main-nav__logo-link">
+                        <a href="home" class="main-nav__logo-link">
                             <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                         </a>
                     </div>

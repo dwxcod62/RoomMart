@@ -31,30 +31,32 @@
                         <!-- form card change password -->
                         <div class="card card-outline-secondary custom-outline">
                             <div class="card-header">
-                                <h2 class="m-2">Change Password</h2>
+                                <h2 class="m-2">Đổi mật khẩu</h2>
                             </div>
                             <div class="card-body">
-                                <form class="form" role="form" autocomplete="off">
+                                <form action="RenterChangePass" class="form" role="form" autocomplete="off">
                                     <div class="form-group m-2">
-                                        <label for="inputPasswordOld" class="titles">Current Password</label>
-                                        <input type="password" class="form-control" id="inputPasswordOld" required="">
+                                        <label for="inputPasswordOld" class="titles">Mật khẩu hiện tại</label>
+                                        <input type="password" class="form-control" id="inputPasswordOld" name="inputPasswordOld" required="">
                                     </div>
                                     <div class="form-group m-2">
-                                        <label for="inputPasswordNew" class="titles">New Password</label>
-                                        <input type="password" class="form-control" id="inputPasswordNew" required="">
+                                        <label for="inputPasswordNew" class="titles">Mật khẩu mới</label>
+                                        <input type="password" class="form-control" id="inputPasswordNew" name="inputPasswordNew" required="">
                                         <span class="form-text small text-muted fz-14">
-                                            The password must be 8-20 characters, and must <em>not</em> contain spaces.
+                                            Mật khẩu phải có 6 ký tự và <em>không</em> chứa dấu cách.
                                         </span>
                                     </div>
                                     <div class="form-group m-2 mt-2">
-                                        <label for="inputPasswordNewVerify" class="titles">Verify</label>
-                                        <input type="password" class="form-control" id="inputPasswordNewVerify" required="">
+                                        <label for="inputPasswordNewVerify" class="titles">Nhập lại mật khẩu</label>
+                                        <input type="password" class="form-control" id="inputPasswordNewVerify" name="inputPasswordNewVerify" required="">
                                         <span class="form-text small text-muted fz-14">
-                                            To confirm, type the new password again.
+                                            Để xác nhận, hãy nhập lại mật khẩu mới.
                                         </span>
                                     </div>
                                     <div class="form-group m-2 mt-4">
-                                        <button type="submit" class="btn btn-outline-dark btn-lg float-right">Save</button>
+                                        <button type="submit" id="saveButton" class="btn btn-outline-dark btn-lg float-right" disabled>
+                                            Lưu
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -85,5 +87,39 @@
 </script>
 <script src="./assets/js/renter/Renter-navbar.js"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.querySelector('form');
+        var newPassword = document.getElementById('inputPasswordNew');
+        var newPasswordVerify = document.getElementById('inputPasswordNewVerify');
+        var oldPassword = document.getElementById('inputPasswordOld');
+        var saveButton = document.getElementById('saveButton');
+
+        form.addEventListener('input', function(event) {
+            if (newPassword.value !== '' && newPasswordVerify.value !== '' && oldPassword.value !== '') {
+                saveButton.removeAttribute('disabled');
+            } else {
+                saveButton.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            if (newPassword.value !== newPasswordVerify.value) {
+                alert('Mật khẩu mới và mật khẩu xác nhận không trùng khớp!');
+                return false;
+            }
+        });
+
+        saveButton.addEventListener('click', function(event) {
+            showAlert();
+        });
+    });
+
+    function showAlert() {
+        if (confirm('Bạn có muốn đổi mật khẩu không?')) {
+            alert('Đổi mật khẩu thành công!');
+        }
+    }
+</script>
 </body>
 </html>

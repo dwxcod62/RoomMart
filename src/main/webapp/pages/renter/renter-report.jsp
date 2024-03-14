@@ -128,7 +128,7 @@
                     </div>
                     <div class="spacer"></div>
                     <div class="form-action d-flex justify-content-end">
-                        <button onclick="sendReport()" class="form-submit">Gửi</button>
+                        <button type="button" onclick="sendReport()" class="form-submit">Gửi</button>
                     </div>
                 </form>
             </div>
@@ -149,9 +149,13 @@
         console.log("hostelOwnerAccountID send report: "+hostelOwnerAccountID);
 
         function sendReport(){
+            console.log("send report ")
             sendToWebSocket("hostel_renter", "hostel_owner", null, hostelOwnerAccountID, null,"Có Báo cáo mới !");
-
+            setTimeout(function() {
+                document.getElementById("add-report-form").submit();
+            }, 1500); // 3000 milliseconds = 3 seconds
         }
+
 
     </script>
 

@@ -862,7 +862,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-//                System.out.println(sql);
+//                System.out.println(sql);z
 
                 pst = cn.prepareStatement(sql);
 
@@ -1576,7 +1576,7 @@ public List<String>getListImgByRoomId(int rid){
                         "join [Contracts] c on r.room_id = c.room_id\n" +
                         "join [Accounts] a on a.account_id = c.renter_id\n" +
                         "join [AccountInformations] ai on ai.account_id = a.account_id\n" +
-                        "where ai.email = ? and c.status = -1";
+                        "where ai.email = ? and c.status = 1";
 
                 psm = conn.prepareStatement(sql);
                 psm.setString(1, email);
@@ -1818,7 +1818,7 @@ public List<String>getListImgByRoomId(int rid){
                         "FROM rooms\n" +
                         "JOIN \n" +
                         "    hostels ON rooms.hostel_id = hostels.hostel_id \n "+
-                        "WHERE price = (SELECT MIN(price) FROM rooms) and hostel_id = ? and hostels.status = 0\n" +
+                        "WHERE price = (SELECT MIN(price) FROM rooms) and rooms.hostel_id = ? and hostels.status = 0\n" +
                         "ORDER BY room_area DESC;";
 
                 pst = cn.prepareStatement(sql);

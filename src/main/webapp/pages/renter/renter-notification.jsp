@@ -30,7 +30,7 @@
     <div class="row main-body">
         <%@include file="component/sidebar.jsp" %>
         <div class="content">
-            <div class="col-10">
+            <div class="col-8">
                 <div id="list-notifications-container" class="content__body view_report">
                     <h1 class="text-center" style="padding: 5px 0 20px 0">Thông báo từ chủ nhà</h1>
                     <table id="notification-table" class="content__table table table-bordered table-striped dataTable no-footer"
@@ -55,8 +55,10 @@
                             <tr style="text-align: center">
                                 <td>${index}</td>
                                 <td style="text-align: left; padding-left: 1.5rem">
-                                    <h3>${nt.title}</h3>
-                                    <h4 style="font-weight: 400; font-size: 1.6rem">${nt.content}</h4>
+                                    <button onclick="setContent(this)" value="${nt.notification_id}" class="btn_custom" data-bs-toggle="modal"
+                                            data-bs-target="#delete-room-infor-modal">
+                                        <p>${nt.title}</p
+                                    </button>
                                 </td>
                                 <td>
                                     <fmt:parseDate var="createDate" value="${nt.createDate}" pattern="yy-MM-dd"/>
@@ -67,10 +69,34 @@
                         </tbody>
                     </table>
                 </div>
+
+
+                <div class="modal fade" id="delete-room-infor-modal" tabindex="-1"
+                     aria-labelledby="update-room-infor-modal-label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="delete-room-infor-modal-label">
+                                    Thông báo
+                                </h5>
+                            </div>
+                            <div class="modal-body" id="modal-body">
+                                ---
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-outline-danger ms-auto"
+                                        data-bs-dismiss="modal">Thoát
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <%@include file="component/footer.jsp" %>
 <!-- Push notification element -->
 <div id="push-noti"></div>
@@ -94,6 +120,10 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 
+<script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         $('#notification-table').DataTable({
@@ -116,6 +146,26 @@
 
     var currentPage = window.location.pathname.split("/").pop().split(".")[0];
     document.getElementById(currentPage).classList.add("active");
+</script>
+
+
+<script>
+    function setContent(button) {
+        var value = button.value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "RenterNotiDe?id=" + value, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+
+                console.log(response);
+
+                document.getElementById("modal-body").innerHTML = response;
+            }
+        };
+        xhr.send();
+    }
 </script>
 </body>
 </html>

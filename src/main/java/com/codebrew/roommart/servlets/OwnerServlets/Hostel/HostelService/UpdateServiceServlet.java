@@ -90,9 +90,11 @@ public class UpdateServiceServlet extends HttpServlet {
 //            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
 //            request.getRequestDispatcher("hostel-page").forward(request, response);
 //            else response.sendRedirect("add-update-service-noti"); //check-here
+
             System.out.println(url);
              response.sendRedirect(url);
 //            request.getRequestDispatcher(url).forward(request, response);
+
         }
     }
 }

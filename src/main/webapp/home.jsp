@@ -141,7 +141,7 @@
                                 </li>
                                 <c:if test="${sessionScope.USER.role eq 1}">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="dashboard">Đăng kí</a>
+                                        <a class="nav-link" href="dashboard">Quản lý trọ</a>
                                     </li>
                                 </c:if>
 
@@ -199,18 +199,20 @@
                             <div class="col-md-12">
                                 <div class="book_tabel_item">
                                     <div class="input-group">
-                                        <input value="${requestScope.key}" id="textInput" name="key" type="text" class="form-control" placeholder="Enter your search here..." />
+                                        <input value="${requestScope.key}" id="textInput" name="key" type="text" class="form-control" placeholder="Nhập từ khoá..." />
                                     </div>
                                 </div>
                             </div>
                             <!-- [ADD] Search -->
+                            <input type="hidden" id="selected_city" value="" name="city" >
+                            <input type="hidden" id="selected_dis" value="" name="district" >
+                            <input type="hidden" id="selected_ward" value="" name="ward" >
+
                             <div class="col-md-4">
                                 <div class="book_tabel_item">
-
-
                                     <div class="input-group">
-                                        <select id="city" name="city" class="wide">
-                                            <option value="all" selected>Chọn tỉnh thành</option>
+                                        <select id="city" name="city1" class="wide">
+                                            <option  value="all" selected>Chọn tỉnh thành</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -227,7 +229,7 @@
                             <div class="col-md-4">
                                 <div class="book_tabel_item">
                                     <div class="input-group">
-                                        <select id="district" name="district" class="wide" >
+                                        <select id="district" name="district1" class="wide" >
                                             <option value="all" selected>Chọn quận huyện</option>
                                         </select>
 
@@ -244,7 +246,7 @@
                                 <div class="book_tabel_item">
                                     <div class="input-group">
                                         <div class="input-group">
-                                            <select id="ward" name="ward" class="wide" >
+                                            <select id="ward" name="ward1" class="wide" >
                                                 <option value="all" selected>Chọn phường xã</option>
                                             </select>
 
@@ -363,9 +365,9 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                All rights reserved | This template is made with
+                All rights reserved | This Project is made with
                 <i class="fa fa-heart-o" aria-hidden="true"></i> by
-                <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <a href="https://colorlib.com" target="_blank">Roomart</a>
             </p>
             <div class="col-lg-4 col-sm-12 footer-social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
@@ -468,6 +470,10 @@ var niceSelectUl3 = wards.nextElementSibling.querySelector("ul.list");
 niceSelectUl3.style.maxHeight = "200px";
 niceSelectUl3.style.overflowY = "auto";
 
+    var selected_city = document.getElementById("selected_city");
+    var selected_dis = document.getElementById("selected_dis");
+    var selected_ward = document.getElementById("selected_ward")
+
     var Parameter = {
         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
         method: "GET",
@@ -486,6 +492,7 @@ niceSelectUl3.style.overflowY = "auto";
             li.classList.add("option");
 
             li.addEventListener("click", function () {
+                selected_city.value = x.Name;
                 for (const y of x.Districts){
                     var li_dis = document.createElement("li");
                     li_dis.setAttribute("data-value", y.Id);
@@ -493,11 +500,15 @@ niceSelectUl3.style.overflowY = "auto";
                     li_dis.classList.add("option");
 
                     li_dis.addEventListener("click", function () {
+                        selected_dis.value = y.Name
                         for (const z of y.Wards) {
                             var li_ward = document.createElement("li");
                             li_ward.setAttribute("data-value", z.Id);
                             li_ward.textContent = z.Name;
                             li_ward.classList.add("option");
+                            li_dis.addEventListener("click", function () {
+                                selected_ward.value = z.Name;
+                            });
                             niceSelectUl3.appendChild(li_ward)
                         }
                     });

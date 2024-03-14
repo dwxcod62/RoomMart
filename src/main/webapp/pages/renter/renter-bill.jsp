@@ -48,11 +48,11 @@
                         <tr class="table-Light">
                             <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                                 colspan="1" aria-label="Mã hoá đơn: activate to sort column ascending"
-                                style="width: 14%; border-bottom: 1px solid #333;">Mã hoá đơn
+                                style="width: 16%; border-bottom: 1px solid #333;">Mã hoá đơn
                             </th>
                             <th class="text-center sorting" tabindex="0" aria-controls="notification-table" rowspan="1"
                                 colspan="1" aria-label="Ngày tạo hoá đơn: activate to sort column ascending"
-                                style="width: 24%; border-bottom: 1px solid #333;"
+                                style="width: 22%; border-bottom: 1px solid #333;"
                                 data-orderable="false">Ngày tạo hoá đơn</th>
                             <th class="text-center sorting" aria-controls="notification-table" rowspan="1" colspan="1"
                                 aria-label="Tổng tiền (VND): activate to sort column ascending"

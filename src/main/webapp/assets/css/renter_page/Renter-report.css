@@ -310,7 +310,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   row-gap: 20px;
-  padding: 20px 30px 30px 30px;
+  padding: 20px 30px 40px 30px;
 }
 
 .tabs {
@@ -458,6 +458,11 @@ body {
   color: #333;
 }
 
+@media screen and (min-width: 14in) {
+  .user-icon:hover>.box-setting {
+    height: 25vh;
+  }
+}
 
 
 

@@ -110,7 +110,7 @@
     }
 
 </style>
-<div  class="wrapper2 dropdown-menu">
+<div  class="wrapper2 dropdown-menu" style="padding: 50px" id="dropdownPricev2" aria-labelledby="dropdownMenuButton">
     <header>
         <h2>Mức Giá</h2>
         <p>Kéo hoặc nhập mức giá mong muốn</p>
