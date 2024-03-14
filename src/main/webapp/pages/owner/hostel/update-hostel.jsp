@@ -115,7 +115,7 @@
                                     <div class="spacer"></div>
                                     <!-- Action -->
                                     <div class="update-hostel-action">
-                                        <a href="list-hostels" class="form-submit">Hủy bỏ</a>
+                                        <a href="listHostel" class="form-submit">Hủy bỏ</a>
                                         <button type="submit" class="form-submit">Cập nhật</button>
                                     </div>
                                 </form>

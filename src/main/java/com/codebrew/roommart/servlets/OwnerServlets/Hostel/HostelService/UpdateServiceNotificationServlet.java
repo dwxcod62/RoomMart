@@ -48,15 +48,15 @@ public class UpdateServiceNotificationServlet extends HttpServlet {
                             request.setAttribute("NOTIFICATION_ID", notiId);
                             request.setAttribute("HOSTEL_ID", hostelId);
 
-                            ArrayList<String> accMailList = new ArrayList<>();
-                            String mail = null;
-                            ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
-                            for (int id : renterList) {
-                                mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
-                                if (mail != null) {
-                                    accMailList.add(mail);
-                                }
-                            }
+//                            ArrayList<String> accMailList = new ArrayList<>();
+//                            String mail = null;
+//                            ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
+//                            for (int id : renterList) {
+//                                mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
+//                                if (mail != null) {
+//                                    accMailList.add(mail);
+//                                }
+//                            }
 
 //                            if (accMailList != null && accMailList.size() > 0) {
 //                                String domain = "http://localhost:8080/HappyHostel/RenterNotificationPage";

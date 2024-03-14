@@ -1,7 +1,10 @@
 package com.codebrew.roommart.servlets.OwnerServlets.Hostel.HostelService;
 
+import com.codebrew.roommart.dao.NotificationDao;
+import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.HostelServiceDAO;
 import com.codebrew.roommart.dao.OwnerDao.Impl.ServiceInfoDAO;
+import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.HostelService;
 import com.codebrew.roommart.dto.ServiceInfo;
@@ -15,7 +18,6 @@ import java.util.List;
 
 @WebServlet(name = "UpdateServiceServlet", value = "/UpdateServiceServlet")
 public class UpdateServiceServlet extends HttpServlet {
-    private final String SUCCESS = "add-update-service-noti";
     private final String FAIL = "detailHostel?hostelID=";
     private final String ERROR = "error-page";
     @Override
@@ -28,6 +30,9 @@ public class UpdateServiceServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String url = ERROR;
         HandlerStatus handlerStatus = null;
+        HttpSession session = request.getSession(false);
+        Account owner = (Account) session.getAttribute("USER");
+        int ownerId = owner.getAccId();
         try {
             url = FAIL;
             int hostelId = Integer.parseInt(request.getParameter("hostel-id"));
@@ -52,6 +57,7 @@ public class UpdateServiceServlet extends HttpServlet {
                 }
 
                 checkUpdate = hostelServiceDAO.insertListServicesIntoHostel(hostelServiceList, hostelId);
+                url += hostelId;
                 if (checkUpdate) {
 
                     request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
@@ -61,13 +67,17 @@ public class UpdateServiceServlet extends HttpServlet {
                     String content = "Cập nhật dịch vụ: \n";
                     List<ServiceInfo> serviceInfoList = new ServiceInfoDAO().getServicesOfHostel(hostelId);
                     for (ServiceInfo item: serviceInfoList) {
-                        content += item.getServiceName() + ": " + item.getServicePrice() + " || ";
+                        content += item.getServiceName() + ": " + item.getServicePrice() + "VND || ";
                     }
 
-                    request.setAttribute("noti-hostel-id", hostelId);
-                    request.setAttribute("noti-title", "Thông báo cập nhật dịch vụ");
-                    request.setAttribute("noti-content", content);
-                    url = SUCCESS;
+//                    request.setAttribute("noti-hostel-id", hostelId);
+//                    request.setAttribute("noti-title", "Thông báo cập nhật dịch vụ");
+                    String title = "Thông báo cập nhật dịch vụ";
+//                    request.setAttribute("noti-content", content);
+                    if (new HostelDAO().checkOwnerHostel(ownerId)) {
+                        int notiId = new NotificationDao().creatNotification(ownerId, hostelId, title, content);
+                    }
+
                 } else {
                     request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                             .status(false)
@@ -77,9 +87,12 @@ public class UpdateServiceServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {
-            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
+//            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
 //            request.getRequestDispatcher("hostel-page").forward(request, response);
-            else response.sendRedirect("add-update-service-noti"); //check-here
+//            else response.sendRedirect("add-update-service-noti"); //check-here
+            System.out.println(url);
+             response.sendRedirect(url);
+//            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }
