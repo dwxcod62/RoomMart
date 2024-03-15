@@ -773,7 +773,7 @@ public List<String>getListImgByRoomId(int rid){
                         "    address,\n" +
                         "    city,\n" +
                         "    ward, rooms.price,rooms.room_view,\n" +
-                        "    district\n"+" ORDER BY \n" +
+                        "    district, hostels.hostel_id\n"+" ORDER BY \n" +
 
                         "    rooms.room_id ASC\n";
                 String sql = "SELECT \n" +
@@ -790,7 +790,7 @@ public List<String>getListImgByRoomId(int rid){
                         "    ward,\n" +
                         "    district,\n" +
                         "    MIN(imgURL.url_img) AS imgUrl,\n" +
-                        "    count(imgURL.url_img) as count_img\n" +
+                        "    count(imgURL.url_img) as count_img, hostels.hostel_id\n" +
                         "    \n" +
                         "FROM \n" +
                         "    rooms \n" +
@@ -862,7 +862,7 @@ public List<String>getListImgByRoomId(int rid){
                 sql+=groupBySql;
                 sql+=" OFFSET ("+page+" - 1) * "+page_Size+" ROWS\n" +
                         " FETCH NEXT  "+page_Size+" ROWS ONLY;\n";
-//                System.out.println(sql);z
+//                System.out.println(sql);
 
                 pst = cn.prepareStatement(sql);
 
@@ -885,6 +885,7 @@ public List<String>getListImgByRoomId(int rid){
                         int imgNumber = rs.getInt("count_img");
                         String img = rs.getString("imgUrl");
                         int room_view = rs.getInt("room_view");
+                        int hostel_id = rs.getInt("hostel_id");
 
                         List<String> imgList = new ArrayList<>();
                         imgList.add(img);
@@ -903,7 +904,7 @@ public List<String>getListImgByRoomId(int rid){
                                 .hasAttic(hasAttic)
                                 .roomInformation(roomInformation)
                                 .imgUrl(imgList)
-                                .roomView(room_view)
+                                .roomView(room_view).hostelId(hostel_id)
                                 .build());
                     }
                 }else {rooms=null;}

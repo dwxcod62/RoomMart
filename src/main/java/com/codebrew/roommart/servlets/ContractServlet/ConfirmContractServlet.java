@@ -147,9 +147,20 @@ public class ConfirmContractServlet extends HttpServlet {
 
 
             } else {
-                if ( contractDAO.addContractRenter(contract.getContract_id(), sign) && roomDAO.updateRoomStatus(contract.getRoom_id(), 0) && accountDao.updateRoomForAccount(acc.getAccId(), contract.getRoom_id()) ){
-                    contractDAO.deleteAfterCreateContract(acc.getAccId());
-                    url = "dashboard";
+                System.out.println(contract.getContract_id());
+                if ( contractDAO.addContractRenter(contract.getContract_id(), sign)  ){
+                    if (roomDAO.updateRoomStatus(contract.getRoom_id(), 0) ){
+                        if ( accountDao.updateRoomForAccount(acc.getAccId(), contract.getRoom_id()) ){
+                            contractDAO.deleteAfterCreateContract(acc.getAccId());
+                            url = "dashboard";
+                        } else{
+                            System.out.println("c");
+                        }
+                    } else {
+                        System.out.println("b");
+                    }
+                } else {
+                    System.out.println("a");
                 }
             }
         } catch ( Exception e){
