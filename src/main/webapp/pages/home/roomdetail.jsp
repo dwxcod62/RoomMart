@@ -464,7 +464,7 @@
                                     style="width: 100%; height: 100%; max-height: 100px; max-width: 100px; object-fit: cover; overflow: hidden"
                                     alt=""
                             />
-                            <h4>Loi chua fix</h4>
+                            <h4>${requestScope.ownerAcc.fullname}</h4>
                             <div class="social_icon">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                             </div>
@@ -473,9 +473,11 @@
                         <aside class="single-sidebar-widget newsletter_widget">
                             <div class="mt-3">
                                 <jsp:useBean id="ContractDao" class="com.codebrew.roommart.dao.ContractDao" scope="application" />
+                                <jsp:useBean id="accountDAO" class="com.codebrew.roommart.dao.AccountDao" scope="application" />
                                 <c:set var="count_contract" value="${ContractDao.countResgiterContractByRenterId(requestScope.USER.getAccId())}" />
+                                <c:set var="USER" value="${sessionScope.USER}" />
                                 <c:choose>
-                                    <c:when test="${sessionScope.USER != null}">
+                                    <c:when test="${sessionScope.USER != null && accountDAO.getRoomOfRenter(USER.getAccountInfo().getInformation().getEmail()) < 1 }">
                                         <c:choose>
                                             <c:when test="${count_contract > 3}">
                                                 <button
@@ -500,7 +502,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </c:when>
-                                    <c:otherwise>
+                                    <c:when test="${sessionScope.USER == null}">
                                         <button
                                             type="button"
                                             class="btn btn-outline-primary btn-block mb-3 btn-custom"
@@ -509,7 +511,7 @@
                                         >
                                             Đăng nhập để thuê phòng
                                         </button>
-                                    </c:otherwise>
+                                    </c:when>
                                 </c:choose>
 <%--                                <button--%>
 <%--                                        type="button"--%>

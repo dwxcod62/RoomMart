@@ -29,7 +29,7 @@ public class ViewContractServlet extends HttpServlet {
         int con_id = Integer.parseInt(request.getParameter("id"));
 
         Contract _contract = contractDao.getContractByContractId(con_id);
-
+        _contract.setContract_id(con_id);
         Account owner = accDao.getAccountById(_contract.getHostelOwnerId());
         Account renter = accDao.getAccountById(_contract.getRenterId());
         Information _renter_info = renter.getAccountInfo().getInformation();
@@ -55,6 +55,7 @@ public class ViewContractServlet extends HttpServlet {
             session.setAttribute("CONTRACT_OWNER", owner.getAccountInfo());
             session.setAttribute("CONTRACT_RENTER", _renter_info);
             session.setAttribute("CONTRACT", _contract);
+            System.out.println(_contract);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

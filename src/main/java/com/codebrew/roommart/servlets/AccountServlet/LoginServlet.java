@@ -40,11 +40,11 @@ public class LoginServlet extends HttpServlet {
         Account account = null;
         try {
             account = accountDAO.getAccountByUsernameAndPassword(username, password);
-            System.out.println("recently_Room: "+account.getRecentlyRoom());
+            int checkRenterHasRoom = accountDAO.getRoomOfRenter(account.getAccountInfo().getInformation().getEmail());
             if (account != null && account.getStatus() == 1) {
                 String temp = url_temp[url_temp.length-1];
                 System.out.println(temp);
-                if ( temp.contains("roomDetailH")) {
+                if ( temp.contains("roomDetailH") && (checkRenterHasRoom < 1)) {
                     url = url_temp[url_temp.length-1];
                 } else {
                     url = "success";
