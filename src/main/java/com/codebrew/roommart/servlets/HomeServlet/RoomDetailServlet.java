@@ -13,7 +13,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import com.cloudinary.*;
@@ -65,14 +68,10 @@ public class RoomDetailServlet extends HttpServlet {
         try {
             rid = Integer.parseInt(rid_raw);
             hostelId = Integer.parseInt(hostelId_raw);
-
-
         }catch (Exception e){
             System.out.println("RoomDetail Servlet error - Parse int id error");
             request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
-
             return;
-
         }
         //call dao
         RoomDao rd = new RoomDao();
@@ -87,6 +86,7 @@ public class RoomDetailServlet extends HttpServlet {
         Information owner_hostel_info = null;
         try {
             owner_hostel_info = ud.getHostelOwnerInfoByHostelId(hostelId);
+            System.out.println(owner_hostel_info);
         } catch (SQLException e) {
             System.out.println("getHostelOwnerInfoByHostelId error");
         }
@@ -138,7 +138,71 @@ public class RoomDetailServlet extends HttpServlet {
         if (accRenter!= null && accRenter.getRole()==2){
             rd.updateRecentlyRoomId(r.getRoomId(),accRenter.getAccId());
         }
+        Account accRent2 = (Account) session.getAttribute("USER");
+        Account accRent = null;
+        if(accRent2 != null){
+             accRent = (Account) new AccountDao().getAccountById(accRent2.getAccId());
+        }
 
+//        System.out.println("--> check acc user: "+ accRent);
+        if (accRent != null){
+
+            java.util.Date currentDate = new java.util.Date();
+
+            // Định dạng ngày thành chuỗi
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                // Chuyển chuỗi createDate thành đối tượng Date
+                java.util.Date createDateObj = formatter.parse(accRent.getCreateDate());
+                java.util.Date expiration;
+                if (accRent.getExpiredDate() == null){
+                    expiration = new java.util.Date();
+                }else
+                    expiration = formatter.parse(accRent.getExpiredDate());
+                System.out.println(expiration);
+
+                // So sánh ngày hiện tại với ngày từ createDate
+                //check tai khoan tao hon 1 ngay chua
+                if (currentDate.after(createDateObj)) {
+                    //check lan cuoi dang nhap da hon 1 ngay chua
+
+                    Calendar currentCalendar = Calendar.getInstance();
+                    currentCalendar.setTime(currentDate);
+                    currentCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                    currentCalendar.set(Calendar.MINUTE, 0);
+                    currentCalendar.set(Calendar.SECOND, 0);
+                    currentDate = currentCalendar.getTime();
+
+                    Calendar expirationCalendar = Calendar.getInstance();
+                    expirationCalendar.setTime(expiration);
+                    expirationCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                    expirationCalendar.set(Calendar.MINUTE, 0);
+                    expirationCalendar.set(Calendar.SECOND, 0);
+                    expiration = expirationCalendar.getTime();
+
+                    String currentDateStr = formatter.format(currentDate);
+                    String expirationStr = formatter.format(expiration);
+                    System.out.println("expiration: "+expirationStr);
+                    System.out.println("currentDate: "+currentDateStr);
+                    int comparisonResult = currentDateStr.compareTo(expirationStr);
+                    if (comparisonResult > 0){
+
+                        System.out.println("currentDate.after(expiration):"+(comparisonResult));
+                        rd.updateExpiredDateRoomId(accRent.getAccId());
+                     request.setAttribute("ads",true);
+
+
+                    }else {
+                        request.setAttribute("ads",false);
+                    }
+                }
+            } catch (ParseException e) {
+                System.out.println(e);
+            }
+        }else {
+            request.setAttribute("ads",true);
+        }
         request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
     }
 

@@ -26,7 +26,6 @@ public class AddReportServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         LocalDate dateObj = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String sendDate = dateObj.format(formatter);
         request.setAttribute("uri", request.getRequestURI());
         try {
             HttpSession session = request.getSession();
@@ -37,7 +36,6 @@ public class AddReportServlet extends HttpServlet {
             int ownerID = hostel.getHostelOwnerAccountID();
             String content = request.getParameter("form-input");
             Report report = Report.builder()
-                    .sendDate(sendDate)
                     .content(content)
                     .sendAccountID(accountId)
                     .status(0)
@@ -51,7 +49,7 @@ public class AddReportServlet extends HttpServlet {
         } catch (Exception e) {
             HandlerStatus status = HandlerStatus.builder().status(false).content("Đã có lỗi xảy ra! Gửi báo cáo thất bại!").build();
             response.getWriter().write(new Gson().toJson(status));
-            log("Error at AddReportServlet: " + e.toString());
+            System.out.println(e);
         } finally {
             response.sendRedirect("RenterReport?success=true");
         }

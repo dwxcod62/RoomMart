@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-12 col-md-5 col-xxl-4">
                             <!-- Account session -->
-                            <%@include file="./room-detail-components/room-account.jsp" %>
+<%--                            <%@include file="./room-detail-components/room-account.jsp" %>--%>
                         </div>
                         <div class="col-12 col-md-7 col-xxl-6">
                             <!-- Infrastructure session -->

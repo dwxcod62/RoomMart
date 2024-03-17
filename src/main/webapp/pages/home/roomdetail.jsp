@@ -31,7 +31,7 @@
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
     <link rel="stylesheet" href="./assets/css/new_home_style/responsive.css" />
-
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- [ADD]  thêm style -->
     <style>
@@ -55,6 +55,42 @@
              margin: 4px 0 16px 0;
              border-radius: 4px;
          }
+
+        .popup-container2 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .popup-content2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        .close-btn2 {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .ads-img2 {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ads-img2 img {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
@@ -135,7 +171,7 @@
                                         <a class="nav-link" href="profile">Thông tin của bạn</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="profile">Xem lịch sử đăng kí</a>
+                                        <a class="nav-link" href="GetContractUserServlet">Xem lịch sử đăng kí</a>
                                     </li>
                                     <c:if test="${sessionScope.st != 0}">
                                         <li class="nav-item">
@@ -428,7 +464,7 @@
                                     style="width: 100%; height: 100%; max-height: 100px; max-width: 100px; object-fit: cover; overflow: hidden"
                                     alt=""
                             />
-                            <h4>Loi chua fix</h4>
+                            <h4>${requestScope.ownerAcc.fullname}</h4>
                             <div class="social_icon">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                             </div>
@@ -437,9 +473,11 @@
                         <aside class="single-sidebar-widget newsletter_widget">
                             <div class="mt-3">
                                 <jsp:useBean id="ContractDao" class="com.codebrew.roommart.dao.ContractDao" scope="application" />
+                                <jsp:useBean id="accountDAO" class="com.codebrew.roommart.dao.AccountDao" scope="application" />
                                 <c:set var="count_contract" value="${ContractDao.countResgiterContractByRenterId(requestScope.USER.getAccId())}" />
+                                <c:set var="USER" value="${sessionScope.USER}" />
                                 <c:choose>
-                                    <c:when test="${sessionScope.USER != null}">
+                                    <c:when test="${sessionScope.USER != null && accountDAO.getRoomOfRenter(USER.getAccountInfo().getInformation().getEmail()) < 1 }">
                                         <c:choose>
                                             <c:when test="${count_contract > 3}">
                                                 <button
@@ -464,7 +502,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </c:when>
-                                    <c:otherwise>
+                                    <c:when test="${sessionScope.USER == null}">
                                         <button
                                             type="button"
                                             class="btn btn-outline-primary btn-block mb-3 btn-custom"
@@ -473,15 +511,15 @@
                                         >
                                             Đăng nhập để thuê phòng
                                         </button>
-                                    </c:otherwise>
+                                    </c:when>
                                 </c:choose>
-                                <button
-                                        type="button"
-                                        class="btn btn-outline-success btn-block btn-custom"
-                                        style="font-size: 20px"
-                                >
-                                    Đề xuất giá phòng
-                                </button>
+<%--                                <button--%>
+<%--                                        type="button"--%>
+<%--                                        class="btn btn-outline-success btn-block btn-custom"--%>
+<%--                                        style="font-size: 20px"--%>
+<%--                                >--%>
+<%--                                    Đề xuất giá phòng--%>
+<%--                                </button>--%>
                             </div>
 
                             <div class="modal fade" id="delete-room-infor-modal" tabindex="-1"
@@ -594,9 +632,34 @@
 </c:if>
 
 
+<c:if test="${requestScope.ads}">
 
 
+<!-- Popup Container -->
+<div class="popup-container2" id="popupContainer2">
+    <div class="popup-content2">
+            <span class="close-btn2" onclick="closePopup2()">
+                <i class='bx bx-x' style="font-size: 30px;"></i>
+            </span>
+        <div class="ads-img2">
+            <img src="https://channel.mediacdn.vn/2022/3/2/photo-1-1646225726739989482093.jpg" alt="Advertisement">
+        </div>
+    </div>
+</div>
+<script>
+    function openPopup2() {
+        document.getElementById("popupContainer2").style.display = "block";
+    }
 
+    function closePopup2() {
+        document.getElementById("popupContainer2").style.display = "none";
+    }
+
+    window.onload = function () {
+        openPopup2();
+    };
+</script>
+</c:if>
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>

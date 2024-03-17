@@ -16,7 +16,7 @@ public class ReportDao {
     private static final String INSERT_REPORT =
             "INSERT INTO Reports (send_date, content, status, " +
                     "reply_account_id, send_account_id, cate_id)" +
-                    "VALUES (?, ?, ?, ?, ?, ?);";
+                    "VALUES ( GETDATE(), ?, ?, ?, ?, ?);";
 
     public List<Report> getReportByRenterId(int id) throws SQLException {
         List<Report> reports = new ArrayList<>();
@@ -80,12 +80,11 @@ public class ReportDao {
                 cn.setAutoCommit(false);
 
                 ptm = cn.prepareStatement(INSERT_REPORT, Statement.RETURN_GENERATED_KEYS);
-                ptm.setString(1, report.getSendDate());
-                ptm.setString(2, report.getContent());
-                ptm.setInt(3, report.getStatus());
-                ptm.setInt(4, report.getReplyAccountID());
-                ptm.setInt(5, report.getSendAccountID());
-                ptm.setInt(6, report.getCateID());
+                ptm.setString(1, report.getContent());
+                ptm.setInt(2, report.getStatus());
+                ptm.setInt(3, report.getReplyAccountID());
+                ptm.setInt(4, report.getSendAccountID());
+                ptm.setInt(5, report.getCateID());
 
                 boolean check = ptm.executeUpdate() > 0;
 

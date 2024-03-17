@@ -58,10 +58,10 @@ public class InformationDao {
     }
     
     private static final String GET_HOSTEL_OWNER_INFO_BY_HOSTEL_ID =
-            "SELECT DISTINCT AccountInformations.fullname, AccountInformations.birthday," +
-                    "AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
-                    "FROM AccountInformations INNER JOIN Hostels ON AccountInformations.account_id=Hostels.owner_account_id\n" +
-                    "WHERE Hostels.hostel_id= ?";
+            "SELECT a.fullname, a.birthday," +
+                    "a.sex, a.phone, a.address, a.identity_card_number\n" +
+                    "FROM AccountInformations a JOIN Hostels h ON a.account_id = h.owner_account_id\n" +
+                    "WHERE h.hostel_id= ?";
     private static final String GET_RENTER_INFO_BY_ID =
             "SELECT *\n" +
                     "FROM AccountInformations\n" +
