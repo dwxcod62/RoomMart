@@ -180,8 +180,8 @@ public class RoomDao {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
                 // Insert new room include Nhà vệ sinh, cửa sổ, cửa ra vào, máy lạnh theo thứ tự
-                String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status, price)\n" +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?)\n" ;
+                String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status, price,room_view)\n" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?,0)\n" ;
 
                 String sql2="INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
                         "VALUES (0, 0, GETDATE(), 0, ?)" +
@@ -321,40 +321,46 @@ public class RoomDao {
                         "\tSET @room_number = 1\n" +
                         "ELSE\n" +
                         "\tSET @room_number = @room_number + 1\n" +
-                        "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status, price)\n" +
-                        "VALUES (?, @room_number, ?, ?, ?, ?,?)\n" +
-                        "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-                        "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
-                        "VALUES (0, 0, GETDATE(), 0, @roomID)" +
+                        "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status, price,room_view)\n" +
+                        "VALUES (?, @room_number, ?, ?, ?, ?,?,0)\n";
+
+                String sql2 = "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                        "VALUES (0, 0, GETDATE(), 0, ?)" +
+
                         "DECLARE @restQuantity int = ?\n" +
                         "WHILE ( @restQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
                         "\tSET @restQuantity = @restQuantity - 1\n" +
                         "END\n" +
+
                         "DECLARE @windowQuantity int = ?\n" +
                         "WHILE ( @windowQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
                         "\tSET @windowQuantity = @windowQuantity - 1\n" +
                         "END\n" +
+
                         "DECLARE @doorQuantity int = ?\n" +
                         "WHILE ( @doorQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
                         "\tSET @doorQuantity = @doorQuantity - 1\n" +
                         "END\n" +
+
                         "DECLARE @airConditionQuantity int = ?\n" +
                         "WHILE ( @airConditionQuantity > 0 )\n" +
                         "BEGIN\n" +
                         "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))\n" +
+                        "\tVALUES (?, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))\n" +
                         "\tSET @airConditionQuantity = @airConditionQuantity - 1\n" +
                         "END";
 
+//                "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status, price,room_view)\n" +
+//                        "VALUES (?, @room_number, ?, ?, ?, ?,?,0)\n";
                 pst = cn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
                 pst.setInt(1, hostelID);
                 pst.setInt(2, hostelID);
@@ -365,43 +371,61 @@ public class RoomDao {
                 pst.setInt(7, price);
 
 
-                pst.setInt(8, quantity1);
-                pst.setInt(9, status1);
 
-                pst.setInt(10, quantity2);
-                pst.setInt(11, status2);
-
-                pst.setInt(12, quantity3);
-                pst.setInt(13, status3);
-
-                pst.setInt(14, quantity4);
-                pst.setInt(15, status4);
 
                 if (pst.executeUpdate() > 0) {
                     int room_Id = -1;
                     rs = pst.getGeneratedKeys();
                     if (rs.next()) {
                         room_Id = rs.getInt(1);
-
+                        System.out.println("rooom id : " + room_Id);
                     }
-                    System.out.println("step 3 - add imgs");
-                    pst = cn.prepareStatement(ADD_IMGs);
 
-
-                    // Set giá trị cho Prepared Statement
+                    pst = cn.prepareStatement(sql2);
                     pst.setInt(1, room_Id);
-                    pst.setString(2, imgUrls);
 
-                    // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                    pst.setInt(2, quantity1);
+                    pst.setInt(3, room_Id);
+                    pst.setInt(4, status1);
+
+
+                    pst.setInt(5, quantity2);
+                    pst.setInt(6, room_Id);
+                    pst.setInt(7, status2);
+
+                    pst.setInt(8, quantity3);
+                    pst.setInt(9, room_Id);
+                    pst.setInt(10, status3);
+
+                    pst.setInt(11, quantity4);
+                    pst.setInt(12, room_Id);
+                    pst.setInt(13, status4);
                     if (pst.executeUpdate() > 0) {
                         isInserted = true;
+                        System.out.println("step 3 - add imgs");
+                        pst = cn.prepareStatement(ADD_IMGs);
+
+
+                        // Set giá trị cho Prepared Statement
+                        pst.setInt(1, room_Id);
+                        pst.setString(2, imgUrls);
+
+                        // Thực hiện câu lệnh SQL và kiểm tra kết quả
+                        if (pst.executeUpdate() > 0) {
+                            isInserted = true;
+                        } else {
+                            isInserted = false;
+
+                        }
                     } else {
                         isInserted = false;
 
                     }
 
 
-                    isInserted = true;
+
+
+//                    isInserted = true;
                 }
             }
         } catch (Exception e) {
