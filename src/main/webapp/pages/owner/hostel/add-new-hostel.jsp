@@ -77,7 +77,7 @@
                             <span class="form-message"></span>
                         </div>
                         <div class="form-group">
-                            <label for="hostel-img" class="form-label">Giấy tờ đất: <span>*</span></label>
+                            <label for="hostel-img" class="form-label">Giấy phép kinh doanh: <span>*</span></label>
                             <input id="hostel-img" type="file" name="fileImage" accept=".png, .jpg" multiple class="form-control" onchange="validateFiles(this)">
                             <span class="form-message"></span>
                         </div>

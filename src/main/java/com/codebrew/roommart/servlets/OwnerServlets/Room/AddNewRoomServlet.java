@@ -131,7 +131,7 @@ public class AddNewRoomServlet extends HttpServlet {
                 String tempImg = "https://res.cloudinary.com/dqp6vdayn/image/upload/v1707647165/What-is-a-404-error-code_lu1xgy.png";
                 for (int i = 0; i < quantityRoom; i++) {
                     boolean isSuccess = roomDao.addNewManyRooms(hostelId, capacity, roomArea, attic, 1,
-                            tempImg,1000000,restrooms, restroomStatus,
+                            tempImg,price,restrooms, restroomStatus,
                             windows, windowsStatus,
                             roomDoors, roomDoorsStatus,
                             airConditions, airConditionsStatus);

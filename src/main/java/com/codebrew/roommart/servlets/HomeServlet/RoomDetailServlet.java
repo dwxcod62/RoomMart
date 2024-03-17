@@ -68,14 +68,10 @@ public class RoomDetailServlet extends HttpServlet {
         try {
             rid = Integer.parseInt(rid_raw);
             hostelId = Integer.parseInt(hostelId_raw);
-
-
         }catch (Exception e){
             System.out.println("RoomDetail Servlet error - Parse int id error");
             request.getRequestDispatcher("pages/home/roomdetail.jsp").forward(request,response);
-
             return;
-
         }
         //call dao
         RoomDao rd = new RoomDao();
@@ -90,6 +86,7 @@ public class RoomDetailServlet extends HttpServlet {
         Information owner_hostel_info = null;
         try {
             owner_hostel_info = ud.getHostelOwnerInfoByHostelId(hostelId);
+            System.out.println(owner_hostel_info);
         } catch (SQLException e) {
             System.out.println("getHostelOwnerInfoByHostelId error");
         }
@@ -142,7 +139,11 @@ public class RoomDetailServlet extends HttpServlet {
             rd.updateRecentlyRoomId(r.getRoomId(),accRenter.getAccId());
         }
         Account accRent2 = (Account) session.getAttribute("USER");
-        Account accRent = (Account) new AccountDao().getAccountById(accRent2.getAccId());
+        Account accRent = null;
+        if(accRent2 != null){
+             accRent = (Account) new AccountDao().getAccountById(accRent2.getAccId());
+        }
+
 //        System.out.println("--> check acc user: "+ accRent);
         if (accRent != null){
 

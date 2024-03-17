@@ -25,7 +25,7 @@ public class ServiceInfoDAO {
                     "RIGHT JOIN \n" +
                     "    HostelService N ON S.service_id = N.service_id\n" +
                     "WHERE \n" +
-                    "    N.hostel_id = ?\n" +
+                    "    N.hostel_id = ? and N.status = 1\n" +
                     "GROUP BY \n" +
                     "    S.service_id,\n" +
                     "    S.service_name,\n" +
