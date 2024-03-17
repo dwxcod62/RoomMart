@@ -40,6 +40,7 @@
     </div>
 </c:if>
 
+
 <div class="app">
 
     <!-- Navbar -->
