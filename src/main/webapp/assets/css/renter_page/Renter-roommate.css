@@ -305,8 +305,7 @@ body {
 .content {
   min-height: 100vh;
   width: 80%;
-  margin: 0px;
-  padding: 0px;
+  padding: 60px 0 40px 0;
   position: relative;
 }
 .content .title-table {
@@ -318,13 +317,13 @@ body {
 }
 .content table {
   margin: 40px auto;
-  width: 70%;
+  width: 55%;
   text-align: center;
   font-size: 25px;
   border-spacing: 0;
   border-collapse: collapse;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.08) 0px 1px 2px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -366,8 +365,24 @@ body {
   height: 36px;
   font-size: 15px;
 }
+
 .content .modal-content {
   padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.content .modal-header h5 {
+  font-size: 20px;
+  color: var(--main-color);
+}
+
+.roommate-details {
+  font-size: 16px;
+}
+
+.btn_custom {
+  background: var(--main-color);
+  color: var(--main-background);
 }
 
 @media screen and (max-width: 1024px) {
