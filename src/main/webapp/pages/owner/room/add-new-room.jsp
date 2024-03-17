@@ -330,20 +330,20 @@
 
 <script>
 
-    Validator({
-        form: '#add-hostel-form',
-        formGroupSelector: '.form-group',
-        errorSelector: '.form-message',
-        rules: [
-            Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
-            Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
-            Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
-            Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
-            Validator.isInteger('#room-capacity', 'Số lượng người phải là số nguyên'),
-            Validator.maxNumber('#room-area', 1000, 'Vui lòng nhập giá trị dưới 1000'),
-            Validator.minNumber('#room-area', 1, 'Vui lòng nhập giá trị tối thiểu là 1'),
-        ]
-    });
+    // Validator({
+    //     form: '#add-hostel-form',
+    //     formGroupSelector: '.form-group',
+    //     errorSelector: '.form-message',
+    //     rules: [
+    //         Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
+    //         Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
+    //         Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
+    //         Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
+    //         Validator.isInteger('#room-capacity', 'Số lượng người phải là số nguyên'),
+    //         Validator.maxNumber('#room-area', 1000, 'Vui lòng nhập giá trị dưới 1000'),
+    //         Validator.minNumber('#room-area', 1, 'Vui lòng nhập giá trị tối thiểu là 1'),
+    //     ]
+    // });
 
     function getParent(element, selector) {
         while (element.parentElement) {
@@ -363,7 +363,6 @@
             rules: [
 
                 Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
-                Validator.isRequired('#room-img', 'Vui lòng nhập Thêm ảnh phòng cần tạo'),
 
                 Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
                 Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
@@ -400,12 +399,14 @@
                 inputName.setAttribute("disabled", "true");
                 inputName.value = "0";
                 fileImg.setAttribute("disabled", "true");
-                fileImg.setAttribute("required","false");
+                // fileImg.removeAttribute("required");
                 errorElement.innerHTML = "";
             } else {
                 inputName.removeAttribute("disabled");
                 inputName.value = "";
                 fileImg.removeAttribute("disabled");
+
+
             }
         })
     }
