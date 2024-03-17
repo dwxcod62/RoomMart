@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class AccountDao {
+    //
 
     private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";
     private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role) \n" +
