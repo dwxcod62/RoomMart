@@ -29,9 +29,78 @@
 * [![JQuery][JQuery.com]][JQuery-url]
 
 ## Use Cases
-- [ ] Login
+- [x] Login
 - [x] Logout
 - [x] Bla Bla
+- [x] View Home Page
+- [x] View room details
+- [x] Login
+- [x] Password recovery
+- [x] Logout
+- [x] Register
+- [x] Room booking
+- [x] List hostel
+- [x] Hostel detail
+- [x] Add new Hostel
+- [x] Update hostel information
+- [x] View list services (Hostel detail)
+- [x] Add new service (Hostel detail)
+- [x] Update services
+- [x] Room detail
+- [x] Add room
+- [x] Update room information (room detail)
+- [x] Update room consume (room detail)
+- [x] View current consume (room detail)
+- [x] View history update consume (room detail)
+- [x] View room infrastructure (Room detail)
+- [x] Add new infrastructure (Room detail)
+- [x] Update infrastructure (Room detail)
+- [x] Update contact (room detail)
+- [x] View contract
+- [x] Create new contract (in generate room account screen)
+- [x] View detail invoice
+- [x] View all invoice
+- [x] Create new invoice
+- [x] View list roommates (room detail)
+- [x] Add roommate
+- [x] Roommate information
+- [x] Send reports
+- [x] List report
+- [x] View list notification
+- [x] View detail notification
+- [x] Create notification
+- [x] View account information
+- [x] View room detail
+- [x] View list roommates
+- [x] Roommate information
+- [x] View contract
+- [x] View all invoice
+- [x] View detail invoice
+- [x] View list report
+- [x] Send report
+- [x] View list notification
+- [x] View detail notification
+- [x] Send response
+- [x] Add roommate
+- [x] Roommate information
+- [x] Update roommate information
+- [x] Send reports
+- [x] List report
+- [x] View list notification
+- [x] View detail notification
+- [x] Create notification
+- [x] View list accounts
+- [x] Banned Account
+- [x] Unbanned Account
+- [x] Accept Hostel
+- [x] Banned Hostel
+- [x] Accept Propose
+- [x] Deny Propose
+- [x] Add service for system
+- [x] Update service for system
+- [x] Add service for system
+- [x] Add facilities for system
+- [x] Update facil
 
 ## Reference
 
