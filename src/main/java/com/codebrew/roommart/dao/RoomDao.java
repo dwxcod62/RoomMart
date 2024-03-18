@@ -1272,7 +1272,7 @@ public List<String>getListImgByRoomId(int rid){
                 rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
-                        imageUrls.add(rs.getString("imgurl"));
+                        imageUrls.add(rs.getString("url_img"));
 
 
                     }
