@@ -150,7 +150,7 @@
 
         function sendReport(){
             console.log("send report ")
-            sendToWebSocket("hostel_renter", "hostel_owner", null, hostelOwnerAccountID, null,"Có Báo cáo mới !");
+            sendToWebSocket("hostel_renter", "hostel_owner", null, hostelOwnerAccountID, "Có Báo cáo mới !","Có Báo cáo mới !");
             setTimeout(function() {
                 document.getElementById("add-report-form").submit();
             }, 1500); // 3000 milliseconds = 3 seconds
