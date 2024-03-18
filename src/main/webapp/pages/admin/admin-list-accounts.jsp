@@ -54,7 +54,7 @@
             <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
                 <%@include file="./components/sidebar.jsp"%>
             </div>
-
+            <!-- Khong can dduyer nua -->
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Inactive Account -->
