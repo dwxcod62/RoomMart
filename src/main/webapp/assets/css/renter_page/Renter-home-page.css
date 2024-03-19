@@ -135,12 +135,13 @@ nav .navbar .navbar-icons .user-icon {
 
 .box-setting {
   width: 280px;
-  height: 0;
+  height: 250px;
   border-radius: 10px;
   transition: 0.5s;
   position: absolute;
   overflow-y: scroll;
   left: -170px;
+  display: none;
   margin-top: 5px;
   background-color: white;
   cursor: context-menu;
@@ -148,7 +149,7 @@ nav .navbar .navbar-icons .user-icon {
 }
 
 .user-icon:hover>.box-setting {
-  height: 38vh;
+  display: block;
 }
 
 .box-setting .user-info{
@@ -517,11 +518,10 @@ body {
 
 @media screen and (min-width: 14in)  {
   .user-icon:hover>.box-setting {
-    height: 25vh;
+    display: block;
   }
 
   .content .main-information {
     height: fit-content;
   }
-
 }

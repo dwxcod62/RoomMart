@@ -55,6 +55,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
             Account account = (Account) session.getAttribute("USER");
             int accID = account.getAccId();
             int accRole = account.getRole();
+
             String name = account.getAccountInfo().getInformation().getFullname();
             String phone = account.getAccountInfo().getInformation().getPhone();
             String address = account.getAccountInfo().getInformation().getAddress();
@@ -63,6 +64,8 @@ public class ExportBillToExcelServlet extends HttpServlet {
             BillDao billDAO = new BillDao();
             int billID = (req.getAttribute("billID") != null) ? (int) req.getAttribute("billID") : Integer.parseInt(req.getParameter("billID"));
             BillDetail billDetail = new BillDao().getBillDetail(billID);
+
+            System.out.println(billID);
 
             Bill bill = billDAO.getRenterBillByID(billID);
             Consume consumeStart = null;
@@ -85,6 +88,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
             int roomID = 0;
             HostelDao hostelDAO = new HostelDao();
             Hostel hostel = new Hostel();
+
             if(accRole == 1){
                 hostelID = Integer.parseInt(req.getParameter("hostelID"));
                 hostel = hostelDAO.getHostelById(hostelID);
@@ -92,15 +96,19 @@ public class ExportBillToExcelServlet extends HttpServlet {
                 hostel = hostelDAO.getHostelByRenterId(accID);
                 hostelID = hostel.getHostelID();
             }
+
+            System.out.println(hostelID);
+
             String hostelName = hostel.getHostelName();
             String hostelAddress = hostel.getAddress();
-            String ward = hostel.getWard().split("-")[1];
-            String district = hostel.getDistrict().split("-")[1];
-            String city = hostel.getCity().split("-")[1];
+            String ward = hostel.getWard();
+            String district = hostel.getDistrict();
+            String city = hostel.getCity();
 
             //Get room
             RoomDao roomDAO = new RoomDao();
             Room room = new Room();
+
             int roomNumber = 0;
             if(accRole == 1){
                 roomID = Integer.parseInt(req.getParameter("roomID"));
@@ -111,6 +119,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
                 roomNumber = room.getRoomNumber();
             }
 
+            System.out.println(roomNumber);
 
             int billDetailID = billDetail.getBillDetailID();
             ServiceInfoDAO serviceInfoDao = new ServiceInfoDAO();

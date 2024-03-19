@@ -158,9 +158,13 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a href="" class="btn btn-outline-success btn-lg float-left mt-4">
-                            Xuất hóa đơn ra file Excel
-                        </a>
+                        <form action="down-bill">
+                            <input type="hidden" name="billID" value="${BILL.billID}">
+                            <button type="submit"
+                                    class="btn btn-outline-danger btn-lg float-right mt-4">
+                                Xuất hóa đơn ra file Excel
+                            </button>
+                        </form>
                         <c:if test="${BILL.payment.paymentID == 0}">
                             <form action="vnp-payment">
                                 <input type="hidden" name="vnp_OrderId" value="${BILL.billID}">
@@ -175,7 +179,6 @@
                             Quay lại
                         </a>
                     </div>
-
                 </div>
             </div>
         </div>
