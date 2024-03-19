@@ -18,8 +18,8 @@ public class BillDao {
             "SELECT b.bill_id, b.total_money, b.created_date, b.bill_title, " +
                 "b.expired_payment_date, b.payment_date, b.status, b.payment_id, b.room_id\n" +
                 "FROM Bill b\n" +
-                "INNER JOIN Contracts c ON b.room_id = c.room_id\n" +
-                "WHERE c.renter_id = ?\n" +
+                "JOIN Contracts c ON b.room_id = c.room_id\n" +
+                "WHERE c.renter_id = ? and b.created_date > c.start_date\n" +
                 "ORDER BY b.created_date DESC";
 
     private static final String GET_BILL_DETAIL =
