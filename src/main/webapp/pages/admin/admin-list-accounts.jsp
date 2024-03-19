@@ -40,6 +40,7 @@
     </div>
 </c:if>
 
+
 <div class="app">
 
     <!-- Navbar -->
@@ -53,193 +54,193 @@
             <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
                 <%@include file="./components/sidebar.jsp"%>
             </div>
-
+            <!-- Khong can dduyer nua -->
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Inactive Account -->
                 <!-- Chi duyet Onner-->
-                <div class="row mt-5">
-                    <div class="uncheck-acc col-12 col-xl-10 col-xxl-8 m-auto">
-                        <div class="uncheck-acc__title">
-                            Tài khoản chờ phê duyệt
-                        </div>
-                        <table id="uncheck-acc__table"
-                               class="uncheck-acc__table mt-4 mb-4 table table-hover table-bordered table-striped">
-                            <thead class="table-dark uncheck-acc__table-head">
-                            <tr>
-                                <th>STT</th>
-                                <th>Tên tài khoản</th>
-                                <th>Chi tiết</th>
-                                <th>Trạng thái</th>
-                                <th class="table-head__action">Hành động</th>
-                            </tr>
-                            </thead>
-                            <tbody class="table-light uncheck-acc__table-body">
-                            <c:set var="count" value="0" scope="page"/>
-                            <c:forEach var="UncheckAccount" items="${requestScope.OWNER_LIST}">
+<%--                <div class="row mt-5">--%>
+<%--                    <div class="uncheck-acc col-12 col-xl-10 col-xxl-8 m-auto">--%>
+<%--                        <div class="uncheck-acc__title">--%>
+<%--                            Tài khoản chờ phê duyệt--%>
+<%--                        </div>--%>
+<%--                        <table id="uncheck-acc__table"--%>
+<%--                               class="uncheck-acc__table mt-4 mb-4 table table-hover table-bordered table-striped">--%>
+<%--                            <thead class="table-dark uncheck-acc__table-head">--%>
+<%--                            <tr>--%>
+<%--                                <th>STT</th>--%>
+<%--                                <th>Tên tài khoản</th>--%>
+<%--                                <th>Chi tiết</th>--%>
+<%--                                <th>Trạng thái</th>--%>
+<%--                                <th class="table-head__action">Hành động</th>--%>
+<%--                            </tr>--%>
+<%--                            </thead>--%>
+<%--                            <tbody class="table-light uncheck-acc__table-body">--%>
+<%--                            <c:set var="count" value="0" scope="page"/>--%>
+<%--                            <c:forEach var="UncheckAccount" items="${requestScope.OWNER_LIST}">--%>
 
 
-                                <c:if test="${UncheckAccount.status eq 0}">
-                                    <c:set var="count" value="${count + 1}" scope="page"/>
-                                    <tr>
-                                        <td>${count}</td>
-                                        <td>${UncheckAccount.username}</td>
-                                        <td>
-                                            <button class="btn btn-outline-info fs-5"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#uncheck-acc__modal-detail-${UncheckAccount.accId}"
-                                            >
-                                                Chi tiết
-                                            </button>
-                                            <!-- Modal detail -->
-                                            <div class="modal fade" id="uncheck-acc__modal-detail-${UncheckAccount.accId}" tabindex="-1"
-                                                 aria-labelledby="#uncheck-acc__modal-detail-label" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="#uncheck-acc__modal-detail-label-${UncheckAccount.accId}">
-                                                                Thông tin chi tiết
-                                                            </h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body ps-5 pe-5">
-                                                            <div class="row pt-3 pb-3">
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-label-${UncheckAccount.accId}">
-                                                                        Họ và tên:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-content">
-                                                                            ${UncheckAccount.accountInfo.information.fullname eq null ? "Trống" : UncheckAccount.accountInfo.information.fullname}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row pt-3 pb-3">
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-label">
-                                                                        Ngày sinh:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-content">
-                                                                            ${UncheckAccount.accountInfo.information.birthday eq null ? "Trống" : UncheckAccount.accountInfo.information.birthday}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row pt-3 pb-3">
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-label">
-                                                                        Giới tính:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-content">
-                                                                            ${UncheckAccount.accountInfo.information.sex eq 1 ? "Nam" : "Nữ"}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row pt-3 pb-3">
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-label">
-                                                                        Số điện thoại:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-content">
-                                                                            ${UncheckAccount.accountInfo.information.phone eq null ? "Trống" : UncheckAccount.accountInfo.information.phone}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row pt-3 pb-3">
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-label">
-                                                                        Email:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-content">
-                                                                            ${UncheckAccount.accountInfo.information.email eq null ? "Trống" : UncheckAccount.accountInfo.information.email}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row pt-3 pb-3">
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-label">
-                                                                        CCCD/CMND:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-content">
-                                                                            ${UncheckAccount.accountInfo.information.cccd eq null ? "Trống" : UncheckAccount.accountInfo.information.cccd}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row pt-3 pb-3">
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-label">
-                                                                        Địa chỉ thường trú:
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="member-detail-modal-content">
-                                                                            ${UncheckAccount.accountInfo.information.address eq null ? "Trống" : UncheckAccount.accountInfo.information.address}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đồng ý</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-danger">
-                                            Chưa kích hoạt
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary fs-5" data-bs-toggle="modal"
-                                                    data-bs-target="#uncheck-acc__modal-${UncheckAccount.accId}">Kích hoạt</button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="uncheck-acc__modal-${UncheckAccount.accId}" tabindex="-1"
-                                                 aria-labelledby="uncheck-acc__modal-label" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="uncheck-acc__modal-label">
-                                                                Cảnh báo
-                                                            </h5>
-                                                            <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body mt-5 mb-5">
-                                                            Bạn đang thực hiện kích hoạt cho tài khoản "${UncheckAccount.username}"! Hãy
-                                                            đảm bảo
-                                                            rằng bạn đã thực hiện đủ các thao các kiểm tra!
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-danger fs-4"
-                                                                    data-bs-dismiss="modal">Hủy bỏ</button>
-                                                            <form action="updateAccountStatus" method="POST">
-                                                                <input type="hidden" name="owner_id" value="${UncheckAccount.accId}" />
-                                                                <input type="hidden" name="status" value="${UncheckAccount.status}" />
-                                                                <button type="submit" class="btn btn-success fs-4">
-                                                                    Kích hoạt
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </c:if>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+<%--                                <c:if test="${UncheckAccount.status eq 0}">--%>
+<%--                                    <c:set var="count" value="${count + 1}" scope="page"/>--%>
+<%--                                    <tr>--%>
+<%--                                        <td>${count}</td>--%>
+<%--                                        <td>${UncheckAccount.username}</td>--%>
+<%--                                        <td>--%>
+<%--                                            <button class="btn btn-outline-info fs-5"--%>
+<%--                                                    data-bs-toggle="modal"--%>
+<%--                                                    data-bs-target="#uncheck-acc__modal-detail-${UncheckAccount.accId}"--%>
+<%--                                            >--%>
+<%--                                                Chi tiết--%>
+<%--                                            </button>--%>
+<%--                                            <!-- Modal detail -->--%>
+<%--                                            <div class="modal fade" id="uncheck-acc__modal-detail-${UncheckAccount.accId}" tabindex="-1"--%>
+<%--                                                 aria-labelledby="#uncheck-acc__modal-detail-label" aria-hidden="true">--%>
+<%--                                                <div class="modal-dialog modal-dialog-centered">--%>
+<%--                                                    <div class="modal-content">--%>
+<%--                                                        <div class="modal-header">--%>
+<%--                                                            <h5 class="modal-title" id="#uncheck-acc__modal-detail-label-${UncheckAccount.accId}">--%>
+<%--                                                                Thông tin chi tiết--%>
+<%--                                                            </h5>--%>
+<%--                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="modal-body ps-5 pe-5">--%>
+<%--                                                            <div class="row pt-3 pb-3">--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-label-${UncheckAccount.accId}">--%>
+<%--                                                                        Họ và tên:--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-content">--%>
+<%--                                                                            ${UncheckAccount.accountInfo.information.fullname eq null ? "Trống" : UncheckAccount.accountInfo.information.fullname}--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                            <div class="row pt-3 pb-3">--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-label">--%>
+<%--                                                                        Ngày sinh:--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-content">--%>
+<%--                                                                            ${UncheckAccount.accountInfo.information.birthday eq null ? "Trống" : UncheckAccount.accountInfo.information.birthday}--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                            <div class="row pt-3 pb-3">--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-label">--%>
+<%--                                                                        Giới tính:--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-content">--%>
+<%--                                                                            ${UncheckAccount.accountInfo.information.sex eq 1 ? "Nam" : "Nữ"}--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                            <div class="row pt-3 pb-3">--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-label">--%>
+<%--                                                                        Số điện thoại:--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-content">--%>
+<%--                                                                            ${UncheckAccount.accountInfo.information.phone eq null ? "Trống" : UncheckAccount.accountInfo.information.phone}--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                            <div class="row pt-3 pb-3">--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-label">--%>
+<%--                                                                        Email:--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-content">--%>
+<%--                                                                            ${UncheckAccount.accountInfo.information.email eq null ? "Trống" : UncheckAccount.accountInfo.information.email}--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                            <div class="row pt-3 pb-3">--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-label">--%>
+<%--                                                                        CCCD/CMND:--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-content">--%>
+<%--                                                                            ${UncheckAccount.accountInfo.information.cccd eq null ? "Trống" : UncheckAccount.accountInfo.information.cccd}--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                            <div class="row pt-3 pb-3">--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-label">--%>
+<%--                                                                        Địa chỉ thường trú:--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="col-6">--%>
+<%--                                                                    <div class="member-detail-modal-content">--%>
+<%--                                                                            ${UncheckAccount.accountInfo.information.address eq null ? "Trống" : UncheckAccount.accountInfo.information.address}--%>
+<%--                                                                    </div>--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="modal-footer">--%>
+<%--                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đồng ý</button>--%>
+<%--                                                        </div>--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </td>--%>
+<%--                                        <td class="text-danger">--%>
+<%--                                            Chưa kích hoạt--%>
+<%--                                        </td>--%>
+<%--                                        <td>--%>
+<%--                                            <button class="btn btn-primary fs-5" data-bs-toggle="modal"--%>
+<%--                                                    data-bs-target="#uncheck-acc__modal-${UncheckAccount.accId}">Kích hoạt</button>--%>
+<%--                                            <!-- Modal -->--%>
+<%--                                            <div class="modal fade" id="uncheck-acc__modal-${UncheckAccount.accId}" tabindex="-1"--%>
+<%--                                                 aria-labelledby="uncheck-acc__modal-label" aria-hidden="true">--%>
+<%--                                                <div class="modal-dialog modal-dialog-centered">--%>
+<%--                                                    <div class="modal-content">--%>
+<%--                                                        <div class="modal-header">--%>
+<%--                                                            <h5 class="modal-title" id="uncheck-acc__modal-label">--%>
+<%--                                                                Cảnh báo--%>
+<%--                                                            </h5>--%>
+<%--                                                            <button type="button" class="btn-close"--%>
+<%--                                                                    data-bs-dismiss="modal" aria-label="Close"></button>--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="modal-body mt-5 mb-5">--%>
+<%--                                                            Bạn đang thực hiện kích hoạt cho tài khoản "${UncheckAccount.username}"! Hãy--%>
+<%--                                                            đảm bảo--%>
+<%--                                                            rằng bạn đã thực hiện đủ các thao các kiểm tra!--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="modal-footer justify-content-between">--%>
+<%--                                                            <button type="button" class="btn btn-danger fs-4"--%>
+<%--                                                                    data-bs-dismiss="modal">Hủy bỏ</button>--%>
+<%--                                                            <form action="updateAccountStatus" method="POST">--%>
+<%--                                                                <input type="hidden" name="owner_id" value="${UncheckAccount.accId}" />--%>
+<%--                                                                <input type="hidden" name="status" value="${UncheckAccount.status}" />--%>
+<%--                                                                <button type="submit" class="btn btn-success fs-4">--%>
+<%--                                                                    Kích hoạt--%>
+<%--                                                                </button>--%>
+<%--                                                            </form>--%>
+<%--                                                        </div>--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                </c:if>--%>
+<%--                            </c:forEach>--%>
+<%--                            </tbody>--%>
+<%--                        </table>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
                 <!-- Active Account -->
                 <div class="row mt-5">
@@ -610,6 +611,9 @@
             </div>
         </div>
     </div>
+</div>
+<div>
+
 
     <!-- Footer -->
     <%@include file="./components/footer.jsp"%>

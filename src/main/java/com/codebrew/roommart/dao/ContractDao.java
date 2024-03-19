@@ -48,7 +48,7 @@ public class ContractDao {
             "JOIN Hostels h ON r.hostel_id = h.hostel_id\n" +
             "JOIN Hostelservice hs ON h.hostel_id = hs.hostel_id\n" +
             "JOIN Services s ON hs.service_id = s.service_id\n" +
-            "WHERE c.renter_id = ?";
+            "WHERE c.renter_id = ? AND hs.status = 1";
     private static final String
             COUNT_MEMBER_BY_CONTRACT = "SELECT COUNT(*)\n" +
             "FROM Contracts\n" +

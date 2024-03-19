@@ -442,7 +442,7 @@
         const  hostelId = ${sessionScope.hostel.hostelID};
         console.log("hostelId reiceiver: "+hostelId);
 
-        sendToWebSocket("hostel_owner", "hostel", hostelId, null, "Cập nhật dịch vụ của khu trọ",null);
+        sendToWebSocket("hostel_owner", "hostel", hostelId, null, "Cập nhật dịch vụ của khu trọ","Cập nhật dịch vụ của khu trọ");
         setTimeout(function() {
             document.getElementById("update-services-form").submit();
         }, 1500); // 3000 milliseconds = 3 seconds

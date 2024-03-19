@@ -7,7 +7,7 @@ function alertPushNoti({ message = "",chat="",rid="",hid="", duration = "" }) {
 
 
     // const notify = (message != null ? message : chat);
-    const notify = message;
+    let notify = (message!=null?message:chat);
 
     if (mainNoti) {
         const noti = document.createElement("div");

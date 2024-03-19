@@ -24,6 +24,7 @@
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
 <body>
@@ -44,38 +45,44 @@
                 <h1 style="color: red; font-size: 26px; text-align: center; margin-top: 20px">Chưa Có Thành Viên</h1>
             </c:if>
             <c:if test="${listRoommateInfor.size() != 0}">
-                <h2 class="title-table">Danh Sách Bạn Cùng Phòng</h2>
-                <div>
-                    <table class="table">
-                        <tr>
-                            <th>STT</th>
-                            <th>Họ và tên</th>
-                            <th colspan="3"></th>
-                        </tr>
-                        <%
-                            int x = 1;
-                        %>
-                        <c:forEach items="${listRoommateInfor}" var="roommateinfor">
-                            <tr>
-                                <td><%=x%>
-                                </td>
-                                <td><span>${roommateinfor.getInformation().getFullname()}</span></td>
-                                <td>
-                                    <button type="button" class="btnAction" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop<%=x%>">Chi tiết
-                                    </button>
-                                </td>
-                            </tr>
+                <h1 style="font-size: 25px; text-align: center">Danh sách thành viên</h1>
+                <table class="table">
+                    <thead class="bg-light">
+                    <tr style="font-size: 16px">
+                        <th>STT</th>
+                        <th>Họ và tên</th>
+                        <th colspan="3"></th>
+                    </tr>
+                    </thead>
+                    <%
+                        int x = 1;
+                    %>
+                    <c:forEach items="${listRoommateInfor}" var="roommateinfor">
+                    <tbody>
+                    <tr style="font-size: 16px">
+                        <td><%=x%></td>
+                        <td class="align-middle">
+                            <div>
+                                <div class="font-weight-normal">
+                                    ${roommateinfor.getInformation().getFullname()}
+                                </div>
+                                <div class="text-muted"></div>
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <button type="button" class="btnAction" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop<%=x%>">Chi tiết</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <%
+                        x += 1;
+                    %>
+                    </c:forEach>
+                </table>
 
-                            <%
-                                x += 1;
-                            %>
-                        </c:forEach>
-
-                    </table>
-                </div>
                 <%
-                    for (int y = 1; y < x; y++) {
+                   for (int y = 1; y < x; y++) {
                 %>
                 <div class="modal fade" id="staticBackdrop<%=y%>" data-bs-backdrop="static" data-bs-keyboard="false"
                      tabindex="-1"
@@ -89,39 +96,64 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body" style="text-align: left">
-                                <h3>
-                                    <strong>Tên: </strong>
-                                    <%=listRoommateInfor.get(y - 1).getInformation().getFullname()%>
-                                </h3>
-                                <h3>
-                                    <strong>Email: </strong>
-                                    <%=listRoommateInfor.get(y - 1).getInformation().getEmail()%>
-                                </h3>
-                                <h3>
-                                    <strong>Ngày Sinh: </strong>
-                                    <%=listRoommateInfor.get(y - 1).getInformation().getBirthday()%>
-                                </h3>
-                                <h3><strong>Giới Tính: </strong>
-                                    <c:choose>
-                                        <c:when test="${roommateinfor.getInformation().getSex()}">
-                                            Nam
-                                        </c:when>
-                                        <c:otherwise>
-                                            Nữ
-                                        </c:otherwise>
-                                    </c:choose>
-                                </h3>
-                                <h3>
-                                    <strong>Số Điện Thoại: </strong>
-                                    <%=listRoommateInfor.get(y - 1).getInformation().getPhone()%>
-                                </h3>
-                                <h3>
-                                    <strong>Địa Chỉ: </strong>
-                                    <%=listRoommateInfor.get(y - 1).getInformation().getAddress()%>
-                                </h3>
+                                <div class="row roommate-details">
+                                    <div class="col-sm-4">
+                                        <div class="mb-0">Họ và Tên:</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <%=listRoommateInfor.get(y - 1).getInformation().getFullname()%>
+                                    </div>
+                                </div>
+                                <div class="row roommate-details">
+                                    <div class="col-sm-4">
+                                        <div class="mb-0">Email:</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <%=listRoommateInfor.get(y - 1).getInformation().getEmail()%>
+                                    </div>
+                                </div>
+                                <div class="row roommate-details">
+                                    <div class="col-sm-4">
+                                        <div class="mb-0">Ngày Sinh:</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <%=listRoommateInfor.get(y - 1).getInformation().getBirthday()%>
+                                    </div>
+                                </div>
+                                <div class="row roommate-details">
+                                    <div class="col-sm-4">
+                                        <div class="mb-0">Giới Tính:</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <c:choose>
+                                            <c:when test="${roommateinfor.getInformation().getSex()}">
+                                                Nam
+                                            </c:when>
+                                            <c:otherwise>
+                                                Nữ
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                                <div class="row roommate-details">
+                                    <div class="col-sm-4">
+                                        <div class="mb-0">Số Điện Thoại:</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <%=listRoommateInfor.get(y - 1).getInformation().getPhone()%>
+                                    </div>
+                                </div>
+                                <div class="row roommate-details">
+                                    <div class="col-sm-4">
+                                        <div class="mb-0">Địa Chỉ:</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <%=listRoommateInfor.get(y - 1).getInformation().getAddress()%>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                                <button type="button" class="btn btn-secondary btn_custom" data-bs-dismiss="modal">Thoát</button>
                             </div>
                         </div>
                     </div>
