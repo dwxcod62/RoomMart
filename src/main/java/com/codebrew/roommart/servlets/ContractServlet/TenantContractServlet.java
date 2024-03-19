@@ -58,9 +58,6 @@ public class TenantContractServlet extends HttpServlet {
         }
     }
 
-
-
-
     private void make_contract(HttpServletRequest req, HttpServletResponse res){
         HttpSession session = req.getSession();
         String start_date = req.getParameter("room_start_date");

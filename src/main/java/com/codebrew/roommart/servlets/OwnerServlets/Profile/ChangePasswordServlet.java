@@ -45,7 +45,7 @@ public class ChangePasswordServlet extends HttpServlet {
                         .content("Mật khẩu cũ không đúng! Vui lòng kiểm tra lại!").build());
             }
         } catch (Exception e) {
-            log("Error at ChangePasswordServlet: " + e.toString());
+            System.out.println(e);
         } finally {
             response.sendRedirect(url);
         }

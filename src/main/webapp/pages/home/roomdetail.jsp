@@ -242,8 +242,6 @@
                                         </div>
                                     </c:forEach>
                                 </c:if>
-
-
                             </div>
                             <a
                                     class="carousel-control-prev"
@@ -475,10 +473,21 @@
                                 <jsp:useBean id="ContractDao" class="com.codebrew.roommart.dao.ContractDao" scope="application" />
                                 <jsp:useBean id="accountDAO" class="com.codebrew.roommart.dao.AccountDao" scope="application" />
                                 <c:set var="count_contract" value="${ContractDao.countResgiterContractByRenterId(requestScope.USER.getAccId())}" />
+                                <c:set var="check_expiration_of_contract" value = "${ContractDao.getExpirationOfContractByRoomAndUser(requestScope.room.roomId, sessionScope.USER.accId)}" />
+
                                 <c:set var="USER" value="${sessionScope.USER}" />
                                 <c:choose>
                                     <c:when test="${sessionScope.USER != null && accountDAO.getRoomOfRenter(USER.getAccountInfo().getInformation().getEmail()) < 1 }">
                                         <c:choose>
+                                            <c:when test="${!(check_expiration_of_contract eq null)}">
+                                                <a
+                                                    class="btn btn-outline-primary btn-block mb-3 btn-custom"
+                                                    style="font-size: 20px"
+                                                    href="view-all-contract"
+                                                >
+                                                    Coi hợp đồng đã đăng kí
+                                                </a>
+                                            </c:when>
                                             <c:when test="${count_contract > 3}">
                                                 <button
                                                     type="button"

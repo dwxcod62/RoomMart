@@ -1,6 +1,6 @@
 function receiveWebsocket(callback) {
     console.log("receisocket func")
-var host = "localhost:8080";
+    var host = "localhost:8080";
     // const websocket = new WebSocket("wss://doe-ultimate-wholly.ngrok-free.app/RoomMart/push-noti-websocket");
 
     const websocket = new WebSocket("ws://localhost:8080/RoomMart/push-noti-websocket");

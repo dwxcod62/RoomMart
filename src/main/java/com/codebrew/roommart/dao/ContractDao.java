@@ -40,7 +40,7 @@ public class ContractDao {
             "JOIN rooms ON Contracts.room_id = rooms.room_id\n" +
             "JOIN infrastructuresroom ON rooms.room_id = infrastructuresroom.room_id\n" +
             "JOIN infrastructureitem ON infrastructuresroom.id_infrastructure_item = infrastructureitem.id_infrastructure_item\n" +
-            "WHERE Contracts.renter_id = ?";
+            "WHERE Contracts.renter_id = ? and Contracts.status = 0";
     private static final String
             GET_SERVICES_BY_CONTRACT = "SELECT s.service_name, hs.service_price, s.unit\n" +
             "FROM Contracts c\n" +
@@ -48,11 +48,11 @@ public class ContractDao {
             "JOIN Hostels h ON r.hostel_id = h.hostel_id\n" +
             "JOIN Hostelservice hs ON h.hostel_id = hs.hostel_id\n" +
             "JOIN Services s ON hs.service_id = s.service_id\n" +
-            "WHERE c.renter_id = ? AND hs.status = 1";
+            "WHERE c.renter_id = ? AND hs.status = 1 and c.status = 0";
     private static final String
             COUNT_MEMBER_BY_CONTRACT = "SELECT COUNT(*)\n" +
             "FROM Contracts\n" +
-            "WHERE room_id IN (SELECT room_id FROM Contracts WHERE renter_id = ?)";
+            "WHERE room_id IN (SELECT room_id FROM Contracts WHERE renter_id = ?) and Contracts.status = 0";
     private static final String
             GET_INFO_CONTRACT = "SELECT start_date, expiration, deposit, price, renter_sign, owner_sign\n" +
             "FROM Contracts\n" +
@@ -1247,5 +1247,43 @@ public class ContractDao {
         return check;
     }
 
+    public String getExpirationOfContractByRoomAndUser(int room, int renter_id){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String date = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement("select expiration from Contracts where room_id = ? and renter_id = ?  and  ( status = -1 or status = 1 )");
+                pst.setInt(1, room);
+                pst.setInt(2, renter_id);
+
+                rs = pst.executeQuery();
+                if (rs.next()){
+                    date = rs.getDate("expiration").toString();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return date;
+    }
 
 }

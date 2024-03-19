@@ -34,7 +34,7 @@
         </c:when>
         <c:otherwise>
             <div class="group-option ${sessionScope.CURRENT_PAGE eq "contract" ? "active" : ""}">
-                <a href="GetContractUserServlet" class="group-option__link">
+                <a href="view-all-contract" class="group-option__link">
                     <i class="group-option__icon fa-solid fa-file-signature"></i>
                     <div class="group-option__label">Hợp đồng</div>
                 </a>
