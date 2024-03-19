@@ -99,6 +99,19 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                                <td>Tiền phòng</td>
+                                <td>
+                                    <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${RoomCharge.price}"/>
+                                </td>
+                                <td>phòng</td>
+                                <td></td>
+                                <td></td>
+                                <td><fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${RoomCharge.price}"/>
+                                </td>
+                            </tr>
                             <c:forEach var="service" items="${LIST_SERVICES}">
                                 <tr>
                                     <td>${service.serviceName}</td>
@@ -161,7 +174,7 @@
                         <form action="down-bill">
                             <input type="hidden" name="billID" value="${BILL.billID}">
                             <button type="submit"
-                                    class="btn btn-outline-danger btn-lg float-right mt-4">
+                                    class="btn btn-outline-success btn-lg float-left mt-4">
                                 Xuất hóa đơn ra file Excel
                             </button>
                         </form>

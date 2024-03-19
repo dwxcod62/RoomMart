@@ -42,10 +42,15 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
             BillDetail billDetail = new BillDao().getBillDetail(billID);
 
             ContractDao roomDAO = new ContractDao();
-            Room room = roomDAO.getRoomByContract(account.getAccId());
+            Room room = roomDAO.getRoomByContract(accID);
             request.setAttribute("RoomInfor", room);
 
             Bill bill = billDAO.getRenterBillByID(billID);
+
+            //get room charge
+            Contract roomCharge = roomDAO.getInfoContract(accID);
+            System.out.println(roomCharge);
+            request.setAttribute("RoomCharge", roomCharge);
 
             if (bill != null){
                 request.setAttribute("BILL", bill);

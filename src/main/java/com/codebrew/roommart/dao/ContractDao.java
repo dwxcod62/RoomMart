@@ -56,7 +56,7 @@ public class ContractDao {
     private static final String
             GET_INFO_CONTRACT = "SELECT start_date, expiration, deposit, price, renter_sign, owner_sign\n" +
             "FROM Contracts\n" +
-            "WHERE renter_id = ?";
+            "WHERE renter_id = ? and status = 0";
 
     private static final String
             GET_CONTRACT_BY_RENTER_ID = "SELECT *\n" +
