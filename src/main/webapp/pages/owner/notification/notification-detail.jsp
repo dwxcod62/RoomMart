@@ -128,7 +128,7 @@
     params.hostel_receiver_id = "${requestScope.HOSTEL_ID}";
     params.account_receiver_id = null;
     params.messages = "Chủ trọ đã gửi một thông báo mới. Vui lòng kiểm tra!";
-    sendToWebSocket(params);
+    sendToWebSocket(params.sender,params.receiver,null,params.account_receiver_id,params.messages,params.messages);
   </c:if>
 
   // Receive

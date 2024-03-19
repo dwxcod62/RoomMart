@@ -10,8 +10,8 @@ public class DatabaseConnector {
         String IP = "localhost";
         String instanceName=""; // Change here
 
-        String uid = "sa"; // Change here
-        String pwd="chinh123"; // Change here
+        String uid = "sa1"; // Change here
+        String pwd="1234"; // Change here
 
         String port = "1433";
         String db = "RoomMart";

@@ -25,6 +25,7 @@ public class AddNotificationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         int ownerId = -1;
         int hostelId = -1;
         String title = null;
