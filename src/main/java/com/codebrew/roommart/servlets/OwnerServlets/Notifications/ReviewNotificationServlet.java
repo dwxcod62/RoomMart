@@ -16,6 +16,7 @@ import java.io.IOException;
 public class ReviewNotificationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         HandlerStatus handlerStatus = null;
         try {
             HttpSession session = request.getSession(false);
