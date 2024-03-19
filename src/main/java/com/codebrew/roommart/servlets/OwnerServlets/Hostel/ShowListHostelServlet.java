@@ -28,13 +28,13 @@ public class ShowListHostelServlet extends HttpServlet {
         acc = (Account) session.getAttribute("USER");
         int accountId = acc.getAccId();
 
-        List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(accountId);
+        List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(accountId); // status = 0, khu trọ đã được phê duyệt
 
         Map<Integer, Integer> ListNumberTotalRoomsOfHostel = new HashMap<>();
         IRoomDAO roomDAO = new RoomDAO();
         if (listHostel.size() > 0) {
             for (Hostel hostel : listHostel) {
-                ListNumberTotalRoomsOfHostel.put(hostel.getHostelID(), roomDAO.getNumberRoomSpecificHostel(hostel.getHostelID()));
+                ListNumberTotalRoomsOfHostel.put(hostel.getHostelID(), roomDAO.getNumberRoomSpecificHostel(hostel.getHostelID())); // lấy tổng số phòng của hostel theo hostelId
             }
             request.setAttribute("LIST_TOTAL_ROOM", ListNumberTotalRoomsOfHostel);
         }

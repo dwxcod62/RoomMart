@@ -31,7 +31,7 @@ public class HostelDetailServlet extends HttpServlet {
 
             int hostelId = Integer.parseInt(request.getParameter("hostelID"));
 
-            Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, accountId); //thông tin hostel (để xem chi tiết)
+            Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, accountId); //lấy thông tin hostel (để xem chi tiết) theo hostelId và ownerHostelId
 
             RoomDAO roomDao = new RoomDAO();
 
@@ -44,9 +44,11 @@ public class HostelDetailServlet extends HttpServlet {
             List<Room> rooms = roomDao.getListRoomsByHostelId(hostelId);  // list các room của hostel đó
             int roomQuantity = roomDao.getNumberRoomSpecificHostel(hostelId); // tổng số phòng của hostel đó
 
-            List<ServiceInfo> serviceList = new ServiceInfoDAO().getServicesOfHostel(hostelId); // thông tin dịch vụ của hostel đó
+            List<ServiceInfo> serviceList = new ServiceInfoDAO().getServicesOfHostel(hostelId); // thông tin dịch vụ của hostel đó // status = 1
 
-            List<Services> listServicesNotInHostel = new ServiceDAO().getListServicesNotInHostel(hostelId); // danh sách service mà chủ trọ có thể chọn để thêm vào các dịch vụ hiện có của khu trọ của họ (các dịch vụ này sẽ không trùng lăp với dịch vụ đang hiện có của khu trọ đó) => when click modal add new service
+            List<Services> listServicesNotInHostel = new ServiceDAO().getListServicesNotInHostel(hostelId); // danh sách service mà chủ trọ có thể chọn để thêm vào các dịch vụ hiện có của khu trọ của họ
+            // (các dịch vụ này sẽ không trùng lăp với dịch vụ đang hiện có của khu trọ đó) => when click modal add new service
+
             url = "pages/owner/hostel/hostel-detail.jsp";
             request.setAttribute("hostel", hostel);
             session.setAttribute("hostel", hostel);

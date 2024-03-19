@@ -44,9 +44,9 @@ public class AddNotificationServlet extends HttpServlet {
                     content = request.getParameter("noti-content");
 
                     if (new HostelDAO().checkOwnerHostel(ownerId)) {
-                        int notiId = new NotificationDao().creatNotification(ownerId, hostelId, title, content);
+                        int notiId = new NotificationDao().creatNotification(ownerId, hostelId, title, content); // thêm mới noti
 
-                        if (notiId > 0) {
+                        if (notiId > 0) { // check để hiển thị thông báo quá HanderStatus
                             Notification notification = new NotificationDao().getNotificationById(notiId);
                             request.setAttribute("NOTIFICATION", notification);
 //                            request.setAttribute("NOTIFICATION_ID", notiId);

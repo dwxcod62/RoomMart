@@ -21,7 +21,7 @@ public class GetProposeServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Account ownerAccount = (Account) session.getAttribute("USER");
-            List<Propose> proposeList = new ProposeDao().getAllProposeBySenderId(ownerAccount.getAccId());
+            List<Propose> proposeList = new ProposeDao().getAllProposeBySenderId(ownerAccount.getAccId()); // lấy list propose theo id của owner
             request.setAttribute("proposeList", proposeList);
             session.setAttribute("CURRENT_PAGE", "propose");
         } catch(Exception e) {

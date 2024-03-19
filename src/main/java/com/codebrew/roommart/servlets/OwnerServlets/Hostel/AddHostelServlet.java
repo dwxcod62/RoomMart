@@ -166,7 +166,7 @@ public class AddHostelServlet extends HttpServlet {
                     .imgUrl(roomFiles)
                     .status(1) // dang duyet
                     .city(hostelProvince).build();
-            int hostelId = dao.addHostel(hostel, hostelServiceList);
+            int hostelId = dao.addHostel(hostel, hostelServiceList); // thêm mới hostel vào db
 
             if (hostelId >= 0) {
                 req.setAttribute("HOSTEL_ID", hostelId);

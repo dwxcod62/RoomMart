@@ -18,7 +18,7 @@ public class GetReportDetailServlet extends HttpServlet {
         try {
             int reportId = Integer.parseInt(request.getParameter("reportId"));
 
-            ReportDetail reportDetail = new ReportDetailDAO().getReportDetailById(reportId);
+            ReportDetail reportDetail = new ReportDetailDAO().getReportDetailById(reportId); // lấy thông tin report, join với bảng account và bảng room
             request.setAttribute("reportDetail", reportDetail);
         } catch (Exception e) {
             e.printStackTrace();

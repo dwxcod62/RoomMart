@@ -29,8 +29,8 @@ public class GetNotificationListServlet extends HttpServlet {
                 if (owner != null){
                     url = SUCCESS;
                     int ownerId = owner.getAccId();
-                    List<Notification> notificationList = new NotificationDao().getNotificationByOwnerId(ownerId);
-                    List<Hostel> hostelList = new HostelDAO().getHostelByOwnerId(ownerId);
+                    List<Notification> notificationList = new NotificationDao().getNotificationByOwnerId(ownerId); // lấy list thông báo
+                    List<Hostel> hostelList = new HostelDAO().getHostelByOwnerId(ownerId); // lấy list phòng trọ
                     request.setAttribute("NOTIFICATION_LIST", notificationList);
                     session.setAttribute("HOSTEL_LIST", hostelList);
                     url = SUCCESS;
