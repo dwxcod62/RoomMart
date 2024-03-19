@@ -19,7 +19,7 @@ import java.io.IOException;
 public class GetOwnerProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "pages/owner/profile.jsp";
+        String url = "profile-page";
         int type = request.getParameter("type") == null ? 0 : Integer.parseInt(request.getParameter("type"));
         try {
             HttpSession session = request.getSession();

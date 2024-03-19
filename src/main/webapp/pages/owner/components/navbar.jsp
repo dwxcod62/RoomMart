@@ -22,15 +22,11 @@
                                     <div class="re__home-header-menu">
                                         <div class="re__home-header-menu">
                                             <ul class="re__dropdown-no-art--sm re__dropdown-navigative-menu">
-
-
-
                                                 <li class="lv0 ">
                                                     <a href="home">
 
                                                         <span class="text">Trang chủ</span>
                                                     </a><div class="re__arrrow"></div>
-
                                                 </li>
                                                 <li class="lv0 ">
                                                     <a href="https://github.com/dwxcod62/RoomMart">
@@ -300,11 +296,10 @@
 <script>
     document.getElementById("nav-profile-btn").addEventListener("click", function() {
         var dropdown = document.getElementById("nav-profile-dropdown");
-        if (dropdown.style.display === "none") {
-            dropdown.style.display = "block";
+        if (dropdown.classList.contains("show")) {
+            dropdown.classList.remove("show");
         } else {
-            dropdown.style.display = "none";
+            dropdown.classList.add("show");
         }
     });
-
 </script>
