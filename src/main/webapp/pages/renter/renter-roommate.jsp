@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.codebrew.roommart.dto.Account" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -117,7 +118,8 @@
                                         <div class="mb-0">Ngày Sinh:</div>
                                     </div>
                                     <div class="col-sm-8">
-                                        <%=listRoommateInfor.get(y - 1).getInformation().getBirthday()%>
+                                        <fmt:parseDate pattern="yyyy-MM-dd" value="<%=listRoommateInfor.get(y - 1).getInformation().getBirthday()%>" var="birthday"/>
+                                        <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
                                     </div>
                                 </div>
                                 <div class="row roommate-details">
@@ -125,14 +127,14 @@
                                         <div class="mb-0">Giới Tính:</div>
                                     </div>
                                     <div class="col-sm-8">
-                                        <c:choose>
-                                            <c:when test="${roommateinfor.getInformation().getSex()}">
-                                                Nam
-                                            </c:when>
-                                            <c:otherwise>
-                                                Nữ
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <%
+                                            String sex = String.valueOf(listRoommateInfor.get(y - 1).getInformation().getSex());
+                                            if (sex.equals("1")) {
+                                                out.print("Nam");
+                                            } else {
+                                                out.print("Nữ");
+                                            }
+                                        %>
                                     </div>
                                 </div>
                                 <div class="row roommate-details">
