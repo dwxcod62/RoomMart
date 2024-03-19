@@ -42,7 +42,7 @@ public class OwnerUpdateProfileServlet extends HttpServlet {
                     .phone(phone)
                     .address(address).build();
 
-            boolean updateResult = new InformationDao().updateOwnerProfileByAccId(information, account.getAccId());
+            boolean updateResult = new InformationDao().updateOwnerProfileByAccId(information, account.getAccId()); // set lại các thuộc tính theo ownerId
             if (updateResult) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)
