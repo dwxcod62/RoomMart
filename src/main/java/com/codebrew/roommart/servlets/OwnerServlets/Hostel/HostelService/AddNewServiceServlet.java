@@ -29,13 +29,13 @@ public class AddNewServiceServlet extends HttpServlet {
             HostelServiceDAO hostelServiceDAO = new HostelServiceDAO();
 
             HostelService hostelService = new HostelService(hostelId, serviceId, servicePrice);
-            hostelServiceDAO.addNewHostelService(hostelService);
+            hostelServiceDAO.addNewHostelService(hostelService); // them moi service, set status = 1
             System.out.println("insert okela");
             url += hostelId;
         } catch (Exception e) {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {
-            response.sendRedirect("/RoomMart/" + url);
+            response.sendRedirect(url);
         }
     }
 }

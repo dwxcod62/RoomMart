@@ -40,23 +40,22 @@ public class UpdateServiceServlet extends HttpServlet {
             String[] servicesPriceStr = request.getParameterValues("update-service-price");
             HostelServiceDAO hostelServiceDAO = new HostelServiceDAO();
 
-            // Remove current hostel services
-            List<HostelService> currentHostelServiceList = hostelServiceDAO.getCurrentListServicesOfAHostel(hostelId);
-            boolean checkUpdate = hostelServiceDAO.updateStatusOfListHostelServices(0, currentHostelServiceList);
+            List<HostelService> currentHostelServiceList = hostelServiceDAO.getCurrentListServicesOfAHostel(hostelId); // lấy lisService hiện tại của hostel
+            boolean checkUpdate = hostelServiceDAO.updateStatusOfListHostelServices(0, currentHostelServiceList); // remove dữ liệu cũ, set status = 0
             if (!checkUpdate) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
                         .content("Đã có lỗi xảy ra! Vui lòng thử lại sau!").build());
                 url += hostelId;
             } else {
-                List<HostelService> hostelServiceList = new ArrayList<>();
+                List<HostelService> hostelServiceList = new ArrayList<>(); // thêm các service vào trong list HostelService
                 for (int i = 0; i < servicesIdStr.length; i++) {
                     hostelServiceList.add(HostelService.builder()
                             .serviceID(Integer.parseInt(servicesIdStr[i]))
                             .servicePrice(Integer.parseInt(servicesPriceStr[i])).build());
                 }
 
-                checkUpdate = hostelServiceDAO.insertListServicesIntoHostel(hostelServiceList, hostelId);
+                checkUpdate = hostelServiceDAO.insertListServicesIntoHostel(hostelServiceList, hostelId); // thêm list HostekService mới vào db, status = 1
                 url += hostelId;
                 if (checkUpdate) {
 
@@ -87,14 +86,8 @@ public class UpdateServiceServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {
-//            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
-//            request.getRequestDispatcher("hostel-page").forward(request, response);
-//            else response.sendRedirect("add-update-service-noti"); //check-here
-
             System.out.println(url);
              response.sendRedirect(url);
-//            request.getRequestDispatcher(url).forward(request, response);
-
         }
     }
 }

@@ -29,7 +29,7 @@ public class GetInvoiceListServlet extends HttpServlet {
             acc = (Account) session.getAttribute("USER");
             int accountId = acc.getAccId();
             InvoiceDao invoiceDAO = new InvoiceDao();
-            List<Bill> invoicePayment = invoiceDAO.getInvoiceListByOwnerAccountID(accountId, 1);
+            List<Bill> invoicePayment = invoiceDAO.getInvoiceListByOwnerAccountID(accountId, 1); // status = 1 => đã thanh toán
             List<String> roomNumberPayment = new ArrayList<>();
             List<String> hostelNamePayment = new ArrayList<>();
             List<Integer> hostelIDPayment = new ArrayList<>();
@@ -47,7 +47,7 @@ public class GetInvoiceListServlet extends HttpServlet {
 
 
 
-            List<Bill> invoiceNotPayment = invoiceDAO.getInvoiceListByOwnerAccountID(accountId, 0);
+            List<Bill> invoiceNotPayment = invoiceDAO.getInvoiceListByOwnerAccountID(accountId, 0); // status = 0 => chưa thanh toán
             List<String> roomNumberNotPayment = new ArrayList<>();
             List<String> hostelNameNotPayment = new ArrayList<>();
             List<Integer> hostelIDNotPayment = new ArrayList<>();

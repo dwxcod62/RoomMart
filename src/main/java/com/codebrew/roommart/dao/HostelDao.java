@@ -146,7 +146,7 @@ public class HostelDao {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement("select * from [dbo].[Hostels] where hostel_id = ?");
+                pst = cn.prepareStatement("select * from [dbo].[Hostels] where hostel_id = ? and status = 0");
                 pst.setInt(1, hostelId);
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
@@ -248,7 +248,7 @@ public class HostelDao {
 
 
     private static final String GET_HOSTEL_BY_OWNER_ID =
-            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE owner_account_id = ?";
+            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE owner_account_id = ? and status = 0";
     public List<Hostel> getHostelByOwnerId(int hostelOwnerAccountID) throws SQLException {
         List<Hostel> listHostels = new ArrayList<>();
         Connection cn = null;

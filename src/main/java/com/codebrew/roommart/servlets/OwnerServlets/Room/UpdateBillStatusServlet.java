@@ -26,7 +26,7 @@ public class UpdateBillStatusServlet extends HttpServlet {
 
             int billID = Integer.parseInt(request.getParameter("billID"));
 
-            boolean isUpdated = new PaymentDAO().updateBillStatus(billID, 1);
+            boolean isUpdated = new PaymentDAO().updateBillStatus(billID, 1); // payment1, tien mat
 
             if (isUpdated) {
                 if (session.getAttribute("CURRENT_PAGE").equals("invoice")) {

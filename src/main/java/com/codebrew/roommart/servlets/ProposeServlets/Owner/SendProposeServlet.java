@@ -28,7 +28,7 @@ public class SendProposeServlet extends HttpServlet {
             Account ownerAccount = (Account) session.getAttribute("USER");
             String proposeContent = request.getParameter("propose-content").trim();
             if (!proposeContent.isEmpty()) {
-                boolean insertStatus = new ProposeDao().insertNewProposeOwner(proposeContent, ownerAccount.getAccId());
+                boolean insertStatus = new ProposeDao().insertNewProposeOwner(proposeContent, ownerAccount.getAccId()); // gửi propose đi, status = 0, đang chờ phản hồi
                 if (insertStatus) {
                     handlerStatus = HandlerStatus.builder()
                             .status(true)

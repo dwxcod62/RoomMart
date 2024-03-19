@@ -155,7 +155,6 @@ public class RoomDAO implements IRoomDAO {
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 String sql = "SELECT COUNT(room_id) as quantity\n" +
                         "FROM Rooms\n" +
                         "WHERE hostel_id = ?";

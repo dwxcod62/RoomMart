@@ -28,7 +28,7 @@ public class ChangePasswordServlet extends HttpServlet {
 
             if (new AccountDAO().getAccountByUsernameAndPassword(account.getUsername(), oldPassword) != null) {
                 String newPassword = new EncodeUtils().hashMd5( request.getParameter("new-password"));
-                boolean resultUpdate = new AccountDAO().updateAccountPass(account.getAccId(), newPassword);
+                boolean resultUpdate = new AccountDAO().updateAccountPass(account.getAccId(), newPassword); // set lại psss theo ownerID
                 if (resultUpdate) {
                     request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                             .status(true)

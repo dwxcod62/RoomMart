@@ -35,6 +35,7 @@ public class OwnerPageServlet extends HttpServlet {
         String URL = "pages/owner/dashboard.jsp";
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("USER");
+        System.out.println("Bat dau DASHBOARD");
         try {
             // Get six months before current month
             List<List> listSixMonthsAndYearsBeforeCurrentDate = getListSixMonthsAndYearBeforeCurrentDate();
@@ -110,6 +111,8 @@ public class OwnerPageServlet extends HttpServlet {
             request.setAttribute("NumberProcessReport", listReportByReportStatus[1]);
             request.setAttribute("NumberDoneReport", listReportByReportStatus[2]);
             request.setAttribute("RATE_REPLY_REPORT", rateReplyReport);
+
+            System.out.println("NumberHostel: " + listHostel.size());
 
             request.setAttribute("NumberHostel", listHostel.size());
 

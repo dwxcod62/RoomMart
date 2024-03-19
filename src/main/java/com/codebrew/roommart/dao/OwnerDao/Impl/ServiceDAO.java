@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class ServiceDAO implements IServiceDAO {
     private static final String GET_LIST_SERVICES_NOT_IN_HOSTEL =
-            "SELECT service_id, service_name, unit FROM Services WHERE service_id NOT IN \n" +
-                    "(SELECT DISTINCT(service_id) FROM HostelService WHERE hostel_id = ?)";
+            "SELECT service_id, service_name, unit FROM Services WHERE service_id NOT IN \n" + // lấy các dịch vụ còn lại, not in  ...
+                    "(SELECT DISTINCT(service_id) FROM HostelService WHERE hostel_id = ?)"; // lấy ra các service_id (không trùng lặp) theo hostel_id
 
     private static final String GET_ALL_SERVICES = "SELECT service_id, service_name, unit FROM Services";
     @Override

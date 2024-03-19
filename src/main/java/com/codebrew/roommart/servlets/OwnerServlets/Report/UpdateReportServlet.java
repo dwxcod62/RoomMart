@@ -29,7 +29,7 @@ public class UpdateReportServlet extends HttpServlet {
             AccountInfo accountInfo = new AccountDAO().getAccountInformationById(report.getSendAccountID());
             if (action.equals("reply")) {
                 String responseMsg = request.getParameter("response");
-                boolean updateResult = new ReportDao().updateReportToProcess(reportId, responseMsg);
+                boolean updateResult = new ReportDao().updateReportToProcess(reportId, responseMsg); // set status = 1 ( đang xử lý)
                 if (updateResult) {
                     request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                             .status(true)
@@ -42,7 +42,7 @@ public class UpdateReportServlet extends HttpServlet {
                             .content("Đã có lỗi xảy ra! Vui lòng thử lại sau!").build());
                 }
             } else if (action.equals("finished")) {
-                boolean updateResult = new ReportDao().updateReportToFinished(reportId);
+                boolean updateResult = new ReportDao().updateReportToFinished(reportId); // set status = 2 đã xử lý
                 if (updateResult) {
                     request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                             .status(true)

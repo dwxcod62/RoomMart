@@ -1675,8 +1675,6 @@ public List<String>getListImgByRoomId(int rid){
         try {
             cn = DatabaseConnector.makeConnection();
             if (cn != null) {
-
-                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 String sql = "SELECT room_id, Hostels.hostel_id as 'hostel_id', room_number, room_status\n" +
                         "FROM Hostels, Rooms\n" +
                         "WHERE Hostels.owner_account_id = ? and Hostels.status =0\n" +

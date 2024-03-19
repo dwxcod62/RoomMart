@@ -24,8 +24,8 @@ public class GetOwnerProfileServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Account ownerAccount = (Account) session.getAttribute("USER");
-            Information information = new InformationDao().getAccountInformationById(ownerAccount.getAccId());
-            ownerAccount.setAccountInfo(AccountInfo.builder().information(information).build());
+            Information information = new InformationDao().getAccountInformationById(ownerAccount.getAccId());  // lấy info
+            ownerAccount.setAccountInfo(AccountInfo.builder().information(information).build()); // set lại info theo dto
             session.setAttribute("CURRENT_PAGE", "account");
             session.setAttribute("USER", ownerAccount);
             request.setAttribute("TYPE", type);

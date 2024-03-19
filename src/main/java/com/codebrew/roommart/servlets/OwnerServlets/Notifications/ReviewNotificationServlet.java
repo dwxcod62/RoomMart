@@ -27,7 +27,7 @@ public class ReviewNotificationServlet extends HttpServlet {
                         (int) request.getAttribute("NOTIFICATION_ID") : Integer.parseInt(request.getParameter("notification_id"));
                 System.out.println(notiId);
                 if(notiId > 0) {
-                    Notification notification = new NotificationDao().getNotificationById(notiId);
+                    Notification notification = new NotificationDao().getNotificationById(notiId); // lấy thông tin của noti theo id để xem chi tiét
                     request.setAttribute("HOSTEL_ID",  request.getAttribute("HOSTEL_ID"));
                     request.setAttribute("NOTIFICATION", notification);
                     if(!"view".equals(action)){

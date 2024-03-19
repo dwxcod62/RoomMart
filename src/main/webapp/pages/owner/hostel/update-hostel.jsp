@@ -84,7 +84,7 @@
                                                     <span>*</span></label>
                                                 <select name="hostel-province" id="hostel-province"
                                                     class="form-control form-select">
-                                                    <option value="all" selected>Chọn tỉnh thành</option>
+                                                    <option value="${requestScope.HOSTEL.city}" selected>${requestScope.HOSTEL.city}</option>
                                                 </select>
                                                 <span class="form-message"></span>
                                             </div>
@@ -95,7 +95,7 @@
                                                     <span>*</span></label>
                                                 <select name="hostel-district" id="hostel-district"
                                                     class="form-control form-select">
-                                                    <option value="all" selected>Chọn quận huyện</option>
+                                                    <option value="${requestScope.HOSTEL.district}" selected>${requestScope.HOSTEL.district}</option>
                                                 </select>
                                                 <span class="form-message"></span>
                                             </div>
@@ -106,7 +106,7 @@
                                                     <span>*</span></label>
                                                 <select name="hostel-ward" id="hostel-ward"
                                                     class="form-control form-select">
-                                                    <option value="all" selected>Chọn phường xã</option>
+                                                    <option value="${requestScope.HOSTEL.ward}" selected>${requestScope.HOSTEL.ward}</option>
                                                 </select>
                                                 <span class="form-message"></span>
                                             </div>
