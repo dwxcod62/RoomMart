@@ -78,6 +78,8 @@
                         </thead>
                         <jsp:useBean id="HostelDao" class="com.codebrew.roommart.dao.HostelDao" scope="application" />
                         <jsp:useBean id="AccountDao" class="com.codebrew.roommart.dao.AccountDao" scope="application" />
+                        <jsp:useBean id="EmailUtils" class="com.codebrew.roommart.utils.EmailUtils" scope="application" />
+
                         <tbody>
                             <c:forEach var="list" items="${requestScope.LIST_CONTRACT}" varStatus="loop">
                                 <tr>
@@ -90,11 +92,8 @@
                                     <td class="text-center">
                                             ${list.getRoom_id()}
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center ${list.status == -1 ? 'text-primary' : 'text-danger'}" >
                                             ${list.status == -1 ? "Đang chờ" : list.status == -2 ? "Từ chối" : "Trạng thái không xác định"}
-                                    </td>
-                                    <td class="text-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     </td>
                                 </tr>
                             </c:forEach>

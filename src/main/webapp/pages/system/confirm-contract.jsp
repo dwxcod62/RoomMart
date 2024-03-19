@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-3">
                     <div class="main-nav__logo">
-                        <a href="home-page" class="main-nav__logo-link">
+                        <a href="home" class="main-nav__logo-link">
                             <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -228,26 +228,37 @@
                 </div>
 
                 <div class="content__spacer"></div>
-                <form action="confirm-contract" method="post" id="content__form" class="content__form">
-                    <div class="form-group">
-                        <div class="d-flex">
-                            <input type="checkbox" id="content__form-confirm" class="content__form-confirm"
-                                   name="action" value="continue">
-                            <label for="content__form-confirm" class="content__form-label">Tôi đã đọc kỹ và xác nhận mọi
-                                thông tin trên đều đúng như đã
-                                thỏa thuận</label>
+
+                <c:choose>
+                    <c:when test="${sessionScope.CONTRACT.status eq 1}">
+                        <form action="confirm-contract" method="post" id="content__form" class="content__form">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <input type="checkbox" id="content__form-confirm" class="content__form-confirm"
+                                           name="action" value="continue">
+                                    <label for="content__form-confirm" class="content__form-label">Tôi đã đọc kỹ và xác nhận mọi
+                                        thông tin trên đều đúng như đã
+                                        thỏa thuận</label>
+                                </div>
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" id="user__sign" class="user__sign" name="sign" value="">
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-actions ">
+                                <button type="submit" class="btn btn-primary fs-3">Tiếp tục</button>
+                                <button type="button" id="btn122" class="btn btn-outline-danger fs-3"> Từ chối </button>
+                            </div>
+                        </form>
+                    </c:when>
+                    <c:when test="${sessionScope.CONTRACT.status eq -1}">
+                        <div class="form-actions d-flex justify-content-between">
+                            <a href="view-all-contract" class="btn btn-outline-info fs-3"> Quay lại </a>
+                            <button type="button" id="btn122" class="btn btn-outline-danger fs-3"> Hủy </button>
                         </div>
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" id="user__sign" class="user__sign" name="sign" value="">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary fs-3">Tiếp tục</button>
-                        <button type="button" id="btn122" class="btn btn-outline-danger fs-3"> Từ chối </button>
-                    </div>
-                </form>
+                    </c:when>
+                </c:choose>
                 <form id="form122" action="ViewContractServlet" method="post">
                     <input type="hidden" value="${sessionScope.CONTRACT.room_id}" name="room_id">
                     <input type="hidden" value="${sessionScope.CONTRACT.renterId}" name="renter_id">

@@ -1247,5 +1247,43 @@ public class ContractDao {
         return check;
     }
 
+    public String getExpirationOfContractByRoomAndUser(int room, int renter_id){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String date = null;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement("select expiration from Contracts where room_id = ? and renter_id = ?  and  ( status = -1 or status = 1 )");
+                pst.setInt(1, room);
+                pst.setInt(2, renter_id);
+
+                rs = pst.executeQuery();
+                if (rs.next()){
+                    date = rs.getDate("expiration").toString();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return date;
+    }
 
 }
