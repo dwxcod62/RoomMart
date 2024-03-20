@@ -6,6 +6,8 @@ import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dto.Account;
 import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.Notification;
+import com.codebrew.roommart.utils.ConfigEmailUtils;
+import com.codebrew.roommart.utils.EmailUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -52,25 +54,26 @@ public class AddNotificationServlet extends HttpServlet {
 //                            request.setAttribute("NOTIFICATION_ID", notiId);
                             request.setAttribute("HOSTEL_ID", hostelId);
 
-//                            ArrayList<String> accMailList = new ArrayList<>();
-//                            String mail = null;
-//                            ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
-//                            for (int id : renterList) {
-//                                mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
-//                                if (mail != null) {
-//                                    accMailList.add(mail);
-//                                }
-//                            }
+                            ArrayList<String> accMailList = new ArrayList<>();
+                            String mail = null;
+                            ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
+                            for (int id : renterList) {
+                                mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
+                                if (mail != null) {
+                                    accMailList.add(mail);
+                                }
+                            }
 
-//                            if (accMailList != null && accMailList.size() > 0) {
-//                                String domain = "http://localhost:8080/HappyHostel/RenterNotificationPage";
-//                                if (new MailUtils().SendMailNotice(accMailList, domain)) {
-//                                    handlerStatus = HandlerStatus.builder().status(true).content("Mail đã được gửi thành công. Vui lòng kiểm tra Email của bạn.").build();
-//                                } else {
-//                                    handlerStatus = HandlerStatus.builder().status(false).content("Không thể gửi Mail. Vui lòng kiểm tra lại các thông tin.").build();
-//                                }
-//                                request.setAttribute("RESPONSE_MSG", handlerStatus);
-//                            }
+                            if (accMailList != null && accMailList.size() > 0) {
+                                String localhost = "localhost:8080";
+                                String domain = "http://"+ ConfigEmailUtils.domain + "/RoomMart/RenterNoti";
+                                if (new EmailUtils().SendMailNotice(accMailList, domain)) {
+                                    handlerStatus = HandlerStatus.builder().status(true).content("Mail đã được gửi thành công. Vui lòng kiểm tra Email của bạn.").build();
+                                } else {
+                                    handlerStatus = HandlerStatus.builder().status(false).content("Không thể gửi Mail. Vui lòng kiểm tra lại các thông tin.").build();
+                                }
+                                request.setAttribute("RESPONSE_MSG", handlerStatus);
+                            }
 
                             url = SUCCESS;
 

@@ -6,6 +6,7 @@ import com.codebrew.roommart.dao.OwnerDao.Impl.HostelDAO;
 import com.codebrew.roommart.dto.HandlerStatus;
 import com.codebrew.roommart.dto.OwnerDTO.Bill;
 import com.codebrew.roommart.dto.OwnerDTO.Hostel;
+import com.codebrew.roommart.utils.ConfigEmailUtils;
 import com.codebrew.roommart.utils.ConfigUtils;
 import com.codebrew.roommart.utils.EmailUtils;
 
@@ -87,7 +88,7 @@ public class VNPayIPNServlet extends HttpServlet {
                                     String ownerEmail = new AccountDao().getAccountInformationById(ownerId).getInformation().getEmail();
                                     if (ownerEmail != null) {
                                         Hostel hostel = new HostelDAO().getHostelByRoomId(bill.getRoomID());
-                                        String domain = "http://localhost:8080/RoomMart/getRoomInvoiceDetail?billID="+billId+"&hostelID="+hostel.getHostelID()+"&roomID="+ bill.getRoomID();
+                                        String domain = "http://" + ConfigEmailUtils.domain + "RoomMart/getRoomInvoiceDetail?billID="+billId+"&hostelID="+hostel.getHostelID()+"&roomID="+ bill.getRoomID();
                                         new EmailUtils().SendMailConfirmPayment(ownerEmail, bill.getRoomID(), hostel.getHostelName() ,bill.getBillTitle(), domain);
                                         handlerStatus = HandlerStatus.builder().status(true).content("Giao dịch thành công!").build();
                                         request.setAttribute("HOSTEL_OWNER_ID", ownerId);

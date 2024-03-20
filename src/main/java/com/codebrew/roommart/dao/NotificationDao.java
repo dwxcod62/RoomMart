@@ -22,7 +22,7 @@ public class NotificationDao {
                     "JOIN Rooms r ON n.hostel_id = r.hostel_id\n" +
                     "JOIN Contracts c ON r.room_id = c.room_id\n" +
                     "JOIN Accounts a ON a.account_id = c.renter_id\n" +
-                    "WHERE a.account_id = ?";
+                    "WHERE a.account_id = ? and n.create_date > c.start_date";
 
     public List<Notification> getNotificationByOwnerId(int accId) {
         Connection cn = null;
