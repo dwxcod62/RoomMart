@@ -230,7 +230,7 @@
                 <div class="content__spacer"></div>
 
                 <c:choose>
-                    <c:when test="${sessionScope.CONTRACT.status eq 1}">
+                    <c:when test="${sessionScope.CONTRACT.status eq 1 || (sessionScope.CONTRACT.status eq -1 && sessionScope.USER.getRole() eq 1)}">
                         <form action="confirm-contract" method="post" id="content__form" class="content__form">
                             <div class="form-group">
                                 <div class="d-flex">
@@ -252,7 +252,7 @@
                             </div>
                         </form>
                     </c:when>
-                    <c:when test="${sessionScope.CONTRACT.status eq -1}">
+                    <c:when test="${sessionScope.CONTRACT.status eq -1 && sessionScope.USER.getRole() eq 2}">
                         <div class="form-actions d-flex justify-content-between">
                             <a href="view-all-contract" class="btn btn-outline-info fs-3"> Quay lại </a>
                             <button type="button" id="btn122" class="btn btn-outline-danger fs-3"> Hủy </button>

@@ -152,6 +152,7 @@ public class ConfirmContractServlet extends HttpServlet {
                     if (roomDAO.updateRoomStatus(contract.getRoom_id(), 0) ){
                         if ( accountDao.updateRoomForAccount(acc.getAccId(), contract.getRoom_id()) ){
                             contractDAO.deleteAfterCreateContract(acc.getAccId());
+                            contractDAO.updateDeniedStatusAfterContract(acc.getAccId(), r.getRoomId());
                             url = "dashboard";
                         } else{
                             System.out.println("c");

@@ -92,8 +92,8 @@
                                     <td class="text-center">
                                             ${list.getRoom_id()}
                                     </td>
-                                    <td class="text-center ${list.status == -1 ? 'text-primary' : 'text-danger'}" >
-                                            ${list.status == -1 ? "Đang chờ" : list.status == -2 ? "Từ chối" : "Trạng thái không xác định"}
+                                    <td class="text-center ${list.status == -1 ? "text-primary" : list.status == -2 ? "text-danger" : "text-success"}" >
+                                            ${list.status == -1 ? "Đang chờ" : list.status == -2 ? "Từ chối" : "Xác nhận"}
                                     </td>
                                 </tr>
                             </c:forEach>

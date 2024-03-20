@@ -1,9 +1,12 @@
 package com.codebrew.roommart.servlets.RenterServlet;
 
+import com.codebrew.roommart.dao.AccountDao;
 import com.codebrew.roommart.dao.HostelDao;
 import com.codebrew.roommart.dao.ReportCategoryDao;
 import com.codebrew.roommart.dao.ReportDao;
 import com.codebrew.roommart.dto.*;
+import com.codebrew.roommart.utils.ConfigEmailUtils;
+import com.codebrew.roommart.utils.EmailUtils;
 import com.google.gson.Gson;
 
 import javax.servlet.*;
@@ -44,6 +47,9 @@ public class AddReportServlet extends HttpServlet {
                     .build();
             new ReportDao().addReport(report);
 
+            AccountInfo info_owner = new AccountDao().getAccountInformationById(ownerID);
+            String domain = "http://" + ConfigEmailUtils.domain + "/RoomMart/owner-report";
+            boolean a = new EmailUtils().SendMailReport(info_owner.getInformation().getEmail(), domain );
             HandlerStatus status = HandlerStatus.builder().status(true).content("Báo cáo đã được gửi thành công!").build();
             response.getWriter().write(new Gson().toJson(status));
         } catch (Exception e) {

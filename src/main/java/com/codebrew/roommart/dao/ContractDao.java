@@ -1286,4 +1286,40 @@ public class ContractDao {
         return date;
     }
 
+    public boolean updateDeniedStatusAfterContract (int renterAccountId, int room_id) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            cn = DatabaseConnector.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement("update Contracts set status = -2 where room_id = ? and renter_id != ? ");
+                pst.setInt(1, room_id);
+                pst.setInt(2, renterAccountId);
+
+                check = pst.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
 }
