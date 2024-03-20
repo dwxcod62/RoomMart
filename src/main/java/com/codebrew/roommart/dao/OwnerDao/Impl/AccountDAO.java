@@ -34,6 +34,7 @@ public class AccountDAO implements IAccountDAO {
                     acc = new Account().builder().
                             accId(rs.getInt("account_id"))
                             .password(rs.getString("password"))
+                            .username(rs.getString("username"))
                             .role(rs.getInt("role"))
                                 .status(rs.getInt("status"))
                             .build();
