@@ -187,7 +187,9 @@ public class OwnerPageServlet extends HttpServlet {
         } else if (totalRepliedReportBefore1Day == totalRepliedReports) {
             return 100.0;
         } else {
+            System.out.println(totalRepliedReports + ", " + totalRepliedReportBefore1Day + ", " + totalRepliedReports);
             rate = ((totalRepliedReports - totalRepliedReportBefore1Day) / totalRepliedReports) * 100;
+            rate = 100 - rate;
         }
         return rate;
     }
