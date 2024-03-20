@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="room-account mb-4 mb-md-0">
     <div class="account-header">
@@ -8,11 +9,11 @@
             <div class="account-username">Tên tài khoản:
                 <span>${requestScope.renterAccount.username}</span>
             </div>
-<%--                <c:choose>--%>
-<%--                    <c:when test="${requestScope.renterAccount.status eq 1}">--%>
-<%--                        <div class="account-status">Trạng thái:--%>
-<%--                            <span class="text-success">Đã kích hoạt</span>--%>
-<%--                        </div>--%>
+                <c:choose>
+                    <c:when test="${requestScope.renterAccount.status eq 1}">
+                        <div class="account-status">Trạng thái:
+                            <span class="text-success">Đã kích hoạt</span>
+                        </div>
 <%--                        <div class="account-action">--%>
 <%--                            <!-- Start reset password btn -->--%>
 <%--                            <button data-bs-toggle="modal" data-bs-target="#reset-password-modal"--%>
@@ -66,13 +67,13 @@
 <%--                            </div>--%>
 <%--                            <!-- End Reset password modal -->--%>
 <%--                        </div>--%>
-<%--                    </c:when>--%>
-<%--                    <c:otherwise>--%>
-<%--                        <div class="account-status">Trạng thái:--%>
-<%--                            <span class="text-danger">Chưa kích hoạt</span>--%>
-<%--                        </div>--%>
-<%--                    </c:otherwise>--%>
-<%--                </c:choose>--%>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="account-status">Trạng thái:
+                            <span class="text-danger">Chưa kích hoạt</span>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
         </c:when>
         <c:otherwise>
             Trống
