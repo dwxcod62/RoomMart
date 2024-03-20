@@ -1,8 +1,8 @@
 
 var host = "";
-// const websocket = new WebSocket("wss://doe-ultimate-wholly.ngrok-free.app/RoomMart/push-noti-websocket");
+const websocket = new WebSocket("wss://doe-ultimate-wholly.ngrok-free.app/RoomMart/push-noti-websocket");
 
-const websocket = new WebSocket("ws://localhost:8080/RoomMart/push-noti-websocket");
+// const websocket = new WebSocket("ws://localhost:8080/RoomMart/push-noti-websocket");
 const websocket2 = new WebSocket("ws://localhost:8080/RoomMart/show-box-chat");
 function sendMessage(message) {
     // let i = 0;

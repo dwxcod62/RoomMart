@@ -255,9 +255,9 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
-<%--                            <a class="btn btn-secondary" href="export-excel?billID=${requestScope.billRoom.billID}">--%>
-<%--                                Xuất Excel--%>
-<%--                            </a>--%>
+                            <a class="btn btn-secondary" href="down-bill?billID=${requestScope.billRoom.billID}">
+                                Xuất Excel
+                            </a>
                             <button type="button" class="btn btn-primary"
                                     data-bs-dismiss="modal">
                                 Xác nhận
